@@ -1,0 +1,13 @@
+[
+	{
+		"gamename": "Remnant: From the Ashes",
+		"gamenickname": "remnant-from-ashes",
+		"gameexecutable": "Remnant-Win64-Shipping.exe",
+		"gamerun_appid": "com.epicgames.launcher://apps/b4a0d2d15acb4db894a599b810297543?action=launch&silent=true -opengl -SkipBuildPatchPrereq",
+		"winevariable": "WINEESYNC=1 WINE_LARGE_ADDRESS_AWARE=1 MESA_GL_VERSION_OVERRIDE=4.4COMPAT",
+		"gamekeywords": "Remnant: From the Ashes, remnant from the ashes, RPG, rpg, ação, acao, aventura, action, adventure, epic games store",
+		"launcher": "Epic Games Store",
+		"launchernickname": "epicstore",
+		"game_access": "false"
+	}
+]

@@ -1,0 +1,12 @@
+[Desktop Entry]
+Exec=/opt/regataos-gcs/scripts/progress-bar/capture-progress-download
+OnlyShowIn=KDE;
+Type=Service
+MimeType=
+Terminal=false
+X-KDE-autostart-after=root
+X-KDE-StartupNotify=false
+X-KDE-autostart-condition=AutoStart:true
+Icon=system-run
+GenericName=regataosgcs-capture-progress-download
+Name=regataosgcs-capture-progress-download

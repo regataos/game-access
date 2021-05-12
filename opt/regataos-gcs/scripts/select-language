@@ -1,0 +1,92 @@
+#!/bin/bash
+
+cd /
+
+while :
+do
+
+# Fix for progressbar-gcs folder
+if test -e /tmp/progressbar-gcs ; then
+	chmod 777 /tmp/progressbar-gcs
+	chmod 777 /tmp/progressbar-gcs/*
+else
+	mkdir -p /tmp/progressbar-gcs
+	chmod 777 /tmp/progressbar-gcs
+	chmod 777 /tmp/progressbar-gcs/*
+fi
+
+# Select language
+function lang_clear_cache() {
+	# Clear cache
+	rm -f "/opt/regataos-gcs/scripts/install/scripts-install"
+	rm -f "/opt/regataos-gcs/scripts/remove/scripts-remove"
+	rm -f "/opt/regataos-gcs/www/js/translations/language"
+}
+
+function lang_pt_BR() {
+	ln -s /opt/regataos-gcs/scripts/install/pt-br /opt/regataos-gcs/scripts/install/scripts-install
+	ln -s /opt/regataos-gcs/scripts/remove/pt-br /opt/regataos-gcs/scripts/remove/scripts-remove
+	ln -s /opt/regataos-gcs/www/js/translations/pt-br /opt/regataos-gcs/www/js/translations/language
+}
+
+function lang_pt_PT() {
+	ln -s /opt/regataos-gcs/scripts/install/pt-br /opt/regataos-gcs/scripts/install/scripts-install
+	ln -s /opt/regataos-gcs/scripts/remove/pt-br /opt/regataos-gcs/scripts/remove/scripts-remove
+	ln -s /opt/regataos-gcs/www/js/translations/pt-br /opt/regataos-gcs/www/js/translations/language
+}
+
+function lang_en_US() {
+	ln -s /opt/regataos-gcs/scripts/install/en-us /opt/regataos-gcs/scripts/install/scripts-install
+	ln -s /opt/regataos-gcs/scripts/remove/en-us /opt/regataos-gcs/scripts/remove/scripts-remove
+	ln -s /opt/regataos-gcs/www/js/translations/en-us /opt/regataos-gcs/www/js/translations/language
+}
+
+user=$(users | awk '{print $1}')
+if test -e "/home/$user/.config/plasma-localerc" ; then
+	lang=$(grep -r LANG "/home/$user/.config/plasma-localerc")
+
+	if [[ $lang == *"pt_BR"* ]]; then
+		lang_clear_cache
+		lang_pt_BR
+
+	elif [[ $lang == *"pt_PT"* ]]; then
+		lang_clear_cache
+		lang_pt_PT
+
+	elif [[ $lang == *"en_US"* ]]; then
+		lang_clear_cache
+		lang_en_US
+
+	else
+		lang_clear_cache
+		lang_en_US
+	fi
+
+	break
+else
+	if test -e "/home/$user/.config/user-dirs.locale" ; then
+		lang=$(cat "/home/$user/.config/user-dirs.locale")
+
+		if [[ $lang == *"pt_BR"* ]]; then
+			lang_clear_cache
+			lang_pt_BR
+
+		elif [[ $lang == *"pt_PT"* ]]; then
+			lang_clear_cache
+			lang_pt_PT
+
+		elif [[ $lang == *"en_US"* ]]; then
+			lang_clear_cache
+			lang_en_US
+
+		else
+			lang_clear_cache
+			lang_en_US
+		fi
+
+		break
+	fi
+fi
+
+   sleep 1
+done

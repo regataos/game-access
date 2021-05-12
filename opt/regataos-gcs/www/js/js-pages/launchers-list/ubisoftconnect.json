@@ -1,0 +1,11 @@
+[
+	{
+		"launcher_name": "Ubisoft Connect",
+		"launcher_nickname": "ubisoftconnect",
+		"executable_file": "UbisoftConnect.exe",
+		"launcher_executable": "dosdevices/c:/Program Files (x86)/Ubisoft/Ubisoft Game Launcher/UbisoftConnect.exe",
+		"desktop_file": "Ubisoft Connect.desktop",
+		"special_options": "",
+		"environment_variable": "WINEESYNC=1 WINEDLLOVERRIDES='winemenubuilder.exe=d;winedbg.exe=d'"
+	}
+]

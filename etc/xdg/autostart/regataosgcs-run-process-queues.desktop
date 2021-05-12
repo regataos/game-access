@@ -1,0 +1,12 @@
+[Desktop Entry]
+Exec=/opt/regataos-gcs/scripts/progress-bar/run-process-queues
+OnlyShowIn=KDE;
+Type=Service
+MimeType=
+Terminal=false
+X-KDE-autostart-after=root
+X-KDE-StartupNotify=false
+X-KDE-autostart-condition=AutoStart:true
+Icon=system-run
+GenericName=regataosgcs-run-process-queues
+Name=regataosgcs-run-process-queues

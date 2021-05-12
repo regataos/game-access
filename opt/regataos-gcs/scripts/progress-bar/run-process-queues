@@ -1,0 +1,43 @@
+#!/bin/bash
+
+cd /
+
+while :
+do
+
+progressbar_dir="/tmp/progressbar-gcs"
+
+#Make sure there are no critical installation errors
+if test ! -e "$progressbar_dir/installing" ; then
+
+# Check process queue and sort by sequence
+if test -e "$progressbar_dir/queued-process" ; then
+
+	check_process=$(cat $progressbar_dir/queued-process | head -1 | tail -1 | cut -d"=" -f 2-)
+
+	if [[ $check_process == *"install"* ]]; then
+
+		run_process=$(cat $progressbar_dir/queued-process | head -1 | tail -1 | cut -d"=" -f -1)
+
+		# echo "installing" > $progressbar_dir/installing
+		sed -i 1d "$progressbar_dir/queued-process"
+		"/opt/regataos-gcs/scripts/install/scripts-install/$run_process-compatibility-mode.sh" start
+
+	elif [[ $check_process == *"remove"* ]]; then
+	
+		run_process=$(cat $progressbar_dir/queued-process | head -1 | tail -1 | cut -d"=" -f -1)
+
+		# echo "Removing" > $progressbar_dir/installing
+		sed -i 1d "$progressbar_dir/queued-process"
+		"/opt/regataos-gcs/scripts/remove/scripts-remove/$run_process-compatibility-mode-rm.sh" start
+
+	else
+		echo "Nothing to do."
+	fi
+
+fi
+
+fi
+
+   sleep 1
+done

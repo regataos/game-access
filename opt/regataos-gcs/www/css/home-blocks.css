@@ -1,0 +1,90 @@
+.title-top {
+    font-family: Roboto;
+    font-size: 20px;
+	font-weight: 400;
+	margin-left: 57px;
+    margin-bottom: 30px;
+}
+
+.home-blocks {
+	display: none;
+	width: 100%;
+	float: left;
+}
+
+.home-blocks2 {
+    margin-top: 30px;
+	margin-left: 245px;
+	margin-bottom: 50px;
+}
+
+.home-blocks3 {
+	display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+	padding-right: 20px;
+    padding-left: 20px;
+}
+
+.app-block {
+	display: inline-block;
+	position: relative;
+	float: left;
+    width: 270px;
+    height: 250px;
+	background-color: #262626;
+	box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
+	margin-bottom: 15px;
+	padding: 10px;
+	cursor: pointer;
+	transition: all .4s;
+	background-position: 50% 50%;
+	background-size: auto 100%;
+	background-repeat: no-repeat;
+}
+
+.app-block:hover {
+	box-shadow: 0px -5px 5px 2px rgba(5, 87, 244, 0.8), 0px 4px 5px 2px rgba(5, 87, 244, 0.8), 0px 0px 5px 2px rgba(5, 87, 244, 0.8);
+}
+
+.appbc1 {
+	margin-right: 15px;
+	float: left;
+    width: 400px;
+    height: 250px;
+}
+
+.appbc2 {
+	margin-right: 15px;
+}
+
+.block-text {
+	position: absolute;
+	bottom: 0;
+    left: 0;
+	background-color: rgba(4, 4, 4, 0.61);
+	width: 100%;
+	padding-top: 15px;
+	padding-bottom: 15px;
+	-webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+}
+
+.block-title {
+	font-size: 20px;
+	font-weight: 400;
+	max-width: 34ch;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+	margin-bottom: 10px;
+	padding: 0px 15px 0px 15px;
+}
+
+.block-desc {
+	font-size: 17px;
+	font-weight: 400;
+	padding: 0px 15px 0px 15px;
+}
+

@@ -1,0 +1,9 @@
+[Unit]
+Description=Select language for Regata OS Game Access
+Before=display-manager.service
+
+[Service]
+ExecStart=/bin/sh /opt/regataos-gcs/scripts/select-language
+
+[Install]
+WantedBy=graphical.target

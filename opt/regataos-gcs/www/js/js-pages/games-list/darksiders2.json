@@ -1,0 +1,13 @@
+[
+	{
+		"gamename": "Darksiders II Deathinitive Edition",
+		"gamenickname": "darksiders2",
+		"gameexecutable": "Darksiders2.exe",
+		"gamerun_appid": "com.epicgames.launcher://apps/Hoki?action=launch&silent=true -opengl -SkipBuildPatchPrereq",
+		"winevariable": "WINEESYNC=1 WINE_LARGE_ADDRESS_AWARE=1 MESA_GL_VERSION_OVERRIDE=4.4COMPAT",
+		"gamekeywords": "Darksiders II, darksiders II, darksiders 2, acao, açao, ação, aventura, adventure, action, epic games store",
+		"launcher": "Epic Games Store",
+		"launchernickname": "epicstore",
+		"game_access": "false"
+    }
+]

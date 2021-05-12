@@ -1,0 +1,13 @@
+[
+	{
+		"gamename": "Assassin's Creed Origins",
+		"gamenickname": "sscd-origins",
+		"gameexecutable": "ACOrigins.exe",
+		"gamerun_appid": "uplay://launch/3539/0",
+		"winevariable": "WINEESYNC=1 WINE_LARGE_ADDRESS_AWARE=1",
+		"gamekeywords": "Assassin's Creed Origins, assassins creed origins, rpg, aventura, rpg de ação, rpg de açao, rpg de acao, adventure, action rpg, ubisoft connect",
+		"launcher": "Ubisoft Connect",
+		"launchernickname": "ubisoftconnect",
+		"game_access": "false"
+    }
+]

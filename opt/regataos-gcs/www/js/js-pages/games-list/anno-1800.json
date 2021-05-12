@@ -1,0 +1,13 @@
+[
+	{
+		"gamename": "Anno 1800",
+		"gamenickname": "anno-1800",
+		"gameexecutable": "Anno1800.exe",
+		"gamerun_appid": "uplay://launch/4553/0",
+		"winevariable": "WINEESYNC=1",
+		"gamekeywords": "Anno 1800, anno 1800, estratégia em tempo real, real time strategy, rts, ubisoft connect",
+		"launcher": "Ubisoft Connect",
+		"launchernickname": "ubisoftconnect",
+		"game_access": "false"
+    }
+]

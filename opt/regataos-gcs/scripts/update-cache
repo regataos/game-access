@@ -1,0 +1,59 @@
+#!/bin/bash
+
+# Home information updates
+# Cache dir
+if test ! -e "$HOME/.config/regataos-gcs/cache" ; then
+	mkdir -p "$HOME/.config/regataos-gcs/cache/"
+fi
+
+cache_download_dir="$HOME/.config/regataos-gcs/cache/"
+
+# Update cache files based on the system language
+function cache_pt_BR() {
+	wget --no-check-certificate -O "$cache_download_dir/home-blocks-content.css" "https://drive.google.com/uc?export=download&id=146HUGfxHZWXFeIAMA_YZDNlSP8BUaQWW" & \
+	wget --no-check-certificate -O "$cache_download_dir/home-slide-content.css" "https://drive.google.com/uc?export=download&id=1KQBGqX0IUBZMmHMHq-j645kRx3VjXmwL" & \
+	wget --no-check-certificate -O "$cache_download_dir/blocks_functions.js" "https://master.dl.sourceforge.net/project/regataos/regataos-gcs-cache/blocks_functions.js" & \
+	wget --no-check-certificate -O "$cache_download_dir/slide_functions.js" "https://master.dl.sourceforge.net/project/regataos/regataos-gcs-cache/slide_functions.js"
+}
+
+function cache_pt_PT() {
+	wget --no-check-certificate -O "$cache_download_dir/home-blocks-content.css" "https://drive.google.com/uc?export=download&id=146HUGfxHZWXFeIAMA_YZDNlSP8BUaQWW" & \
+	wget --no-check-certificate -O "$cache_download_dir/home-slide-content.css" "https://drive.google.com/uc?export=download&id=1KQBGqX0IUBZMmHMHq-j645kRx3VjXmwL" & \
+	wget --no-check-certificate -O "$cache_download_dir/blocks_functions.js" "https://master.dl.sourceforge.net/project/regataos/regataos-gcs-cache/blocks_functions.js" & \
+	wget --no-check-certificate -O "$cache_download_dir/slide_functions.js" "https://master.dl.sourceforge.net/project/regataos/regataos-gcs-cache/slide_functions.js"
+}
+
+function cache_en_US() {
+	wget --no-check-certificate -O "$cache_download_dir/home-blocks-content.css" "https://drive.google.com/uc?export=download&id=1_HO4oRrLU5htH0RFx5e2CKnDzrwYFY1u" & \
+	wget --no-check-certificate -O "$cache_download_dir/home-slide-content.css" "https://drive.google.com/uc?export=download&id=1f8K6tdZ7qkBps2qOZsxSHazJFT8fPBKu" & \
+	wget --no-check-certificate -O "$cache_download_dir/blocks_functions.js" "https://master.dl.sourceforge.net/project/regataos/regataos-gcs-cache/blocks_functions.js" & \
+	wget --no-check-certificate -O "$cache_download_dir/slide_functions.js" "https://master.dl.sourceforge.net/project/regataos/regataos-gcs-cache/slide_functions.js"
+}
+
+#If there is internet access, clear the cache
+if [[ $(cat /tmp/apps-scripts/network-status.txt) == *"online"* ]]; then
+	rm -f /tmp/regataos-gcs/config/cache/*
+fi
+
+#Identify the system language
+if test -e "$HOME/.config/plasma-localerc" ; then
+	lang=$(grep -r LANG "$HOME/.config/plasma-localerc")
+else
+	lang=$(cat "$HOME/.config/user-dirs.locale")
+fi
+
+if [[ $lang == *"pt_BR"* ]]; then
+	cache_pt_BR
+
+elif [[ $lang == *"pt_PT"* ]]; then
+	cache_pt_PT
+
+elif [[ $lang == *"en_US"* ]]; then
+	cache_en_US
+
+else
+	cache_en_US
+fi
+
+# Clear cache
+rm -r /tmp/regataos-gcs/confirm-*

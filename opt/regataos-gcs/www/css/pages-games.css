@@ -1,0 +1,259 @@
+body {
+    font-family: Oxygen;
+    font-weight: 300;
+	font-size: 18px;
+	color: #fff;
+    padding: 0;
+    margin: 0;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+	background-color: #2a2e33;
+}
+
+@font-face{
+    font-family: "Oxygen";
+    src: url('fonts/Oxygen.otf') format('truetype');
+}
+
+a, a:visited {
+    text-decoration: none;
+}
+
+.page-box {
+	width: 100%;
+    float: left;
+}
+
+.page-box2 {
+    margin-top: 350px;
+    margin-left: 245px;
+    margin-bottom: 50px;
+}
+
+.content-box {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    min-width: 692px;
+}
+
+.post {
+	display: inline-block;
+    position: relative;
+    float: left;
+	width: 1000px;
+    min-width: 750px;
+    height: auto;
+    /* background-color: rgba(4, 4, 4, 0.50); */
+    /* box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12); */
+    margin-bottom: 15px;
+    padding: 15px;
+	padding-bottom: 30px;
+    border-radius: 3px;
+    transition: all .3s;
+	/* -webkit-backdrop-filter: blur(10px); */
+	/*  backdrop-filter: blur(10px); */
+}
+
+.post-box {
+    float: left;
+}
+
+.title-box {
+	width: 290px;
+}
+
+.game-title {
+    float: left;
+    font-size: 25px;
+    font-weight: 600;
+	width: 500px;
+}
+
+.game-dev {
+	float: left;
+	font-size: 15px;
+}
+
+.game-genre {
+	float: right;
+	font-size: 15px;
+}
+
+.details {
+    float: left;
+	line-height: 1.4em;
+	font-size: 15px;
+	width: 230px;
+}
+
+.system-requirements {
+	font-size: 19px;
+	font-weight: 600;
+	border-top: 2px #575757 solid;
+	padding-top: 10px;
+	margin-bottom: 15px;
+}
+
+.system-recommended {
+	margin-top: 10px;
+}
+
+.discretion {
+	font-size: 17px;
+	line-height: 1.4em;
+	margin-left: 270px;
+}
+
+.discretion-title {
+	font-size: 19px;
+	font-weight: 600;
+	border-top: 2px #575757 solid;
+	padding-top: 10px;
+	margin-bottom: 15px;
+}
+.discretion-text {
+	line-height: 1.4em;
+}
+
+.rating {
+	width: 350px;
+	padding: 10px;
+	padding-top: 15px;
+	padding-left: 12px;
+	background-color: #000;
+	border-radius: 8px;
+	float: left;
+	margin-top: 10px;
+	margin-bottom: 0px;
+}
+
+.rating-img {
+	float: left;
+	width: 50px;
+	height: 50px;
+	margin-right: 10px;
+}
+
+.rating-icon {
+	display: block;
+	height: auto;
+	margin: 0 10px 10px 0;
+	width: 50px;
+}
+
+.rating-age {
+	text-align: left;
+	display: block;
+	font-size: 14px;
+	font-weight: 600;
+	line-height: 20px;
+	text-align: left;
+}
+
+.rating-status {
+	text-align: left;
+	display: block;
+	font-size: 14px;
+	line-height: 20px;
+	text-align: left;
+}
+
+.rating-text {
+	font-size: 14px;
+	line-height: 20px;
+	text-align: left;
+}
+
+.apps-configs {
+	display: none;
+	position: relative;
+	float: right;
+	margin-bottom: 10px;
+}
+
+.buttons-game-box {
+	position: absolute;
+	right: 0;
+	top: 30px;
+	margin-right: 15px;
+}
+
+.button-game {
+	float: left;
+	font-size: 17px;
+	text-align: center;
+	text-transform: uppercase;
+	font-weight: 400;
+	letter-spacing: 0.1em;
+    font-family: Oxygen;
+    border-radius: 2px;
+    background-color: #ccc;
+	cursor: pointer;
+    transition: all .3s;
+	box-shadow: 0 1px 6px rgba(0,0,0,0.1);
+    padding-top: 3px;
+    padding-left: 15px;
+    padding-right: 15px;
+	padding-bottom: 3px;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	width: 160px;
+	height: 50px;
+}
+
+.install-button {
+	display: none;
+	color: #dbe8ff;
+    background-image: linear-gradient(to right, #0662f0, #309eff, #04befe, #3f86ed);
+	background-size: 300% 100%;
+	transition: all .4s ease-in-out;
+	width: 165px;
+}
+.install-button:hover {
+	background-position: 100% 0;
+    transition: all .4s ease-in-out;
+}
+.install-button:active {
+    background-image: linear-gradient(to right, #0956cc, #0956cc, #0956cc, #0956cc);
+}
+
+.run-button {
+	display: none;
+	background-image: linear-gradient(to right, #18dc52, #2ab388, #30dd8a, #2bb673);
+	background-size: 300% 100%;
+	transition: all .4s ease-in-out;
+	margin-right: 15px;
+	width: 135px;
+}
+.text-play {
+	float: right;
+	text-align: right;
+}
+.run-button:hover {
+	background-position: 100% 0;
+	transition: all .4s ease-in-out;
+}
+.run-button:active {
+	background-image: linear-gradient(to right, #169547, #169547, #169547, #169547);
+}
+
+.remove-button {
+	display: none;
+	color: #dbe8ff;
+    background-image: linear-gradient(to right, #cc121a, #ee4248, #df4247, #cc121a);
+	background-size: 300% 100%;
+	transition: all .4s ease-in-out;
+	width: 166px;
+}
+.remove-button:hover {
+    background-position: 100% 0;
+	transition: all .4s ease-in-out;
+}
+.remove-button:active {
+    background-image: linear-gradient(to right, #9d0c12, #9d0c12, #9d0c12, #9d0c12);
+}

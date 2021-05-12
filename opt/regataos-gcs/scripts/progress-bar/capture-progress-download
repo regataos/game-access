@@ -1,0 +1,62 @@
+#!/bin/bash
+
+cd /
+
+while :
+do
+
+# Capture progress for JavaScript
+if test -e /tmp/progressbar-gcs/download-percentage ; then
+
+	lines=$(wc -l /tmp/progressbar-gcs/download-percentage | cut -d"/" -f -1)
+	if [ $lines -ge 10 ]; then
+	
+		# Progress bar and percentage
+		progress=$(tail -2 /tmp/progressbar-gcs/download-percentage | awk '{print $7}' | head -1 | tail -1)
+
+		if [[ $progress == *"salvo"* ]]; then
+			echo "100%"
+		else
+			echo $progress > /tmp/progressbar-gcs/progress
+		fi
+
+		# Internet connection speed and estimated time of conclusion
+		check_progress=$(grep -r 100% /tmp/progressbar-gcs/download-percentage)
+
+		if [[ $check_progress == *"100%"* ]]; then
+			rm -f "/tmp/progressbar-gcs/speed"
+			rm -f "/tmp/progressbar-gcs/eta"
+		else
+			speed=$(tail -2 /tmp/progressbar-gcs/download-percentage | awk '{print $8}' | head -1 | tail -1 | sed 's,M, MB/s,' | sed 's,K, KB/s,' | sed 's,G, GB/s,')
+			echo $speed > /tmp/progressbar-gcs/speed
+			eta=$(tail -2 /tmp/progressbar-gcs/download-percentage | awk '{print $9}' | head -1 | tail -1 | sed 's/h/h /' | sed 's/m/m /' | sed 's/s/s /')
+			echo $eta > /tmp/progressbar-gcs/eta
+		fi
+
+		# Download Size
+		download_size=$(grep -r application /tmp/progressbar-gcs/download-percentage | head -1 | tail -1 | cut -d":" -f 2- | cut -d"(" -f 2- | cut -d")" -f -1 | sed 's/M/ MB/' | sed 's/K/ KB/' | sed 's/G/ GB/')
+		download_size2=$(grep -r application /tmp/progressbar-gcs/download-percentage | head -1 | tail -1 | cut -d":" -f 2- | cut -d"(" -f 2- | cut -d")" -f -1 | sed 's/M//' | sed 's/K//' | sed 's/G//')
+		echo "$download_size" > /tmp/progressbar-gcs/download-size
+
+		# Downloading File Size
+		file_downloading=$(cat /tmp/progressbar-gcs/file-download-size)
+		file_size=$(du -hs $file_downloading | awk '{print $1}' | sed 's/M/ MB/' | sed 's/K/ KB/' | sed 's/G/ GB/')
+		file_size2=$(du -hs $file_downloading | awk '{print $1}' | sed 's/M//' | sed 's/K//' | sed 's/G//')
+		
+		if [ $file_size2 -ge $download_size2 ]; then
+			echo "$download_size /" > /tmp/progressbar-gcs/file-size
+		else
+			echo "$file_size /" > /tmp/progressbar-gcs/file-size
+		fi
+
+		# Get Wget PID
+		get_pid=$(cat /tmp/progressbar-gcs/get-pid)
+		pid=$(ps -C "$get_pid" | awk '{print $1}'| tail -1)
+		echo $pid > /tmp/progressbar-gcs/wget-pid
+
+	fi
+
+fi
+
+   sleep 1
+done

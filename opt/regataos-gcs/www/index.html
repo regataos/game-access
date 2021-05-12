@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Regata OS Game Access</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<link rel="stylesheet" type="text/css" href="css/responsive-style.css">
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/jquery-1.12.4.js"></script>
+	<script type="text/javascript" src="js/fas-icons.js"></script>
+	<script type="text/javascript" src="js/update-css.js"></script>
+	<script type="text/javascript" src="js/index.js"></script>
+	<script type="text/javascript" src="js/go-pagesfile.js"></script>
+	<script type="text/javascript" src="js/go-pages.js"></script>
+	<script type="text/javascript" src="js/run-wineprefix.js"></script>
+	<script type="text/javascript" src="js/open-launcher-folder.js"></script>
+	<script type="text/javascript" src="js/js-pages/highlighting-pages.js"></script>
+	<script type="text/javascript" src="js/translations/language/confirm-box.js"></script>
+	<script type="text/javascript" src="js/translations/language/index-lang.js"></script>
+	<script type="text/javascript" src="js/js-pages/check-installed-launcher.js"></script>
+	<script type="text/javascript" src="js/js-pages/confirm-box-uninstall.js"></script>
+	<script type="text/javascript" src="js/js-pages/action-config.js"></script>
+	<script type="text/javascript" src="js/js-pages/action-launchers.js"></script>
+	<script type="text/javascript" src="js/confirm-cancel-installation.js"></script>
+	<script type="text/javascript" src="js/confirm-installation.js"></script>
+	<script type="text/javascript" src="js/confirm-uninstall.js"></script>
+	<script type="text/javascript" src="js/scripts.js"></script>
+</head>
+<body>
+<div class="progress-bar-full">
+	<iframe src="progress-bar/progress-bar-full.html" frameborder="0" class="iframe_pbf" id="iframepbf"></iframe>
+</div>
+
+<div class="confirmation-cancel-installation">
+	<div class="confirmation">
+		<div class="confir-title"></div>
+		<div class="cbuttons">
+			<div class="confirm-button true-button" onclick="cancel_down();"></div>
+			<div class="confirm-button false-button" onclick="hideconfirmboxinstallation();"></div>
+		</div>
+	</div>
+</div>
+
+<div class="confirmation-box confirm-uninstall">
+	<div class="confirmation">
+		<div class="confir-title"></div>
+		<div class="cbuttons">
+			<div class="confirm-button true-button" onclick="start_uninstall_app();"></div>
+			<div class="confirm-button false-button" onclick="cancel_uninstall();"></div>
+		</div>
+	</div>
+</div>
+
+<div id="side-bar">
+	<div class="icon-regataos" style="background-image:url(images/regataos.png);"></div>
+
+	<div id="block-home">
+		<div class="block-title">Launchers disponíveis</div>
+	</div>
+	<script type="text/javascript" src="js/js-pages/launchers-list.js"></script>
+
+	<div class="progress-bar">
+		<iframe src="progress-bar/progress-bar.html" frameborder="0" class="iframe_pb" id="iframepb"></iframe>
+	</div>
+</div>
+<script type="text/javascript" src="js/js-pages/list-launchers-options.js"></script>
+<!-- Check configs status -->
+<script type="text/javascript" src="js/js-pages/check-config-status.js"></script>
+
+<!-- html top bar -->
+<div class="top-bar">
+
+<div class='top-bar-arrow' onclick='voltar(); back_button_pages();' title='Voltar'>
+<span class='svg svg-arrow-left'>
+<svg enable-background='new 0 0 14 26' height='16px' id='svg4-Layer_1' version='1.1' viewBox='0 0 14 26' width='14px' x='0px' xml:space='preserve' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' y='0px'> <path d='M13,26c-0.256,0-0.512-0.098-0.707-0.293l-12-12c-0.391-0.391-0.391-1.023,0-1.414l12-12c0.391-0.391,1.023-0.391,1.414,0s0.391,1.023,0,1.414L2.414,13l11.293,11.293c0.391,0.391,0.391,1.023,0,1.414C13.512,25.902,13.256,26,13,26z'/> </svg>
+<span class='alt sr-only'/>
+</span>
+</div>
+
+<ul id='top-menu'>
+    <li>
+      <a class='p-home' onclick="go_home();">Game Access</a>
+    </li><li class="p-installed-li">
+      <a class='p-installed' onclick="go_installed();">Instalados</a>
+    </li><li>
+      <a class='p-allgames' onclick="go_allgames();">Todos os jogos</a>
+    </li>
+</ul>
+
+<div id='search'>
+<form id="form">
+	<div><input id='field' name='q' onblur='if (this.value == "") {this.value = "Pesquisar jogos";}' onfocus='if (this.value == "Pesquisar jogos") {this.value = "";}' type='text' value='Pesquisar jogos'/>
+	<input class='submit' name='submit' type='submit' value='Pesquisar jogos'/></div>
+</form>
+</div>
+<script type="text/javascript" src="js/search.js"></script>
+</div>
+
+	<iframe src="pages/home.html" frameborder="0" class="iframe_gcs" id="iframegcs"></iframe>
+
+</body>
+</html>

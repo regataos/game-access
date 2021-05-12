@@ -1,0 +1,63 @@
+#!/bin/bash
+
+# This script ends the application of the Regata OS Game Access application
+# when a game or launcher was executed from it
+
+cd /
+
+while :
+do
+
+# Check if any game or launcher has been run from the game access
+if test -e "/tmp/regataos-gcs/running-with-regataos-gcs.txt" ; then
+
+	# When this file is removed, the scan restarts
+	if test -e "/tmp/regataos-gcs/run-regataos-gcs.txt"; then
+		rm -f "/tmp/regataos-gcs/run-regataos-gcs.txt"
+	fi
+
+	# If Game Access is running, close the application
+	ps -C regataosgcs > /dev/null
+	if [ $? = 0 ]; then
+		echo "Close the Game Access application"
+		kill -SIGTERM $(ps -C regataosgcs | head -2 | tail -1 | awk '{print $1}')
+		sleep 5
+		sed -i 's/\(closed-manually=1\)/closed-manually=0/' "$HOME/.config/regataos-gcs/regataos-gcs.conf"
+
+	else
+		# Verify that the launcher is running
+        for i in /opt/regataos-gcs/www/js/js-pages/launchers-list/*.json; do
+            executable="$(grep -R '"executable_file":' $i | awk '{print $2}' | sed 's/"\|,//g')"
+
+            ps -C $executable > /dev/null
+			if [ $? = 0 ]; then
+				echo "" > "/tmp/regataos-gcs/run-regataos-gcs.txt"
+			fi
+        done
+
+		if test ! -e "/tmp/regataos-gcs/run-regataos-gcs.txt"; then
+        	for i in /opt/regataos-gcs/www/js/js-pages/games-list/*.json; do
+            	executable="$(grep -R '"gameexecutable":' $i | awk '{print $2}' | sed 's/"\|,//g')"
+
+            	ps -C $executable > /dev/null
+				if [ $? = 0 ]; then
+					echo "" > "/tmp/regataos-gcs/run-regataos-gcs.txt"
+				fi
+        	done
+		fi
+
+		# If the launcher or game is closed, start Game Access
+		if test ! -e "/tmp/regataos-gcs/run-regataos-gcs.txt"; then
+			if [[ $(grep -r "closed-manually=" $HOME/.config/regataos-gcs/regataos-gcs.conf | cut -d"=" -f 2-) != *"1"* ]]; then
+				sed -i 's/\(closed-manually=1\)/closed-manually=0/' "$HOME/.config/regataos-gcs/regataos-gcs.conf"
+
+				rm -f "/tmp/regataos-gcs/running-with-regataos-gcs.txt"
+				cd "/usr/share/applications/"
+				gtk-launch "regataos-gcs.desktop"
+			fi
+		fi
+	fi
+fi
+
+   sleep 10
+done

@@ -1,0 +1,13 @@
+[
+	{
+		"gamename": "Batman: Arkham Knight",
+		"gamenickname": "batman-rk",
+		"gameexecutable": "BatmanAK.exe",
+		"gamerun_appid": "com.epicgames.launcher://apps/Cowbird?action=launch&silent=true -opengl -SkipBuildPatchPrereq",
+		"winevariable": "WINEESYNC=1 WINE_LARGE_ADDRESS_AWARE=1 MESA_GL_VERSION_OVERRIDE=4.4COMPAT",
+		"gamekeywords": "Batman: Arkham Knight, batman arkham knight, acao, açao, ação, aventura, adventure, action, epic games store",
+		"launcher": "Epic Games Store",
+		"launchernickname": "epicstore",
+		"game_access": "false"
+    }
+]

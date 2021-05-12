@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Regata OS Game Access</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
+	<link rel="stylesheet" type="text/css" href="./../css/style.css">
+	<link rel="stylesheet" type="text/css" href="./../css/category-app.css">
+	<link rel="stylesheet" type="text/css" href="./../css/responsive-style.css">
+	<link rel="stylesheet" type="text/css" href="./../css/roboto-style.css">
+	<link rel="stylesheet" type="text/css" href="./../css/installed.css">
+	<script type="text/javascript" src="./../js/jquery.min-3.2.1.js"></script>
+	<script type="text/javascript" src="./../js/jquery.min.js"></script>
+	<script type="text/javascript" src="./../js/jquery-1.12.4.js"></script>
+	<script type="text/javascript" src="./../js/fas-icons.js"></script>
+	<script type="text/javascript" src="./../js/confirm-installation.js"></script>
+	<script type="text/javascript" src="./../js/translations/language/pages-lang.js"></script>
+	<script type="text/javascript" src="./../js/js-pages/action-games.js"></script>
+
+	<!-- Display content when everything is ready -->
+	<script type="text/javascript">
+		$(function(){
+			$("#loadscreen").fadeOut("slow");
+		});
+
+		$(function(){
+			$(".blocks").fadeIn("slow");
+		});
+	</script>
+</head>
+<body>
+	<div id='loadscreen'></div>
+
+	<div class="blocks">
+	<div class="blocks2">
+	<div class="title-top-box">
+		<div class="title-top installed-title">Lista com todos os jogos detectados pelo Regata OS Game Access</div>
+	</div>
+
+	<div class="blocks4" id="games_installed">
+		<div class="nogamefound">
+			<div class="nogamefound-img" style="background-image:url(./../images/triste.png);"></div>
+			<div class="nogamefound-title">Nenhum jogo encontrado</div>
+			<div class="nogamefound-desc">Infelizmente, ainda não achei nenhum jogo instalado.</div>
+		</div>
+	</div>
+	<script type="text/javascript" src="./../js/js-pages/games-list-installed.js"></script>
+	<script type="text/javascript" src="./../js/js-pages/check-installed-games.js"></script>
+	<script type="text/javascript" src="./../js/js-pages/gcs/check-installed-games.js"></script>
+	<!-- translations -->
+	<script type="text/javascript" src="./../js/translations/language/pages-blocks-lang.js"></script>
+
+	</div>
+	</div>
+</body>
+</html>

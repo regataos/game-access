@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Progress Bar</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
+	<link rel="stylesheet" type="text/css" href="./../css/style-progress-bar.css">
+	<script type="text/javascript" src="./../js/jquery.min.js"></script>
+	<script type="text/javascript" src="./../js/jquery-1.12.4.js"></script>
+	<script type="text/javascript" src="./../js/progress-bar/progress-bar.js"></script>
+            <!-- Translations -->
+	<script type="text/javascript" src="./../js/translations/language/progressbar-lang.js"></script>
+</head>
+
+<body>
+<div class="container">
+	<div class="app-installing">Game</div>
+	<div class="light-grey">
+		<div id="myBar" class="progress"></div>
+		<div id="myBar-movement" class="progress-movement"></div>
+		<div id="myBar-full" class="progress-full"></div>
+	</div>
+	<div class="status"></div>
+	<div class="percentage"></div>
+	<div class="down-functions">
+	<div class="down-file-size"><div id="filesize" class="file-size">700 MB /</div><div id="downsize" class="file-size">9.5 GB</div></div>
+	<div id="eta" class="eta-info">4h 25m 5s</div><div class="eta-info eta-desc">restante.</div>
+		<div class="more-info" title="Mais informações" onclick="full_progressbar();" style="background-image:url(./../images/arrow-right-off.png);"></div>
+		<div class="more-info2" onclick="full_progressbar();" style="background-image:url(./../images/arrow-right-off.png);"></div>
+	</div>
+</div>
+</body>
+</html>

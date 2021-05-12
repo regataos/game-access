@@ -1,0 +1,13 @@
+[
+	{
+		"gamename": "Assassin's Creed Syndicate",
+		"gamenickname": "sscd-syndicate-epic",
+		"gameexecutable": "ACS.exe",
+		"gamerun_appid": "com.epicgames.launcher://apps/Albacore?action=launch&silent=true -opengl -SkipBuildPatchPrereq",
+		"winevariable": "WINEESYNC=1 WINE_LARGE_ADDRESS_AWARE=1 MESA_GL_VERSION_OVERRIDE=4.4COMPAT",
+		"gamekeywords": "Assassin's Creed Syndicate, assassins creed syndicate, aventura, açao, acao, mundo aberto, adventure, action, open world, epic games store",
+		"launcher": "Epic Games Store",
+		"launchernickname": "epicstore",
+		"game_access": "false"
+    }
+]

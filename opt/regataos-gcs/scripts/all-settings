@@ -1,0 +1,29 @@
+#!/bin/bash
+
+# Fix executable
+if test ! -e /opt/magma/regataosgcs ; then
+	cp -f /opt/magma/magma /opt/magma/regataosgcs
+fi
+
+if test ! -e /usr/bin/regataosgcs ; then
+	ln -sf /opt/magma/regataosgcs /usr/bin/regataosgcs
+fi
+
+# Fix for regataos-gcs folder
+if test -e /tmp/regataos-gcs ; then
+	chmod 777 /tmp/regataos-gcs
+else
+	mkdir -p /tmp/regataos-gcs
+	chmod 777 /tmp/regataos-gcs
+fi
+
+# Fix for progressbar-gcs folder
+if test -e /tmp/progressbar-gcs ; then
+	chmod 777 /tmp/progressbar-gcs
+else
+	mkdir -p /tmp/progressbar-gcs
+	chmod 777 /tmp/progressbar-gcs
+fi
+
+# Clear log cache
+rm -f /var/log/regataos-logs/*.log

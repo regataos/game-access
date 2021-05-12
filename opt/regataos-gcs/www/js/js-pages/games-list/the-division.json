@@ -1,0 +1,13 @@
+[
+	{
+		"gamename": "Tom Clancy's The Division",
+		"gamenickname": "the-division",
+		"gameexecutable": "TheDivision.exe",
+		"gamerun_appid": "uplay://launch/568/0",
+		"winevariable": "WINEESYNC=1 WINE_LARGE_ADDRESS_AWARE=1",
+		"gamekeywords": "Tom Clancy's The Division, tom clancys the division, RPG, rpg, open world. mundo aberto, tiro em terceira pessoa, third-person shooter, third person shooter, ubisoft connect",
+		"launcher": "Ubisoft Connect",
+		"launchernickname": "ubisoftconnect",
+		"game_access": "false"
+    }
+]

@@ -1,0 +1,13 @@
+[
+	{
+		"gamename": "Surviving Mars",
+		"gamenickname": "surviving-mars",
+		"gameexecutable": "MarsEpic.exe",
+		"gamerun_appid": "com.epicgames.launcher://apps/Ovenbird?action=launch&silent=true -opengl -SkipBuildPatchPrereq",
+		"winevariable": "MESA_GL_VERSION_OVERRIDE=4.4COMPAT",
+		"gamekeywords": "Surviving Mars, surviving mars, estratégia, simulador, sobrevivência, strategy, simulator, survival, epic games store",
+		"launcher": "Epic Games Store",
+		"launchernickname": "epicstore",
+		"game_access": "false"
+	}
+]

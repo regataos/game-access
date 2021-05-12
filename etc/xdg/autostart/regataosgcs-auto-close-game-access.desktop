@@ -1,0 +1,12 @@
+[Desktop Entry]
+Exec=/opt/regataos-gcs/scripts/action-games/auto-close-game-access.sh
+OnlyShowIn=KDE;
+Type=Service
+MimeType=
+Terminal=false
+X-KDE-autostart-after=root
+X-KDE-StartupNotify=false
+X-KDE-autostart-condition=AutoStart:true
+Icon=system-run
+GenericName=Automatically close the Regata OS Game Access
+Name=Auto close Game Access
