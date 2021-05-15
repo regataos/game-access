@@ -5,7 +5,7 @@ Version: 6.5
 Release: 0
 Summary: Compatibility mode for Regata OS Store
 License: MIT
-Url: https://www.regataos.com.br/
+Url: https://github.com/regataos/game-access
 Source1: regataos-wine-service.tar.xz
 Source2: regataos-wine.service
 Group: System/GUI/KDE
