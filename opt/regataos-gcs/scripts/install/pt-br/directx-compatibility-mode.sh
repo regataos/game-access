@@ -74,7 +74,7 @@ if test -e "$app_download_dir/$app_download_file_name" ; then
 	rm -f $progressbar_dir/progress-full
 	rm -f $progressbar_dir/installing
 
-	exit 0;
+	exit 0
 
 else
 	# Abort installations

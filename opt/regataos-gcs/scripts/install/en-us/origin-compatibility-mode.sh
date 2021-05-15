@@ -29,8 +29,8 @@ install_dotnet_status="This may take a few minutes..."
 
 #Download information
 app_download_status="Downloading Origin installer..."
-app_download_link="https://download.dm.origin.com/origin/live/OriginUpdate_10_5_96_47512.zip"
-app_download_file_name="OriginUpdate_10_5_96_47512.zip"
+app_download_link="https://download.dm.origin.com/origin/live/OriginUpdate_10_5_98_47688.zip"
+app_download_file_name="OriginUpdate_10_5_98_47688.zip"
 
 #Default settings
 app_nickname_dir="$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"

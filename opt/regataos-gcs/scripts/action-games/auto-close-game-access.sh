@@ -26,14 +26,10 @@ if test -e "/tmp/regataos-gcs/running-with-regataos-gcs.txt" ; then
 
 	else
 		# Verify that the launcher is running
-        for i in /opt/regataos-gcs/www/js/js-pages/launchers-list/*.json; do
-            executable="$(grep -R '"executable_file":' $i | awk '{print $2}' | sed 's/"\|,//g')"
-
-            ps -C $executable > /dev/null
-			if [ $? = 0 ]; then
-				echo "" > "/tmp/regataos-gcs/run-regataos-gcs.txt"
-			fi
-        done
+        ps -C "Battle.net.exe | Origin.exe | OriginThinSetup | EpicGamesLaunch | Uplay.exe | upc.exe | GalaxyClient.ex | SocialClubHelpe" > /dev/null
+		if [ $? = 0 ]; then
+			echo "" > "/tmp/regataos-gcs/run-regataos-gcs.txt"
+		fi
 
 		if test ! -e "/tmp/regataos-gcs/run-regataos-gcs.txt"; then
         	for i in /opt/regataos-gcs/www/js/js-pages/games-list/*.json; do
