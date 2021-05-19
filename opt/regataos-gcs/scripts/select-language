@@ -18,27 +18,27 @@ fi
 # Select language
 function lang_clear_cache() {
 	# Clear cache
-	rm -f "/opt/regataos-gcs/scripts/install/scripts-install"
-	rm -f "/opt/regataos-gcs/scripts/remove/scripts-remove"
-	rm -f "/opt/regataos-gcs/www/js/translations/language"
+	rm -rf "/opt/regataos-gcs/scripts/install/scripts-install"
+	rm -rf "/opt/regataos-gcs/scripts/remove/scripts-remove"
+	rm -rf "/opt/regataos-gcs/www/js/translations/language"
 }
 
 function lang_pt_BR() {
-	ln -s /opt/regataos-gcs/scripts/install/pt-br /opt/regataos-gcs/scripts/install/scripts-install
-	ln -s /opt/regataos-gcs/scripts/remove/pt-br /opt/regataos-gcs/scripts/remove/scripts-remove
-	ln -s /opt/regataos-gcs/www/js/translations/pt-br /opt/regataos-gcs/www/js/translations/language
+	ln -sf /opt/regataos-gcs/scripts/install/pt-br /opt/regataos-gcs/scripts/install/scripts-install
+	ln -sf /opt/regataos-gcs/scripts/remove/pt-br /opt/regataos-gcs/scripts/remove/scripts-remove
+	ln -sf /opt/regataos-gcs/www/js/translations/pt-br /opt/regataos-gcs/www/js/translations/language
 }
 
 function lang_pt_PT() {
-	ln -s /opt/regataos-gcs/scripts/install/pt-br /opt/regataos-gcs/scripts/install/scripts-install
-	ln -s /opt/regataos-gcs/scripts/remove/pt-br /opt/regataos-gcs/scripts/remove/scripts-remove
-	ln -s /opt/regataos-gcs/www/js/translations/pt-br /opt/regataos-gcs/www/js/translations/language
+	ln -sf /opt/regataos-gcs/scripts/install/pt-br /opt/regataos-gcs/scripts/install/scripts-install
+	ln -sf /opt/regataos-gcs/scripts/remove/pt-br /opt/regataos-gcs/scripts/remove/scripts-remove
+	ln -sf /opt/regataos-gcs/www/js/translations/pt-br /opt/regataos-gcs/www/js/translations/language
 }
 
 function lang_en_US() {
-	ln -s /opt/regataos-gcs/scripts/install/en-us /opt/regataos-gcs/scripts/install/scripts-install
-	ln -s /opt/regataos-gcs/scripts/remove/en-us /opt/regataos-gcs/scripts/remove/scripts-remove
-	ln -s /opt/regataos-gcs/www/js/translations/en-us /opt/regataos-gcs/www/js/translations/language
+	ln -sf /opt/regataos-gcs/scripts/install/en-us /opt/regataos-gcs/scripts/install/scripts-install
+	ln -sf /opt/regataos-gcs/scripts/remove/en-us /opt/regataos-gcs/scripts/remove/scripts-remove
+	ln -sf /opt/regataos-gcs/www/js/translations/en-us /opt/regataos-gcs/www/js/translations/language
 }
 
 user=$(users | awk '{print $1}')
