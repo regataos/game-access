@@ -264,7 +264,7 @@ else
 			# Enable DXVK for Direct3D 9/10/11 over Vulkan
 			export WINEDLLOVERRIDES="mscoree,mshtml="
 			export WINEPREFIX="$HOME/.local/share/wineprefixes/default-compatibility-mode"
-			/bin/sh /opt/regataos-wine/dxvk/setup_dxvk.sh install --symlink --with-d3d10
+			/bin/sh /opt/regataos-wine/dxvk/setup_dxvk.sh install --symlink
 
 			# Enable VKD3D-Proton for Direct3D 12 over Vulkan
 			export WINEDLLOVERRIDES="mscoree,mshtml="
