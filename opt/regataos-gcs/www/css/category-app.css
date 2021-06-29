@@ -70,18 +70,32 @@
 
 .blocks3 {
 	display: block;
+    position: relative;
 	min-width: 692px;
 	max-width: 1040px;
 	margin-left: auto;
     margin-right: auto;
+    -webkit-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+    -webkit-animation-name: animatebottom;
+    -webkit-animation-duration: .5s;
+    animation-name: animatebottom;
+    animation-duration: .5s;
 }
 
 .blocks4 {
 	display: block;
+    position: relative;
 	min-width: 692px;
 	max-width: 1040px;
 	margin-left: auto;
     margin-right: auto;
+    -webkit-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+    -webkit-animation-name: animatebottom;
+    -webkit-animation-duration: .5s;
+    animation-name: animatebottom;
+    animation-duration: .5s;
 }
 
 .app-block {
@@ -257,4 +271,15 @@
     margin-right: 6px;
     font-size: 17px;
     margin-bottom: 0px;
+}
+
+/* Responsive CSS */
+@-webkit-keyframes animatebottom {
+    from { bottom:-30px; opacity:0 } 
+    to { bottom:0px; opacity:1 }
+}
+
+@keyframes animatebottom { 
+    from{ bottom:-30px; opacity:0 } 
+    to{ bottom:0; opacity:1 }
 }

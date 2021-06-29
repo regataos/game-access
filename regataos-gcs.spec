@@ -2,7 +2,7 @@
 %define service_name2 regataos-gcs-selectlanguage
 
 Name: regataos-gcs
-Version: 4.0
+Version: 4.1
 Release: 0
 Url: https://github.com/regataos/game-access
 Summary: Access your Windows games from Regata OS
