@@ -1,6 +1,3 @@
-%define service_name1 regataos-gcs-allsettings
-%define service_name2 regataos-gcs-selectlanguage
-
 Name: regataos-gcs
 Version: 4.2
 Release: 0
@@ -57,27 +54,35 @@ else
 	chmod 777 "/tmp/progressbar-gcs"
 fi
 
-# Fix "auto close game access"
-if test -e /etc/xdg/autostart/regataosgcs-auto-open-game-access.desktop ; then
-  rm -f "/etc/xdg/autostart/regataosgcs-auto-open-game-access.desktop"
-  killall auto-open-game-access.sh
-fi
-
-if test -e /etc/xdg/autostart/regataosgcs-close-launchers.desktop ; then
-  rm -f "/etc/xdg/autostart/regataosgcs-close-launchers.desktop"
-  killall close-launchers.sh
-fi
-
 # Start system services
-%service_add_post %{service_name1}.service
-systemctl enable  %{service_name1}.service || true
-systemctl start   %{service_name1}.service || true
-systemctl restart %{service_name1}.service || true
+%service_add_post regataos-gcs-allsettings.service
+systemctl enable  regataos-gcs-allsettings.service || true
+systemctl start   regataos-gcs-allsettings.service || true
+systemctl restart regataos-gcs-allsettings.service || true
 
-%service_add_post %{service_name2}.service
-systemctl enable  %{service_name2}.service || true
-systemctl start   %{service_name2}.service || true
-systemctl restart %{service_name2}.service || true
+# Changes for the new version of Regata OS Game Access
+if test -e "/etc/xdg/autostart/regataosgcs-auto-close-game-access.desktop"; then
+	# Disable obsolete systemd services
+	systemctl stop regataos-gcs-selectlanguage.service || true
+	systemctl disable regataos-gcs-selectlanguage.service || true
+
+	# Remove obsolete autostart services
+	rm -f "/etc/xdg/autostart/regataosgcs-auto-close-game-access.desktop"
+	rm -f "/etc/xdg/autostart/regataosgcs-capture-progress-download.desktop"
+	rm -f "/etc/xdg/autostart/regataosgcs-create-process-queues.desktop"
+	rm -f "/etc/xdg/autostart/regataosgcs-run-process-queues.desktop"
+	rm -f "/etc/xdg/autostart/regataosgcs-search-installeds.desktop"
+
+	# Shut down services that are unnecessarily running
+	killall auto-close-game-access.sh
+	killall capture-progress-download
+	killall create-process-queues
+	killall run-process-queues
+	killall search-installeds.sh
+fi
+
+# Set language according to user settings
+/opt/regataos-gcs/scripts/select-language start
 
 # Update icon caches
 update-desktop-database
