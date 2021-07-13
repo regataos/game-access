@@ -5,6 +5,11 @@ cd /
 while :
 do
 
+# Check if the Regata OS Game Access is running
+ps -C "regataosgcs /opt/regataos-gcs" > /dev/null
+if [ $? = 0 ]
+then
+
 # Capture progress for JavaScript
 if test -e /tmp/progressbar-gcs/download-percentage ; then
 
@@ -56,6 +61,11 @@ if test -e /tmp/progressbar-gcs/download-percentage ; then
 
 	fi
 
+fi
+
+else
+	echo "Nothing to do..."
+	break
 fi
 
    sleep 1

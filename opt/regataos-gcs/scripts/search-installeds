@@ -7,12 +7,16 @@ cd /
 while :
 do
 
-ps -C regataosgcs > /dev/null
+# Check if the Regata OS Game Access is running
+ps -C "regataosgcs /opt/regataos-gcs" > /dev/null
 if [ $? = 0 ]
 then
 	/opt/regataos-gcs/scripts/search-installed-launchers.sh start
 	/opt/regataos-gcs/scripts/search-installed-games.sh start
+else
+	echo "Nothing to do..."
+	break
 fi
 
-   sleep 5
+   sleep 2
 done

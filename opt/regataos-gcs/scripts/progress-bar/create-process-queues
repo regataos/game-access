@@ -5,6 +5,11 @@ cd /
 while :
 do
 
+# Check if the Regata OS Game Access is running
+ps -C "regataosgcs /opt/regataos-gcs" > /dev/null
+if [ $? = 0 ]
+then
+
 progressbar_dir="/tmp/progressbar-gcs"
 
 #Make sure there are no critical installation errors
@@ -87,6 +92,11 @@ else
 		rm -f "$progressbar_dir/queued-8"
 	fi
 
+fi
+
+else
+	echo "Nothing to do..."
+	break
 fi
 
    sleep 1

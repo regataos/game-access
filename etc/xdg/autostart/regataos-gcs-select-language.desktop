@@ -1,5 +1,5 @@
 [Desktop Entry]
-Exec=/opt/regataos-gcs/scripts/search-installeds.sh
+Exec=sudo /opt/regataos-gcs/scripts/select-language
 OnlyShowIn=KDE;
 Type=Service
 MimeType=
@@ -8,5 +8,5 @@ X-KDE-autostart-after=root
 X-KDE-StartupNotify=false
 X-KDE-autostart-condition=AutoStart:true
 Icon=system-run
-GenericName=regataosgcs-search-installeds
-Name=regataosgcs-search-installeds
+GenericName=regataos-gcs-select-language
+Name=regataos-gcs-select-language

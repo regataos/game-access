@@ -17,7 +17,7 @@ if test -e "/tmp/regataos-gcs/running-with-regataos-gcs.txt" ; then
 	fi
 
 	# If Game Access is running, close the application
-	ps -C regataosgcs > /dev/null
+	ps -C "regataosgcs /opt/regataos-gcs" > /dev/null
 	if [ $? = 0 ]; then
 		echo "Close the Game Access application"
 		kill -SIGTERM $(ps -C regataosgcs | head -2 | tail -1 | awk '{print $1}')

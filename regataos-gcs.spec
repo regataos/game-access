@@ -2,7 +2,7 @@
 %define service_name2 regataos-gcs-selectlanguage
 
 Name: regataos-gcs
-Version: 4.1
+Version: 4.2
 Release: 0
 Url: https://github.com/regataos/game-access
 Summary: Access your Windows games from Regata OS
@@ -16,8 +16,8 @@ BuildRequires: systemd
 BuildRequires: grep
 BuildRequires: xz
 Requires: xz
-Requires: magma >= 5.52.2-lp152.6.1
-Requires: regataos-wine-service >= 5.9
+Requires: magma >= 5.52.2
+Requires: regataos-wine-service >= 21.6.10.1
 License: MIT
 Source1: %{name}-%{version}.tar.xz
 Source2: regataos-gcs.desktop.txt
