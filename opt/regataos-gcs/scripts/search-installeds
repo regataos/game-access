@@ -1,7 +1,5 @@
 #!/bin/bash
 
-# Verify that launchers or games are installed
-
 cd /
 
 while :
@@ -11,12 +9,12 @@ do
 ps -C "regataosgcs /opt/regataos-gcs" > /dev/null
 if [ $? = 0 ]
 then
-	/opt/regataos-gcs/scripts/search-installed-launchers.sh start
-	/opt/regataos-gcs/scripts/search-installed-games.sh start
+	# Search for installed games
+	/bin/bash /opt/regataos-gcs/scripts/search-installed-games.sh & /bin/bash /opt/regataos-gcs/scripts/search-steam-games.sh
 else
 	echo "Nothing to do..."
 	break
 fi
 
-   sleep 2
+   sleep 5
 done

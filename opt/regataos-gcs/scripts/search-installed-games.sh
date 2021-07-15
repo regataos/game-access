@@ -67,10 +67,11 @@ function search_installed_games() {
 
 # Get game information and check if they are installed
 for i in /opt/regataos-gcs/www/js/js-pages/games-list/*.json; do
-
 	game_nickname="$(grep -R '"gamenickname":' $i | awk '{print $2}' | sed 's/"\|,//g')"
 	game_executable="$(grep -R '"gameexecutable":' $i | awk -F: '{print $2 $3}' | sed 's/"\|,//g')"
-	echo $game_executable
-	search_installed_games
+	game_launcher="$(grep -R '"launchernickname":' $i | awk '{print $2}' | sed 's/"\|,//g')"
 
+	if [[ $(grep -wr "$game_launcher" "/tmp/regataos-gcs/config/installed-launchers.conf") == *"$game_launcher"* ]]; then
+		search_installed_games
+	fi
 done
