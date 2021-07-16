@@ -186,12 +186,21 @@ ul#top-menu {
 }
 
 ul#top-menu li {
-	display: inline-block;
+	display: none;
 	padding-top: 0px;
 	padding-bottom: 11px;
 	margin-right: 40px;
 	margin-top: 0px;
     float: left;
+	transition: all .3s;
+}
+
+li.p-home-li {
+	display: inline-block !important;
+}
+
+li.p-allgames-li {
+	display: inline-block !important;
 }
 
 ul#top-menu li a {

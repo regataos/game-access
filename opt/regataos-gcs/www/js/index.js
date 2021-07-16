@@ -102,9 +102,21 @@ function installed_page() {
 	}
 }
 
+function steam_games() {
+	fs.access('/tmp/regataos-gcs/config/steam-games/no-steam-games.txt', (err) => {
+	if (!err) {
+		$(".p-steam-li").css("display", "none");
+		return;
+	} else {
+		$(".p-steam-li").css("display", "block");
+	}
+	});
+}
+
 setInterval(function() {
 	installed_page();
-}, 100);
+	steam_games();
+}, 500);
 
 setInterval(function() {
 	show_progressbar();
