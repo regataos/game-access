@@ -32,6 +32,9 @@ sed -i 's/\(closed-manually=1\)/closed-manually=0/' "$HOME/.config/regataos-gcs/
 rm -f "/tmp/regataos-gcs/running-with-regataos-gcs.txt"
 rm -f "/tmp/regataos-gcs/run-regataos-gcs.txt"
 
+# Clear cache
+rm -f /tmp/regataos-gcs/config/steam-games/json/steam-id/*
+
 # Check internet connection
 /opt/regataos-help/scripts/regataos-help-check-network.sh start
 

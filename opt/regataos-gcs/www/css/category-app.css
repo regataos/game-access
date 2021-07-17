@@ -100,6 +100,10 @@
     animation-duration: .5s;
 }
 
+.inner-blocks {
+	float: left;
+}
+
 .app-block {
 	position: relative;
 	float: left;
@@ -326,6 +330,37 @@
 
 .play-box:active {
 	background-image: linear-gradient(to right, #169547, #169547, #169547, #169547);
+}
+
+.install-box-steam {
+    font-family: 'Roboto', sans-serif;
+	font-size: 19px;
+	text-align: center;
+	text-transform: uppercase;
+	font-weight: 400;
+    letter-spacing: 0.1em;
+	color: #dbe8ff;
+	cursor: pointer;
+	border-radius: 5px;
+	background-image: linear-gradient(to right, #0662f0, #309eff, #04befe, #3f86ed);
+	background-size: 300% 100%;
+    transition: all .4s ease-in-out;
+	width: 165px;
+	border-radius: 3px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 70px;
+	padding-top: 15px;
+	padding-bottom: 15px;
+}
+
+.install-box-steam:hover {
+	background-position: 100% 0;
+	transition: all .4s ease-in-out;
+}
+
+.install-box-steam:active {
+    background-image: linear-gradient(to right, #0956cc, #0956cc, #0956cc, #0956cc);
 }
 
 .install-box {
