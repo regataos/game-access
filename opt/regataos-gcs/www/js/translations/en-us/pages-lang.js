@@ -22,8 +22,14 @@ $(document).ready(function() {
 	$(".installed-title").text("List with all games detected by the Regata OS Game Access");
 	$(".nogamefound-title").text("No games found");
 	$(".nogamefound-desc").text("Unfortunately, I haven't found any games installed yet.");
-
 	$(".allgames-title").text("List with some of the games that you can run with Regata OS Game Access");
+
+	// Steam games
+	//Page title
+	$(".steam-title").text("Games installed by Steam");
+	//View more
+	$(".steam-more").text("See more on Steam");
+	$(".steam-account-title").text("Available on your Steam account");
 
 	// Search page
 	//Page title

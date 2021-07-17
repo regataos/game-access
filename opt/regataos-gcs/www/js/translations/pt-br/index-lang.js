@@ -6,6 +6,7 @@ $(document).ready(function() {
 	//Top menu
 	$(".p-installed").text("Instalados");
 	$(".p-allgames").text("Todos os jogos");
+	$(".p-steam").text("Jogos do Steam");
 	//Top search
 	$("#field").attr({value:"Pesquisar jogos"});
 	$("#field").attr({onfocus:"if (this.value == 'Pesquisar jogos') {this.value = '';}"});

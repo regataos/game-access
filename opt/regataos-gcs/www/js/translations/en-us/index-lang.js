@@ -6,6 +6,7 @@ $(document).ready(function() {
 	//Top menu
 	$(".p-installed").text("Installed");
 	$(".p-allgames").text("All games");
+	$(".p-steam").text("Steam games");
 	//Top search
 	$("#field").attr({value:"Search games"});
 	$("#field").attr({onfocus:"if (this.value == 'Search games') {this.value = '';}"});
