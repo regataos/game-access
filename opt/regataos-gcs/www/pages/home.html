@@ -12,6 +12,7 @@
 	<link rel="stylesheet" type="text/css" href="./../css/responsive-style.css">
 	<link rel="stylesheet" type="text/css" href="./../cache/home-blocks-content.css">
 	<link rel="stylesheet" type="text/css" href="./../cache/home-slide-content.css">
+	<script type="text/javascript" src="./../js/js-pages/steam-games-list.js"></script>
 	<script type="text/javascript" src="./../js/jquery.min-3.2.1.js"></script>
 	<script type="text/javascript" src="./../js/jquery.min.js"></script>
 	<script type="text/javascript" src="./../js/jquery-1.12.4.js"></script>
@@ -36,6 +37,11 @@
 		$(function(){
 			$(".blocks").fadeIn("slow");
 		});
+
+		// Check Steam Games
+    setTimeout(function(){
+    	create_cache_steam_games();
+    }, 1000);
 	</script>
 </head>
 

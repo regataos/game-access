@@ -27,6 +27,13 @@ function back_button() {
 		$("a.p-allgames").css("font-weight", "400")
 	}
 
+	if ((iframeurl.indexOf("steam-games") > -1) == "1") {
+		$("a.p-steam").css("font-weight", "700")
+		$("#block-home").css("display", "block")
+	} else {
+		$("a.p-steam").css("font-weight", "400")
+	}
+
 	if ((iframeurl.indexOf("search") > -1) == "1") {
 		$(".top-bar-arrow").css("display", "block")
 		$("#block-home").css("display", "block")

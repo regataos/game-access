@@ -6,5 +6,9 @@ $(document).ready(function() {
 	$(".install-txt").text("Install");
 	$(".play-txt").text("Play");
 	$(".play-txt").css("width", "50px");
+
+	//Native game
+	$(".nativegame").text("Native");
+	$(".steamplay").text("Steam Play");
 });
 }, 500);

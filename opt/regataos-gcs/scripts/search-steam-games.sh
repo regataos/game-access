@@ -17,6 +17,14 @@ if test ! -e "/tmp/regataos-gcs/config/steam-games.conf"; then
 	echo "" > "/tmp/regataos-gcs/config/steam-games.conf"
 fi
 
+if test ! -e "/tmp/regataos-gcs/config/steam-games/img"; then
+	mkdir -p "/tmp/regataos-gcs/config/steam-games/img"
+fi
+
+if test ! -e "/tmp/regataos-gcs/config/steam-games/json/games-account"; then
+	mkdir -p "/tmp/regataos-gcs/config/steam-games/json/games-account"
+fi
+
 if test ! -e "/tmp/regataos-gcs/config/steam-games/json/installed"; then
 	mkdir -p "/tmp/regataos-gcs/config/steam-games/json/installed"
 fi
@@ -69,8 +77,10 @@ if test ! -e "/tmp/regataos-gcs/config/steam-games/no-steam-games.txt" ;then
 		game_name="$(grep -R '"name"' $i | cut -d'"' -f 4- | cut -d'"' -f -1)"
 
 		if [ ! -z $game_appid ];then
-			if test ! -e "/tmp/regataos-gcs/config/steam-games/json/installed/$game_appid.json"; then
+			if test ! -e "/tmp/regataos-gcs/config/steam-games/json/games-account/$game_appid.json"; then
 				search_steam_games
+			else
+				cp -f "/tmp/regataos-gcs/config/steam-games/json/games-account/$game_appid.json" "/tmp/regataos-gcs/config/steam-games/json/installed/$game_appid.json"
 			fi
 		fi
 	done

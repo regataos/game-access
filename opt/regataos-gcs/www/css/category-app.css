@@ -166,8 +166,8 @@
     padding-left: 0px;
     padding-right: 0px;
 	padding-bottom: 15px;
-	border-bottom-left-radius: 8px;
-    border-bottom-right-radius: 8px;
+	border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
 	-webkit-backdrop-filter: blur(10px);
     backdrop-filter: blur(10px);
 }
@@ -181,9 +181,9 @@
 	padding-top: 15px;
     padding-left: 0px;
     padding-right: 0px;
-	padding-bottom: 15px;
-	border-bottom-left-radius: 8px;
-    border-bottom-right-radius: 8px;
+	padding-bottom: 10px;
+	border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
 	-webkit-backdrop-filter: blur(10px);
     backdrop-filter: blur(10px);
 }
@@ -193,20 +193,69 @@
 }
 
 .block-title {
+	width: 100%;
+    float: left;
     font-family: 'Roboto', sans-serif;
 	font-size: 19px;
 	font-weight: 400;
-	margin-bottom: 10px;
+	max-width: 29ch;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+	margin-bottom: 0px;
 	line-height: 1.2em;
 	margin-left: 10px;
+	margin-bottom: 5px;
+}
+
+.block-text-steam .block-title {
+	margin-bottom: 10px;
 }
 
 .block-desc {
+	float: left;
     font-family: 'Roboto', sans-serif;
 	font-size: 15px;
 	font-weight: 400;
 	line-height: 1.2em;
+	margin-top: 10px;
 	margin-left: 10px;
+}
+
+.block-text-steam .block-desc {
+	margin-top: 5px;
+}
+
+.native-game {
+	float: right;
+	height: 18px;
+	background-color: #1d2e40;
+    border-radius: 3px;
+    font-family: Roboto, sans-serif;
+    text-transform: uppercase;
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 1.2em;
+    margin-right: 10px;
+	padding: 5px;
+}
+
+.native-game-img {
+    float: left;
+	width: 18px;
+    height: 18px;
+    background-image: url(./../images/native-game.png);
+    background-position: 50% 50%;
+    background-size: auto 18px;
+    background-repeat: no-repeat;
+}
+
+.native-game-desc {
+	float: left;
+    color: #9099a1;
+    margin-top: 1px;
+    margin-right: 0px;
+    margin-left: 5px;
 }
 
 .block-play {
@@ -236,9 +285,10 @@
 	position: absolute;
     float: left;
     width: 330px;
-    height: 180px;
+    height: 175px;
     background-color: #262626;
-    border-radius: 5px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
     transition: all .4s;
     background-size: auto 180px;
     background-position: 50% 0%;
