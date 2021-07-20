@@ -1,5 +1,6 @@
 // Search
 function search() {
+const exec = require('child_process').exec;
 const fs = require('fs');
 
 	var form = document.getElementById('form');
@@ -20,10 +21,7 @@ const fs = require('fs');
         data2 = data2.replace(/(ó)|(ô)|(ô)/g,     'o');
         data2 = data2.replace(/(ú)|(û)|(ũ)/g,     'u');
 
-		fs.writeFile('/tmp/regataos-gcs/search.txt', data2, (err) => {
-		if (err) throw err;
-		console.log('The file has been saved!');
-		});
+		fs.writeFileSync("/tmp/regataos-gcs/search.txt", data2, "utf8");
 
 		// Go search page
 		$("#iframegcs").attr("src", "pages/search.html");
