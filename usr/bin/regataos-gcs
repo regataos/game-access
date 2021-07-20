@@ -26,7 +26,7 @@ if test ! -e "/tmp/regataos-configs/config/plasma-localerc" ; then
 fi
 
 # Update cache
-# /opt/regataos-gcs/scripts/update-cache start
+/opt/regataos-gcs/scripts/update-cache start
 sed -i 's/\(closed-manually=1\)/closed-manually=0/' "$HOME/.config/regataos-gcs/regataos-gcs.conf"
 
 rm -f "/tmp/regataos-gcs/running-with-regataos-gcs.txt"
