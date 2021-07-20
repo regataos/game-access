@@ -1,0 +1,13 @@
+[
+	{
+		"gamename": "Watch_Dogs 2",
+		"gamenickname": "watch-dogs2",
+		"gameexecutable": "WatchDogs2.exe",
+		"gamerun_appid": "uplay://launch/2688/0 -eac_launcher -nosplash",
+		"winevariable": "WINEESYNC=1 WINE_LARGE_ADDRESS_AWARE=1",
+		"gamekeywords": "Watch Dogs 2, watch dogs2, tiro em primeira pessoa, aventura, ação, açao, acao, first person shooter, fps, adventure, action, uplay, ubisoft connect, Ubisoft Connect",
+		"launcher": "Ubisoft Connect",
+		"launchernickname": "ubisoftconnect",
+		"game_access": "false"
+    }
+]

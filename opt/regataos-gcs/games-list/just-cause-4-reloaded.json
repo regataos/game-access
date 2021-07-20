@@ -1,0 +1,13 @@
+[
+	{
+		"gamename": "Just Cause 4 Reloaded",
+		"gamenickname": "just-cause-4-reloaded",
+		"gameexecutable": "JustCause4.exe",
+		"gamerun_appid": "com.epicgames.launcher://apps/Kakopo?action=launch&silent=true -opengl -SkipBuildPatchPrereq",
+		"winevariable": "WINEESYNC=1 WINE_LARGE_ADDRESS_AWARE=1 MESA_GL_VERSION_OVERRIDE=4.4COMPAT",
+		"gamekeywords": "Just Cause 4 Reloaded, just cause 4 reloaded, aventura, ação, acao, mundo aberto, open world, singleplayer ,single player, adventure, action, epic games store",
+		"launcher": "Epic Games Store",
+		"launchernickname": "epicstore",
+		"game_access": "false"
+	}
+]

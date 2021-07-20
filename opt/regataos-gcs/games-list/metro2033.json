@@ -1,0 +1,13 @@
+[
+	{
+		"gamename": "Metro 2033 Redux",
+		"gamenickname": "metro2033",
+		"gameexecutable": "metro2033.exe",
+		"gamerun_appid": "com.epicgames.launcher://apps/Petunia?action=launch&silent=true -opengl -SkipBuildPatchPrereq",
+		"winevariable": "WINEESYNC=1 WINE_LARGE_ADDRESS_AWARE=1 MESA_GL_VERSION_OVERRIDE=4.4COMPAT",
+		"gamekeywords": "Metro 2033 Redux, metro 2033 redux, tiro em primeira pessoa, acao, açao, ação, first person shooter, fps, survival horror, epic games store",
+		"launcher": "Epic Games Store",
+		"launchernickname": "epicstore",
+		"game_access": "false"
+    }
+]

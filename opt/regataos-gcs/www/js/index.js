@@ -102,10 +102,19 @@ function installed_page() {
 	}
 }
 
+// Check if Steam is installed and if there are any games installed
 function steam_games() {
 	fs.access('/tmp/regataos-gcs/config/steam-games/no-steam-games.txt', (err) => {
 	if (!err) {
-		$(".p-steam-li").css("display", "none");
+		fs.access('/tmp/regataos-gcs/config/steam-games/json/steam-id/show-steam-games.txt', (err) => {
+		if (!err) {
+			$(".p-steam-li").css("display", "block");
+			return;
+		} else {
+			$(".p-steam-li").css("display", "none");
+		}
+		});
+
 		return;
 	} else {
 		$(".p-steam-li").css("display", "block");

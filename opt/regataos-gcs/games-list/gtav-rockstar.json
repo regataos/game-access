@@ -1,0 +1,13 @@
+[
+	{
+		"gamename": "Grand Theft Auto V",
+		"gamenickname": "gtav-rockstar",
+		"gameexecutable": "GTAV.exe",
+		"gamerun_appid": "",
+		"winevariable": "WINEESYNC=1 WINE_LARGE_ADDRESS_AWARE=1",
+		"gamekeywords": "Grand Theft Auto V, grand theft auto v, aventura, ação, açao, acao, gtav, gta v, gta 5, adventure, action, rockstar",
+		"launcher": "Rockstar Games Launcher",
+		"launchernickname": "rockstar",
+		"game_access": "false"
+    }
+]

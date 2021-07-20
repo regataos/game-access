@@ -1,0 +1,13 @@
+[
+	{
+		"gamename": "Fallout 3",
+		"gamenickname": "fallout3",
+		"gameexecutable": "Fallout3.exe",
+		"gamerun_appid": "",
+		"winevariable": "WINEESYNC=1 WINE_LARGE_ADDRESS_AWARE=1 MESA_GL_VERSION_OVERRIDE=4.5COMPAT allow_glsl_builtin_variable_redeclaration=true force_glsl_extensions_warn=true",
+		"gamekeywords": "Fallout 3, fallout 3, tiro em primeira pessoa, first person shooter, fps, gog galaxy",
+		"launcher": "GOG Galaxy",
+		"launchernickname": "gog",
+		"game_access": "false"
+    }
+]

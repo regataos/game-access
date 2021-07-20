@@ -33,8 +33,8 @@ function run_game() {
 	var files = [];
 
     // Read the JSON file with the list of games
-    fs.readdirSync("/opt/regataos-gcs/www/js/js-pages/games-list").forEach(files => {
-    fs.readFile("/opt/regataos-gcs/www/js/js-pages/games-list/" +files , "utf8", function(err, data) {
+    fs.readdirSync("/opt/regataos-gcs/games-list").forEach(files => {
+    fs.readFile("/opt/regataos-gcs/games-list/" +files , "utf8", function(err, data) {
     if(!err) {
         var games = JSON.parse(data);
 

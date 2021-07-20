@@ -66,7 +66,7 @@ function search_installed_games() {
 }
 
 # Get game information and check if they are installed
-for i in /opt/regataos-gcs/www/js/js-pages/games-list/*.json; do
+for i in /opt/regataos-gcs/games-list/*.json; do
 	game_nickname="$(grep -R '"gamenickname":' $i | awk '{print $2}' | sed 's/"\|,//g')"
 	game_executable="$(grep -R '"gameexecutable":' $i | awk -F: '{print $2 $3}' | sed 's/"\|,//g')"
 	game_launcher="$(grep -R '"launchernickname":' $i | awk '{print $2}' | sed 's/"\|,//g')"

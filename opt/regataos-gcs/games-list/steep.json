@@ -1,0 +1,13 @@
+[
+	{
+		"gamename": "Steep",
+		"gamenickname": "steep",
+		"gameexecutable": "Steep.exe",
+		"gamerun_appid": "uplay://launch/3279/0",
+		"winevariable": "WINEESYNC=1 WINE_LARGE_ADDRESS_AWARE=1",
+		"gamekeywords": "Steep, steep, esporte, esportes radicais, aventura, radical sports, adventure, ubisoft connect",
+		"launcher": "Ubisoft Connect",
+		"launchernickname": "ubisoftconnect",
+		"game_access": "false"
+    }
+]

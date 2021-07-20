@@ -36,7 +36,7 @@ then
 			fi
 
 			if test ! -e "/tmp/regataos-gcs/run-regataos-gcs.txt"; then
-        		for i in /opt/regataos-gcs/www/js/js-pages/games-list/*.json; do
+        		for i in /opt/regataos-gcs/games-list/*.json; do
             		executable="$(grep -R '"gameexecutable":' $i | awk '{print $2}' | sed 's/"\|,//g')"
 
             		ps -C $executable > /dev/null
@@ -83,7 +83,7 @@ else
 			fi
 
 			if test ! -e "/tmp/regataos-gcs/run-regataos-gcs.txt"; then
-        		for i in /opt/regataos-gcs/www/js/js-pages/games-list/*.json; do
+        		for i in /opt/regataos-gcs/games-list/*.json; do
             		executable="$(grep -R '"gameexecutable":' $i | awk '{print $2}' | sed 's/"\|,//g')"
 
             		ps -C $executable > /dev/null

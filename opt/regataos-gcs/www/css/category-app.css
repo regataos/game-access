@@ -77,6 +77,9 @@
 	max-width: 1040px;
 	margin-left: auto;
     margin-right: auto;
+}
+
+.game-access-blocks {
     -webkit-transition: all 0.3s ease-in-out;
     transition: all 0.3s ease-in-out;
     -webkit-animation-name: animatebottom;
@@ -102,6 +105,13 @@
 
 .inner-blocks {
 	float: left;
+    position: relative;
+    -webkit-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+    -webkit-animation-name: animatebottom;
+    -webkit-animation-duration: .5s;
+    animation-name: animatebottom;
+    animation-duration: .5s;
 }
 
 .app-block {
@@ -177,15 +187,15 @@
 	bottom: 0;
     left: 0;
 	width: 100%;
-	background-color: rgba(4, 4, 4, 0.68);
+	background-color: rgb(4, 4, 4, 0.37);
 	padding-top: 15px;
     padding-left: 0px;
     padding-right: 0px;
 	padding-bottom: 10px;
 	border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
-	-webkit-backdrop-filter: blur(10px);
-    backdrop-filter: blur(10px);
+	-webkit-backdrop-filter: blur(2px);
+    backdrop-filter: blur(2px);
 }
 
 .block-text-steam:hover > .block-play-steam {
@@ -228,22 +238,23 @@
 
 .native-game {
 	float: right;
-	height: 18px;
+	height: 17px;
 	background-color: #1d2e40;
     border-radius: 3px;
     font-family: Roboto, sans-serif;
     text-transform: uppercase;
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 400;
     line-height: 1.2em;
     margin-right: 10px;
+	margin-bottom: 2px;
 	padding: 5px;
 }
 
 .native-game-img {
     float: left;
-	width: 18px;
-    height: 18px;
+	width: 17px;
+    height: 17px;
     background-image: url(./../images/native-game.png);
     background-position: 50% 50%;
     background-size: auto 18px;

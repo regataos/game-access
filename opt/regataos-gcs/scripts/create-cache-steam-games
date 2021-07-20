@@ -3,13 +3,17 @@
 # Create JSON files in game cache on Steam account
 
 #Create JSON file
-if test ! -e "/tmp/regataos-gcs/config/steam-games/json/games-account/$gameid.json"; then
-cat > "/tmp/regataos-gcs/config/steam-games/json/games-account/$gameid.json" << STEAMGAMEJSON
+if test ! -e "/opt/regataos-gcs/games-list/$gamename_lowercase-steam.json"; then
+cat > "/opt/regataos-gcs/games-list/$gamename_lowercase-steam.json" << STEAMGAMEJSON
 [
 	{
 		"gamename": "$gamename",
+		"gamenickname": "$gamename_lowercase",
 		"gameid": "$gameid",
 		"gametype": "$gametype",
+		"gamekeywords": "$gamename, $gamekeywords, steam",
+		"launcher": "Steam",
+		"launchernickname": "steam",
 		"gamenative": "$gamenative"
     }
 ]
@@ -17,6 +21,6 @@ STEAMGAMEJSON
 fi
 
 #Save game image to cache
-if test ! -e "/tmp/regataos-gcs/config/steam-games/img/$gameid.jpg"; then
-	wget --no-check-certificate -O "/tmp/regataos-gcs/config/steam-games/img/$gameid.jpg" "https://cdn.cloudflare.steamstatic.com/steam/apps/$gameid/header.jpg"
+if test ! -e "/tmp/regataos-gcs/config/steam-games/img/$gamename_lowercase.jpg"; then
+	wget --no-check-certificate -O "/tmp/regataos-gcs/config/steam-games/img/$gamename_lowercase.jpg" "https://cdn.cloudflare.steamstatic.com/steam/apps/$gameid/header.jpg"
 fi

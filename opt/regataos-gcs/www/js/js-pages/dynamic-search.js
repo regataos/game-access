@@ -3,20 +3,19 @@ function search() {
 const fs = require('fs');
 
 // Read the JSON file with the list of games
-fs.readdirSync("/opt/regataos-gcs/www/js/js-pages/games-list").forEach(files => {
-fs.readFile("/opt/regataos-gcs/www/js/js-pages/games-list/" +files , "utf8", function(err, data) {
+fs.readdirSync("/opt/regataos-gcs/games-list").forEach(files => {
+fs.readFile("/opt/regataos-gcs/games-list/" +files , "utf8", function(err, data) {
 if(!err) {
-var games = JSON.parse(data);
-
-for (var i = 0; i < games.length; i++) {
+	var games = JSON.parse(data);
+	games.forEach(gamesdata => {
 
 	// Capture the game nickname, user search and game keywords
-	var data_game = games[i].gamenickname
-	var data_keywords = games[i].gamekeywords
+	var data_game = gamesdata.gamenickname
+	var data_keywords = gamesdata.gamekeywords
 	var search = fs.readFileSync("/tmp/regataos-gcs/search.txt", "utf8");
 
 		// Check which games are related to the search and display them
-		if (data_keywords.indexOf(search) > -1) {
+		if ((data_keywords.indexOf(search) > -1) == "1") {
 		$(document).ready(function() {
 			$(".title-top").css("display", "block")
 			$(".title-top2").css("display", "block")
@@ -28,7 +27,7 @@ for (var i = 0; i < games.length; i++) {
 			$("." + data_game).css("display", "none")
 		});
 		}
-	}
+	});
 	return;
 }
 });

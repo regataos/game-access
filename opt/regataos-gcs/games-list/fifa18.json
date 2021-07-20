@@ -1,0 +1,13 @@
+[
+	{
+		"gamename": "FIFA 18",
+		"gamenickname": "fifa18",
+		"gameexecutable": "fifa18.exe",
+		"gamerun_appid": "",
+		"winevariable": "WINEESYNC=1 WINE_LARGE_ADDRESS_AWARE=1",
+		"gamekeywords": "FIFA 18, fifa 18, fifa18, futebol, soccer, origin",
+		"launcher": "Origin",
+		"launchernickname": "origin",
+		"game_access": "false"
+    }
+]

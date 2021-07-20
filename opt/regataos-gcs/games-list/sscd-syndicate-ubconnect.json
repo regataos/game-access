@@ -1,0 +1,13 @@
+[
+	{
+		"gamename": "Assassin's Creed Syndicate",
+		"gamenickname": "sscd-syndicate-ubconnect",
+		"gameexecutable": "ACS.exe",
+		"gamerun_appid": "uplay://launch/1875/0",
+		"winevariable": "WINEESYNC=1 WINE_LARGE_ADDRESS_AWARE=1",
+		"gamekeywords": "Assassin's Creed Syndicate, assassins creed syndicate, rpg, aventura, rpg de ação, rpg de açao, rpg de acao, mundo aberto, adventure, action rpg, open world, ubisoft connect",
+		"launcher": "Ubisoft Connect",
+		"launchernickname": "ubisoftconnect",
+		"game_access": "false"
+    }
+]

@@ -1,0 +1,13 @@
+[
+	{
+		"gamename": "Unravel Two",
+		"gamenickname": "unraveltwo",
+		"gameexecutable": "UnravelTwo.exe",
+		"gamerun_appid": "",
+		"winevariable": "WINEESYNC=1",
+		"gamekeywords": "Unravel Two, unravel two, aventura, plataforma, platform, adventure, origin",
+		"launcher": "Origin",
+		"launchernickname": "origin",
+		"game_access": "false"
+	}
+]

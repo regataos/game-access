@@ -1,0 +1,13 @@
+[
+	{
+		"gamename": "FIFA 19",
+		"gamenickname": "fifa19",
+		"gameexecutable": "fifa19.exe",
+		"gamerun_appid": "",
+		"winevariable": "WINEESYNC=1 WINE_LARGE_ADDRESS_AWARE=1",
+		"gamekeywords": "FIFA 19, fifa 19, fifa19, futebol, soccer, origin",
+		"launcher": "Origin",
+		"launchernickname": "origin",
+		"game_access": "false"
+	}
+]
