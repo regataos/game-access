@@ -36,7 +36,7 @@ rm -f "/tmp/regataos-gcs/run-regataos-gcs.txt"
 rm -f /tmp/regataos-gcs/config/steam-games/json/steam-id/*
 
 # Check internet connection
-/opt/regataos-help/scripts/regataos-help-check-network.sh start
+# /opt/regataos-help/scripts/regataos-help-check-network.sh start
 
 # Run app
 if [[ $(glxinfo | grep vendor) == *"Intel"* ]]; then
