@@ -54,6 +54,11 @@ else
 	chmod 777 "/tmp/progressbar-gcs"
 fi
 
+# Change the permission of the games json files folder
+if test -e "/opt/regataos-gcs/games-list" ; then
+	chmod 777 "/opt/regataos-gcs/games-list"
+fi
+
 # Start system services
 %service_add_post regataos-gcs-allsettings.service
 systemctl enable  regataos-gcs-allsettings.service || true
