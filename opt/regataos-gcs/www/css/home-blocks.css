@@ -7,7 +7,6 @@
 }
 
 .home-blocks {
-	display: none;
 	width: 100%;
 	float: left;
 	background-color: #2a2e33;
@@ -40,10 +39,15 @@
 	margin-bottom: 15px;
 	padding: 10px;
 	cursor: pointer;
-	transition: all .4s;
 	background-position: 50% 50%;
 	background-size: auto 100%;
 	background-repeat: no-repeat;
+    -webkit-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+    -webkit-animation-name: animatebottom;
+    -webkit-animation-duration: .5s;
+    animation-name: animatebottom;
+    animation-duration: .5s;
 }
 
 .app-block:hover {
@@ -92,3 +96,13 @@
 	padding: 0px 15px 0px 15px;
 }
 
+/* Responsive CSS */
+@-webkit-keyframes animatebottom {
+    from { bottom:-30px; opacity:0 } 
+    to { bottom:0px; opacity:1 }
+}
+
+@keyframes animatebottom { 
+    from{ bottom:-30px; opacity:0 } 
+    to{ bottom:0; opacity:1 }
+}

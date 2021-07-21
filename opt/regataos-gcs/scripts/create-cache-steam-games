@@ -7,7 +7,7 @@ if test ! -e "/opt/regataos-gcs/games-list/$gamename_lowercase-steam.json"; then
 cat > "/opt/regataos-gcs/games-list/$gamename_lowercase-steam.json" << STEAMGAMEJSON
 [
 	{
-		"gamename": "$gamename",
+		"gamename": "$game_name",
 		"gamenickname": "$gamename_lowercase",
 		"gameid": "$gameid",
 		"gametype": "$gametype",
@@ -21,6 +21,8 @@ STEAMGAMEJSON
 fi
 
 #Save game image to cache
-if test ! -e "/tmp/regataos-gcs/config/steam-games/img/$gamename_lowercase.jpg"; then
-	wget --no-check-certificate -O "/tmp/regataos-gcs/config/steam-games/img/$gamename_lowercase.jpg" "https://cdn.cloudflare.steamstatic.com/steam/apps/$gameid/header.jpg"
+if test ! -e /opt/regataos-gcs/www/images/games-backg/*/$gamename_lowercase.jpg; then
+	if test ! -e "/tmp/regataos-gcs/config/steam-games/img/$gamename_lowercase.jpg"; then
+		wget --no-check-certificate -O "/tmp/regataos-gcs/config/steam-games/img/$gamename_lowercase.jpg" "https://cdn.cloudflare.steamstatic.com/steam/apps/$gameid/header.jpg"
+	fi
 fi

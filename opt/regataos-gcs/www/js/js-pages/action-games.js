@@ -71,3 +71,13 @@ function run_game() {
 		show_confirm_install();
 	}
 }
+
+// Run Steam game
+function run_steam_game() {
+    const exec = require('child_process').exec;
+
+    var command_line = 'steam steam://rungameid/' + gameid;
+    console.log(command_line);
+    exec(command_line,function(error,call,errlog){
+    });
+}
