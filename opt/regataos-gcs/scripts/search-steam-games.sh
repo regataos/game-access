@@ -51,6 +51,8 @@ else
 			echo "No Steam games" > "/tmp/regataos-gcs/config/steam-games/no-steam-games.txt"
 			rm -f /tmp/regataos-gcs/config/steam-games/json/installed/*
 			rm -f /tmp/regataos-gcs/config/steam-games/json/steam-id/*
+			rm -f /opt/regataos-gcs/games-list/*-steam.json
+			rm -f /tmp/regataos-gcs/config/steam-games/img/*
 		fi
 
 	else
