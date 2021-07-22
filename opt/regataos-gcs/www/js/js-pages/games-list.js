@@ -88,90 +88,89 @@ function games_list2() {
 
 		//Configure according to game launcher
 		if ((gamesdata.launchernickname.indexOf("steam") > -1) == "1") {
+			if (!fs.existsSync('/tmp/regataos-gcs/config/steam-games/json/installed/' + gamesdata.gamenickname + '-steam.json')) {
+				//Request the creation of the new element (block) for each game
+				var new_game_blocks = document.createElement("div");
+				new_game_blocks.id = gamesdata.gamenickname + "-block";
+	
+				//Add classes to the new game blocks
+				new_game_blocks.classList.add("app-block-steam", gamesdata.gamenickname);
+		
+				//Add the game image in the background
+				new_game_blocks.style.backgroundImage = "url('./../images/games-backg/steam/steam.jpg')";
+	
+				//Check game plataform
+				if ((gamesdata.gamenative.indexOf("true") > -1) == "1") {
+					var game_plataform = "nativegame"
+				} else {
+					var game_plataform = "steamplay"
+				}
 
-			if (!fs.existsSync('/tmp/regataos-gcs/config/steam-games/json/installed/' + gamesdata.gamenickname + '.json')) {
-				const child = all_blocks.querySelector("div#" + gamesdata.gamenickname + "-block");
-	
-					//Request the creation of the new element (block) for each game
-					var new_game_blocks = document.createElement("div");
-					new_game_blocks.id = gamesdata.gamenickname + "-block";
-	
-					//Add classes to the new game blocks
-					new_game_blocks.classList.add("app-block-steam", gamesdata.gamenickname);
-		
-					//Add the game image in the background
-					new_game_blocks.style.backgroundImage = "url('./../images/games-backg/steam/steam.jpg')";
-	
-					//Check game plataform
-					if ((gamesdata.gamenative.indexOf("true") > -1) == "1") {
-						var game_plataform = "nativegame"
-					} else {
-						var game_plataform = "steamplay"
-					}
-	
-					//Add game details within the newly created block
-					new_game_blocks.innerHTML = ' \
-					<div class="steam-game-img" style="background-image: url(file:///tmp/regataos-gcs/config/steam-games/img/' + gamesdata.gamenickname + '.jpg)"></div> \
-						<div class="block-play-steam"> \
-							<div id="' + gamesdata.gameid + '" class="install-box-steam" onclick="window.gameid=this.id; run_steam_game();"> \
-							<div class="play-button"> \
-								<i class="fas fa-download"></i><div class="install-txt">Jogar</div> \
-							</div> \
+				//Add game details within the newly created block
+				new_game_blocks.innerHTML = ' \
+				<div class="steam-game-img" style="background-image: url(file:///tmp/regataos-gcs/config/steam-games/img/' + gamesdata.gamenickname + '.jpg)"></div> \
+					<div class="block-play-steam"> \
+						<div id="' + gamesdata.gameid + '" class="install-box-steam" onclick="window.gameid=this.id; run_steam_game();"> \
+						<div class="play-button"> \
+							<i class="fas fa-download"></i><div class="install-txt-steam">Instalar</div> \
 						</div> \
-						</div> \
-						<div class="block-text-steam" title="' + gamesdata.gamename + '"> \
-							<div class="block-title">' + gamesdata.gamename + '</div> \
-							<div class="block-desc">Steam</div> \
-							<div class="native-game"> \
-								<div class="native-game-img" style="background-image: url(./../images/' + game_plataform + '.png)"></div> \
-								<div class="native-game-desc ' + game_plataform + '">Native</div> \
-						</div> \
-					</div>';
-	
-					//Finally, create the new game blocks dynamically
-					all_blocks.appendChild(new_game_blocks);
-	
-			} else {
-				const child = all_blocks.querySelector("div#" + gamesdata.gamenickname + "-block");
-					//Request the creation of the new element (block) for each game
-					var new_game_blocks = document.createElement("div");
-					new_game_blocks.id = gamesdata.gamenickname + "-block";
-	
-					//Add classes to the new game blocks
-					new_game_blocks.classList.add("app-block-steam", gamesdata.gamenickname);
-		
-					//Add the game image in the background
-					new_game_blocks.style.backgroundImage = "url('./../images/games-backg/steam/steam.jpg')";
-	
-					//Check game plataform
-					if ((gamesdata.gamenative.indexOf("true") > -1) == "1") {
-						var game_plataform = "nativegame"
-					} else {
-						var game_plataform = "steamplay"
-					}
-	
-					//Add game details within the newly created block
-					new_game_blocks.innerHTML = ' \
-					<div class="steam-game-img" style="background-image: url(file:///tmp/regataos-gcs/config/steam-games/img/' + gamesdata.gamenickname + '.jpg)"></div> \
-						<div class="block-play-steam"> \
-						<div id="' + gamesdata.gameid + '" class="play-box-steam" onclick="window.gameid=this.id; run_steam_game();"> \
-							<div class="play-button"> \
-								<i class="fas fa-play"></i><div class="play-txt">Instalar</div> \
-							</div> \
-						</div> \
-						</div> \
-						<div class="block-text-steam" title="' + gamesdata.gamename + '"> \
-							<div class="block-title">' + gamesdata.gamename + '</div> \
-							<div class="block-desc">Steam</div> \
+					</div> \
+					</div> \
+					<div class="block-text-steam" title="' + gamesdata.gamename + '"> \
+						<div class="block-title">' + gamesdata.gamename + '</div> \
+						<div class="block-desc">Steam</div> \
 						<div class="native-game"> \
 							<div class="native-game-img" style="background-image: url(./../images/' + game_plataform + '.png)"></div> \
 							<div class="native-game-desc ' + game_plataform + '">Native</div> \
-						</div> \
-					</div>';
+					</div> \
+				</div>';
 	
-					//Finally, create the new game blocks dynamically
-					all_blocks.appendChild(new_game_blocks);
+				//Finally, create the new game blocks dynamically
+				all_blocks.appendChild(new_game_blocks);
+	
+			} else {
+				//Request the creation of the new element (block) for each game
+				var new_game_blocks = document.createElement("div");
+				new_game_blocks.id = gamesdata.gamenickname + "-block";
+	
+				//Add classes to the new game blocks
+				new_game_blocks.classList.add("app-block-steam", gamesdata.gamenickname);
+		
+				//Add the game image in the background
+				new_game_blocks.style.backgroundImage = "url('./../images/games-backg/steam/steam.jpg')";
+	
+				//Check game plataform
+				if ((gamesdata.gamenative.indexOf("true") > -1) == "1") {
+					var game_plataform = "nativegame"
+				} else {
+					var game_plataform = "steamplay"
+				}
+	
+				//Add game details within the newly created block
+				new_game_blocks.innerHTML = ' \
+				<div class="steam-game-img" style="background-image: url(file:///tmp/regataos-gcs/config/steam-games/img/' + gamesdata.gamenickname + '.jpg)"></div> \
+					<div class="block-play-steam"> \
+					<div id="' + gamesdata.gameid + '" class="play-box-steam" onclick="window.gameid=this.id; run_steam_game();"> \
+						<div class="play-button"> \
+							<i class="fas fa-play"></i><div class="play-txt-steam">Jogar</div> \
+						</div> \
+					</div> \
+					</div> \
+					<div class="block-text-steam" title="' + gamesdata.gamename + '"> \
+						<div class="block-title">' + gamesdata.gamename + '</div> \
+						<div class="block-desc">Steam</div> \
+					<div class="native-game"> \
+						<div class="native-game-img" style="background-image: url(./../images/' + game_plataform + '.png)"></div> \
+						<div class="native-game-desc ' + game_plataform + '">Native</div> \
+					</div> \
+				</div>';
+	
+				//Finally, create the new game blocks dynamically
+				all_blocks.appendChild(new_game_blocks);
 			}
+			// Show Steam Games
+			$("div.app-block-steam").css("display", "block")
+
 		} else {
 			//Request the creation of the new element (block) for each game
 			var new_game_blocks = document.createElement("div");

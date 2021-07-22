@@ -17,6 +17,7 @@ if (!err) {
 		gamename_lowercase = gamename_lowercase.replace(/[:-]/g,"");
 		gamename_lowercase = gamename_lowercase.replace(/(|)/g,"")
 		gamename_lowercase = gamename_lowercase.replace(/(,)/g,"")
+		gamename_lowercase = gamename_lowercase.replace(/(&)/g,"and")
 		gamename_lowercase = gamename_lowercase.replace(/\s+/g,"-");
 		gamename_lowercase = gamename_lowercase.replace(/(™)/g,             '');
 		gamename_lowercase = gamename_lowercase.replace(/(ç)/g,             'c');

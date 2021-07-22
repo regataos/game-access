@@ -11,7 +11,7 @@ cat > "/opt/regataos-gcs/games-list/$gamename_lowercase-steam.json" << STEAMGAME
 		"gamenickname": "$gamename_lowercase",
 		"gameid": "$gameid",
 		"gametype": "$gametype",
-		"gamekeywords": "$gamename, $gamekeywords, steam",
+		"gamekeywords": "$game_name, $gamekeywords, steam",
 		"launcher": "Steam",
 		"launchernickname": "steam",
 		"gamenative": "$gamenative"
