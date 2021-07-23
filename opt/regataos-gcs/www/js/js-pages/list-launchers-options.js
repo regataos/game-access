@@ -15,38 +15,38 @@ function list_launchers_options() {
 		var all_blocks = document.querySelector("div#side-bar");
 
 		//Read the list of launchers that should appear in each block
-		for (var i = 0; i < launchers.length; i++) {
+		launchers.forEach(launchersdata => {
 			//Request the creation of the new element (block) for each launcher
 			var new_game_blocks = document.createElement("div");
 
 			//Add classes to the new launcher blocks
-			new_game_blocks.classList.add("block-top", "block-" + launchers[i].launcher_nickname);
+			new_game_blocks.classList.add("block-top", "block-" + launchersdata.launcher_nickname);
 
 			//Add launcher details within the newly created block
 			//Special variables for running launchers
-			var launcher_nickname = "'" + launchers[i].launcher_nickname + "'";
+			var launcher_nickname = "'" + launchersdata.launcher_nickname + "'";
 
 			new_game_blocks.innerHTML = ' \
-			<div class="icon-app-top" style="background-image:url(images/icon-apps/' + launchers[i].launcher_nickname + '.png);"></div> \
-			<div class="text-app-top">' + launchers[i].launcher_name + '</div> \
+			<div class="icon-app-top" style="background-image:url(images/icon-apps/' + launchersdata.launcher_nickname + '.png);"></div> \
+			<div class="text-app-top">' + launchersdata.launcher_name + '</div> \
 			<div class="div-line"></div> \
 			<div id="block-remove"> \
-				<div class="checkbox-apps ' + launchers[i].launcher_nickname + '-fps fpson"> \
+				<div class="checkbox-apps ' + launchersdata.launcher_nickname + '-fps fpson"> \
 					<label class="checkbox fpshud" onclick="showfps();"><p class="checkbox-fpstxt">Exibir contador de FPS</p> \
-						<input type="checkbox" checked="checked" id="' + launchers[i].launcher_nickname + 'fps"><span class="checkmark"></span></label> \
+						<input type="checkbox" checked="checked" id="' + launchersdata.launcher_nickname + 'fps"><span class="checkmark"></span></label> \
 				</div> \
-				<div class="checkbox-apps ' + launchers[i].launcher_nickname + '-nonfps fpsoff"> \
+				<div class="checkbox-apps ' + launchersdata.launcher_nickname + '-nonfps fpsoff"> \
 					<label class="checkbox fpshud" onclick="hidefps();"><p class="checkbox-fpstxt">Exibir contador de FPS</p> \
-						<input type="checkbox" id="' + launchers[i].launcher_nickname + 'nonfps"><span class="checkmark"></span></label> \
+						<input type="checkbox" id="' + launchersdata.launcher_nickname + 'nonfps"><span class="checkmark"></span></label> \
 				</div> \
 				<div class="div-buttons"> \
 					<div class="div-label"> \
-						<label class="label-run" id="' + launchers[i].launcher_nickname + '" onclick="window.launcher_name=this.id; run_launcher_exe();" title="Rode um arquivo .exe neste drive virtual." for="run-' + launchers[i].launcher_nickname + '"> \
+						<label class="label-run" id="' + launchersdata.launcher_nickname + '" onclick="window.launcher_name=this.id; run_launcher_exe();" title="Rode um arquivo .exe neste drive virtual." for="run-' + launchersdata.launcher_nickname + '"> \
 							<div class="label-run-div"><i class="fas fa-cogs"></i></div> \
 						</label> \
-						<input type="file" id="run-' + launchers[i].launcher_nickname + '" name="files[]" /> \
+						<input type="file" id="run-' + launchersdata.launcher_nickname + '" name="files[]" /> \
 					</div> \
-					<div class="open-folder" onclick="openfolder_' + launchers[i].launcher_nickname + '();" title="Abrir pasta de instalação do driver virtual."> \
+					<div class="open-folder" onclick="openfolder_' + launchersdata.launcher_nickname + '();" title="Abrir pasta de instalação do driver virtual."> \
 						<i class="fas fa-folder"></i> \
 					</div> \
 					<div class="run-launcher" onclick="window.launcher_name=' + launcher_nickname + '; run_launcher();" title="Executar"> \
@@ -60,7 +60,7 @@ function list_launchers_options() {
 
 			//Finally, create the new launcher blocks dynamically
 			all_blocks.appendChild(new_game_blocks);
-		}
+		});
 		return;
 	}
 	});

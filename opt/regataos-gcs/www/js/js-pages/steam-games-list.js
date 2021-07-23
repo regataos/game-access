@@ -156,7 +156,7 @@ if (!err) {
 			steam_game_blocks.innerHTML = ' \
 			<div class="steam-game-img" style="background-image: url(file:///tmp/regataos-gcs/config/steam-games/img/' + gamesdata.gamenickname + '.jpg)"></div> \
 				<div class="block-play-steam"> \
-					<div id="' + gamesdata.gameid + '" class="install-box-steam" onclick="window.gameid=this.id; run_steam_game();"> \
+					<div id="' + gamesdata.gameid + '" class="install-box-steam" onclick="window.gameid=this.id; install_steam_game();"> \
 					<div class="play-button"> \
 						<i class="fas fa-download"></i><div class="install-txt">Jogar</div> \
 					</div> \

@@ -15,7 +15,7 @@ function launchers_list() {
 		var all_blocks = document.querySelector("div#block-home");
 
 		//Read the list of launchers that should appear in each block
-		for (var i = 0; i < launchers.length; i++) {
+		launchers.forEach(launchersdata => {
 			//Request the creation of the new element (block) for each launcher
 			var new_game_blocks = document.createElement("div");
 
@@ -24,15 +24,15 @@ function launchers_list() {
 
 			//Add launcher details within the newly created block
 			//Special variables for running launchers
-			var launchernickname = '"' + launchers[i].launcher_nickname + '"'
+			var launchernickname = '"' + launchersdata.launcher_nickname + '"'
 
 			new_game_blocks.innerHTML = " \
-			<div onclick='window.launchername=" + launchernickname + "; go_to_page(); back_button_pages(); check_fps();' class='icon-app' title='" + launchers[i].launcher_name + "' style='background-image:url(images/icon-apps/" + launchers[i].launcher_nickname + ".png);'></div> \
-			<div onclick='window.launchername=" + launchernickname + "; go_to_page(); back_button_pages(); check_fps();' class='text-app " + launchers[i].launcher_nickname + "-title'>" + launchers[i].launcher_name + "</div>";
+			<div onclick='window.launchername=" + launchernickname + "; go_to_page(); back_button_pages(); check_fps();' class='icon-app' title='" + launchersdata.launcher_name + "' style='background-image:url(images/icon-apps/" + launchersdata.launcher_nickname + ".png);'></div> \
+			<div onclick='window.launchername=" + launchernickname + "; go_to_page(); back_button_pages(); check_fps();' class='text-app " + launchersdata.launcher_nickname + "-title'>" + launchersdata.launcher_name + "</div>";
 
 			//Finally, create the new launcher blocks dynamically
 			all_blocks.appendChild(new_game_blocks);
-		}
+		});
 		return;
 	}
 	});
@@ -56,12 +56,12 @@ function launchers_confirm_box() {
 		var all_blocks = document.querySelector("body");
 
 		//Read the list of launchers that should appear in each block
-		for (var i = 0; i < launchers.length; i++) {
+		launchers.forEach(launchersdata => {
 			//Request the creation of the new element (block) for each launcher
 			var new_game_blocks = document.createElement("div");
 
 			//Add classes to the new launcher blocks
-			new_game_blocks.classList.add("confirmation-box", launchers[i].launcher_nickname + "-install");
+			new_game_blocks.classList.add("confirmation-box", launchersdata.launcher_nickname + "-install");
 
 			//Add launcher details within the newly created block
 			//Special variables for running launchers
@@ -76,7 +76,7 @@ function launchers_confirm_box() {
 
 			//Finally, create the new launcher blocks dynamically
 			all_blocks.appendChild(new_game_blocks);
-		}
+		});
 		return;
 	}
 	});

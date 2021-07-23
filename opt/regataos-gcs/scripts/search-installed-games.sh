@@ -72,6 +72,8 @@ for i in /opt/regataos-gcs/games-list/*.json; do
 	game_launcher="$(grep -R '"launchernickname":' $i | awk '{print $2}' | sed 's/"\|,//g')"
 
 	if [[ $(grep -wr "$game_launcher" "/tmp/regataos-gcs/config/installed-launchers.conf") == *"$game_launcher"* ]]; then
-		search_installed_games
+		if [[ $(grep -wr "$game_launcher" "/tmp/regataos-gcs/config/installed-launchers.conf") != *"steam"* ]]; then
+			search_installed_games
+		fi
 	fi
 done

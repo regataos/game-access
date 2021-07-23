@@ -75,8 +75,25 @@ function run_game() {
 // Run Steam game
 function run_steam_game() {
     const exec = require('child_process').exec;
+	const fs = require("fs");
 
-    var command_line = 'steam steam://rungameid/' + gameid;
+	// Verify that hybrid graphics are supported and run with the dGPU
+	if (fs.existsSync("/tmp/regataos-prime/use-hybrid-graphics.txt")) {
+    	var command_line = 'regataos-dgpu gamemoderun steam steam://rungameid/' + gameid;
+	} else {
+    	var command_line = 'gamemoderun steam steam://rungameid/' + gameid;
+	}
+
+    console.log(command_line);
+    exec(command_line,function(error,call,errlog){
+    });
+}
+
+// Install Steam game
+function install_steam_game() {
+    const exec = require('child_process').exec;
+
+    var command_line = 'steam steam://rungameid/' + gameid + ' & sleep 10; steam steam://open/downloads';
     console.log(command_line);
     exec(command_line,function(error,call,errlog){
     });
