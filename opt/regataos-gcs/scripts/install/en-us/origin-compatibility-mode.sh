@@ -266,8 +266,21 @@ else
 		override_dll $(echo "$i" | sed s/.dll//)
 	done
 
-	echo "82%" > $progressbar_dir/progress
+	# Install Media Foundation workaround for Wine
+	echo "78%" > $progressbar_dir/progress
+	#Download
+	wget --no-check-certificate -O /tmp/regataos-gcs/mf-install-master.zip https://lutris.nyc3.cdn.digitaloceanspaces.com/games/epic-games-store/mf-install-master.zip
 
+	#Extract
+	cd /tmp/regataos-gcs/
+	unzip mf-install-master.zip
+
+	#Install
+	cd /tmp/regataos-gcs/mf-install-master/
+	export WINEPREFIX="$HOME/.local/share/wineprefixes/default-compatibility-mode";
+	./install-mf.sh
+
+	echo "82%" > $progressbar_dir/progress
 	# If Vulkan is supported, enable DXVK and VKD3D-Proton
 	vulkan_test=$(vulkaninfo)
 	if [[ $vulkan_test == *"Instance Extensions"* ]]; then
