@@ -7,7 +7,7 @@ var dir = "/tmp/progressbar-gcs/"
 // Close confirm box
 function show_confirmbox() {
     var command_line = "echo showconfirmbox > "+dir+"confirm-cancel-installation";
-    console.log(command_line);
+    //console.log(command_line);
     exec(command_line,function(error,call,errlog){
     });
 }
@@ -15,17 +15,17 @@ function show_confirmbox() {
 // If prompted, pause download
 function down_paused() {
     var command_line = "echo downpaused > "+dir+"down-paused";
-    console.log(command_line);
+    //console.log(command_line);
     exec(command_line,function(error,call,errlog){
     });
 
 	fs.readFile(dir+'wget-pid', (err, wgetpid) => {
 	if (err) throw err;
-	console.log(wgetpid);
+	//console.log(wgetpid);
 	var wgetpid = wgetpid
 
     var command_line = "kill -STOP "+wgetpid;
-    console.log(command_line);
+    //console.log(command_line);
     exec(command_line,function(error,call,errlog){
     });
 
@@ -35,17 +35,17 @@ function down_paused() {
 
 function down_started() {
 	var command_line = "rm -f "+dir+"down-paused";
-    console.log(command_line);
+    //console.log(command_line);
     exec(command_line,function(error,call,errlog){
     });
 
 	fs.readFile(dir+'wget-pid', (err, wgetpid) => {
 	if (err) throw err;
-	console.log(wgetpid);
+	//console.log(wgetpid);
 	var wgetpid = wgetpid
 
     var command_line = "kill -CONT "+wgetpid;
-    console.log(command_line);
+    //console.log(command_line);
     exec(command_line,function(error,call,errlog){
     });
 
@@ -71,7 +71,7 @@ if (!err) {
 // When prompted, display full progress bar
 function show_barfull() {
     var command_line = "echo full > "+dir+"show-barfull";
-    console.log(command_line);
+    //console.log(command_line);
     exec(command_line,function(error,call,errlog){
     });
 }
@@ -84,7 +84,7 @@ if (!err) {
 	$(".more-info2").css("display", "none")
 
 	var command_line = "rm -f "+dir+"show-barfull";
-    console.log(command_line);
+    //console.log(command_line);
     exec(command_line,function(error,call,errlog){
     });
 
@@ -117,7 +117,7 @@ function app_name() {
 
 fs.readFile(dir+'app-name', (err, appname) => {
   if (err) throw err;
-  console.log(appname);
+  //console.log(appname);
 
   var app = appname
 
@@ -130,7 +130,7 @@ function progress() {
 
 fs.readFile(dir+'progress', (err, percentage) => {
   if (err) throw err;
-  console.log(percentage);
+  //console.log(percentage);
 
   var valor = percentage
 
@@ -144,7 +144,7 @@ function status() {
 
 fs.readFile(dir+'status', (err, status) => {
   if (err) throw err;
-  console.log(status);
+  //console.log(status);
 
   var status = status
 
@@ -184,7 +184,7 @@ if (!err) {
 
 	fs.readFile(dir+'speed', (err, speed) => {
 	if (err) throw err;
-	console.log(speed);
+	//console.log(speed);
 
 		var speed = speed
 
@@ -217,7 +217,7 @@ function down_size() {
 
 fs.readFile(dir+'download-size', (err, downsize) => {
   if (err) throw err;
-  console.log(downsize);
+  //console.log(downsize);
 
   var downsize = downsize
 
@@ -230,7 +230,7 @@ function file_size() {
 
 fs.readFile(dir+'file-size', (err, filesize) => {
   if (err) throw err;
-  console.log(filesize);
+  //console.log(filesize);
 
   var filesize = filesize
 
@@ -243,7 +243,7 @@ function eta_down() {
 
 fs.readFile(dir+'eta', (err, eta) => {
   if (err) throw err;
-  console.log(eta);
+  //console.log(eta);
 
   var eta = eta
 
@@ -315,7 +315,7 @@ console.error('myfile already exists');
 
 	fs.readFile(dir+'queued-1', (err, queued1) => {
 	if (err) throw err;
-		console.log(queued1);
+		//console.log(queued1);
 		var app1 = queued1
 		$("#queued-1").css("display", "block")
 		$("#queued-1 .queued-title").text(app1);
@@ -337,7 +337,7 @@ console.error('myfile already exists');
 
 	fs.readFile(dir+'queued-2', (err, queued2) => {
 	if (err) throw err;
-		console.log(queued2);
+		//console.log(queued2);
 		var app2 = queued2
 		$("#queued-2").css("display", "block")
 		$("#queued-2 .queued-title").text(app2);
@@ -359,7 +359,7 @@ console.error('myfile already exists');
 
 	fs.readFile(dir+'queued-3', (err, queued3) => {
 	if (err) throw err;
-		console.log(queued3);
+		//console.log(queued3);
 		var app3 = queued3
 		$("#queued-3").css("display", "block")
 		$("#queued-3 .queued-title").text(app3);
@@ -381,7 +381,7 @@ console.error('myfile already exists');
 
 	fs.readFile(dir+'queued-4', (err, queued4) => {
 	if (err) throw err;
-		console.log(queued4);
+		//console.log(queued4);
 		var app4 = queued4
 		$("#queued-4").css("display", "block")
 		$("#queued-4 .queued-title").text(app4);
@@ -403,7 +403,7 @@ console.error('myfile already exists');
 
 	fs.readFile(dir+'queued-5', (err, queued5) => {
 	if (err) throw err;
-		console.log(queued5);
+		//console.log(queued5);
 		var app5 = queued5
 		$("#queued-5").css("display", "block")
 		$("#queued-5 .queued-title").text(app5);
@@ -425,7 +425,7 @@ console.error('myfile already exists');
 
 	fs.readFile(dir+'queued-6', (err, queued6) => {
 	if (err) throw err;
-		console.log(queued6);
+		//console.log(queued6);
 		var app6 = queued6
 		$("#queued-6").css("display", "block")
 		$("#queued-6 .queued-title").text(app6);
@@ -447,7 +447,7 @@ console.error('myfile already exists');
 
 	fs.readFile(dir+'queued-7', (err, queued7) => {
 	if (err) throw err;
-		console.log(queued7);
+		//console.log(queued7);
 		var app7 = queued7
 		$("#queued-7").css("display", "block")
 		$("#queued-7 .queued-title").text(app7);
@@ -469,7 +469,7 @@ console.error('myfile already exists');
 
 	fs.readFile(dir+'queued-8', (err, queued8) => {
 	if (err) throw err;
-		console.log(queued8);
+		//console.log(queued8);
 		var app8 = queued8
 		$("#queued-8").css("display", "block")
 		$("#queued-8 .queued-title").text(app8);

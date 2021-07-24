@@ -1,5 +1,5 @@
 // Check iframe url
-setInterval(function() {
+/* setInterval(function() {
 	lol_url();
 	home_url();
-}, 100);
+}, 100); */

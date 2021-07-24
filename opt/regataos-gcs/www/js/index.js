@@ -130,5 +130,5 @@ setInterval(function() {
 setInterval(function() {
 	show_progressbar();
 	downspeed();
-	home_url();
+	//home_url();
 }, 500);
