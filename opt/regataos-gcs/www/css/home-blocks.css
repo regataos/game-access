@@ -70,13 +70,15 @@
 	bottom: 0;
     left: 0;
 	background-color: rgba(4, 4, 4, 0.68);
+	background-image: url(./../images/games-backg/steam/steam.jpg);
+    background-position: 50% 50%;
+    background-size: 100% auto;
+    background-repeat: no-repeat;
 	width: 100%;
 	padding-top: 15px;
 	padding-bottom: 15px;
 	border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
-	-webkit-backdrop-filter: blur(10px);
-    backdrop-filter: blur(10px);
 }
 
 .block-title {
