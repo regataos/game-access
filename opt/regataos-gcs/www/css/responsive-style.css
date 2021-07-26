@@ -14,7 +14,7 @@
 	}
 	/* page launchers */
 	.title-top {
-		margin-left: 300px;
+		margin-left: 50px;
 		font-size: 30px;
 	}
 	.view-more {
@@ -25,7 +25,7 @@
 		max-width: 2080px;
 	}
 	.blocks4 {
-		max-width: 1730px;
+		max-width: 2080px;
 	}
 	/* slide */
 	.slideshow {
