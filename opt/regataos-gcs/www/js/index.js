@@ -44,7 +44,7 @@ if (!err) {
 	$(".others").css("display", "block")
 
 	var command_line = "rm -f /tmp/progressbar-gcs/show-barfull";
-    console.log(command_line);
+    //console.log(command_line);
     exec(command_line,function(error,call,errlog){
     });
 
