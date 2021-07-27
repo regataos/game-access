@@ -230,10 +230,18 @@ else
 	winetricks prefix=default-compatibility-mode -q -f nocrashdialog
 
 	echo "32%" > $progressbar_dir/progress
-	winetricks prefix=default-compatibility-mode -q -f vcrun2019
+	winetricks prefix=default-compatibility-mode -q -f vcrun2012 vcrun2013
+
+	# Download vcrun2019
+	mkdir -p "$HOME/.cache/winetricks/vcrun2019/"
+	wget --no-check-certificate -O "$HOME/.cache/winetricks/vcrun2019/vc_redist.x86.exe" "https://aka.ms/vs/16/release/vc_redist.x86.exe"
+	wget --no-check-certificate -O "$HOME/.cache/winetricks/vcrun2019/vc_redist.x64.exe" "https://aka.ms/vs/16/release/vc_redist.x64.exe"
+
+	wine $HOME/.cache/winetricks/vcrun2019/vc_redist.x86.exe /q
+	wine $HOME/.cache/winetricks/vcrun2019/vc_redist.x64.exe /q
 
 	echo "47%" > $progressbar_dir/progress
-	winetricks prefix=default-compatibility-mode -q -f physx 
+	winetricks prefix=default-compatibility-mode -q -f physx d3dcompiler_43
 
 	echo "52%" > $progressbar_dir/progress
 	winetricks prefix=default-compatibility-mode -q -f mdx
