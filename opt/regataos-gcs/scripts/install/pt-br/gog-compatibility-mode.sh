@@ -237,6 +237,7 @@ else
 	wget --no-check-certificate -O "$HOME/.cache/winetricks/vcrun2019/vc_redist.x86.exe" "https://aka.ms/vs/16/release/vc_redist.x86.exe"
 	wget --no-check-certificate -O "$HOME/.cache/winetricks/vcrun2019/vc_redist.x64.exe" "https://aka.ms/vs/16/release/vc_redist.x64.exe"
 
+	export WINEPREFIX="$HOME/.local/share/wineprefixes/default-compatibility-mode";
 	wine $HOME/.cache/winetricks/vcrun2019/vc_redist.x86.exe /q
 	wine $HOME/.cache/winetricks/vcrun2019/vc_redist.x64.exe /q
 
@@ -269,13 +270,15 @@ else
 	wget --no-check-certificate -O /tmp/regataos-gcs/mf-install-master.zip https://lutris.nyc3.cdn.digitaloceanspaces.com/games/epic-games-store/mf-install-master.zip
 
 	#Extract
+	rm -rf "/tmp/regataos-gcs/mf-install-master"
 	cd /tmp/regataos-gcs/
 	unzip mf-install-master.zip
 
 	#Install
 	cd /tmp/regataos-gcs/mf-install-master/
 	export WINEPREFIX="$HOME/.local/share/wineprefixes/default-compatibility-mode";
-	./install-mf.sh
+	sed -i 's/cp -v/cp -vf/g' install-mf.sh
+	/bin/sh install-mf.sh
 
 	echo "82%" > $progressbar_dir/progress
 	# If Vulkan is supported, enable DXVK and VKD3D-Proton
