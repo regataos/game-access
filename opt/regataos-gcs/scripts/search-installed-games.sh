@@ -32,12 +32,6 @@ function search_installed_games() {
 			sed -i '/.egstore/d' "/tmp/regataos-gcs/config/game-install-dir.conf"
 		fi
 
-		# Apply corrections
-		if [[ $(echo "$game_executable" | sed 's/ //') == *"Borderlands2.exe"* ]]; then
-			sed -i '/.egstore/d' "/tmp/regataos-gcs/config/game-install-dir.conf"
-			/opt/regataos-gcs/scripts/specific-game-fixes/borderlands2.sh start
-		fi
-
 	else
 		echo "Game not installed or not found."
 		game_dir_cache=$(grep -wr "$(echo "$game_executable" | sed 's/ //')" "/tmp/regataos-gcs/config/game-install-dir.conf")
