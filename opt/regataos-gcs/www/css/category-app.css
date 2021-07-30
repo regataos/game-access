@@ -67,6 +67,10 @@ div.steam-account-title {
 	background-image: linear-gradient(to right, #313d4a, #313d4a, #313d4a, #313d4a);
 }
 
+.epicstore-more {
+	display: none;
+}
+
 .blocks {
 	width: 100%;
 	float: left;
@@ -88,6 +92,56 @@ div.steam-account-title {
 	max-width: 1040px;
 	margin-left: auto;
     margin-right: auto;
+}
+
+.loading {
+    display: none;
+    position: relative;
+    width: 110px;
+    margin-top: 20%;
+    margin-left: auto;
+    margin-right: auto;
+    -webkit-animation-name: animatebottom;
+    -webkit-animation-duration: .5s;
+    animation-name: animatebottom;
+    animation-duration: .5s;
+}
+
+.loader {
+    border: 10px solid #36414d;
+    border-radius: 50%;
+    border-top: 10px solid #485563;
+    width: 90px;
+    height: 90px;
+    -webkit-animation: spin 1.5s linear infinite;
+    animation: spin 1.5s linear infinite;
+}
+
+@-webkit-keyframes spin {
+    0% { -webkit-transform: rotate(0deg); }
+    100% { -webkit-transform: rotate(360deg); }
+}
+  
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.loading-games {
+    display: none;
+	position: relative;
+	width: 400px;
+	text-align: center;
+    font-family: Roboto;
+    font-size: 22px;
+	font-weight: 300;
+	margin-top: 25px;
+    margin-left: auto;
+    margin-right: auto;
+    -webkit-animation-name: animatebottom;
+    -webkit-animation-duration: .5s;
+    animation-name: animatebottom;
+    animation-duration: .5s;
 }
 
 .game-access-blocks {

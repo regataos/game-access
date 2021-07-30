@@ -12,6 +12,7 @@
 	<script type="text/javascript" src="./../js/jquery.min.js"></script>
 	<script type="text/javascript" src="./../js/jquery-1.12.4.js"></script>
 	<script type="text/javascript" src="./../js/fas-icons.js"></script>
+	<script type="text/javascript" src="./../js/js-pages/epicstore-games-list.js"></script>
 	<script type="text/javascript" src="./../js/js-pages/action-launchers.js"></script>
 	<script type="text/javascript" src="./../js/js-pages/action-games.js"></script>
 	<script type="text/javascript" src="./../js/confirm-installation.js"></script>
@@ -36,10 +37,16 @@
 <div class="title-top-box">
 <div class="title-top epicstore-title">Jogos acessíveis pela Epic Games Store</div>
 </div>
+<div class="view-more epicstore-login" onclick="open_url('https://www.epicgames.com/id/login?redirectUrl=https://www.epicgames.com/id/api/redirect')">Fazer login na Epic Games Store</div>
 <div id="epicstore" class="view-more epicstore-more" onclick="window.launcher_name=this.id; run_launcher();">Ver mais na Epic Games Store</div>
 
-<div class="blocks3 game-access-blocks">
+<div class="blocks3 game-access-blocks"></div>
+
+<div class="loading">
+	<div class="loader"></div>
 </div>
+<div class="loading-games">Carregando a sua biblioteca de jogos...</div>
+
 <script type="text/javascript" src="./../js/js-pages/games-list.js"></script>
 <script type="text/javascript" src="./../js/js-pages/check-installed-games.js"></script>
 <script type="text/javascript" src="./../js/translations/language/pages-blocks-lang.js"></script>

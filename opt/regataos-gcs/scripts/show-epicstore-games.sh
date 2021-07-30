@@ -1,0 +1,22 @@
+#!/bin/bash
+
+# This script follows the Epic Games Store login process, initiated by the user,
+# and from now on starts using the legendary command-line tool.
+
+# Check if the file with the login id exists
+if test -e "/tmp/regataos-gcs/login-id.txt"; then
+    # Separate and save only the login id
+    login_id=$(cat /tmp/regataos-gcs/login-id.txt | sed 's/{\|}//g' | sed 's/"//g' | cut -d"," -f 2- | cut -d":" -f 2-)
+
+    # Use the saved id to login with the Epic Games Store account with legendary
+    /opt/regataos-gcs/legendary/legendary auth --sid $login_id
+
+    # Update cache with game information
+    /opt/regataos-gcs/legendary/legendary status
+
+    # Create cache with game files
+    /opt/regataos-gcs/scripts/search-epicstore-games.sh start
+
+    # Remove file with login id
+    rm -f "/tmp/regataos-gcs/login-id.txt"
+fi
