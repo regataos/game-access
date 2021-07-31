@@ -62,19 +62,34 @@ STEAMGAMEJSON
 for i in $HOME/.config/legendary/metadata/*.json; do
 	game_title="$(grep -R '"app_title"' $i | cut -d'"' -f 4- | cut -d'"' -f -1 | head -1 | tail -2 | sed 's,\\u00ae,,g' | sed 's,\\u2122,,g')"
 	game_name="$(grep -R '"app_name"' $i | cut -d'"' -f 4- | cut -d'"' -f -1 | head -1 | tail -2)"
-	game_img="$(grep -R '"url"' $i | cut -d'"' -f 4- | cut -d'"' -f -1 | tail -2 | head -1)"
+	categories="$(grep -R '"path": "games"' $i | cut -d'"' -f 4- | cut -d'"' -f -1 | head -1 | tail -2)"
+
+	# Capture image url
+	file_search="$i"
+	search='"DieselGameBox"'
+	line_search=$(cat -n $file_search | grep -w $search | head -4 | tail -1 | awk '{print $1}')
+	search_result=$(qt=`wc -l $file_search | cut -d ' ' -f 1`; sed -n ''$line_search','$qt'p' $file_search)
+	game_img=$(echo "$search_result" | head -4 | grep url | cut -d'"' -f 4- | cut -d'"' -f -1)
 
 	# Make the game name lowercase
 	gamename_lowercase=$(echo "$game_title" | tr 'A-Z' 'a-z' | sed 's/: \|- \|(\|)\|, \|™//g')
 	gamename_lowercase=$(echo $gamename_lowercase | sed 's/ /-/g')
 
-	if test ! -e "/tmp/regataos-gcs/config/epicstore-games/json/$gamename_lowercase-epicstore.json"; then
-		create_json_file
-	fi
+	if [[ $(echo $categories) == *"games"* ]]; then
+		if test ! -e "/tmp/regataos-gcs/config/epicstore-games/json/$gamename_lowercase-epicstore.json"; then
+			create_json_file
+		fi
 
-	# Download game image
-	image_type=$(echo $game_img | cut -d'.' -f 4-)
-	if test ! -e "/tmp/regataos-gcs/config/epicstore-games/img/$gamename_lowercase.$image_type"; then
-		wget --no-check-certificate -O "/tmp/regataos-gcs/config/epicstore-games/img/$gamename_lowercase.$image_type" "$game_img"
+		# Download game image
+		image_type=$(echo $game_img | cut -d'.' -f 4-)
+		if [ -z $image_type ];then
+			if test ! -e "/tmp/regataos-gcs/config/epicstore-games/img/$gamename_lowercase"; then
+				wget --no-check-certificate -O "/tmp/regataos-gcs/config/epicstore-games/img/$gamename_lowercase" "$game_img"
+			fi
+		else
+			if test ! -e "/tmp/regataos-gcs/config/epicstore-games/img/$gamename_lowercase.$image_type"; then
+				wget --no-check-certificate -O "/tmp/regataos-gcs/config/epicstore-games/img/$gamename_lowercase.$image_type" "$game_img"
+			fi
+		fi
 	fi
 done
