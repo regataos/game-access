@@ -3,7 +3,22 @@
 # Create JSON files in game cache on Steam account
 
 #Create JSON file
-if test ! -e "/opt/regataos-gcs/games-list/$gamename_lowercase-steam.json"; then
+if test ! -e "/tmp/regataos-gcs/config/steam-games/json/games/$gamename_lowercase-steam.json"; then
+cat > "/tmp/regataos-gcs/config/steam-games/json/games/$gamename_lowercase-steam.json" << STEAMGAMEJSON
+[
+	{
+		"gamename": "$game_name",
+		"gamenickname": "$gamename_lowercase",
+		"gameid": "$gameid",
+		"gametype": "$gametype",
+		"gamekeywords": "$game_name, $gamekeywords, steam",
+		"launcher": "Steam",
+		"launchernickname": "steam",
+		"gamenative": "$gamenative"
+    }
+]
+STEAMGAMEJSON
+
 cat > "/opt/regataos-gcs/games-list/$gamename_lowercase-steam.json" << STEAMGAMEJSON
 [
 	{

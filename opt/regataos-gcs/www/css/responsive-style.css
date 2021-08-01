@@ -21,7 +21,16 @@
 		margin-right: 300px;
 		font-size: 20px;
 	}
+	.page-buttons {
+		margin-right: 300px;
+	}
+	.remove-account {
+		font-size: 20px;
+	}
 	.blocks3 {
+		max-width: 2080px;
+	}
+	.blocks3-universal {
 		max-width: 2080px;
 	}
 	.blocks4 {
@@ -95,10 +104,16 @@
 	.blocks3 {
     	max-width: 1735px;
 	}
+	.blocks3-universal {
+    	max-width: 1735px;
+	}
 }
 
 @media screen and (max-width: 2000px) {
 	.blocks3 {
+    	max-width: 1385px;
+	}
+	.blocks3-universal {
     	max-width: 1385px;
 	}
 }
@@ -126,8 +141,17 @@
 		margin-right: 150px;
 		font-size: 17px;
 	}
+	.page-buttons {
+		margin-right: 150px;
+	}
+	.remove-account {
+		font-size: 17px;
+	}
 	.blocks3 {
 		max-width: 1385px;
+	}
+	.blocks3-universal {
+    	max-width: 1385px;
 	}
 	.blocks4 {
 		max-width: 1385px;
@@ -200,6 +224,9 @@
 	.blocks3 {
     	max-width: 1038px;
 	}
+	.blocks3-universal {
+    	max-width: 1038px;
+	}
 }
 
 @media screen and (max-width: 1441px) {
@@ -210,8 +237,14 @@
 	.view-more {
 		margin-right: 86px;
 	}
+	.page-buttons {
+		margin-right: 86px;
+	}
 	.blocks3 {
 		max-width: 1038px;
+	}
+	.blocks3-universal {
+    	max-width: 1038px;
 	}
 	.blocks4 {
 		max-width: 1030px;
@@ -261,8 +294,14 @@
 	.view-more {
 		margin-right: 45px;
 	}
+	.page-buttons {
+		margin-right: 45px;
+	}
 	.blocks3 {
 		max-width: 1040px;
+	}
+	.blocks3-universal {
+    	max-width: 1040px;
 	}
 	.blocks4 {
 		max-width: 1040px;
@@ -297,6 +336,9 @@
 	/* page launchers */
 	.blocks3 {
 		max-width: 692px;
+	}
+	.blocks3-universal {
+    	max-width: 692px;
 	}
 	.blocks4 {
 		max-width: 692px;

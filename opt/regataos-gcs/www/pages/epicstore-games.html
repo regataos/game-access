@@ -12,9 +12,9 @@
 	<script type="text/javascript" src="./../js/jquery.min.js"></script>
 	<script type="text/javascript" src="./../js/jquery-1.12.4.js"></script>
 	<script type="text/javascript" src="./../js/fas-icons.js"></script>
-	<script type="text/javascript" src="./../js/js-pages/epicstore-games-list.js"></script>
 	<script type="text/javascript" src="./../js/js-pages/action-launchers.js"></script>
 	<script type="text/javascript" src="./../js/js-pages/action-games.js"></script>
+	<script type="text/javascript" src="./../js/js-pages/remove-account.js"></script>
 	<script type="text/javascript" src="./../js/confirm-installation.js"></script>
 	<script type="text/javascript" src="./../js/translations/language/pages-lang.js"></script>
 
@@ -35,12 +35,21 @@
 <div class="blocks">
 <div class="blocks2">
 <div class="title-top-box">
-<div class="title-top epicstore-title">Jogos acessíveis pela Epic Games Store</div>
+<div class="title-top universal-installed-title">Jogos instalados pela Epic Games Store</div>
 </div>
-<div class="view-more epicstore-login" onclick="open_url('https://www.epicgames.com/id/login?redirectUrl=https://www.epicgames.com/id/api/redirect')">Fazer login na Epic Games Store</div>
-<div id="epicstore" class="view-more epicstore-more" onclick="window.launcher_name=this.id; run_launcher();">Ver mais na Epic Games Store</div>
+<div class="page-buttons">
+	<div class="view-more universal-login" onclick="open_url('https://www.epicgames.com/id/login?redirectUrl=https://www.epicgames.com/id/api/redirect')">Fazer login na Epic Games Store</div>
+	<div id="epicstore" class="view-more universal-more" onclick="window.launcher_name=this.id; run_launcher();">Ver mais na Epic Games Store</div>
+	<div id="epicstore-remove-account" class="remove-account" onclick="window.launcher_name=this.id; remove_account();">Remover conta</div>
+</div>
 
-<div class="blocks3 game-access-blocks"></div>
+<div class="blocks3-universal">
+	<div id="universal-installed" class="inner-blocks universal-installed-games"></div>
+	<div class="title-top universal-account-title">Disponíveis na sua conta da Epic Games Store</div>
+	<div id="universal-account" class="inner-blocks universal-all-games"></div>
+	<script type="text/javascript" src="./../js/js-pages/epicstore-games-list.js"></script>
+	<script type="text/javascript" src="./../js/js-pages/epicstore-login.js"></script>
+</div>
 
 <div class="loading">
 	<div class="loader"></div>

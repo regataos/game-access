@@ -29,6 +29,10 @@ if test ! -e "/tmp/regataos-gcs/config/steam-games/json/steam-id"; then
 	mkdir -p "/tmp/regataos-gcs/config/steam-games/json/steam-id"
 fi
 
+if test ! -e "/tmp/regataos-gcs/config/steam-games/json/games"; then
+	mkdir -p "/tmp/regataos-gcs/config/steam-games/json/games"
+fi
+
 # Check if there are any Steam games installed
 if [[ $(ls $HOME/.local/share/Steam/steamapps/ | grep acf) == *"acf"* ]]; then
 	if test -e "/tmp/regataos-gcs/config/steam-games/no-steam-games.txt" ;then

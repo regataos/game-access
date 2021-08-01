@@ -15,11 +15,11 @@
 	padding-top: 5px;
 }
 
-div.steam-title {
+div.universal-title {
 	transition: all .2s ease-in-out;
 }
 
-div.steam-account-title {
+div.universal-account-title {
 	width: 700px;
 	margin-top: 100px;
 	margin-left: 10px;
@@ -36,6 +36,12 @@ div.steam-account-title {
 	margin-left: 8px;
     margin-bottom: 50px;
 	padding-top: 5px;
+}
+
+.page-buttons {
+	position: absolute;
+	top: 95px;
+	right: 0;
 }
 
 .view-more {
@@ -67,7 +73,48 @@ div.steam-account-title {
 	background-image: linear-gradient(to right, #313d4a, #313d4a, #313d4a, #313d4a);
 }
 
-.epicstore-more {
+.universal-login {
+	float: left;
+    position: relative;
+    top: 0px;
+	margin-right: 0px;
+}
+
+.remove-account {
+	float: left;
+    position: relative;
+	font-family: Roboto;
+	font-size: 17px;
+	font-weight: 400;
+	cursor: pointer;
+	border-radius: 3px;
+    background-image: linear-gradient(to right, #cc121a, #ee4248, #df4247, #cc121a);
+	background-size: 300% 100%;
+	transition: all .4s ease-in-out;
+	padding-top: 10px;
+	padding-right: 15px;
+	padding-left: 15px;
+	padding-bottom: 10px;
+	box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.1);
+}
+
+.remove-account:hover {
+	background-position: 100% 0;
+	transition: all .4s ease-in-out;
+}
+
+.remove-account:active {
+    background-image: linear-gradient(to right, #9d0c12, #9d0c12, #9d0c12, #9d0c12);
+}
+
+.page-buttons .universal-more {
+	float: left;
+    position: relative;
+    top: 0px;
+	margin-right: 15px;
+}
+
+.universal-more {
 	display: none;
 }
 
@@ -92,6 +139,26 @@ div.steam-account-title {
 	max-width: 1040px;
 	margin-left: auto;
     margin-right: auto;
+}
+
+.game-access-blocks {
+	display: block;
+    position: relative;
+    -webkit-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+}
+
+.blocks3-universal {
+	display: block;
+    position: relative;
+	min-width: 692px;
+	max-width: 1040px;
+	margin-left: auto;
+    margin-right: auto;
+}
+
+.universal-all-games {
+	display: none;
 }
 
 .loading {
@@ -144,15 +211,6 @@ div.steam-account-title {
     animation-duration: .5s;
 }
 
-.game-access-blocks {
-    -webkit-transition: all 0.3s ease-in-out;
-    transition: all 0.3s ease-in-out;
-    -webkit-animation-name: animatebottom;
-    -webkit-animation-duration: .5s;
-    animation-name: animatebottom;
-    animation-duration: .5s;
-}
-
 .blocks4 {
 	display: block;
     position: relative;
@@ -162,10 +220,6 @@ div.steam-account-title {
     margin-right: auto;
     -webkit-transition: all 0.3s ease-in-out;
     transition: all 0.3s ease-in-out;
-    -webkit-animation-name: animatebottom;
-    -webkit-animation-duration: .5s;
-    animation-name: animatebottom;
-    animation-duration: .5s;
 }
 
 .inner-blocks {
@@ -174,10 +228,6 @@ div.steam-account-title {
 	width: 100%;
     -webkit-transition: all 0.3s ease-in-out;
     transition: all 0.3s ease-in-out;
-    -webkit-animation-name: animatebottom;
-    -webkit-animation-duration: .5s;
-    animation-name: animatebottom;
-    animation-duration: .5s;
 }
 
 .app-block {
@@ -197,10 +247,6 @@ div.steam-account-title {
 	padding: 10px;
     -webkit-transition: all 0.3s ease-in-out;
     transition: all 0.3s ease-in-out;
-    -webkit-animation-name: animatebottom;
-    -webkit-animation-duration: .5s;
-    animation-name: animatebottom;
-    animation-duration: .5s;
 }
 
 .app-block:hover {
@@ -211,11 +257,19 @@ div.steam-account-title {
 	opacity: 1 !important;
 }
 
-.steam-title {
+.universal-title {
 	display: none;
 }
 
-.app-block-steam {
+.universal-installed-title {
+	display: none;
+}
+
+.universal-account-title {
+	display: none;
+}
+
+.app-block-universal {
 	display: none;
 	position: relative;
 	float: left;
@@ -233,17 +287,13 @@ div.steam-account-title {
 	padding: 0px;
     -webkit-transition: all 0.3s ease-in-out;
     transition: all 0.3s ease-in-out;
-    -webkit-animation-name: animatebottom;
-    -webkit-animation-duration: .5s;
-    animation-name: animatebottom;
-    animation-duration: .5s;
 }
 
-.app-block-steam:hover {
+.app-block-universal:hover {
 	box-shadow: 0px -5px 5px 2px rgba(5, 87, 244, 0.8), 0px 4px 5px 2px rgba(5, 87, 244, 0.8), 0px 0px 5px 2px rgba(5, 87, 244, 0.8);
 }
 
-.app-block-steam:hover > .block-play-steam {
+.app-block-universal:hover > .block-play-universal {
 	opacity: 1 !important;
 }
 
@@ -265,7 +315,7 @@ div.steam-account-title {
     border-bottom-right-radius: 5px;
 }
 
-.block-text-steam {
+.block-text-universal {
 	position: absolute;
 	bottom: 0;
     left: 0;
@@ -283,7 +333,7 @@ div.steam-account-title {
     border-bottom-right-radius: 5px;
 }
 
-.block-text-steam:hover > .block-play-steam {
+.block-text-universal:hover > .block-play-universal {
 	opacity: 1 !important;
 }
 
@@ -303,7 +353,7 @@ div.steam-account-title {
 	margin-bottom: 5px;
 }
 
-.block-text-steam .block-title {
+.block-text-universal .block-title {
 	margin-bottom: 10px;
 }
 
@@ -317,7 +367,7 @@ div.steam-account-title {
 	margin-left: 10px;
 }
 
-.block-text-steam .block-desc {
+.block-text-universal .block-desc {
 	margin-top: 5px;
 }
 
@@ -377,7 +427,7 @@ div.steam-account-title {
 	opacity: 1;
 }
 
-.steam-game-img {
+.universal-game-img {
 	position: absolute;
     float: left;
     width: 330px;
@@ -391,7 +441,11 @@ div.steam-account-title {
     background-repeat: no-repeat;
 }
 
-.block-play-steam {
+.epicstore-game-img {
+    background-size: 100% auto;
+}
+
+.block-play-universal {
     position: absolute;
 	width: 100%;
     height: 100%;
@@ -410,11 +464,11 @@ div.steam-account-title {
 	backdrop-filter: blur(10px);
 }
 
-.block-play-steam:hover {
+.block-play-universal:hover {
 	opacity: 1;
 }
 
-.play-box-steam {
+.play-box-universal {
 	display: block;
     font-family: 'Roboto', sans-serif;
 	font-size: 19px;
@@ -437,12 +491,12 @@ div.steam-account-title {
 	padding-bottom: 15px;
 }
 
-.play-box-steam:hover {
+.play-box-universal:hover {
 	background-position: 100% 0;
 	transition: all .4s ease-in-out;
 }
 
-.play-box-steam:active {
+.play-box-universal:active {
 	background-image: linear-gradient(to right, #169547, #169547, #169547, #169547);
 }
 
@@ -478,7 +532,7 @@ div.steam-account-title {
 	background-image: linear-gradient(to right, #169547, #169547, #169547, #169547);
 }
 
-.install-box-steam {
+.install-box-universal {
     font-family: 'Roboto', sans-serif;
 	font-size: 19px;
 	text-align: center;
@@ -500,12 +554,12 @@ div.steam-account-title {
 	padding-bottom: 15px;
 }
 
-.install-box-steam:hover {
+.install-box-universal:hover {
 	background-position: 100% 0;
 	transition: all .4s ease-in-out;
 }
 
-.install-box-steam:active {
+.install-box-universal:active {
     background-image: linear-gradient(to right, #0956cc, #0956cc, #0956cc, #0956cc);
 }
 

@@ -29,7 +29,7 @@ if (!err) {
 		gamename_lowercase = gamename_lowercase.replace(/(ü)|(ú)|(û)|(ũ)/g, 'u');
 
 		// If not, create the games JSON file
-		if (!fs.existsSync('/opt/regataos-gcs/games-list/' + gamename_lowercase + '-steam.json')) {
+		if (!fs.existsSync('/tmp/regataos-gcs/config/steam-games/json/games/' + gamename_lowercase + '-steam.json')) {
 			// Make the request, putting the id directly in the URL, and send the return to the variable "res"
 			const https = require('https');
 			https.get(`https://store.steampowered.com/api/appdetails?appids=${games.appid}&cc=br&l=br`, (res) => {
@@ -120,13 +120,13 @@ var files = [];
 var child = [];
 
 // Read JSON files with the list of games
-fs.readdirSync("/opt/regataos-gcs/games-list").forEach(files => {
-fs.readFile("/opt/regataos-gcs/games-list/" + files, "utf8", function (err, data2) {
+fs.readdirSync("/tmp/regataos-gcs/config/steam-games/json/games").forEach(files => {
+fs.readFile("/tmp/regataos-gcs/config/steam-games/json/games/" + files, "utf8", function (err, data2) {
 if (!err) {
 
 	// Request the dynamic creation of game blocks on the HTML page
 	//Capture the main element where the game blocks will be created
-	var steam_all_games = document.querySelector("div.steam-all-games");
+	var steam_all_games = document.querySelector("div.universal-all-games");
 
 	var steam_games_json = JSON.parse(data2);
 
@@ -140,7 +140,7 @@ if (!err) {
 			steam_game_blocks.id = gamesdata.gamenickname + "-block";
 
 			//Add classes to the new game blocks
-			steam_game_blocks.classList.add("app-block-steam");
+			steam_game_blocks.classList.add("app-block-universal");
 
 			//Add the game image in the background
 			steam_game_blocks.style.backgroundImage = "url('./../images/games-backg/steam/steam.jpg')";
@@ -154,15 +154,15 @@ if (!err) {
 
 			//Add game details within the newly created block
 			steam_game_blocks.innerHTML = ' \
-			<div class="steam-game-img" style="background-image: url(file:///tmp/regataos-gcs/config/steam-games/img/' + gamesdata.gamenickname + '.jpg)"></div> \
-				<div class="block-play-steam"> \
-					<div id="' + gamesdata.gameid + '" class="install-box-steam" onclick="window.gameid=this.id; install_steam_game();"> \
+			<div class="universal-game-img" style="background-image: url(file:///tmp/regataos-gcs/config/steam-games/img/' + gamesdata.gamenickname + '.jpg)"></div> \
+				<div class="block-play-universal"> \
+					<div id="' + gamesdata.gameid + '" class="install-box-universal" onclick="window.gameid=this.id; install_steam_game();"> \
 					<div class="play-button"> \
-						<i class="fas fa-download"></i><div class="install-txt">Jogar</div> \
+						<i class="fas fa-download"></i><div class="install-txt">Instalar</div> \
 					</div> \
 				</div> \
 				</div> \
-				<div class="block-text-steam" title="' + gamesdata.gamename + '"> \
+				<div class="block-text-universal" title="' + gamesdata.gamename + '"> \
 					<div class="block-title">' + gamesdata.gamename + '</div> \
 					<div class="block-desc">Steam</div> \
 					<div class="native-game"> \
@@ -176,11 +176,11 @@ if (!err) {
 		}
 
 		if (!fs.existsSync('/tmp/regataos-gcs/config/steam-games/json/installed/' + gamesdata.gamenickname + '-steam.json')) {
-			$("div.steam-all-games div#" + gamesdata.gamenickname + "-block").css("display", "block")
-			$("div.steam-installed-games div#" + gamesdata.gamenickname + "-block").css("display", "none")
+			$("div.universal-all-games div#" + gamesdata.gamenickname + "-block").css("display", "block")
+			$("div.universal-installed-games div#" + gamesdata.gamenickname + "-block").css("display", "none")
 		} else {
-			$("div.steam-all-games div#" + gamesdata.gamenickname + "-block").css("display", "none")
-			$("div.steam-installed-games div#" + gamesdata.gamenickname + "-block").css("display", "block")
+			$("div.universal-all-games div#" + gamesdata.gamenickname + "-block").css("display", "none")
+			$("div.universal-installed-games div#" + gamesdata.gamenickname + "-block").css("display", "block")
 		}
 	})
 return;
@@ -197,13 +197,13 @@ var files = [];
 var child = [];
 
 // Read JSON files with the list of games
-fs.readdirSync("/opt/regataos-gcs/games-list").forEach(files => {
-fs.readFile("/opt/regataos-gcs/games-list/" + files, "utf8", function (err, data2) {
+fs.readdirSync("/tmp/regataos-gcs/config/steam-games/json/games").forEach(files => {
+fs.readFile("/tmp/regataos-gcs/config/steam-games/json/games/" + files, "utf8", function (err, data2) {
 if (!err) {
 
 	// Request the dynamic creation of game blocks on the HTML page
 	//Capture the main element where the game blocks will be created
-	var installed_games = document.querySelector("div.steam-installed-games");
+	var installed_games = document.querySelector("div.universal-installed-games");
 
 	var steam_games_json = JSON.parse(data2);
 
@@ -217,7 +217,7 @@ if (!err) {
 			steam_game_blocks.id = gamesdata.gamenickname + "-block";
 
 			//Add classes to the new game blocks
-			steam_game_blocks.classList.add("app-block-steam");
+			steam_game_blocks.classList.add("app-block-universal");
 
 			//Add the game image in the background
 			steam_game_blocks.style.backgroundImage = "url('./../images/games-backg/steam/steam.jpg')";
@@ -231,15 +231,15 @@ if (!err) {
 
 			//Add game details within the newly created block
 			steam_game_blocks.innerHTML = ' \
-			<div class="steam-game-img" style="background-image: url(file:///tmp/regataos-gcs/config/steam-games/img/' + gamesdata.gamenickname + '.jpg)"></div> \
-				<div class="block-play-steam"> \
-				<div id="' + gamesdata.gameid + '" class="play-box-steam" onclick="window.gameid=this.id; run_steam_game();"> \
+			<div class="universal-game-img" style="background-image: url(file:///tmp/regataos-gcs/config/steam-games/img/' + gamesdata.gamenickname + '.jpg)"></div> \
+				<div class="block-play-universal"> \
+				<div id="' + gamesdata.gameid + '" class="play-box-universal" onclick="window.gameid=this.id; run_steam_game();"> \
 					<div class="play-button"> \
-						<i class="fas fa-play"></i><div class="play-txt">Instalar</div> \
+						<i class="fas fa-play"></i><div class="play-txt">Jogar</div> \
 					</div> \
 				</div> \
 				</div> \
-				<div class="block-text-steam" title="' + gamesdata.gamename + '"> \
+				<div class="block-text-universal" title="' + gamesdata.gamename + '"> \
 					<div class="block-title">' + gamesdata.gamename + '</div> \
 					<div class="block-desc">Steam</div> \
 				<div class="native-game"> \
@@ -253,11 +253,11 @@ if (!err) {
 		}
 
 		if (fs.existsSync('/tmp/regataos-gcs/config/steam-games/json/installed/' + gamesdata.gamenickname + '-steam.json')) {
-			$("div.steam-all-games div#" + gamesdata.gamenickname + "-block").css("display", "none")
-			$("div.steam-installed-games div#" + gamesdata.gamenickname + "-block").css("display", "block")
+			$("div.universal-all-games div#" + gamesdata.gamenickname + "-block").css("display", "none")
+			$("div.universal-installed-games div#" + gamesdata.gamenickname + "-block").css("display", "block")
 		} else {
-			$("div.steam-all-games div#" + gamesdata.gamenickname + "-block").css("display", "block")
-			$("div.steam-installed-games div#" + gamesdata.gamenickname + "-block").css("display", "none")
+			$("div.universal-all-games div#" + gamesdata.gamenickname + "-block").css("display", "block")
+			$("div.universal-installed-games div#" + gamesdata.gamenickname + "-block").css("display", "none")
 		}
 	})
 return;
@@ -270,24 +270,24 @@ return;
 function show_steam_games() {
 	const exec = require('child_process').exec;
 
-    var command_line = "ls $HOME/.local/share/Steam/steamapps/ | grep acf";
+    var command_line = "wc -l $HOME/.local/share/Steam/steamapps/ | grep acf";
     exec(command_line, (error, stdout, stderr) => {
     if (stdout) {
         var game_file = stdout
 
 		if ((game_file.indexOf("acf") > -1) == "1") {
-			$(".steam-installed-games").css("display", "block");
-			$(".steam-account-title").css("margin-top", "30px");
-			$(".steam-title").css("display", "block");
+			$(".universal-installed-games").css("display", "block");
+			$(".universal-account-title").css("margin-top", "30px");
+			$(".universal-installed-title").css("display", "block");
 		} else {
-			$(".steam-installed-games").css("display", "none");
-			$(".steam-account-title").css("margin-top", "100px");
-			$(".steam-title").css("display", "none");
+			$(".universal-installed-games").css("display", "none");
+			$(".universal-account-title").css("margin-top", "100px");
+			$(".universal-installed-title").css("display", "none");
 		}
 	} else {
-		$(".steam-installed-games").css("display", "none");
-		$(".steam-account-title").css("margin-top", "100px");
-		$(".steam-title").css("display", "none");
+		$(".universal-installed-games").css("display", "none");
+		$(".universal-account-title").css("margin-top", "100px");
+		$(".universal-installed-title").css("display", "none");
 	}
 	});
 }
@@ -297,12 +297,14 @@ function show_installed_games() {
 	var fs = require("fs");
 	fs.access('/tmp/regataos-gcs/config/steam-games/json/steam-id/show-steam-games.txt', (err) => {
 	if (!err) {
-		$(".steam-account-title").css("display", "block");
-		$(".steam-all-games").css("display", "block");
+		$(".universal-account-title").css("display", "block");
+		$(".universal-all-games").css("display", "block");
+		$(".universal-more").css("display", "block");
 		return;
 	} else {
-		$(".steam-account-title").css("display", "none");
-		$(".steam-all-games").css("display", "none");
+		$(".universal-account-title").css("display", "none");
+		$(".universal-all-games").css("display", "none");
+		$(".universal-more").css("display", "block");
 	}
 	});
 }

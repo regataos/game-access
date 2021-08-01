@@ -17,6 +17,11 @@ if test -e "/tmp/regataos-gcs/login-id.txt"; then
     # Create cache with game files
     /opt/regataos-gcs/scripts/search-epicstore-games.sh start
 
+    # Verify successful login to Epic Games Store
+    if test -e "$HOME/.config/legendary/user.json"; then
+        echo "Show EGS" > "/tmp/regataos-gcs/config/epicstore-games/show-egs.txt"
+    fi
+
     # Remove file with login id
     rm -f "/tmp/regataos-gcs/login-id.txt"
 fi

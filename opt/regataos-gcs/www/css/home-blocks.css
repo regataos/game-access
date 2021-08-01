@@ -44,10 +44,6 @@
 	background-repeat: no-repeat;
     -webkit-transition: all 0.3s ease-in-out;
     transition: all 0.3s ease-in-out;
-    -webkit-animation-name: animatebottom;
-    -webkit-animation-duration: .5s;
-    animation-name: animatebottom;
-    animation-duration: .5s;
 }
 
 .app-block:hover {
