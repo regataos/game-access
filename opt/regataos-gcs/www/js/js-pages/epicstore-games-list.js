@@ -171,6 +171,7 @@ function start_list_games() {
 	fs.access('/tmp/regataos-gcs/config/epicstore-games/show-egs.txt', (err) => {
 	if (!err) {
 		$("div.universal-login").css("display", "none")
+		$('body').css('background-image', 'url()');
 		$("div.remove-account").css("display", "block")
 		$("div.universal-more").css("display", "block")
 		$("div.universal-account-title").css("display", "block")
@@ -184,8 +185,10 @@ function start_list_games() {
 	} else {
 		if (fs.existsSync('/tmp/regataos-gcs/login-id.txt')) {
 			$("div.universal-login").css("display", "none")
+			$('body').css('background-image', 'url()');
 		} else {
 			$("div.universal-login").css("display", "block")
+			$('body').css('background-image', 'url(./../images/games-backg/epicstore/epicstore-backg.jpg)');
 		}
 
 		if (fs.existsSync('/tmp/regataos-gcs/login-id.txt')) {
@@ -212,4 +215,4 @@ setTimeout(function(){
 	setInterval(function(){
 		start_list_games()
 	}, 500);
-}, 1000);
+}, 500);

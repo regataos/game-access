@@ -58,9 +58,44 @@ if test -e /tmp/progressbar-gcs/download-percentage ; then
 		get_pid=$(cat /tmp/progressbar-gcs/get-pid)
 		pid=$(ps -C "$get_pid" | awk '{print $1}'| tail -1)
 		echo $pid > /tmp/progressbar-gcs/wget-pid
-
 	fi
 
+else
+	if test -e "/tmp/progressbar-gcs/download-percentage-legendary"; then
+		lines=$(wc -l /tmp/progressbar-gcs/download-percentage-legendary | cut -d"/" -f -1)
+		if [ $lines -ge 12 ]; then
+
+			# Progress bar and percentage
+			progress=$(cat /tmp/progressbar-gcs/download-percentage-legendary | grep "Progress" | awk '{print $5}' | tail -1 | head -1 | cut -d"." -f -1)
+
+			if [[ $progress == *"salvo"* ]]; then
+				echo "100%"
+			else
+				echo "$progress%" > /tmp/progressbar-gcs/progress
+			fi
+
+			# Internet connection speed and estimated time of conclusion
+			check_progress=$(cat /tmp/progressbar-gcs/download-percentage-legendary | grep "Progress" | awk '{print $5}' | tail -1 | head -1 | cut -d"." -f -1)
+
+			if [[ $check_progress == *"100%"* ]]; then
+				rm -f "/tmp/progressbar-gcs/speed"
+				rm -f "/tmp/progressbar-gcs/eta"
+			else
+				speed=$(cat /tmp/progressbar-gcs/download-percentage-legendary | grep "Download" | awk '{print $6 $7}' | tail -1 | head -1)
+				echo $speed > /tmp/progressbar-gcs/speed
+				eta=$(cat /tmp/progressbar-gcs/download-percentage-legendary | grep "ETA" | awk '{print $11}' | tail -1 | head -1)
+				echo "$(echo $eta)h" > /tmp/progressbar-gcs/eta
+			fi
+
+			# Download Size
+			download_size=$(cat /tmp/progressbar-gcs/download-percentage-legendary | grep "Download size" | awk '{print $5 $6}' | tail -1 | head -1)
+			echo "$download_size" > /tmp/progressbar-gcs/download-size
+
+			# Downloading File Size
+			file_size=$(cat /tmp/progressbar-gcs/download-percentage-legendary | grep "Downloaded" | awk '{print $5 $6}' | tail -1 | head -1 | sed 's/,//g')
+			echo "$file_size /" > /tmp/progressbar-gcs/file-size
+		fi
+	fi
 fi
 
 else

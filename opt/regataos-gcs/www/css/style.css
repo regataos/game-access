@@ -8,6 +8,7 @@ body {
     -webkit-user-select: none;
     user-select: none;
 	background-color: #2a2e33;
+	background-repeat: no-repeat;
 }
 
 @font-face{
