@@ -33,7 +33,8 @@ function save_login_id() {
 
 	setTimeout(function(){
 		check_status()
-		var command_line = '/opt/regataos-gcs/scripts/show-epicstore-games.sh start';
+		var command_line = '/opt/regataos-gcs/scripts/show-epicstore-games.sh & \
+		/opt/regataos-gcs/scripts/install/scripts-install/install-game-epicstore/prepare-compatibility-mode.sh';
 		exec(command_line,function(error,call,errlog){
 		});
 	}, 1000);

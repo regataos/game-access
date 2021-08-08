@@ -294,7 +294,6 @@ div.universal-account-title {
 }
 
 .app-block-universal {
-	display: none;
 	position: relative;
 	float: left;
     width: 330px;
@@ -466,7 +465,7 @@ div.universal-account-title {
 }
 
 .epicstore-game-img {
-    background-size: 100% auto;
+    background-size: 103% auto;
 }
 
 .block-play-universal {

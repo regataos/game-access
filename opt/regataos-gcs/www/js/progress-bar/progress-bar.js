@@ -31,6 +31,17 @@ function down_paused() {
 
 	});
 
+	fs.readFile(dir+'legendary-pid', (err, legendary_pid) => {
+	if (err) throw err;
+	//console.log(wgetpid);
+	var legendary_pid = legendary_pid
+
+    var command_line = "pkill --signal STOP "+legendary_pid;
+    //console.log(command_line);
+    exec(command_line,function(error,call,errlog){
+    });
+
+	});
 }
 
 function down_started() {
@@ -51,6 +62,17 @@ function down_started() {
 
 	});
 
+	fs.readFile(dir+'legendary-pid', (err, legendary_pid) => {
+	if (err) throw err;
+	//console.log(wgetpid);
+	var legendary_pid = legendary_pid
+
+    var command_line = "pkill --signal CONT "+legendary_pid;
+    //console.log(command_line);
+    exec(command_line,function(error,call,errlog){
+    });
+
+	});
 }
 
 function pause_down() {

@@ -109,3 +109,13 @@ function run_steam_client() {
     exec(command_line,function(error,call,errlog){
     });
 }
+
+// Remove user account
+function remove_user_account_epicstore() {
+    const exec = require('child_process').exec;
+
+    var command_line = 'echo "remove account" > "/tmp/regataos-gcs/remove-user-account-epicstore.txt"';
+    console.log(command_line);
+    exec(command_line,function(error,call,errlog){
+    });
+}

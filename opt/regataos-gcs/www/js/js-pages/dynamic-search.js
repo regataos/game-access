@@ -27,7 +27,7 @@ if(!err) {
 			}
 
 		} else {
-			$(".app-block-steam").css("display", "none")
+			$(".app-block-universal").css("display", "none")
 		}
 	});
 	return;

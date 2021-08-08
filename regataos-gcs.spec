@@ -1,5 +1,5 @@
 Name: regataos-gcs
-Version: 4.6
+Version: 5.0
 Release: 0
 Url: https://github.com/regataos/game-access
 Summary: Access your Windows games from Regata OS
@@ -13,7 +13,7 @@ BuildRequires: systemd
 BuildRequires: grep
 BuildRequires: xz
 Requires: xz
-Requires: magma >= 5.52.2
+Requires: magma >= 5.54.1
 Requires: regataos-wine-service >= 21.6.10.1
 License: MIT
 Source1: %{name}-%{version}.tar.xz
@@ -66,31 +66,33 @@ systemctl start   regataos-gcs-allsettings.service || true
 systemctl restart regataos-gcs-allsettings.service || true
 
 # Changes for the new version of Regata OS Game Access
-if test -e "/etc/xdg/autostart/regataosgcs-auto-close-game-access.desktop"; then
-	# Disable obsolete systemd services
-	systemctl stop regataos-gcs-selectlanguage.service || true
-	systemctl disable regataos-gcs-selectlanguage.service || true
+if test ! -e /usr/share/regataos/create-iso.txt ; then
+	if test -e "/etc/xdg/autostart/regataosgcs-auto-close-game-access.desktop"; then
+		# Disable obsolete systemd services
+		systemctl stop regataos-gcs-selectlanguage.service || true
+		systemctl disable regataos-gcs-selectlanguage.service || true
 
-	# Remove obsolete autostart services
-	rm -f "/etc/xdg/autostart/regataosgcs-auto-close-game-access.desktop"
-	rm -f "/etc/xdg/autostart/regataosgcs-capture-progress-download.desktop"
-	rm -f "/etc/xdg/autostart/regataosgcs-create-process-queues.desktop"
-	rm -f "/etc/xdg/autostart/regataosgcs-run-process-queues.desktop"
-	rm -f "/etc/xdg/autostart/regataosgcs-search-installeds.desktop"
+		# Remove obsolete autostart services
+		rm -f "/etc/xdg/autostart/regataosgcs-auto-close-game-access.desktop"
+		rm -f "/etc/xdg/autostart/regataosgcs-capture-progress-download.desktop"
+		rm -f "/etc/xdg/autostart/regataosgcs-create-process-queues.desktop"
+		rm -f "/etc/xdg/autostart/regataosgcs-run-process-queues.desktop"
+		rm -f "/etc/xdg/autostart/regataosgcs-search-installeds.desktop"
 
-	# Shut down services that are unnecessarily running
-	killall auto-close-game-access.sh
-	killall capture-progress-download
-	killall create-process-queues
-	killall run-process-queues
-	killall search-installeds.sh
+		# Shut down services that are unnecessarily running
+		killall auto-close-game-access.sh
+		killall capture-progress-download
+		killall create-process-queues
+		killall run-process-queues
+		killall search-installeds.sh
+	fi
+
+	# Set language according to user settings
+	/opt/regataos-gcs/scripts/select-language start
+
+	# Update icon caches
+	update-desktop-database
 fi
-
-# Set language according to user settings
-/opt/regataos-gcs/scripts/select-language start
-
-# Update icon caches
-update-desktop-database
 
 %clean
 

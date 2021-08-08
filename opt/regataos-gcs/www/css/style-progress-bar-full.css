@@ -284,9 +284,9 @@ background-image:url("../images/close-off.png") !important;
 
 .down-file-size {
 float: right;
-max-width: 115px;
+max-width: 250px;
 margin-top: 5px;
-margin-left: 90px;
+margin-left: 0px;
 margin-bottom: 10px;
 }
 
@@ -299,7 +299,7 @@ line-height: 1.4em;
 
 #filesize {
 text-align: right;
-width: 60px;
+width: 80px;
 }
 
 #downsize {

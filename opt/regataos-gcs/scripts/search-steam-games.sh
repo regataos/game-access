@@ -21,10 +21,6 @@ if test ! -e "/tmp/regataos-gcs/config/steam-games/img"; then
 	mkdir -p "/tmp/regataos-gcs/config/steam-games/img"
 fi
 
-if test ! -e "/tmp/regataos-gcs/config/steam-games/json/installed"; then
-	mkdir -p "/tmp/regataos-gcs/config/steam-games/json/installed"
-fi
-
 if test ! -e "/tmp/regataos-gcs/config/steam-games/json/steam-id"; then
 	mkdir -p "/tmp/regataos-gcs/config/steam-games/json/steam-id"
 fi
@@ -53,7 +49,7 @@ else
 	if [[ $(grep -r "appid" "/tmp/regataos-gcs/config/steam-games/json/steam-id/$steam_games.json") != *"appid"* ]]; then
 		if test ! -e "/tmp/regataos-gcs/config/steam-games/no-steam-games.txt" ;then
 			echo "No Steam games" > "/tmp/regataos-gcs/config/steam-games/no-steam-games.txt"
-			rm -f /tmp/regataos-gcs/config/steam-games/json/installed/*
+			rm -f /tmp/regataos-gcs/config/installed/*-steam.json
 			rm -f /tmp/regataos-gcs/config/steam-games/json/steam-id/*
 			rm -f /opt/regataos-gcs/games-list/*-steam.json
 			rm -f /tmp/regataos-gcs/config/steam-games/img/*
@@ -73,7 +69,7 @@ fi
 # Check if the game installation directory exists, looking for the game executable
 function search_steam_games() {
 #Create JSON file
-cat > "/tmp/regataos-gcs/config/steam-games/json/installed/$gamename_lowercase.json" << STEAMGAMEJSON
+cat > "/tmp/regataos-gcs/config/installed/$gamename_lowercase-steam.json" << STEAMGAMEJSON
 [
 	{
 		"gamename": "$game_name",
@@ -87,11 +83,11 @@ STEAMGAMEJSON
 # Run game processes only if necessary.
 if test ! -e "/tmp/regataos-gcs/config/steam-games/no-steam-games.txt" ;then
 	# Check if the Steam game is still installed
-	for i in /tmp/regataos-gcs/config/steam-games/json/installed/*.json; do
+	for i in /tmp/regataos-gcs/config/installed/*-steam.json; do
 		file_id=$(echo $i | cut -d"/" -f 6- | cut -d"." -f -1)
 
 		if ! test -e "$HOME/.local/share/Steam/steamapps/$file_id.acf"; then
-			rm -f "/tmp/regataos-gcs/config/steam-games/json/installed/$file_id.json"
+			rm -f "/tmp/regataos-gcs/config/installed/$file_id-steam.json"
 		fi
 	done
 
@@ -108,7 +104,7 @@ if test ! -e "/tmp/regataos-gcs/config/steam-games/no-steam-games.txt" ;then
 			if test ! -e "/opt/regataos-gcs/games-list/$gamename_lowercase-steam.json"; then
 				search_steam_games
 			else
-				cp -f "/opt/regataos-gcs/games-list/$gamename_lowercase-steam.json" "/tmp/regataos-gcs/config/steam-games/json/installed/$gamename_lowercase-steam.json"
+				cp -f "/opt/regataos-gcs/games-list/$gamename_lowercase-steam.json" "/tmp/regataos-gcs/config/installed/$gamename_lowercase-steam.json"
 			fi
 		fi
 	done
@@ -140,11 +136,11 @@ if test ! -e "/tmp/regataos-gcs/config/steam-games/no-steam-games.txt" ;then
 fi
 
 # Check if a game is still in the installed or downloading list
-for i in /tmp/regataos-gcs/config/steam-games/json/installed/*-steam.json; do
+for i in /tmp/regataos-gcs/config/installed/*-steam.json; do
 	game_name="$(grep -R '"gamenickname"' $i | cut -d'"' -f 4- | cut -d'"' -f -1)"
 	game_id="$(grep -R '"gameid"' $i | awk '{print $2}' | sed 's/"\|,//g')"
 
 	if test ! -e "$HOME/.local/share/Steam/steamapps/appmanifest_$(echo $game_id).acf"; then
-		rm -f "/tmp/regataos-gcs/config/steam-games/json/installed/$game_name-steam.json"
+		rm -f "/tmp/regataos-gcs/config/installed/$game_name-steam.json"
 	fi
 done

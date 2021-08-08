@@ -349,7 +349,7 @@ color: #fff;
 }
 
 .confirmation-box .confir-title {
-    width: 360px;
+    width: 300px;
 	margin-left: auto;
 	margin-right: auto;
 }
@@ -358,6 +358,38 @@ color: #fff;
 	position: relative;
     width: 380px;
     height: 120px;
+    margin-top: 15%;
+    margin-right: auto;
+    margin-left: auto;
+	padding: 5px 8px 8px 8px;
+	background-image: linear-gradient(to right, #262a31, #1d1f25);
+	border-radius: 5px;
+	box-shadow: 0px 0px 10px 2px rgba(8, 13, 18, 0.3);
+	opacity: 1;
+	animation-name: example;
+	animation-duration: .3s;
+}
+
+.donwload-game-confirmation {
+	position: relative;
+    width: 450px;
+    height: 170px;
+    margin-top: 15%;
+    margin-right: auto;
+    margin-left: auto;
+	padding: 5px 8px 8px 8px;
+	background-image: linear-gradient(to right, #262a31, #1d1f25);
+	border-radius: 5px;
+	box-shadow: 0px 0px 10px 2px rgba(8, 13, 18, 0.3);
+	opacity: 1;
+	animation-name: example;
+	animation-duration: .3s;
+}
+
+.uninstall-game-confirmation {
+	position: relative;
+    width: 380px;
+    height: 130px;
     margin-top: 15%;
     margin-right: auto;
     margin-left: auto;
@@ -387,19 +419,171 @@ color: #fff;
 	margin-bottom: 23px;
 }
 
+.confir-title-game {
+	font-size: 16px;
+	text-align: center;
+	color: #f5f5f5;
+	line-height: 1.4em;
+	margin-top: 10px;
+	margin-bottom: 23px;
+}
+
+.confir-title-remove-account {
+	font-size: 18px;
+	text-align: center;
+	color: #f5f5f5;
+	line-height: 1.4em;
+	margin-top: 10px;
+	margin-bottom: 23px;
+}
+
+.donwload-game-title {
+	font-size: 18px;
+	text-align: center;
+	color: #f5f5f5;
+	line-height: 1.4em;
+	margin-top: 10px;
+	margin-bottom: 23px;
+}
+
 .confirm-button {
 	float: left;
     width: 82px;
-    height: 33px;
     text-align: center;
-	font-size: 15px;
+	font-size: 16px;
 	color: #f5f5f5;
 	cursor: pointer;
 	border-radius: 3px;
     margin-left: 5px;
 	margin-right: 3px;
+	padding: 2px;
 	transition: all .3s;
 	box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.1);
+}
+
+.donwload-game-button {
+	float: left;
+    text-align: center;
+    font-size: 17px;
+    color: #f5f5f5;
+    cursor: pointer;
+    border-radius: 3px;
+	margin-top: 15px;
+    margin-left: 5px;
+    margin-right: 3px;
+    padding: 2px 12px 2px 12px;
+    transition: all .3s;
+    box-shadow: 0px 2px 2px rgb(0 0 0 / 10%);
+	background-image: linear-gradient(to right, #0662f0, #309eff, #04befe, #3f86ed);
+    background-size: 300% 100%;
+    transition: all .4s ease-in-out;
+}
+.donwload-game-button:hover {
+	background-position: 100% 0;
+	transition: all .4s ease-in-out;
+}
+.donwload-game-button:active {
+    background-image: linear-gradient(to right, #0956cc, #0956cc, #0956cc, #0956cc);
+}
+
+.donwload-import-button {
+	float: left;
+    text-align: center;
+    font-size: 17px;
+    color: #f5f5f5;
+    cursor: pointer;
+    border-radius: 3px;
+	margin-top: 15px;
+    margin-left: 5px;
+    margin-right: 3px;
+    padding: 2px 12px 2px 12px;
+    transition: all .3s;
+    box-shadow: 0px 2px 2px rgb(0 0 0 / 10%);
+	background-image: linear-gradient(to right, #36414d, #485563, #485563, #36414d);
+    background-size: 300% 100%;
+    transition: all .4s ease-in-out;
+}
+.donwload-import-button:hover {
+	background-position: 100% 0;
+	transition: all .4s ease-in-out;
+}
+.donwload-import-button:active {
+	background-image: linear-gradient(to right, #313d4a, #313d4a, #313d4a, #313d4a);
+}
+
+.donwload-cancel-button {
+	float: right;
+    text-align: center;
+    font-size: 17px;
+    color: #f5f5f5;
+    cursor: pointer;
+    border-radius: 3px;
+	margin-top: 15px;
+    margin-left: 0px;
+    margin-right: 5px;
+    padding: 2px 12px 2px 12px;
+    transition: all .3s;
+    box-shadow: 0px 2px 2px rgb(0 0 0 / 10%);
+	background-image: linear-gradient(to right, #36414d, #485563, #485563, #36414d);
+    background-size: 300% 100%;
+    transition: all .4s ease-in-out;
+}
+.donwload-cancel-button:hover {
+	background-position: 100% 0;
+	transition: all .4s ease-in-out;
+}
+.donwload-cancel-button:active {
+	background-image: linear-gradient(to right, #313d4a, #313d4a, #313d4a, #313d4a);
+}
+
+.uninstall-game-button {
+	float: left;
+    text-align: center;
+    font-size: 17px;
+    color: #f5f5f5;
+    cursor: pointer;
+    border-radius: 3px;
+	margin-top: 15px;
+    margin-left: 5px;
+    margin-right: 3px;
+    padding: 2px 12px 2px 12px;
+    transition: all .3s;
+    box-shadow: 0px 2px 2px rgb(0 0 0 / 10%);
+	background-image: linear-gradient(to right, #0662f0, #309eff, #04befe, #3f86ed);
+    background-size: 300% 100%;
+    transition: all .4s ease-in-out;
+}
+.uninstall-game-button:hover {
+	background-position: 100% 0;
+	transition: all .4s ease-in-out;
+}
+.uninstall-game-button:active {
+    background-image: linear-gradient(to right, #0956cc, #0956cc, #0956cc, #0956cc);
+}
+
+.uninstall-cancel-button {
+	float: right;
+    text-align: center;
+    font-size: 17px;
+    color: #f5f5f5;
+    cursor: pointer;
+    border-radius: 3px;
+	margin-top: 15px;
+    margin-left: 5px;
+    margin-right: 3px;
+    padding: 2px 12px 2px 12px;
+    transition: all .3s;
+    box-shadow: 0px 2px 2px rgb(0 0 0 / 10%);
+	background-image: linear-gradient(to right, #36414d, #485563, #485563, #36414d);
+    background-size: 300% 100%;
+    transition: all .4s ease-in-out;
+}
+.uninstall-cancel-button:hover {
+	background-position: 100% 0;
+	transition: all .4s ease-in-out;
+}
+.uninstall-cancel-button:active {
+	background-image: linear-gradient(to right, #313d4a, #313d4a, #313d4a, #313d4a);
 }
 
 .true-button {
@@ -444,6 +628,24 @@ color: #fff;
     flex-direction: row;
     justify-content: center;
     align-items: center;
+}
+
+.checkbox-install-games {
+	flex-direction: row;
+    justify-content: center;
+    align-items: center;
+	width: 250px;
+    margin-top: 0px;
+	margin-left: 5px;
+}
+
+.checkbox-install-games .checkbox {
+	font-size: 15px;
+	padding-left: 30px;
+}
+
+.install-other-directory {
+	display: none;
 }
 
 .checkbox-fpstxt {
@@ -517,6 +719,56 @@ color: #fff;
   height: 10px;
   border: solid white;
   border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+.checkmark-game {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 20px;
+  width: 20px;
+  background-color: #383e42;
+  margin-top: 5px;
+  transition: all .3s;
+  border-radius: 2px;
+}
+
+.checkbox:hover input ~ .checkmark-game {
+  background-color: #43494d;
+}
+
+.checkbox input:checked ~ .checkmark-game {
+  background-color: #0078f2;
+}
+
+.checkbox:hover input:checked ~ .checkmark-game {
+  background-color: #1087ff;
+}
+
+.checkbox:active input:checked ~ .checkmark-game {
+  background-color: #383e42;
+}
+
+.checkmark-game:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+.checkbox input:checked ~ .checkmark-game:after {
+  display: block;
+}
+
+.checkbox .checkmark-game:after {
+  left: 7px;
+  top: 4px;
+  width: 4px;
+  height: 8px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
   -webkit-transform: rotate(45deg);
   -ms-transform: rotate(45deg);
   transform: rotate(45deg);
