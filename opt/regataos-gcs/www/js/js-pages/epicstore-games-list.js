@@ -47,6 +47,7 @@ if (!err) {
 					<div class="native-game"> \
 						<div class="native-game-img" style="background-image: url(./../images/gcs.png)"></div> \
 						<div class="native-game-desc gcs">Game Access</div> \
+					</div> \
 				</div> \
 			</div>';
 
@@ -101,10 +102,16 @@ if (!err) {
 			//Add the game image in the background
 			epicstore_game_blocks.style.backgroundImage = "url('./../images/games-backg/steam/steam.jpg')";
 
+			//Variable required for uninstall game button
+			var gamenickname = "'" + gamesdata.gamenickname + "'"
+
 			//Add game details within the newly created block
 			epicstore_game_blocks.innerHTML = ' \
 			<div class="universal-game-img epicstore-game-img" style="background-image: url(file://' + gamesdata.game_img1 + ')"></div> \
 				<div class="block-play-universal"> \
+					<div title="Desinstalar jogo" class="remove-game-button" onclick="window.game_for_remove=' + gamenickname + '; uninstall_epicstore_game();"> \
+						<i class="fas fa-trash-alt"></i> \
+					</div> \
 					<div id="' + gamesdata.gameid + '" class="play-box-universal" onclick="window.gameid=this.id; run_epicstore_game();"> \
 					<div class="play-button"> \
 						<i class="fas fa-play"></i><div class="play-txt">Jogar</div> \
@@ -117,6 +124,7 @@ if (!err) {
 					<div class="native-game"> \
 						<div class="native-game-img" style="background-image: url(./../images/gcs.png)"></div> \
 						<div class="native-game-desc gcs">Game Access</div> \
+					</div> \
 				</div> \
 			</div>';
 

@@ -29,8 +29,8 @@ install_dotnet_status="This may take a few minutes..."
 
 #Download information
 app_download_status="Downloading Origin installer..."
-app_download_link="https://download.dm.origin.com/origin/live/OriginUpdate_10_5_101_48500.zip"
-app_download_file_name="OriginUpdate_10_5_101_48500.zip"
+app_download_link="https://download.dm.origin.com/origin/live/OriginUpdate_10_5_102_48654.zip"
+app_download_file_name="OriginUpdate_10_5_102_48654.zip"
 
 #Default settings
 app_nickname_dir="$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"
@@ -65,7 +65,7 @@ function success_installation() {
     rm -f "$app_nickname_dir/drive_c/Program Files (x86)/Origin/vcredist_x86.exe"
 
 	# Notify
-	notify-send -i emblem-ok-symbolic -u normal -a 'Regata OS Game Access' "$app_name $success_notify_title" "$app_name $success_notify_text"
+	notify-send -i regataos-gcs -u normal -a 'Regata OS Game Access' "$app_name $success_notify_title" "$app_name $success_notify_text"
 
 	# Create desktop shortcut
 	#Check desktop
@@ -95,7 +95,7 @@ function gameinstall_folder() {
 # Installation failed
 function installation_failed() {
 	# Notify
-	notify-send -i emblem-important-symbolic -u normal -a 'Regata OS Game Access' "$app_name $error_notify_title" "$error_notify_text $app_name."
+	notify-send -i regataos-gcs -u normal -a 'Regata OS Game Access' "$app_name $error_notify_title" "$error_notify_text $app_name."
 }
 
 # Fix Wine applications folder

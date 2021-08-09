@@ -14,7 +14,7 @@ BuildRequires: grep
 BuildRequires: xz
 Requires: xz
 Requires: magma >= 5.54.1
-Requires: regataos-wine-service >= 21.6.10.1
+Requires: regataos-wine-service >= 21.6.14
 License: MIT
 Source1: %{name}-%{version}.tar.xz
 Source2: regataos-gcs.desktop.txt

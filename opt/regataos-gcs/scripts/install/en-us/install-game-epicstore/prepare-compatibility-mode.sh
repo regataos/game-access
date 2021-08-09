@@ -15,25 +15,28 @@ app_name_directx="Installing DirectX Redistributable"
 install_dotnet_status="This may take a few minutes..."
 
 if test -e "$HOME/.local/share/wineprefixes/default-compatibility-mode" ; then
-	# Configuring compatibility mode
-	echo "installing" > $progressbar_dir/progress-movement
-	echo "" > $progressbar_dir/progress
-	echo $app_name > $progressbar_dir/app-name
-	echo $conf_prefix_status > $progressbar_dir/status
-	sleep 1
-	echo "show progress bar" > $progressbar_dir/progressbar
-
 	if test ! -e "$HOME/.local/share/wineprefixes/epicstore-compatibility-mode" ; then
+		# Configuring compatibility mode
+		echo "installing" > $progressbar_dir/progress-movement
+		echo "" > $progressbar_dir/progress
+		echo $app_name > $progressbar_dir/app-name
+		echo $conf_prefix_status > $progressbar_dir/status
+		sleep 1
+		echo "show progress bar" > $progressbar_dir/progressbar
+
 		cp -rf "$HOME/.local/share/wineprefixes/default-compatibility-mode" \
 		"$HOME/.local/share/wineprefixes/epicstore-compatibility-mode"
-	fi
 
-	rm -f $progressbar_dir/progress-movement
-	echo "completed" > $progressbar_dir/progress-full
-	echo "" > $progressbar_dir/status
-	echo $success_installation > $progressbar_dir/progress
-	sleep 2
-	rm -f $progressbar_dir/*
+		rm -f $progressbar_dir/progress-movement
+		echo "completed" > $progressbar_dir/progress-full
+		echo "" > $progressbar_dir/status
+		echo $success_installation > $progressbar_dir/progress
+		sleep 2
+		rm -f $progressbar_dir/*
+	else
+		# We're finished!
+		exit 0
+	fi
 
 else
 

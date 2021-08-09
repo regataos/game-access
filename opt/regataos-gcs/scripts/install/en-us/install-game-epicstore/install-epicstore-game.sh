@@ -27,6 +27,12 @@ installation_error_status="Installation error"
 progressbar_dir="/tmp/progressbar-gcs"
 user=$(users | awk '{print $1}')
 
+# Check the game's installation folder
+if [ -z "$GAME_INSTALL_DIR" ] ;then
+	mkdir -p "$HOME/Game Access/Epic Games Store"
+	GAME_INSTALL_DIR="$HOME/Game Access/Epic Games Store"
+fi
+
 #Complements
 app_name_dotnet40="Installing .NET Framework 4.0"
 app_name_dotnet48="Installing .NET Framework 4.8"
@@ -40,7 +46,7 @@ app_nickname_dir="$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mo
 function install_app() {
 	winetricks prefix=$app_nickname-compatibility-mode -q win10
 
-	/opt/regataos-gcs/legendary/legendary import-game $game_id "$GAME_INSTALL_DIR/" 2>&1 | (pv -n > /tmp/regataos-gcs/instalation-legendary)
+	/opt/regataos-gcs/legendary/legendary import-game $game_id "$(cat /tmp/regataos-gcs/game-patch-epicstore.txt)" 2>&1 | (pv -n > /tmp/regataos-gcs/instalation-legendary)
 	# /opt/regataos-gcs/legendary/legendary repair -y $game_id
 }
 
@@ -49,7 +55,7 @@ function success_installation() {
     cp -f "$HOME/.config/regataos-gcs/epicstore-games/json/$game_nickname-epicstore.json" "$HOME/.config/regataos-gcs/installed/$game_nickname-epicstore.json"
 
 	# Notify
-	notify-send -i emblem-ok-symbolic -u normal -a 'Regata OS Game Access' "$app_name $success_notify_title" "$app_name $success_notify_text"
+	notify-send -i regataos-gcs -u normal -a 'Regata OS Game Access' "$app_name $success_notify_title" "$app_name $success_notify_text"
 }
 
 # Installation failed
@@ -57,7 +63,7 @@ function installation_failed() {
 	rm -f "$HOME/.config/regataos-gcs/installed/$game_nickname-epicstore.json"
 
 	# Notify
-	notify-send -i emblem-important-symbolic -u normal -a 'Regata OS Game Access' "$error_notify_title $app_name!" "$error_notify_text $app_name."
+	notify-send -i regataos-gcs -u normal -a 'Regata OS Game Access' "$error_notify_title $app_name!" "$error_notify_text $app_name."
 }
 
 # Search for processes
@@ -115,6 +121,8 @@ rm -f $progressbar_dir/installing
 rm -f "/tmp/regataos-gcs/installing-$app_nickname"
 rm -f $progressbar_dir/down-paused
 rm -f $progressbar_dir/script-cancel
+rm -f "/tmp/regataos-gcs/instalation-legendary"
+rm -f "/tmp/regataos-gcs/game-patch-epicstore.txt"
 EOM
 
 chmod +x $progressbar_dir/script-cancel
@@ -128,12 +136,6 @@ echo "0%" > $progressbar_dir/progress
 echo $app_download_status > $progressbar_dir/status
 sleep 1
 echo "show progress bar" > $progressbar_dir/progressbar
-
-# Check the game's installation folder
-if [ -z "$GAME_INSTALL_DIR" ] ;then
-	mkdir -p "$HOME/Game Access/Epic Games Store/"
-	GAME_INSTALL_DIR="$HOME/Game Access/Epic Games Store/"
-fi
 
 echo "legendary" > $progressbar_dir/legendary-pid
 /opt/regataos-gcs/legendary/legendary -y install --download-only $game_id --base-path "$GAME_INSTALL_DIR/" 2>&1 | (pv -n > $progressbar_dir/download-percentage-legendary)
@@ -149,13 +151,16 @@ rm -f $progressbar_dir/eta
 # Prepare wineprefix to run the launcher and games
 if test -e "$HOME/.local/share/wineprefixes/default-compatibility-mode" ; then
 	# Configuring compatibility mode
-	echo "installing" > $progressbar_dir/progress-movement
-	echo "" > $progressbar_dir/progress
-	echo $app_name > $progressbar_dir/app-name
-	echo $conf_prefix_status > $progressbar_dir/status
+	if test ! -e "$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"; then
+		echo "installing" > $progressbar_dir/progress-movement
+		echo "" > $progressbar_dir/progress
+		echo $app_name > $progressbar_dir/app-name
+		echo $conf_prefix_status > $progressbar_dir/status
 
-	cp -rf "$HOME/.local/share/wineprefixes/default-compatibility-mode" \
-	"$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"
+		cp -rf "$HOME/.local/share/wineprefixes/default-compatibility-mode" \
+		"$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"
+	fi
+
 else
 	# Environment variables for Wine
 	export WINEPREFIX="$HOME/.local/share/wineprefixes/default-compatibility-mode";
@@ -298,6 +303,7 @@ if [[ $(cat /tmp/regataos-gcs/instalation-legendary) == *"Game has been imported
 	echo "completed" > $progressbar_dir/progress-full
 	echo "" > $progressbar_dir/status
 	echo $success_installation > $progressbar_dir/progress
+	echo "show installed games" > "/tmp/regataos-gcs/config/installed/show-installed-games-epic.txt"
 	success_installation
 	sleep 2
 	rm -f $progressbar_dir/progress-full
@@ -305,7 +311,7 @@ if [[ $(cat /tmp/regataos-gcs/instalation-legendary) == *"Game has been imported
 	rm -f /tmp/regataos-gcs/installing-$app_nickname
 	rm -f "/tmp/regataos-gcs/$app_download_file_name"
 	rm -f "/tmp/regataos-gcs/instalation-legendary"
-
+	rm -f "/tmp/regataos-gcs/game-patch-epicstore.txt"
 
 	# If there are no more processes, clear the progress bar cache
 	if test ! -e "$progressbar_dir/queued-1" ; then
@@ -323,6 +329,7 @@ else
 	rm -f /tmp/regataos-gcs/installing-$app_nickname
 	rm -f "/tmp/regataos-gcs/$app_download_file_name"
 	rm -f "/tmp/regataos-gcs/instalation-legendary"
+	rm -f "/tmp/regataos-gcs/game-patch-epicstore.txt"
 
 	# If there are no more processes, clear the progress bar cache
 	if test ! -e "$progressbar_dir/queued-1" ; then

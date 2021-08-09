@@ -23,13 +23,15 @@ $(document).ready(function() {
 	$(".nogamefound-title").text("Nenhum jogo encontrado");
 	$(".nogamefound-desc").text("Infelizmente, ainda não achei nenhum jogo instalado.");
 	$(".allgames-title").text("Lista com alguns dos jogos que você pode rodar com o Regata OS Game Access");
+	$(".loading-games").text("Carregando a sua biblioteca de jogos...");
+	$(".remove-game-button").attr({title:"Desinstalar jogo"});
 
 	// Steam games
 	//Page title
-	$(".steam-title").text("Jogos instalados pelo Steam");
+	$(".installed-title-steam").text("Jogos instalados pelo Steam");
 	//View more
 	$(".steam-more").text("Ver mais no Steam");
-	$(".steam-account-title").text("Disponíveis na sua conta Steam");
+	$(".account-title-steam").text("Disponíveis na sua conta Steam");
 
 	// Search page
 	//Page title
@@ -46,9 +48,14 @@ $(document).ready(function() {
 
 	// Epic Games Store page
 	//Page title
-	$(".epicstore-title").text("Jogos acessíveis pela Epic Games Store");
+	$(".installed-title-epicstore").text("Jogos instalados");
+	$(".account-title-epicstore").text("Disponíveis na sua conta da Epic Games Store");
 	//View more
 	$(".epicstore-more").text("Ver mais na Epic Games Store");
+	//Login button
+	$(".login-button-epicstore").text("Fazer login na Epic Games Store");
+	//Remove account button
+	$(".remove-account").text("Remover conta");
 
 	// GOG Galaxy page
 	//Page title

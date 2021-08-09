@@ -333,7 +333,7 @@ div.universal-account-title {
 	padding-top: 15px;
     padding-left: 0px;
     padding-right: 0px;
-	padding-bottom: 15px;
+	padding-bottom: 10px;
 	border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
 }
@@ -386,7 +386,7 @@ div.universal-account-title {
 	font-size: 15px;
 	font-weight: 400;
 	line-height: 1.2em;
-	margin-top: 10px;
+	margin-top: 5px;
 	margin-left: 10px;
 }
 
@@ -651,6 +651,29 @@ div.universal-account-title {
     margin-right: 6px;
     font-size: 17px;
     margin-bottom: 0px;
+}
+
+.remove-game-button {
+    margin: 12px 10px 0px 0px;
+    position: relative;
+    float: right;
+    padding: 5px;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: all .2s ease-in-out;
+}
+
+.remove-game-button {
+    margin: 12px 13px 0px 0px;
+}
+
+.fa-trash-alt {
+    transition: all .2s ease-in-out;
+    font-size: 20px;
+}
+
+.fa-trash-alt:active {
+    font-size: 18px;
 }
 
 /* Responsive CSS */

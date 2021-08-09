@@ -28,4 +28,22 @@ $(document).ready(function() {
 	$(".run-launcher").attr({title:"Executar"});
 	//Uninstall button
 	$(".text-remove").text("Remover");
+
+	// Confirm box
+	//Install game
+	$(".donwload-game-title").text("Fazer o download do jogo ou importá-lo?");
+	$(".install-default-directory-desc").text("Baixar o jogo no diretório padrão.");
+	$(".download-game-txt").text("Download");
+	$(".import-game-txt").text("Importar");
+	$(".donwload-cancel-button").text("Cancelar");
+
+	//Remove game
+	$(".confir-title-game").text("Você realmente quer desinstalar o jogo? Isso deve apagar todos os arquivos.");
+	$(".uninstall-game-button").text("Desinstalar");
+	$(".uninstall-cancel-button").text("Cancelar");
+
+	//Remove account
+	$(".confir-title-remove-account").text("Remover conta de usuário?");
+	$(".true-button").text("Sim");
+	$(".false-button").text("Cancelar");
 });

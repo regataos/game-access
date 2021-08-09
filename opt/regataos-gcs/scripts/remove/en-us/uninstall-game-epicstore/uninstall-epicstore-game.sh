@@ -16,8 +16,13 @@ game_id="$(grep -r "gameid" $HOME/.config/regataos-gcs/epicstore-games/json/$gam
 	/opt/regataos-gcs/legendary/legendary uninstall -y $game_id 2>&1 | (pv -n > /var/log/regataos-logs/uninstall-$game_nickname-epicstore.log)
 
 	# Remove game from installed list
-	if test -e "$HOME/.config/regataos-gcs/installed/$game_nickname-epicstore.json"; then
-		rm -f "$HOME/.config/regataos-gcs/installed/$game_nickname-epicstore.json"
+	rm -f "$HOME/.config/regataos-gcs/installed/$game_nickname-epicstore.json"
+
+	# Check for installed games from the Epic Games Store
+	if test ! -e $HOME/.config/regataos-gcs/installed/*-epicstore.json; then
+		rm -f "$HOME/.config/regataos-gcs/installed/show-installed-games-epic.txt"
+	else
+		echo "show installed games" > "/tmp/regataos-gcs/config/installed/show-installed-games-epic.txt"
 	fi
 
 ) | env GTK_THEME=Adwaita:dark zenity --progress --pulsate --width 450 --window-icon "/usr/share/pixmaps/regataos-gcs.png" \

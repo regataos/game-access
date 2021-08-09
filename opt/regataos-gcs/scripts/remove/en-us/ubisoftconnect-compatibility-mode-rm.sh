@@ -31,13 +31,13 @@ function remove_app() {
 # Uninstall failed notify
 function success_uninstall() {
 	# Notify
-	notify-send -i emblem-ok-symbolic -u normal -a 'Regata OS Game Access' "$app_name $success_notify_title" "$app_name $success_notify_text"
+	notify-send -i regataos-gcs -u normal -a 'Regata OS Game Access' "$app_name $success_notify_title" "$app_name $success_notify_text"
 }
 
 # Uninstall failed notify
 function uninstall_failed() {
 	# Notify
-	notify-send -i emblem-important-symbolic -u normal -a 'Regata OS Game Access' "$error_notify_title $app_name!" "$error_notify_text $app_name."
+	notify-send -i regataos-gcs -u normal -a 'Regata OS Game Access' "$error_notify_title $app_name!" "$error_notify_text $app_name."
 }
 
 # Search for processes

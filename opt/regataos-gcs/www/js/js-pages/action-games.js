@@ -112,7 +112,7 @@ function install_epicstore_game() {
 // Uninstall game from Epic Games Store
 function uninstall_epicstore_game() {
 	const exec = require('child_process').exec;
-	var command_line = 'echo "' + gamenickname + '" > "/tmp/regataos-gcs/start-uninstallation-epicstore.txt"';
+	var command_line = 'echo "' + game_for_remove + '" > "/tmp/regataos-gcs/start-uninstallation-epicstore.txt"';
 	console.log(command_line);
 	exec(command_line,function(error,call,errlog){
 	});
@@ -125,9 +125,9 @@ function run_epicstore_game() {
 
 	// Verify that hybrid graphics are supported and run with the dGPU
 	if (fs.existsSync("/tmp/regataos-prime/use-hybrid-graphics.txt")) {
-    	var command_line = 'regataos-dgpu gamemoderun legendary launch ' + gameid + ' --wine-prefix "$HOME/.local/share/wineprefixes/epicstore-compatibility-mode"';
+    	var command_line = 'regataos-dgpu gamemoderun /opt/regataos-gcs/legendary/legendary launch ' + gameid + ' --wine-prefix "$HOME/.local/share/wineprefixes/epicstore-compatibility-mode"';
 	} else {
-    	var command_line = 'gamemoderun legendary launch ' + gameid + ' --wine-prefix "$HOME/.local/share/wineprefixes/epicstore-compatibility-mode"';
+    	var command_line = 'gamemoderun /opt/regataos-gcs/legendary/legendary launch ' + gameid + ' --wine-prefix "$HOME/.local/share/wineprefixes/epicstore-compatibility-mode"';
 	}
 
     console.log(command_line);

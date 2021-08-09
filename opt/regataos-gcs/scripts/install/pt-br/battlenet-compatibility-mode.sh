@@ -62,7 +62,7 @@ function success_installation() {
 	sed -i '/^$/d' "$HOME/.config/regataos-gcs/installed-launchers.conf"
 
 	# Notify
-	notify-send -i emblem-ok-symbolic -u normal -a 'Regata OS Game Access' "$app_name $success_notify_title" "$app_name $success_notify_text"
+	notify-send -i regataos-gcs -u normal -a 'Regata OS Game Access' "$app_name $success_notify_title" "$app_name $success_notify_text"
 
 	# Create desktop shortcut
 	#Check desktop
@@ -90,7 +90,7 @@ function gameinstall_folder() {
 # Installation failed
 function installation_failed() {
 	# Notify
-	notify-send -i emblem-important-symbolic -u normal -a 'Regata OS Game Access' "$error_notify_title $app_name!" "$error_notify_text $app_name."
+	notify-send -i regataos-gcs -u normal -a 'Regata OS Game Access' "$error_notify_title $app_name!" "$error_notify_text $app_name."
 }
 
 # Fix Wine applications folder

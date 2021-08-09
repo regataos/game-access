@@ -54,6 +54,10 @@ function games_list1() {
 			<div class="block-text ' + gamesdata.gamenickname +'" title="' + gamesdata.gamename +'"> \
 				<div class="block-title">' + gamesdata.gamename + '</div> \
 				<div class="block-desc">' + gamesdata.launcher + '</div> \
+				<div class="native-game"> \
+					<div class="native-game-img" style="background-image: url(./../images/gcs.png)"></div> \
+					<div class="native-game-desc gcs">Game Access</div> \
+				</div> \
 			</div>';
 
 			//Finally, create the new game blocks dynamically
@@ -94,7 +98,7 @@ function games_list2() {
 				new_game_blocks.id = gamesdata.gamenickname + "-block";
 	
 				//Add classes to the new game blocks
-				new_game_blocks.classList.add("app-block-universal", gamesdata.gamenickname);
+				new_game_blocks.classList.add("app-block-universal", gamesdata.gamenickname + "-block", gamesdata.gamenickname);
 		
 				//Add the game image in the background
 				new_game_blocks.style.backgroundImage = "url('./../images/games-backg/steam/steam.jpg')";
@@ -122,6 +126,7 @@ function games_list2() {
 						<div class="native-game"> \
 							<div class="native-game-img" style="background-image: url(./../images/' + game_plataform + '.png)"></div> \
 							<div class="native-game-desc ' + game_plataform + '">Native</div> \
+						</div> \
 					</div> \
 				</div>';
 	
@@ -134,8 +139,8 @@ function games_list2() {
 				new_game_blocks.id = gamesdata.gamenickname + "-block";
 
 				//Add classes to the new game blocks
-				new_game_blocks.classList.add("app-block-universal", gamesdata.gamenickname);
-
+				new_game_blocks.classList.add("app-block-universal", gamesdata.gamenickname + "-block", gamesdata.gamenickname);
+	
 				//Add the game image in the background
 				new_game_blocks.style.backgroundImage = "url('./../images/games-backg/steam/steam.jpg')";
 
@@ -159,9 +164,10 @@ function games_list2() {
 					<div class="block-text-universal" title="' + gamesdata.gamename + '"> \
 						<div class="block-title">' + gamesdata.gamename + '</div> \
 						<div class="block-desc">Steam</div> \
-					<div class="native-game"> \
-						<div class="native-game-img" style="background-image: url(./../images/' + game_plataform + '.png)"></div> \
-						<div class="native-game-desc ' + game_plataform + '">Native</div> \
+						<div class="native-game"> \
+							<div class="native-game-img" style="background-image: url(./../images/' + game_plataform + '.png)"></div> \
+							<div class="native-game-desc ' + game_plataform + '">Native</div> \
+						</div> \
 					</div> \
 				</div>';
 	
@@ -176,10 +182,10 @@ function games_list2() {
 				//Request the creation of the new element (block) for each game
 				var new_game_blocks = document.createElement("div");
 				new_game_blocks.id = gamesdata.gameid + "-block";
-	
+
 				//Add classes to the new game blocks
 				new_game_blocks.classList.add("app-block-universal", gamesdata.gamenickname + "-block", gamesdata.gamenickname);
-	
+
 				//Add the game image in the background
 				new_game_blocks.style.backgroundImage = "url('./../images/games-backg/steam/steam.jpg')";
 	
@@ -199,6 +205,7 @@ function games_list2() {
 						<div class="native-game"> \
 							<div class="native-game-img" style="background-image: url(./../images/gcs.png)"></div> \
 							<div class="native-game-desc gcs">Game Access</div> \
+						</div> \
 					</div> \
 				</div>';
 	
@@ -220,6 +227,9 @@ function games_list2() {
 				new_game_blocks.innerHTML = ' \
 				<div class="universal-game-img epicstore-game-img" style="background-image: url(file://' + gamesdata.game_img1 + ')"></div> \
 					<div class="block-play-universal"> \
+						<div title="Desinstalar jogo" class="remove-game-button" onclick="window.game_for_remove=' + gamenickname + '; uninstall_epicstore_game();"> \
+							<i class="fas fa-trash-alt"></i> \
+						</div> \
 						<div id="' + gamesdata.gameid + '" class="play-box-universal" onclick="window.gameid=this.id; run_epicstore_game();"> \
 						<div class="play-button"> \
 							<i class="fas fa-play"></i><div class="play-txt">Jogar</div> \
@@ -232,6 +242,7 @@ function games_list2() {
 						<div class="native-game"> \
 							<div class="native-game-img" style="background-image: url(./../images/gcs.png)"></div> \
 							<div class="native-game-desc gcs">Game Access</div> \
+						</div> \
 					</div> \
 				</div>';
 	
@@ -273,6 +284,10 @@ function games_list2() {
 			<div class="block-text ' + gamesdata.gamenickname +'" title="' + gamesdata.gamename +'"> \
 				<div class="block-title">' + gamesdata.gamename + '</div> \
 				<div class="block-desc">' + gamesdata.launcher + '</div> \
+				<div class="native-game"> \
+					<div class="native-game-img" style="background-image: url(./../images/gcs.png)"></div> \
+					<div class="native-game-desc gcs">Game Access</div> \
+				</div> \
 			</div>';
 
 			//Finally, create the new game blocks dynamically

@@ -76,7 +76,7 @@ setInterval(function() {
 	show_confirmbox_uninstall_game_epicstore();
 	show_confirmbox_installation();
 	show_remove_user_account();
-}, 1000);
+}, 1500);
 
 // Cancel game installation
 function cancel_game_installation() {
@@ -179,6 +179,8 @@ function start_uninstall_epicstore_game() {
 	console.log(command_line);
 	exec(command_line,function(error,call,errlog){
 	});
+
+	$('.confirm-start-game-uninstallation').css('display', 'none')
 }
 
 function cancel_uninstall_epicstore_game() {

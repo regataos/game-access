@@ -71,3 +71,10 @@ for i in /opt/regataos-gcs/games-list/*.json; do
 		fi
 	fi
 done
+
+# Check for installed games from the Epic Games Store
+if test ! -e $HOME/.config/regataos-gcs/installed/*-epicstore.json; then
+	rm -f "$HOME/.config/regataos-gcs/installed/show-installed-games-epic.txt"
+else
+	echo "show installed games" > "/tmp/regataos-gcs/config/installed/show-installed-games-epic.txt"
+fi

@@ -168,6 +168,7 @@ if (!err) {
 					<div class="native-game"> \
 						<div class="native-game-img" style="background-image: url(./../images/' + game_plataform + '.png)"></div> \
 						<div class="native-game-desc ' + game_plataform + '">Native</div> \
+					</div> \
 				</div> \
 			</div>';
 
@@ -242,9 +243,10 @@ if (!err) {
 				<div class="block-text-universal" title="' + gamesdata.gamename + '"> \
 					<div class="block-title">' + gamesdata.gamename + '</div> \
 					<div class="block-desc">Steam</div> \
-				<div class="native-game"> \
-					<div class="native-game-img" style="background-image: url(./../images/' + game_plataform + '.png)"></div> \
-					<div class="native-game-desc ' + game_plataform + '">Native</div> \
+					<div class="native-game"> \
+						<div class="native-game-img" style="background-image: url(./../images/' + game_plataform + '.png)"></div> \
+						<div class="native-game-desc ' + game_plataform + '">Native</div> \
+					</div> \
 				</div> \
 			</div>';
 

@@ -16,5 +16,16 @@ else
 	break
 fi
 
+# Capture the games installation folder from the Epic Games Store
+if test -e "/tmp/progressbar-gcs/download-percentage-legendary"; then
+	if test ! -e "/tmp/regataos-gcs/game-patch-epicstore.txt"; then
+		if [[ $(grep -r "Install path" "/tmp/progressbar-gcs/download-percentage-legendary") == *"Install path"* ]]; then
+			install_path="$(grep -r "Install path" "/tmp/progressbar-gcs/download-percentage-legendary" | cut -d":" -f 3- | cut -d" " -f 2-)"
+
+			echo "$install_path" > "/tmp/regataos-gcs/game-patch-epicstore.txt"
+		fi
+	fi
+fi
+
    sleep 5
 done

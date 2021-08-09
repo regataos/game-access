@@ -20,6 +20,8 @@ installation_path="$GAME_PATH"
 	cp -f "$HOME/.config/regataos-gcs/epicstore-games/json/$game_nickname-epicstore.json" \
 	"$HOME/.config/regataos-gcs/installed/$game_nickname-epicstore.json"
 
+	echo "show installed games" > "/tmp/regataos-gcs/config/installed/show-installed-games-epic.txt"
+
 ) | env GTK_THEME=Adwaita:dark zenity --progress --pulsate --width 450 --window-icon "/usr/share/pixmaps/regataos-gcs.png" \
 --title "Regata OS Game Access" \
 --text "<big>Importing the $game_name game.\nThis may take a few minutes...</big>" \

@@ -57,7 +57,7 @@ function success_installation() {
 	sed -i '/^$/d' "$HOME/.config/regataos-gcs/installed-launchers.conf"
 
 	# Notify
-	notify-send -i emblem-ok-symbolic -u normal -a 'Regata OS Game Access' "$app_name $success_notify_title" "$app_name $success_notify_text"
+	notify-send -i regataos-gcs -u normal -a 'Regata OS Game Access' "$app_name $success_notify_title" "$app_name $success_notify_text"
 
 	# Create desktop shortcut
 	#Check desktop
@@ -87,7 +87,7 @@ function gameinstall_folder() {
 # Installation failed
 function installation_failed() {
 	# Notify
-	notify-send -i emblem-important-symbolic -u normal -a 'Regata OS Game Access' "$error_notify_title $app_name!" "$error_notify_text $app_name."
+	notify-send -i regataos-gcs -u normal -a 'Regata OS Game Access' "$error_notify_title $app_name!" "$error_notify_text $app_name."
 }
 
 # Fix Wine applications folder
@@ -177,13 +177,16 @@ rm -f $progressbar_dir/eta
 # Prepare wineprefix to run the launcher and games
 if test -e "$HOME/.local/share/wineprefixes/default-compatibility-mode" ; then
 	# Configuring compatibility mode
-	echo "installing" > $progressbar_dir/progress-movement
-	echo "" > $progressbar_dir/progress
-	echo $app_name > $progressbar_dir/app-name
-	echo $conf_prefix_status > $progressbar_dir/status
+	if test ! -e "$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"; then
+		echo "installing" > $progressbar_dir/progress-movement
+		echo "" > $progressbar_dir/progress
+		echo $app_name > $progressbar_dir/app-name
+		echo $conf_prefix_status > $progressbar_dir/status
 
-	cp -rf "$HOME/.local/share/wineprefixes/default-compatibility-mode" \
-	"$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"
+		cp -rf "$HOME/.local/share/wineprefixes/default-compatibility-mode" \
+		"$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"
+	fi
+
 else
 	# Environment variables for Wine
 	export WINEPREFIX="$HOME/.local/share/wineprefixes/default-compatibility-mode";
