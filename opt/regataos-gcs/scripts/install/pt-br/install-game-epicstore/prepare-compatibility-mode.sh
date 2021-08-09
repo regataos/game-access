@@ -38,6 +38,21 @@ if test -e "$HOME/.local/share/wineprefixes/default-compatibility-mode" ; then
 		exit 0
 	fi
 
+elif test -e "/usr/share/regataos/compatibility-mode/default-wineprefix.tar.xz" ; then
+	# Configuring compatibility mode
+	echo "installing" > $progressbar_dir/progress-movement
+	echo "" > $progressbar_dir/progress
+	echo $app_name > $progressbar_dir/app-name
+	echo $conf_prefix_status > $progressbar_dir/status
+
+	if test -e "/usr/share/regataos/compatibility-mode/default-wineprefix.tar.xz" ; then
+		mkdir -p "$HOME/.local/share/wineprefixes/"
+		tar xf "/usr/share/regataos/compatibility-mode/default-wineprefix.tar.xz" -C "$HOME/.local/share/wineprefixes/"
+	fi
+
+	cp -rf "$HOME/.local/share/wineprefixes/default-compatibility-mode" \
+	"$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"
+
 else
 
 # Prepare the progress bar
