@@ -1,6 +1,6 @@
 // Open a pop-up that allows login to launcher
 function open_url(URL) {
-	window.open(URL, 'popup', 'width=1024, height=590')
+	window.open("./../pages/go-egs.html", 'popup', 'width=1024, height=590')
 }
 
 // If necessary, display the loading status on the page
