@@ -159,6 +159,8 @@ if test -e "$HOME/.local/share/wineprefixes/default-compatibility-mode" ; then
 
 		cp -rf "$HOME/.local/share/wineprefixes/default-compatibility-mode" \
 		"$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"
+
+		winetricks prefix=epicstore-compatibility-mode -q -f win10
 	fi
 
 elif test -e "/usr/share/regataos/compatibility-mode/default-wineprefix.tar.xz" ; then
@@ -175,6 +177,8 @@ elif test -e "/usr/share/regataos/compatibility-mode/default-wineprefix.tar.xz" 
 
 	cp -rf "$HOME/.local/share/wineprefixes/default-compatibility-mode" \
 	"$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"
+
+	winetricks prefix=epicstore-compatibility-mode -q -f win10
 
 else
 	# Environment variables for Wine

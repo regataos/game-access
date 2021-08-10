@@ -27,6 +27,8 @@ if test -e "$HOME/.local/share/wineprefixes/default-compatibility-mode" ; then
 		cp -rf "$HOME/.local/share/wineprefixes/default-compatibility-mode" \
 		"$HOME/.local/share/wineprefixes/epicstore-compatibility-mode"
 
+		winetricks prefix=epicstore-compatibility-mode -q -f win10
+
 		rm -f $progressbar_dir/progress-movement
 		echo "completed" > $progressbar_dir/progress-full
 		echo "" > $progressbar_dir/status
@@ -50,8 +52,10 @@ elif test -e "/usr/share/regataos/compatibility-mode/default-wineprefix.tar.xz" 
 		tar xf "/usr/share/regataos/compatibility-mode/default-wineprefix.tar.xz" -C "$HOME/.local/share/wineprefixes/"
 	fi
 
+	winetricks prefix=epicstore-compatibility-mode -q -f win10
+
 	cp -rf "$HOME/.local/share/wineprefixes/default-compatibility-mode" \
-	"$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"
+	"$HOME/.local/share/wineprefixes/epicstore-compatibility-mode"
 
 else
 
