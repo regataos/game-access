@@ -169,6 +169,8 @@ elif test -e "/usr/share/regataos/compatibility-mode/default-wineprefix.tar.xz" 
 	echo "" > $progressbar_dir/progress
 	echo $app_name > $progressbar_dir/app-name
 	echo $conf_prefix_status > $progressbar_dir/status
+	sleep 1
+	echo "show progress bar" > $progressbar_dir/progressbar
 
 	if test -e "/usr/share/regataos/compatibility-mode/default-wineprefix.tar.xz" ; then
 		mkdir -p "$HOME/.local/share/wineprefixes/"
@@ -179,6 +181,13 @@ elif test -e "/usr/share/regataos/compatibility-mode/default-wineprefix.tar.xz" 
 	"$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"
 
 	winetricks prefix=epicstore-compatibility-mode -q -f win10
+
+	rm -f $progressbar_dir/progress-movement
+	echo "completed" > $progressbar_dir/progress-full
+	echo "" > $progressbar_dir/status
+	echo $success_installation > $progressbar_dir/progress
+	sleep 2
+	rm -f $progressbar_dir/*
 
 else
 	# Environment variables for Wine
