@@ -107,6 +107,10 @@ label.label-run {
 	cursor: pointer;
 }
 
+label.label-run-game {
+	cursor: pointer;
+}
+
 /* Display content when everything is ready */
 #loadscreen {
 	display: block;

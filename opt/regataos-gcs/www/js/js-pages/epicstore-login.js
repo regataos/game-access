@@ -1,6 +1,12 @@
 // Open a pop-up that allows login to launcher
 function open_url(URL) {
-	window.open("./../pages/go-egs.html", 'popup', 'width=1024, height=590')
+	var popup = window.open("./../pages/go-egs.html", 'popup')
+	document.getElementById("login-button").style.pointerEvents = "none";
+
+	setTimeout(function(){
+		popup.focus();
+		document.getElementById("login-button").style.pointerEvents = "auto";
+	}, 2000);
 }
 
 // If necessary, display the loading status on the page
