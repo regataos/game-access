@@ -102,22 +102,25 @@ if test -e "$progressbar_dir/installing" ; then
 
 	#I'm in the process queue, see you later
 	exit 0
+
 else
 	# Start dependences Download
-	if test ! -e "$HOME/.cache/winetricks/directx9/directx_Jun2010_redist.exe" ; then
-		# Put the process in the installation queue
-		kmsg=$(grep -r $app_nickname $progressbar_dir/queued-process)
-		if [[ $kmsg == *"$app_nickname"* ]]; then
-			echo "Nothing to do."
-		else
-			echo "$app_nickname=install process-$app_name_process" >> $progressbar_dir/queued-process
+	if test ! -e "/usr/share/regataos/compatibility-mode/default-wineprefix.tar.xz" ; then
+		if test ! -e "$HOME/.cache/winetricks/directx9/directx_Jun2010_redist.exe" ; then
+			# Put the process in the installation queue
+			kmsg=$(grep -r $app_nickname $progressbar_dir/queued-process)
+			if [[ $kmsg == *"$app_nickname"* ]]; then
+				echo "Nothing to do."
+			else
+				echo "$app_nickname=install process-$app_name_process" >> $progressbar_dir/queued-process
+			fi
+
+			echo dotnet > /tmp/regataos-gcs/dotnet
+			/opt/regataos-gcs/scripts/install/scripts-install/directx-compatibility-mode.sh start
+
+			#I'm in the process queue, see you later
+			exit 0
 		fi
-
-		echo dotnet > /tmp/regataos-gcs/dotnet
-		/opt/regataos-gcs/scripts/install/scripts-install/directx-compatibility-mode.sh start
-
-		#I'm in the process queue, see you later
-		exit 0
 	fi
 fi
 

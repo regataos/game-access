@@ -3,12 +3,14 @@
 
 # Settings and variables
 #General information
-game_nickname="$(cat /tmp/regataos-gcs/start-installation-epicstore.txt)"
+if [ -z "$game_nickname" ] ;then
+	game_nickname="$(cat /tmp/regataos-gcs/start-installation-epicstore.txt)"
+fi
 
 #Clear cache
 rm -f "/tmp/regataos-gcs/start-installation-epicstore.txt"
 
-app_name="$(grep -r "gamename" $HOME/.config/regataos-gcs/epicstore-games/json/$game_nickname-epicstore.json | awk '{print $2}' | sed 's/"\|,//g')"
+app_name="$(grep -r "gamename" $HOME/.config/regataos-gcs/epicstore-games/json/$game_nickname-epicstore.json | cut -d":" -f 2- | sed 's/ //' | sed 's/"\|,//g')"
 game_id="$(grep -r "gameid" $HOME/.config/regataos-gcs/epicstore-games/json/$game_nickname-epicstore.json | awk '{print $2}' | sed 's/"\|,//g')"
 GAME_INSTALL_DIR="$GAME_PATH"
 app_nickname="epicstore"
@@ -69,31 +71,34 @@ function installation_failed() {
 # Search for processes
 if test -e "$progressbar_dir/installing" ; then
 	# Put the process in the installation queue
-	kmsg=$(grep -r $app_nickname $progressbar_dir/queued-process)
-	if [[ $kmsg == *"install-epicstore-game"* ]]; then
+	kmsg=$(grep -r $game_nickname $progressbar_dir/queued-process)
+	if [[ $kmsg == *"$game_nickname"* ]]; then
 		echo "Nothing to do."
 	else
-		echo "install-epicstore-game=install process-$app_name_process" >> $progressbar_dir/queued-process
+		echo "$game_nickname=epicstore process-$app_name_process" >> $progressbar_dir/queued-process
 	fi
 
 	#I'm in the process queue, see you later
 	exit 0
+
 else
 	# Start dependences Download
-	if test ! -e "$HOME/.cache/winetricks/directx9/directx_Jun2010_redist.exe" ; then
-		# Put the process in the installation queue
-		kmsg=$(grep -r install-epicstore-game $progressbar_dir/queued-process)
-		if [[ $kmsg == *"install-epicstore-game"* ]]; then
-			echo "Nothing to do."
-		else
-			echo "install-epicstore-game=install process-$app_name_process" >> $progressbar_dir/queued-process
+	if test ! -e "/usr/share/regataos/compatibility-mode/default-wineprefix.tar.xz" ; then
+		if test ! -e "$HOME/.cache/winetricks/directx9/directx_Jun2010_redist.exe" ; then
+			# Put the process in the installation queue
+			kmsg=$(grep -r $game_nickname $progressbar_dir/queued-process)
+			if [[ $kmsg == *"$game_nickname"* ]]; then
+				echo "Nothing to do."
+			else
+				echo "$game_nickname=epicstore process-$app_name_process" >> $progressbar_dir/queued-process
+			fi
+
+			echo dotnet > /tmp/regataos-gcs/dotnet
+			/opt/regataos-gcs/scripts/install/scripts-install/directx-compatibility-mode.sh start
+
+			#I'm in the process queue, see you later
+			exit 0
 		fi
-
-		echo dotnet > /tmp/regataos-gcs/dotnet
-		/opt/regataos-gcs/scripts/install/scripts-install/directx-compatibility-mode.sh start
-
-		#I'm in the process queue, see you later
-		exit 0
 	fi
 fi
 
@@ -106,16 +111,21 @@ cat > $progressbar_dir/script-cancel << EOM
 #!/bin/bash 
 #
 
-killall legendary
 killall install-epicstore-game.sh
+pkill --signal CONT legendary
+killall legendary
 
-rm -f "/tmp/regataos-gcs/$app_download_file_name"
+if [ ! -z "$GAME_INSTALL_DIR" ] ;then
+	rm -f "/tmp/regataos-gcs/$app_download_file_name"
+fi
 
 if test ! -e $progressbar_dir/queued-1 ; then
 	rm -f $progressbar_dir/*
 fi
 
 echo "0%" > $progressbar_dir/progress
+rm -f $progressbar_dir/app-name
+rm -f $progressbar_dir/download-percentage-legendary
 rm -f $progressbar_dir/get-pid
 rm -f $progressbar_dir/installing
 rm -f "/tmp/regataos-gcs/installing-$app_nickname"
@@ -373,7 +383,11 @@ if [[ $(ps aux | egrep "install-epicstore-game.sh") == *"install-epicstore-game.
 		rm -f "$progressbar_dir/download-extra.txt"
 		start_installation
 	else
-		echo "Installation in progress..."
+		if test -e "$progressbar_dir/installing"; then
+			echo "Installation in progress..."
+		else
+			start_installation
+		fi
 	fi
 else
 	start_installation
