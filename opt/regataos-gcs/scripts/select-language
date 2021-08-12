@@ -6,13 +6,8 @@ while :
 do
 
 # Fix for progressbar-gcs folder
-if test -e /tmp/progressbar-gcs ; then
-	chmod 777 /tmp/progressbar-gcs
-	chmod 777 /tmp/progressbar-gcs/*
-else
-	mkdir -p /tmp/progressbar-gcs
-	chmod 777 /tmp/progressbar-gcs
-	chmod 777 /tmp/progressbar-gcs/*
+if test ! -e /tmp/progressbar-gcs/installing ; then
+	rm -rf "/tmp/progressbar-gcs"
 fi
 
 # Select language

@@ -81,19 +81,23 @@ else
 				rm -f "/tmp/progressbar-gcs/speed"
 				rm -f "/tmp/progressbar-gcs/eta"
 			else
-				speed=$(cat /tmp/progressbar-gcs/download-percentage-legendary | grep "Download" | awk '{print $6 $7}' | tail -1 | head -1)
+				speed=$(cat /tmp/progressbar-gcs/download-percentage-legendary | grep "Download" | awk '{print $6 $7}' | tail -1 | head -1 | sed 's/K/ K/' | sed 's/M/ M/' | sed 's/G/ G/')
 				echo $speed > /tmp/progressbar-gcs/speed
 				eta=$(cat /tmp/progressbar-gcs/download-percentage-legendary | grep "ETA" | awk '{print $11}' | tail -1 | head -1)
 				echo "$(echo $eta)h" > /tmp/progressbar-gcs/eta
 			fi
 
 			# Download Size
-			download_size=$(cat /tmp/progressbar-gcs/download-percentage-legendary | grep "Download size" | awk '{print $5 $6}' | tail -1 | head -1)
-			echo "$download_size" > /tmp/progressbar-gcs/download-size
+			game_size=$(cat /tmp/progressbar-gcs/download-percentage-legendary | grep "Download size" | awk '{print $5}' | tail -1 | head -1 | cut -d"." -f -1)
+			download_size_bytes=$(( $game_size * 1024*1024 ))
+
+			echo "$download_size_bytes" > /tmp/progressbar-gcs/download-size-bytes
 
 			# Downloading File Size
-			file_size=$(cat /tmp/progressbar-gcs/download-percentage-legendary | grep "Downloaded" | awk '{print $5 $6}' | tail -1 | head -1 | sed 's/,//g')
-			echo "$file_size /" > /tmp/progressbar-gcs/file-size
+			download_percentage=$(cat /tmp/progressbar-gcs/download-percentage-legendary | grep "Downloaded" | awk '{print $5}' | tail -1 | head -1 | sed 's/,//g' | cut -d"." -f -1)
+			file_size_bytes=$(( $download_percentage * 1024*1024 ))
+
+			echo "$file_size_bytes" > /tmp/progressbar-gcs/file-size-bytes
 		fi
 	fi
 fi

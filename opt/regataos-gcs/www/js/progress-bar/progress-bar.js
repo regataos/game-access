@@ -236,29 +236,67 @@ if (!err) {
 }
 
 function down_size() {
+	fs.access(dir+'download-size-bytes', (err) => {
+	if (!err) {
+		fs.readFile(dir+'download-size-bytes', (err, downsize_bytes) => {
+  		if (err) throw err;
+  			var downsize_bytes = downsize_bytes
 
-fs.readFile(dir+'download-size', (err, downsize) => {
-  if (err) throw err;
-  //console.log(downsize);
+			function formatBytes(bytes, decimals = 2) {
+			if (bytes == 0) return '0 Bytes';
+				const k = 1024;
+				const dm = decimals < 0 ? 0 : decimals;
+				const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
 
-  var downsize = downsize
+				const i = Math.floor(Math.log(bytes) / Math.log(k));
 
-  $("#downsize").text(downsize);
-});
+				return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+			}
 
+  			$("#downsize").text(formatBytes(downsize_bytes));
+		});
+	return;
+
+	} else {
+		fs.readFile(dir+'download-size', (err, downsize) => {
+		if (err) throw err;
+			var downsize = downsize
+			$("#downsize").text(downsize);
+		});
+	}
+	});
 }
 
 function file_size() {
+	fs.access(dir+'file-size-bytes', (err) => {
+	if (!err) {
+		fs.readFile(dir+'file-size-bytes', (err, filesize_bytes) => {
+  		if (err) throw err;
+  			var filesize_bytes = filesize_bytes
 
-fs.readFile(dir+'file-size', (err, filesize) => {
-  if (err) throw err;
-  //console.log(filesize);
+			function formatBytes(bytes, decimals = 2) {
+			if (bytes == 0) return '0 Bytes /';
+				const k = 1024;
+				const dm = decimals < 0 ? 0 : decimals;
+				const sizes = ['Bytes /', 'KB /', 'MB /', 'GB /', 'TB /', 'PB /', 'EB /', 'ZB /', 'YB /'];
 
-  var filesize = filesize
+				const i = Math.floor(Math.log(bytes) / Math.log(k));
 
-  $("#filesize").text(filesize);
-});
+				return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+			}
 
+  			$("#filesize").text(formatBytes(filesize_bytes));
+		});
+	return;
+
+	} else {
+		fs.readFile(dir+'file-size', (err, filesize) => {
+		if (err) throw err;
+			var filesize = filesize
+			$("#filesize").text(filesize);
+		});
+	}
+	});
 }
 
 function eta_down() {

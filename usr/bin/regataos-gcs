@@ -19,6 +19,15 @@ if test ! -e "/tmp/regataos-gcs/config" ; then
 	ln -sf "$HOME/.config/regataos-gcs" "/tmp/regataos-gcs/config"
 fi
 
+# Create download cache
+if test ! -e "$HOME/.config/regataos-gcs/progressbar-gcs" ; then
+	mkdir -p "$HOME/.config/regataos-gcs/progressbar-gcs/"
+fi
+
+if test ! -e "/tmp/progressbar-gcs" ; then
+	ln -sf "$HOME/.config/regataos-gcs/progressbar-gcs" "/tmp/progressbar-gcs"
+fi
+
 # Check language
 if test ! -e "/tmp/regataos-configs/config/plasma-localerc" ; then
 	mkdir -p /tmp/regataos-configs/config
@@ -49,7 +58,7 @@ fi
 sed -i 's/\(closed-manually=0\)/closed-manually=1/' "$HOME/.config/regataos-gcs/regataos-gcs.conf"
 
 # If necessary, clear the cache
-ps -C ps -e | egrep 'battlenet-comp|epicstore-comp|gog-comp|lol-comp|origin-comp|rockstar-comp|ubisoftconnect' > /dev/null
+ps -C ps -e | egrep 'battlenet-comp|epicstore-comp|gog-comp|lol-comp|origin-comp|rockstar-comp|ubisoftconnect|install-epics' > /dev/null
 if [ $? = 1 ]
 then
 	rm -f /tmp/progressbar-gcs/*
