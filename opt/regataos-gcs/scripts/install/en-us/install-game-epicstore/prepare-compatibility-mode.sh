@@ -14,7 +14,11 @@ app_name_dotnet48="Installing .NET Framework 4.8"
 app_name_directx="Installing DirectX Redistributable"
 install_dotnet_status="This may take a few minutes..."
 
-if test -e "$HOME/.local/share/wineprefixes/default-compatibility-mode" ; then
+if test -e "$HOME/.local/share/wineprefixes/epicstore-compatibility-mode" ; then
+	# We're finished!
+	exit 0
+
+elif test -e "$HOME/.local/share/wineprefixes/default-compatibility-mode" ; then
 	if test ! -e "$HOME/.local/share/wineprefixes/epicstore-compatibility-mode" ; then
 		# Configuring compatibility mode
 		echo "installing" > $progressbar_dir/progress-movement
@@ -54,10 +58,10 @@ elif test -e "/usr/share/regataos/compatibility-mode/default-wineprefix.tar.xz" 
 		tar xf "/usr/share/regataos/compatibility-mode/default-wineprefix.tar.xz" -C "$HOME/.local/share/wineprefixes/"
 	fi
 
-	winetricks prefix=epicstore-compatibility-mode -q -f win10
-
 	cp -rf "$HOME/.local/share/wineprefixes/default-compatibility-mode" \
 	"$HOME/.local/share/wineprefixes/epicstore-compatibility-mode"
+
+	winetricks prefix=epicstore-compatibility-mode -q -f win10
 
 	rm -f $progressbar_dir/progress-movement
 	echo "completed" > $progressbar_dir/progress-full
@@ -65,6 +69,9 @@ elif test -e "/usr/share/regataos/compatibility-mode/default-wineprefix.tar.xz" 
 	echo $success_installation > $progressbar_dir/progress
 	sleep 2
 	rm -f $progressbar_dir/*
+
+	# We're finished!
+	exit 0
 
 else
 
@@ -203,6 +210,8 @@ if test ! -e "$HOME/.local/share/wineprefixes/epicstore-compatibility-mode" ; th
 	cp -rf "$HOME/.local/share/wineprefixes/default-compatibility-mode" \
 	"$HOME/.local/share/wineprefixes/epicstore-compatibility-mode"
 fi
+
+winetricks prefix=epicstore-compatibility-mode -q -f win10
 
 echo "100%" > $progressbar_dir/progress
 sleep 3
