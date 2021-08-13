@@ -5,14 +5,13 @@ const fs = require('fs');
 
 var installed_launchers = fs.readFileSync("/tmp/regataos-gcs/config/installed-launchers.conf", "utf8");
 if ((installed_launchers.indexOf("epicstore") > -1) == "1") {
-
 	var command_line = 'cd /opt/regataos-wine/desktop-files/; gtk-launch "Epic Games Launcher.desktop"';
-	console.log(command_line);
 	exec(command_line,function(error,call,errlog){
 	});
-
 } else {
-	window.open("https://www.epicgames.com/store/p/rebel-galaxy", 'popup')
+	var command_line = 'echo "epicstore" > "/tmp/regataos-gcs/confirm-installation"';
+	exec(command_line,function(error,call,errlog){
+	});
 }
 }
 
@@ -22,14 +21,13 @@ const fs = require('fs');
 
 var installed_launchers = fs.readFileSync("/tmp/regataos-gcs/config/installed-launchers.conf", "utf8");
 if ((installed_launchers.indexOf("epicstore") > -1) == "1") {
-
 	var command_line = 'cd /opt/regataos-wine/desktop-files/; gtk-launch "Epic Games Launcher.desktop"';
-	console.log(command_line);
 	exec(command_line,function(error,call,errlog){
 	});
-
 } else {
-	window.open("https://www.epicgames.com/store/free-games", 'popup')
+	var command_line = 'echo "epicstore" > "/tmp/regataos-gcs/confirm-installation"';
+	exec(command_line,function(error,call,errlog){
+	});
 }
 }
 
@@ -39,13 +37,12 @@ const fs = require('fs');
 
 var installed_launchers = fs.readFileSync("/tmp/regataos-gcs/config/installed-launchers.conf", "utf8");
 if ((installed_launchers.indexOf("epicstore") > -1) == "1") {
-
 	var command_line = 'cd /opt/regataos-wine/desktop-files/; gtk-launch "Epic Games Launcher.desktop"';
-	console.log(command_line);
 	exec(command_line,function(error,call,errlog){
 	});
-
 } else {
-	window.open("https://www.epicgames.com/store/p/rocket-league", 'popup')
+	var command_line = 'echo "epicstore" > "/tmp/regataos-gcs/confirm-installation"';
+	exec(command_line,function(error,call,errlog){
+	});
 }
 }
