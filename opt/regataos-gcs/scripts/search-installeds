@@ -27,5 +27,12 @@ if test -e "/tmp/progressbar-gcs/download-percentage-legendary"; then
 	fi
 fi
 
+# Check for JSON files in the directory listing installed games
+if [[ $(ls "/tmp/regataos-gcs/config/installed/" | grep json) == *".json"* ]]; then
+	echo "Show installed games" > "/tmp/regataos-gcs/config/installed/show-installed-games.txt"
+else
+	rm -f "/tmp/regataos-gcs/config/installed/show-installed-games.txt"
+fi
+
    sleep 5
 done

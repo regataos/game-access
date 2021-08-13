@@ -223,6 +223,9 @@ function games_list2() {
 				//Add the game image in the background
 				new_game_blocks.style.backgroundImage = "url('./../images/games-backg/steam/steam.jpg')";
 	
+				//Variable required for uninstall game button
+				var gamenickname = "'" + gamesdata.gamenickname + "'"
+
 				//Add game details within the newly created block
 				new_game_blocks.innerHTML = ' \
 				<div class="universal-game-img epicstore-game-img" style="background-image: url(file://' + gamesdata.game_img1 + ')"></div> \
@@ -257,7 +260,7 @@ function games_list2() {
 			var new_game_blocks = document.createElement("div");
 
 			//Add classes to the new game blocks
-			new_game_blocks.classList.add("app-block", gamesdata.launchernickname+"-block", gamesdata.gamenickname);
+			new_game_blocks.classList.add("app-block", gamesdata.launchernickname+"-block", gamesdata.gamenickname + "-block", gamesdata.gamenickname);
 
 			//Add the game image in the background
 			new_game_blocks.style.backgroundImage = "url('./../images/games-backg/" + gamesdata.launchernickname + "/" + gamesdata.gamenickname + ".jpg')";

@@ -176,7 +176,6 @@ function default_folder() {
 function start_uninstall_epicstore_game() {
 	const exec = require('child_process').exec;
 	var command_line = '/opt/regataos-gcs/scripts/remove/scripts-remove/uninstall-game-epicstore/uninstall-epicstore-game.sh';
-	console.log(command_line);
 	exec(command_line,function(error,call,errlog){
 	});
 

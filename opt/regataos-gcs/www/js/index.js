@@ -78,28 +78,13 @@ if (!err) {
 
 // Show the link to the installed games page
 function installed_page() {
-	var installed_launchers = fs.readFileSync("/tmp/regataos-gcs/config/installed-launchers.conf", "utf8");
-	var n = installed_launchers.length;
-
-	if (n <= 2) {
-		var iframeurl = document.getElementById("iframegcs").contentWindow.location.href
-		var url_split1 = iframeurl.split("pages/")[1];
-		var pagename = url_split1.replace('.html', '');
-
-		if ((pagename.indexOf("installed") > -1) == "0") {
-			$(".p-installed-li").css("display", "none");
-		}
-
+	fs.access('/tmp/regataos-gcs/config/installed/show-installed-games.txt', (err) => {
+	if (!err) {
+		$(".p-installed-li").css("display", "block");
 	} else {
-		var installed_games = fs.readFileSync("/tmp/regataos-gcs/config/installed-games.conf", "utf8");
-		var g = installed_games.length;
-	
-		if (g >= 2) {
-			$(".p-installed-li").css("display", "block");
-		} else {
-			$(".p-installed-li").css("display", "none");
-		}
+		$(".p-installed-li").css("display", "none");
 	}
+	});
 }
 
 // Check if Steam is installed and if there are any games installed

@@ -51,7 +51,9 @@ $(document).ready(function() {
 	$(".installed-title-epicstore").text("Installed games");
 	$(".account-title-epicstore").text("Available in your Epic Games Store account");
 	//View more
-	$(".epicstore-more").text("Install Epic Games Store");
+	$(".epicstore-more").text("See more at Epic Games Store");
+	//Install
+	$(".epicstore-install").text("Install Epic Games Store");
 	//Login button
 	$(".login-button-epicstore").text("Log in to Epic Games Store");
 	//Remove account button

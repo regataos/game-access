@@ -18,7 +18,7 @@ if (!err) {
 
 	//Read the list of games that should appear in each block
 	epicstore_games_json.forEach(gamesdata => {
-		const child = epicstore_all_games.querySelector("div#" + gamesdata.gameid + "-block");
+		const child = epicstore_all_games.querySelector("div." + gamesdata.gamenickname + "-block");
 
 		if (child == null) {
 			//Request the creation of the new element (block) for each game
@@ -89,7 +89,7 @@ if (!err) {
 
 	//Read the list of games that should appear in each block
 	epicstore_games_json.forEach(gamesdata => {
-		const child = epicstore_installed_games.querySelector("div#" + gamesdata.gameid + "-block");
+		const child = epicstore_installed_games.querySelector("div." + gamesdata.gamenickname + "-block");
 
 		if (child == null) {
 			//Request the creation of the new element (block) for each game
@@ -193,11 +193,20 @@ function start_list_games() {
 		$("div.universal-login").css("display", "none")
 		$('body').css('background-image', 'url()');
 		$("div.remove-account").css("display", "block")
-		$("div.universal-more").css("display", "block")
 		$("div.universal-account-title").css("display", "block")
 		$("div.universal-all-games").css("display", "block")
 		$("div.loading").css("display", "none")
 		$("div.loading-games").css("display", "none")
+
+		var launchers = fs.readFileSync("/tmp/regataos-gcs/config/installed-launchers.conf", "utf8");
+		if ((launchers.indexOf("epicstore") > -1) == "1") {
+			$("div.epicstore-install").css("display", "none")
+			$("div.epicstore-more").css("display", "block")
+		} else {
+			$("div.epicstore-install").css("display", "block")
+			$("div.epicstore-more").css("display", "none")
+		}
+
 		show_installed_games();
 		list_epicstore_account();
 		return;
