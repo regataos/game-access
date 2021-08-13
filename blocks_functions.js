@@ -12,10 +12,7 @@ if ((installed_launchers.indexOf("epicstore") > -1) == "1") {
 	});
 
 } else {
-	var comando = 'echo "epicstore" > "/tmp/regataos-gcs/confirm-installation"';
-	console.log(comando);
-	exec(comando,function(error,call,errlog){
-	});
+	window.open("https://www.epicgames.com/store/p/rebel-galaxy", 'popup')
 }
 }
 
@@ -32,10 +29,7 @@ if ((installed_launchers.indexOf("epicstore") > -1) == "1") {
 	});
 
 } else {
-	var comando = 'echo "epicstore" > "/tmp/regataos-gcs/confirm-installation"';
-	console.log(comando);
-	exec(comando,function(error,call,errlog){
-	});
+	window.open("https://www.epicgames.com/store/free-games", 'popup')
 }
 }
 
@@ -52,9 +46,6 @@ if ((installed_launchers.indexOf("epicstore") > -1) == "1") {
 	});
 
 } else {
-	var comando = 'echo "epicstore" > "/tmp/regataos-gcs/confirm-installation"';
-	console.log(comando);
-	exec(comando,function(error,call,errlog){
-	});
+	window.open("https://www.epicgames.com/store/p/rocket-league", 'popup')
 }
 }
