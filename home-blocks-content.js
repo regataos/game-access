@@ -10,12 +10,12 @@ function home_content() {
             $(document).ready(function() {
                 // Content of block 1
                 //Block image
-                $(".appbc1").css("background-image", 'url("https://i.ibb.co/M9dMzpq/block1.jpg")');
+                $(".appbc1").css("background-image", 'url("https://i.ibb.co/RBKLnSY/block1.jpg")');
                 $(".appbc1").css("background-position", "50% 50%")
 
                 //Title and description
-                $(".appbc1 .block-title").text("Defense Grid: The Awakening");
-                $(".appbc1 .block-desc").text("Disponível de graça na Epic Games Store até 29 de julho.");
+                $(".appbc1 .block-title").text("Rebel Galaxy");
+                $(".appbc1 .block-desc").text("Disponível de graça na Epic Games Store até 19 de agosto.");
 
                 // Content of block 2
                 //Block image
@@ -40,12 +40,12 @@ function home_content() {
             $(document).ready(function() {
                 // Content of block 1
                 //Block image
-                $(".appbc1").css("background-image", 'url("https://i.ibb.co/M9dMzpq/block1.jpg")');
+                $(".appbc1").css("background-image", 'url("https://i.ibb.co/RBKLnSY/block1.jpg")');
                 $(".appbc1").css("background-position", "50% 50%")
 
                 //Title and description
-                $(".appbc1 .block-title").text("Defense Grid: The Awakening");
-                $(".appbc1 .block-desc").text("Disponível de graça na Epic Games Store até 15 de julho.");
+                $(".appbc1 .block-title").text("Rebel Galaxy");
+                $(".appbc1 .block-desc").text("Disponível de graça na Epic Games Store até 15 de agosto.");
 
                 // Content of block 2
                 //Block image
@@ -70,12 +70,12 @@ function home_content() {
             $(document).ready(function() {
                 // Content of block 1
                 //Block image
-                $(".appbc1").css("background-image", 'url("https://i.ibb.co/M9dMzpq/block1.jpg")');
+                $(".appbc1").css("background-image", 'url("https://i.ibb.co/RBKLnSY/block1.jpg")');
                 $(".appbc1").css("background-position", "50% 50%")
 
                 //Title and description
-                $(".appbc1 .block-title").text("Defense Grid: The Awakening");
-                $(".appbc1 .block-desc").text("Available for free at the Epic Games Store until July 15.");
+                $(".appbc1 .block-title").text("Rebel Galaxy");
+                $(".appbc1 .block-desc").text("Available for free at the Epic Games Store until August 19.");
 
                 // Content of block 2
                 //Block image
@@ -100,12 +100,12 @@ function home_content() {
             $(document).ready(function() {
                 // Content of block 1
                 //Block image
-                $(".appbc1").css("background-image", 'url("https://i.ibb.co/M9dMzpq/block1.jpg")');
+                $(".appbc1").css("background-image", 'url("https://i.ibb.co/RBKLnSY/block1.jpg")');
                 $(".appbc1").css("background-position", "50% 50%")
 
                 //Title and description
-                $(".appbc1 .block-title").text("Defense Grid: The Awakening");
-                $(".appbc1 .block-desc").text("Available for free at the Epic Games Store until July 15.");
+                $(".appbc1 .block-title").text("Rebel Galaxy");
+                $(".appbc1 .block-desc").text("Available for free at the Epic Games Store until August 19.");
 
                 // Content of block 2
                 //Block image
