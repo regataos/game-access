@@ -19,12 +19,12 @@ function home_content() {
 
                 // Content of block 2
                 //Block image
-                $(".appbc2").css("background-image", 'url("https://i.ibb.co/dG468tS/block2.jpg")');
+                $(".appbc2").css("background-image", 'url("https://i.ibb.co/b583qPG/block2.jpg")');
                 $(".appbc2").css("background-position", "50% 0%")
 
                 //Title and description
-                $(".appbc2 .block-title").text("Verdun");
-                $(".appbc2 .block-desc").text("Disponível de graça na Epic Games Store até 29 de julho.");
+                $(".appbc2 .block-title").text("Yooka-Laylee");
+                $(".appbc2 .block-desc").text("Disponível em breve na Epic Games Store.");
 
                 // Content of block 3
                 //Block image
@@ -45,16 +45,16 @@ function home_content() {
 
                 //Title and description
                 $(".appbc1 .block-title").text("Rebel Galaxy");
-                $(".appbc1 .block-desc").text("Disponível de graça na Epic Games Store até 15 de agosto.");
+                $(".appbc1 .block-desc").text("Disponível de graça na Epic Games Store até 19 de agosto.");
 
                 // Content of block 2
                 //Block image
-                $(".appbc2").css("background-image", 'url("https://i.ibb.co/dG468tS/block2.jpg")');
+                $(".appbc2").css("background-image", 'url("https://i.ibb.co/b583qPG/block2.jpg")');
                 $(".appbc2").css("background-position", "50% 0%")
 
                 //Title and description
-                $(".appbc2 .block-title").text("Verdun");
-                $(".appbc2 .block-desc").text("Disponível de graça na Epic Games Store até 15 de julho.");
+                $(".appbc2 .block-title").text("Yooka-Laylee");
+                $(".appbc2 .block-desc").text("Disponível em breve na Epic Games Store.");
 
                 // Content of block 3
                 //Block image
@@ -79,12 +79,12 @@ function home_content() {
 
                 // Content of block 2
                 //Block image
-                $(".appbc2").css("background-image", 'url("https://i.ibb.co/dG468tS/block2.jpg")');
+                $(".appbc2").css("background-image", 'url("https://i.ibb.co/b583qPG/block2.jpg")');
                 $(".appbc2").css("background-position", "50% 0%")
 
                 //Title and description
-                $(".appbc2 .block-title").text("Verdun");
-                $(".appbc2 .block-desc").text("Available for free at the Epic Games Store until July 15.");
+                $(".appbc2 .block-title").text("Yooka-Laylee");
+                $(".appbc2 .block-desc").text("Available soon on the Epic Games Store.");
 
                 // Content of block 3
                 //Block image
@@ -109,12 +109,12 @@ function home_content() {
 
                 // Content of block 2
                 //Block image
-                $(".appbc2").css("background-image", 'url("https://i.ibb.co/dG468tS/block2.jpg")');
+                $(".appbc2").css("background-image", 'url("https://i.ibb.co/b583qPG/block2.jpg")');
                 $(".appbc2").css("background-position", "50% 0%")
 
                 //Title and description
-                $(".appbc2 .block-title").text("Verdun");
-                $(".appbc2 .block-desc").text("Available for free at the Epic Games Store until July 15.");
+                $(".appbc2 .block-title").text("Yooka-Laylee");
+                $(".appbc2 .block-desc").text("Available soon on the Epic Games Store.");
 
                 // Content of block 3
                 //Block image
