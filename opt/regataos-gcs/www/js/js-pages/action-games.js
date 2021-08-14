@@ -121,15 +121,8 @@ function uninstall_epicstore_game() {
 // Run game from Epic Games Store
 function run_epicstore_game() {
     const exec = require('child_process').exec;
-	const fs = require("fs");
 
-	// Verify that hybrid graphics are supported and run with the dGPU
-	if (fs.existsSync("/tmp/regataos-prime/use-hybrid-graphics.txt")) {
-    	var command_line = 'regataos-dgpu gamemoderun /opt/regataos-gcs/legendary/legendary launch ' + gameid + ' --wine-prefix "$HOME/.local/share/wineprefixes/epicstore-compatibility-mode"';
-	} else {
-    	var command_line = 'gamemoderun /opt/regataos-gcs/legendary/legendary launch ' + gameid + ' --wine-prefix "$HOME/.local/share/wineprefixes/epicstore-compatibility-mode"';
-	}
-
+    var command_line = 'export GAMEID="' + gameid + '"; /opt/regataos-gcs/scripts/action-games/rungame-epicstore';
     console.log(command_line);
     exec(command_line,function(error,call,errlog){
     });

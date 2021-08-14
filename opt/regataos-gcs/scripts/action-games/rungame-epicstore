@@ -2,22 +2,15 @@
 # Script that helps automate the execution of games with Regata OS Game Access
 
 # Location of the application's prefix and executable
-PREFIX_LOCATION="$HOME/.local/share/wineprefixes/$LAUNCHER-compatibility-mode"
-GCS_CONFIG="$HOME/.config/regataos-gcs/$LAUNCHER.conf"
-LOG_FILE="/var/log/regataos-logs/$LAUNCHER-$GAME.log"
-
-if [ -z $RUNGAME ];then
-	if [[ $(grep -r "$GAME" "$HOME/.config/regataos-gcs/game-install-dir.conf" | cut -d"=" -f -1) == *"$GAME"* ]]; then
-		export GAME_EXEC=$(grep -r "$GAME=" "$HOME/.config/regataos-gcs/game-install-dir.conf" | cut -d"=" -f 2-)
-	else
-		/opt/regataos-wine/apps-exec/$LAUNCHER start
-		exit 0
-	fi
-fi
+PREFIX_LOCATION="$HOME/.local/share/wineprefixes/epicstore-compatibility-mode"
+GCS_CONFIG="$HOME/.config/regataos-gcs/regataos-gcs.conf"
+LOG_FILE="/var/log/regataos-logs/epicstore-$GAMEID.log"
 
 # Variables
 export WINEPREFIX="$PREFIX_LOCATION"
 export WINEDLLOVERRIDES="winemenubuilder,winedbg,nvapi,nvapi64="
+export WINEESYNC=1
+export WINE_LARGE_ADDRESS_AWARE=1
 export DXVK_STATE_CACHE_PATH="$PREFIX_LOCATION"
 export DXVK_LOG_PATH="$PREFIX_LOCATION"
 
@@ -26,11 +19,11 @@ if test -e "$PREFIX_LOCATION/dxvk.conf"; then
 fi
 
 # Enable performance info
-if [[ $(grep -r FPS $GCS_CONFIG) == *"FPS=1"* ]]; then
-	#export MANGOHUD_CONFIG=ram,vram,gpu_core_clock,cpu_temp,gpu_temp,core_load,gpu_name,font_size=19
-	#export MANGOHUD=1
-	#export MANGOHUD_GL="mangohud"
-	export DXVK_HUD=devinfo,fps,frametimes,gpuload,api,compiler
+if [[ $(grep -r fps $GCS_CONFIG) == *"fps=1"* ]]; then
+	export MANGOHUD_CONFIG=ram,vram,gpu_core_clock,cpu_temp,gpu_temp,core_load,gpu_name,font_size=19
+	export MANGOHUD=1
+	export MANGOHUD_GL="mangohud"
+	#export DXVK_HUD=devinfo,fps,frametimes,gpuload,api,compiler
 fi
 
 # If necessary, run osftware with the dGPU
@@ -40,31 +33,29 @@ if test -e /tmp/regataos-prime/use-hybrid-graphics.txt ; then
 		export GAMEMODERUNEXEC='env __NV_PRIME_RENDER_OFFLOAD=1 __GLX_VENDOR_LIBRARY_NAME=nvidia __VK_LAYER_NV_optimus=NVIDIA_only __GL_SHADER_DISK_CACHE=1 __GL_SHADER_DISK_CACHE_PATH="$PREFIX_LOCATION" __GL_SHADER_DISK_CACHE_SKIP_CLEANUP=1'
 
 		# Special configurations for DXVK with NVIDIA GPU
-		ln -sf "/opt/regataos-wine/custom-configs/$LAUNCHER/dxvk-nvidia.conf" "$PREFIX_LOCATION/dxvk.conf"
+		ln -sf "/opt/regataos-wine/custom-configs/epicstore/dxvk-nvidia.conf" "$PREFIX_LOCATION/dxvk.conf"
+
 	else
 		# For open source drivers
 		export GAMEMODERUNEXEC="env DRI_PRIME=1"
 
 		# Special configurations for DXVK with AMD/Intel GPU
-		ln -sf "/opt/regataos-wine/custom-configs/$LAUNCHER/dxvk.conf" "$PREFIX_LOCATION/dxvk.conf"
+		ln -sf "/opt/regataos-wine/custom-configs/epicstore/dxvk.conf" "$PREFIX_LOCATION/dxvk.conf"
 	fi
 
 else
 	if test -e /usr/bin/nvidia-xconfig ; then
 		# Special configurations for DXVK with NVIDIA GPU
-		ln -sf "/opt/regataos-wine/custom-configs/$LAUNCHER/dxvk-nvidia.conf" "$PREFIX_LOCATION/dxvk.conf"
+		ln -sf "/opt/regataos-wine/custom-configs/epicstore/dxvk-nvidia.conf" "$PREFIX_LOCATION/dxvk.conf"
 
 		# For the NVIDIA proprietary driver
 		export GAMEMODERUNEXEC="env __GL_SHADER_DISK_CACHE=1 __GL_SHADER_DISK_CACHE_PATH=$PREFIX_LOCATION __GL_SHADER_DISK_CACHE_SKIP_CLEANUP=1"
+
 	else
 		# Special configurations for DXVK with AMD/Intel GPU
-		ln -sf "/opt/regataos-wine/custom-configs/$LAUNCHER/dxvk.conf" "$PREFIX_LOCATION/dxvk.conf"
+		ln -sf "/opt/regataos-wine/custom-configs/epicstore/dxvk.conf" "$PREFIX_LOCATION/dxvk.conf"
 	fi
 fi
 
 # Run game
-if [ -z $RUNGAME ];then
-	(env $GAMEVAR $(echo $MANGOHUD_GL) gamemoderun wine "$GAME_EXEC") 2>&1 | tee $LOG_FILE
-else
-	(env $GAMEVAR $(echo $MANGOHUD_GL) gamemoderun wine start "$RUNGAME") 2>&1 | tee $LOG_FILE
-fi
+(env $(echo $MANGOHUD_GL) gamemoderun /opt/regataos-gcs/legendary/legendary launch "$GAMEID" --wine-prefix "$PREFIX_LOCATION") 2>&1 | tee $LOG_FILE
