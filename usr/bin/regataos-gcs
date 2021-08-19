@@ -52,6 +52,12 @@ if [[ $(ls "$HOME/.config/regataos-gcs/epicstore-games/json/" | grep json) == *"
 	/opt/regataos-gcs/legendary/legendary status
 fi
 
+# Verify that Epic Games Store is installed to sync information
+if [[ $(cat /tmp/regataos-gcs/config/installed-launchers.conf) == *"epicstore"* ]]; then
+	/opt/regataos-gcs/legendary/legendary egl-sync -y --egl-wine-prefix "$HOME/.local/share/wineprefixes/epicstore-compatibility-mode/"
+	/opt/regataos-gcs/legendary/legendary egl-sync -y --enable-sync
+fi
+
 # Run app
 if [[ $(glxinfo | grep vendor) == *"Intel"* ]]; then
 	regataosgcs --disable-gpu /opt/regataos-gcs & sleep 1; /opt/regataos-gcs/scripts/progress-bar/capture-progress-download & /opt/regataos-gcs/scripts/progress-bar/create-process-queues & /opt/regataos-gcs/scripts/progress-bar/run-process-queues & /opt/regataos-gcs/scripts/search-installeds & /opt/regataos-gcs/scripts/action-games/auto-close-game-access

@@ -144,3 +144,17 @@ for i in $HOME/.config/legendary/metadata/*.json; do
 		fi
 	fi
 done
+
+# Check if a game is still in the installed or downloading list
+for i in /tmp/regataos-gcs/config/epicstore-games/json/*-epicstore.json; do
+	game_id="$(grep -R '"gameid"' $i | awk '{print $2}' | sed 's/"\|,//g')"
+	game_nickname="$(grep -R '"gamenickname"' $i | awk '{print $2}' | sed 's/"\|,//g')"
+
+	if [[ $(cat $HOME/.config/legendary/installed.json | grep $game_id) == *"$game_id"* ]]; then
+		if test ! -e "/tmp/regataos-gcs/config/installed/$game_nickname-epicstore.json" ; then
+			cp -f "/tmp/regataos-gcs/config/epicstore-games/json/$game_nickname-epicstore.json" "/tmp/regataos-gcs/config/installed/$game_nickname-epicstore.json"
+		fi
+	else
+		rm -f "/tmp/regataos-gcs/config/installed/$game_nickname-epicstore.json"
+	fi
+done

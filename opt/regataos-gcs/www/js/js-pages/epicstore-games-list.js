@@ -112,7 +112,7 @@ if (!err) {
 					<div title="Desinstalar jogo" class="remove-game-button" onclick="window.game_for_remove=' + gamenickname + '; uninstall_epicstore_game();"> \
 						<i class="fas fa-trash-alt"></i> \
 					</div> \
-					<div id="' + gamesdata.gameid + '" class="play-box-universal" onclick="window.gameid=this.id; run_epicstore_game();"> \
+					<div id="' + gamesdata.gameid + '" class="play-box-universal" onclick="window.gameid=this.id; window.gamenickname=' + gamenickname + '; run_epicstore_game();"> \
 					<div class="play-button"> \
 						<i class="fas fa-play"></i><div class="play-txt">Jogar</div> \
 					</div> \
@@ -151,11 +151,11 @@ function show_installed_games() {
 	var fs = require("fs");
 	const exec = require('child_process').exec;
 
-    var command_line = "cat $HOME/.local/share/wineprefixes/epicstore-compatibility-mode/drive_c/ProgramData/Epic/UnrealEngineLauncher/LauncherInstalled.dat | grep ItemId";
+    var command_line = "cat $HOME/.config/legendary/installed.json | grep app_name";
 	exec(command_line, (error, stdout, stderr) => {
     if (stdout) {
 		var data = stdout
-		if ((data.indexOf("ItemId") > -1) == "1") {
+		if ((data.indexOf("app_name") > -1) == "1") {
 			$(".universal-installed-games").css("display", "block");
 			$(".universal-account-title").css("margin-top", "30px");
 			$(".universal-installed-title").css("display", "block");

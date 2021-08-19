@@ -75,11 +75,17 @@ function games_list_installed() {
 				//Add the game image in the background
 				new_game_blocks.style.backgroundImage = "url('./../images/games-backg/steam/steam.jpg')";
 
+				//Variable required for uninstall game button
+				var gamenickname = "'" + gamesdata.gamenickname + "'"
+
 				//Add game details within the newly created block
 				new_game_blocks.innerHTML = ' \
 				<div class="universal-game-img epicstore-game-img" style="background-image: url(file://' + gamesdata.game_img1 + ')"></div> \
 					<div class="block-play-universal"> \
-						<div id="' + gamesdata.gameid + '" class="play-box-universal" onclick="window.gameid=this.id; run_epicstore_game();"> \
+						<div title="Desinstalar jogo" class="remove-game-button" onclick="window.game_for_remove=' + gamenickname + '; uninstall_epicstore_game();"> \
+							<i class="fas fa-trash-alt"></i> \
+						</div> \
+						<div id="' + gamesdata.gameid + '" class="play-box-universal" onclick="window.gameid=this.id; window.gamenickname=' + gamenickname + '; run_epicstore_game();"> \
 						<div class="play-button"> \
 							<i class="fas fa-play"></i><div class="play-txt">Jogar</div> \
 						</div> \

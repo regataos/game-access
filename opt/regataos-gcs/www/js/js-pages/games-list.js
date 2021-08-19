@@ -233,7 +233,7 @@ function games_list2() {
 						<div title="Desinstalar jogo" class="remove-game-button" onclick="window.game_for_remove=' + gamenickname + '; uninstall_epicstore_game();"> \
 							<i class="fas fa-trash-alt"></i> \
 						</div> \
-						<div id="' + gamesdata.gameid + '" class="play-box-universal" onclick="window.gameid=this.id; run_epicstore_game();"> \
+						<div id="' + gamesdata.gameid + '" class="play-box-universal" onclick="window.gameid=this.id; window.gamenickname=' + gamenickname + '; run_epicstore_game();"> \
 						<div class="play-button"> \
 							<i class="fas fa-play"></i><div class="play-txt">Jogar</div> \
 						</div> \
