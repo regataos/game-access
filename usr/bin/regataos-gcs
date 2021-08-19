@@ -47,6 +47,11 @@ rm -f /tmp/regataos-gcs/config/steam-games/json/steam-id/*
 # Check internet connection
 # /opt/regataos-help/scripts/regataos-help-check-network.sh start
 
+# Check if you have logged in to the Epic Games Store
+if [[ $(ls "$HOME/.config/regataos-gcs/epicstore-games/json/" | grep json) == *".json"* ]]; then
+	/opt/regataos-gcs/legendary/legendary status
+fi
+
 # Run app
 if [[ $(glxinfo | grep vendor) == *"Intel"* ]]; then
 	regataosgcs --disable-gpu /opt/regataos-gcs & sleep 1; /opt/regataos-gcs/scripts/progress-bar/capture-progress-download & /opt/regataos-gcs/scripts/progress-bar/create-process-queues & /opt/regataos-gcs/scripts/progress-bar/run-process-queues & /opt/regataos-gcs/scripts/search-installeds & /opt/regataos-gcs/scripts/action-games/auto-close-game-access

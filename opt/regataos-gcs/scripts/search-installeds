@@ -34,5 +34,10 @@ else
 	rm -f "/tmp/regataos-gcs/config/installed/show-installed-games.txt"
 fi
 
+# Check if you have logged in to the Epic Games Store
+if [[ $(ls "$HOME/.config/regataos-gcs/epicstore-games/json/" | grep json) == *".json"* ]]; then
+	/opt/regataos-gcs/scripts/search-epicstore-games.sh start
+fi
+
    sleep 5
 done

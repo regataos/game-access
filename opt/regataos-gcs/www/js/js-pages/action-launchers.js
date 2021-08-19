@@ -119,3 +119,17 @@ function remove_user_account_epicstore() {
     exec(command_line,function(error,call,errlog){
     });
 }
+
+
+// Check if you have logged in to the Epic Games Store
+function legendary_status() {
+	const exec = require('child_process').exec;
+	const fs = require("fs");
+
+	if (fs.existsSync("/tmp/regataos-gcs/config/epicstore-games/show-egs.txt")) {
+		var command_line = '/opt/regataos-gcs/legendary/legendary status';
+		exec(command_line,function(error,call,errlog){
+		});
+	}
+}
+legendary_status();
