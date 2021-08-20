@@ -84,7 +84,7 @@ for i in $HOME/.config/legendary/metadata/*.json; do
 
 	# Make the game name lowercase
 	gamename_lowercase=$(echo "$game_title" | tr 'A-Z' 'a-z' | sed 's/: \|- \|(\|)\|, \|™\|+//g')
-	gamename_lowercase=$(echo $gamename_lowercase | sed 's/ /-/g')
+	gamename_lowercase=$(echo $gamename_lowercase | sed 's/ /-/g' | sed "s/'//g")
 
 	if [[ $(echo $categories) == *"games"* ]]; then
 		# Download game image
