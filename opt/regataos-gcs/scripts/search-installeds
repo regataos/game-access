@@ -36,7 +36,7 @@ fi
 
 # Check if you have logged in to the Epic Games Store
 if [[ $(ls "$HOME/.config/regataos-gcs/epicstore-games/json/" | grep json) == *".json"* ]]; then
-	/opt/regataos-gcs/scripts/search-epicstore-games.sh start
+	/bin/bash /opt/regataos-gcs/scripts/search-epicstore-games.sh & sleep 5; /bin/bash /opt/regataos-gcs/scripts/search-epicstore-games.sh
 fi
 
    sleep 5

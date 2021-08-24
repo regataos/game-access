@@ -15,7 +15,7 @@ if test -e "/tmp/regataos-gcs/login-id.txt"; then
     /opt/regataos-gcs/legendary/legendary status
 
     # Create cache with game files
-    /opt/regataos-gcs/scripts/search-epicstore-games.sh start
+	/bin/bash /opt/regataos-gcs/scripts/search-epicstore-games.sh & sleep 5; /bin/bash /opt/regataos-gcs/scripts/search-epicstore-games.sh
 
     # Verify successful login to Epic Games Store
     if test -e "$HOME/.config/legendary/user.json"; then

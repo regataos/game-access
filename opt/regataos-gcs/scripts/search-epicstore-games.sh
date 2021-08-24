@@ -91,7 +91,9 @@ for i in $HOME/.config/legendary/metadata/*.json; do
 		image_type=$(echo $game_img1 | cut -d'.' -f 4-)
 		if [ -z $image_type ];then
 			if test ! -e "/tmp/regataos-gcs/config/epicstore-games/img/$gamename_lowercase"; then
+				sleep 1
 				wget --no-check-certificate -O "/tmp/regataos-gcs/config/epicstore-games/img/$gamename_lowercase" "$game_img1"
+				sleep 1
 			fi
 
 			game_img1="/tmp/regataos-gcs/config/epicstore-games/img/$gamename_lowercase"
@@ -99,32 +101,13 @@ for i in $HOME/.config/legendary/metadata/*.json; do
 
 		else
 			if test ! -e "/tmp/regataos-gcs/config/epicstore-games/img/$gamename_lowercase.$image_type"; then
+				sleep 1
 				wget --no-check-certificate -O "/tmp/regataos-gcs/config/epicstore-games/img/$gamename_lowercase.$image_type" "$game_img1"
+				sleep 1
 			fi
 
 			game_img1="/tmp/regataos-gcs/config/epicstore-games/img/$gamename_lowercase.$image_type"
 			convert -resize 854 /tmp/regataos-gcs/config/epicstore-games/img/$gamename_lowercase.$image_type /tmp/regataos-gcs/config/epicstore-games/img/$gamename_lowercase.$image_type
-		fi
-
-		# Download game logo
-		if [ ! -z $game_img2 ];then
-			image_type2=$(echo $game_img2 | cut -d'.' -f 4-)
-			if [ -z $image_type2 ];then
-				if test ! -e "/tmp/regataos-gcs/config/epicstore-games/img/$gamename_lowercase-logo"; then
-					wget --no-check-certificate -O "/tmp/regataos-gcs/config/epicstore-games/img/$gamename_lowercase-logo" "$game_img2"
-				fi
-
-				game_img2="/tmp/regataos-gcs/config/epicstore-games/img/$gamename_lowercase-logo"
-				convert -resize 854 /tmp/regataos-gcs/config/epicstore-games/img/$gamename_lowercase-logo /tmp/regataos-gcs/config/epicstore-games/img/$gamename_lowercase-logo
-
-			else
-				if test ! -e "/tmp/regataos-gcs/config/epicstore-games/img/$gamename_lowercase-logo.$image_type2"; then
-					wget --no-check-certificate -O "/tmp/regataos-gcs/config/epicstore-games/img/$gamename_lowercase-logo.$image_type2" "$game_img2"
-				fi
-
-				game_img2="/tmp/regataos-gcs/config/epicstore-games/img/$gamename_lowercase-logo.$image_type2"
-				convert -resize 250 /tmp/regataos-gcs/config/epicstore-games/img/$gamename_lowercase-logo.$image_type2 /tmp/regataos-gcs/config/epicstore-games/img/$gamename_lowercase-logo.$image_type2
-			fi
 		fi
 
 		# Update cache only if game data does not exist
