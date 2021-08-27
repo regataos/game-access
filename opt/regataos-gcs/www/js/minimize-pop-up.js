@@ -1,13 +1,15 @@
-// Get the current window
-var win = nw.Window.get();
+setTimeout(function(){
+	// Get the current window
+	var win = nw.Window.get();
 
-// Listen to the minimize event
-win.on('minimize', function() {
-  console.log('Window is minimized');
-});
+	// Listen to the minimize event
+	win.on('minimize', function() {
+		console.log('Window is minimized');
+	});
 
-// Minimize the window
-win.minimize();
+	// Minimize the window
+	win.minimize();
 
-// Unlisten the minimize event
-win.removeAllListeners('minimize');
+	// Unlisten the minimize event
+	win.removeAllListeners('minimize');
+}, 500);

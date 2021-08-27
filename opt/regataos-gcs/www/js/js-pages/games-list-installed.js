@@ -78,9 +78,26 @@ function games_list_installed() {
 				//Variable required for uninstall game button
 				var gamenickname = "'" + gamesdata.gamenickname + "'"
 
+				//Set game image
+				if (fs.existsSync('/tmp/regataos-gcs/config/epicstore-games/img/' + gamesdata.gamenickname + '.jpg')) {
+					var background = "/tmp/regataos-gcs/config/epicstore-games/img/" + gamesdata.gamenickname + ".jpg"
+					var gamebackg = "file://" + background
+
+				} else if (fs.existsSync('/tmp/regataos-gcs/config/epicstore-games/img/' + gamesdata.gamenickname + '.png')) {
+					var background = "/tmp/regataos-gcs/config/epicstore-games/img/" + gamesdata.gamenickname + ".png"
+					var gamebackg = "file://" + background
+
+				} else if (fs.existsSync('/tmp/regataos-gcs/config/epicstore-games/img/' + gamesdata.gamenickname)) {
+					var background = "/tmp/regataos-gcs/config/epicstore-games/img/" + gamesdata.gamenickname
+					var gamebackg = "file://" + background
+
+				} else {
+					var gamebackg = "'" + gamesdata.game_img1 + "'"
+				}
+
 				//Add game details within the newly created block
 				new_game_blocks.innerHTML = ' \
-				<div class="universal-game-img epicstore-game-img" style="background-image: url(file://' + gamesdata.game_img1 + ')"></div> \
+				<div class="universal-game-img epicstore-game-img" style="background-image: url(' + gamebackg + ')"></div> \
 					<div class="block-play-universal"> \
 						<div title="Desinstalar jogo" class="remove-game-button" onclick="window.game_for_remove=' + gamenickname + '; uninstall_epicstore_game();"> \
 							<i class="fas fa-trash-alt"></i> \

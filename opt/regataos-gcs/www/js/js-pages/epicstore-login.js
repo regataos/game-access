@@ -6,7 +6,7 @@ function open_url(URL) {
 	setTimeout(function(){
 		popup.focus();
 		document.getElementById("login-button").style.pointerEvents = "auto";
-	}, 2000);
+	}, 3000);
 }
 
 // If necessary, display the loading status on the page

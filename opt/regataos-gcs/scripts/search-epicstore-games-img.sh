@@ -87,6 +87,29 @@ for i in $HOME/.config/legendary/metadata/*.json; do
 	gamename_lowercase=$(echo $gamename_lowercase | sed 's/ /-/g' | sed "s/'//g")
 
 	if [[ $(echo $categories) == *"games"* ]]; then
+		# Download game image
+		image_type=$(echo $game_img1 | cut -d'.' -f 4-)
+		if [ -z $image_type ];then
+			if test ! -e "/tmp/regataos-gcs/config/epicstore-games/img/$gamename_lowercase"; then
+				sleep 1
+				wget --no-check-certificate -O "/tmp/regataos-gcs/config/epicstore-games/img/$gamename_lowercase" "$game_img1"
+				sleep 1
+			fi
+
+			game_img1="/tmp/regataos-gcs/config/epicstore-games/img/$gamename_lowercase"
+			convert -resize 854 /tmp/regataos-gcs/config/epicstore-games/img/$gamename_lowercase /tmp/regataos-gcs/config/epicstore-games/img/$gamename_lowercase
+
+		else
+			if test ! -e "/tmp/regataos-gcs/config/epicstore-games/img/$gamename_lowercase.$image_type"; then
+				sleep 1
+				wget --no-check-certificate -O "/tmp/regataos-gcs/config/epicstore-games/img/$gamename_lowercase.$image_type" "$game_img1"
+				sleep 1
+			fi
+
+			game_img1="/tmp/regataos-gcs/config/epicstore-games/img/$gamename_lowercase.$image_type"
+			convert -resize 854 /tmp/regataos-gcs/config/epicstore-games/img/$gamename_lowercase.$image_type /tmp/regataos-gcs/config/epicstore-games/img/$gamename_lowercase.$image_type
+		fi
+
 		# Update cache only if game data does not exist
 		if test ! -e "/tmp/regataos-gcs/config/epicstore-games/json/$gamename_lowercase-epicstore.json"; then
 			create_json_file
@@ -96,6 +119,10 @@ for i in $HOME/.config/legendary/metadata/*.json; do
 			# otherwise clear cache
 			if test ! -e "$HOME/.config/legendary/metadata/$game_name.json"; then
 				rm -f "/tmp/regataos-gcs/config/epicstore-games/json/$gamename_lowercase-epicstore.json"
+				rm -f "/tmp/regataos-gcs/config/epicstore-games/img/$gamename_lowercase-logo"
+				rm -f "/tmp/regataos-gcs/config/epicstore-games/img/$gamename_lowercase-logo.$image_type2"
+				rm -f "/tmp/regataos-gcs/config/epicstore-games/img/$gamename_lowercase"
+				rm -f "/tmp/regataos-gcs/config/epicstore-games/img/$gamename_lowercase.$image_type"
 			fi
 		fi
 	fi
