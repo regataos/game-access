@@ -10,21 +10,21 @@ function home_content() {
             $(document).ready(function() {
                 // Content of block 1
                 //Block image
-                $(".appbc1").css("background-image", 'url("https://cdn1.epicgames.com/salesEvent/salesEvent/EGS_VoidBastards_BlueManchu_S1_2560x1440-6ffb5f547e5434d115cc6de7d13b1bc6?h=480&resize=1&w=854")');
+                $(".appbc1").css("background-image", 'url("https://cdn1.epicgames.com/3928fd8975b2437d894bbc5cd21de9a0/offer/Diesel_productv2_saints-row-the-third-remastered_home_Free_Games_Desktop_horizontal-1060x596-606f53e45df3fe0daefcf09f0a5e527c6bafb9cc-1060x596-facff57675176116ba956106519677ed.jpg?h=480&resize=1&w=854")');
                 $(".appbc1").css("background-position", "50% 50%")
 
                 //Title and description
-                $(".appbc1 .block-title").text("Void Bastards");
-                $(".appbc1 .block-desc").text("Disponível de graça na Epic Games Store até 26 de agosto.");
+                $(".appbc1 .block-title").text("Saints Row: The Third Remastered");
+                $(".appbc1 .block-desc").text("Disponível de graça na Epic Games Store até 2 de setembro.");
 
                 // Content of block 2
                 //Block image
-                $(".appbc2").css("background-image", 'url("https://cdn1.epicgames.com/salesEvent/salesEvent/EGS_YookaLaylee_Playtonic_S3_2560x1440-779ed9403879e74fe1992fefeec9b0d5?h=480&resize=1&w=854")');
+                $(".appbc2").css("background-image", 'url("https://cdn1.epicgames.com/salesEvent/salesEvent/EGS_Automachef_HermesInteractive_S1_2560x1440-448983fc02b127093940156b7c1d489a?h=480&resize=1&w=854")');
                 $(".appbc2").css("background-position", "50% 0%")
 
                 //Title and description
-                $(".appbc2 .block-title").text("Yooka-Laylee");
-                $(".appbc2 .block-desc").text("Disponível de graça na Epic Games Store até 26 de agosto.");
+                $(".appbc2 .block-title").text("Automachef");
+                $(".appbc2 .block-desc").text("Disponível de graça na Epic Games Store até 2 de setembro.");
 
                 // Content of block 3
                 //Block image
@@ -40,21 +40,21 @@ function home_content() {
             $(document).ready(function() {
                 // Content of block 1
                 //Block image
-                $(".appbc1").css("background-image", 'url("https://cdn1.epicgames.com/salesEvent/salesEvent/EGS_VoidBastards_BlueManchu_S1_2560x1440-6ffb5f547e5434d115cc6de7d13b1bc6?h=480&resize=1&w=854")');
+                $(".appbc1").css("background-image", 'url("https://cdn1.epicgames.com/3928fd8975b2437d894bbc5cd21de9a0/offer/Diesel_productv2_saints-row-the-third-remastered_home_Free_Games_Desktop_horizontal-1060x596-606f53e45df3fe0daefcf09f0a5e527c6bafb9cc-1060x596-facff57675176116ba956106519677ed.jpg?h=480&resize=1&w=854")');
                 $(".appbc1").css("background-position", "50% 50%")
 
                 //Title and description
-                $(".appbc1 .block-title").text("Void Bastards");
-                $(".appbc1 .block-desc").text("Disponível de graça na Epic Games Store até 26 de agosto.");
+                $(".appbc1 .block-title").text("Saints Row: The Third Remastered");
+                $(".appbc1 .block-desc").text("Disponível de graça na Epic Games Store até 2 de setembro.");
 
                 // Content of block 2
                 //Block image
-                $(".appbc2").css("background-image", 'url("https://cdn1.epicgames.com/salesEvent/salesEvent/EGS_YookaLaylee_Playtonic_S3_2560x1440-779ed9403879e74fe1992fefeec9b0d5?h=480&resize=1&w=854")');
+                $(".appbc2").css("background-image", 'url("https://cdn1.epicgames.com/salesEvent/salesEvent/EGS_Automachef_HermesInteractive_S1_2560x1440-448983fc02b127093940156b7c1d489a?h=480&resize=1&w=854")');
                 $(".appbc2").css("background-position", "50% 0%")
 
                 //Title and description
-                $(".appbc2 .block-title").text("Yooka-Laylee");
-                $(".appbc2 .block-desc").text("Disponível de graça na Epic Games Store até 26 de agosto.");
+                $(".appbc2 .block-title").text("Automachef");
+                $(".appbc2 .block-desc").text("Disponível de graça na Epic Games Store até 2 de setembro.");
 
                 // Content of block 3
                 //Block image
@@ -70,21 +70,21 @@ function home_content() {
             $(document).ready(function() {
                 // Content of block 1
                 //Block image
-                $(".appbc1").css("background-image", 'url("https://cdn1.epicgames.com/salesEvent/salesEvent/EGS_VoidBastards_BlueManchu_S1_2560x1440-6ffb5f547e5434d115cc6de7d13b1bc6?h=480&resize=1&w=854")');
+                $(".appbc1").css("background-image", 'url("https://cdn1.epicgames.com/3928fd8975b2437d894bbc5cd21de9a0/offer/Diesel_productv2_saints-row-the-third-remastered_home_Free_Games_Desktop_horizontal-1060x596-606f53e45df3fe0daefcf09f0a5e527c6bafb9cc-1060x596-facff57675176116ba956106519677ed.jpg?h=480&resize=1&w=854")');
                 $(".appbc1").css("background-position", "50% 50%")
 
                 //Title and description
-                $(".appbc1 .block-title").text("Void Bastards");
-                $(".appbc1 .block-desc").text("Available for free at the Epic Games Store until August 26.");
+                $(".appbc1 .block-title").text("Saints Row: The Third Remastered");
+                $(".appbc1 .block-desc").text("Available for free at the Epic Games Store until September 02.");
 
                 // Content of block 2
                 //Block image
-                $(".appbc2").css("background-image", 'url("https://cdn1.epicgames.com/salesEvent/salesEvent/EGS_YookaLaylee_Playtonic_S3_2560x1440-779ed9403879e74fe1992fefeec9b0d5?h=480&resize=1&w=854")');
+                $(".appbc2").css("background-image", 'url("https://cdn1.epicgames.com/salesEvent/salesEvent/EGS_Automachef_HermesInteractive_S1_2560x1440-448983fc02b127093940156b7c1d489a?h=480&resize=1&w=854")');
                 $(".appbc2").css("background-position", "50% 0%")
 
                 //Title and description
-                $(".appbc2 .block-title").text("Yooka-Laylee");
-                $(".appbc2 .block-desc").text("Available for free at the Epic Games Store until August 26.");
+                $(".appbc2 .block-title").text("Automachef");
+                $(".appbc2 .block-desc").text("Available for free at the Epic Games Store until September 02.");
 
                 // Content of block 3
                 //Block image
@@ -100,21 +100,21 @@ function home_content() {
             $(document).ready(function() {
                 // Content of block 1
                 //Block image
-                $(".appbc1").css("background-image", 'url("https://cdn1.epicgames.com/salesEvent/salesEvent/EGS_VoidBastards_BlueManchu_S1_2560x1440-6ffb5f547e5434d115cc6de7d13b1bc6?h=480&resize=1&w=854")');
+                $(".appbc1").css("background-image", 'url("https://cdn1.epicgames.com/3928fd8975b2437d894bbc5cd21de9a0/offer/Diesel_productv2_saints-row-the-third-remastered_home_Free_Games_Desktop_horizontal-1060x596-606f53e45df3fe0daefcf09f0a5e527c6bafb9cc-1060x596-facff57675176116ba956106519677ed.jpg?h=480&resize=1&w=854")');
                 $(".appbc1").css("background-position", "50% 50%")
 
                 //Title and description
-                $(".appbc1 .block-title").text("Void Bastards");
-                $(".appbc1 .block-desc").text("Available for free at the Epic Games Store until August 26.");
+                $(".appbc1 .block-title").text("Saints Row: The Third Remastered");
+                $(".appbc1 .block-desc").text("Available for free at the Epic Games Store until September 02.");
 
                 // Content of block 2
                 //Block image
-                $(".appbc2").css("background-image", 'url("https://cdn1.epicgames.com/salesEvent/salesEvent/EGS_YookaLaylee_Playtonic_S3_2560x1440-779ed9403879e74fe1992fefeec9b0d5?h=480&resize=1&w=854")');
+                $(".appbc2").css("background-image", 'url("https://cdn1.epicgames.com/salesEvent/salesEvent/EGS_Automachef_HermesInteractive_S1_2560x1440-448983fc02b127093940156b7c1d489a?h=480&resize=1&w=854")');
                 $(".appbc2").css("background-position", "50% 0%")
 
                 //Title and description
-                $(".appbc2 .block-title").text("Yooka-Laylee");
-                $(".appbc2 .block-desc").text("Available for free at the Epic Games Store until August 26.");
+                $(".appbc2 .block-title").text("Automachef");
+                $(".appbc2 .block-desc").text("Available for free at the Epic Games Store until September 02.");
 
                 // Content of block 3
                 //Block image
