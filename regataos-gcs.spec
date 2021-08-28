@@ -59,6 +59,14 @@ if test -e "/opt/regataos-gcs/games-list" ; then
 	chmod 777 "/opt/regataos-gcs/games-list"
 fi
 
+# Update game access configuration file
+users=`who | cut -d' ' -f1 | uniq`
+for user in $users
+do
+	su - $user -c "sed -i sed -i 's/\(closed-manually=1\)/closed-manually=true/' /tmp/regataos-gcs/config/regataos-gcs.conf"
+	su - $user -c "sed -i sed -i 's/\(closed-manually=0\)/closed-manually=false/' /tmp/regataos-gcs/config/regataos-gcs.conf"
+done
+
 # Start system services
 %service_add_post regataos-gcs-allsettings.service
 systemctl enable  regataos-gcs-allsettings.service || true

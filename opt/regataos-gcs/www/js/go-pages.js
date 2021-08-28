@@ -15,6 +15,7 @@ function go_home() {
 	$("a.p-installed").css("font-weight", "400")
 	$("a.p-allgames").css("font-weight", "400")
 	$("a.p-steam").css("font-weight", "400")
+	$("a.p-settings").css("font-weight", "400")
 	$(".text-app").css("font-weight", "400")
 
 	document.getElementById("iframegcs").contentWindow.document.location.href="pages/home.html";
@@ -24,6 +25,7 @@ function go_installed() {
 	$("a.p-installed").css("font-weight", "700")
 	$("a.p-allgames").css("font-weight", "400")
 	$("a.p-steam").css("font-weight", "400")
+	$("a.p-settings").css("font-weight", "400")
 	$(".top-bar-arrow").css("display", "block")
 	$("ul#top-menu").css("margin-left", "80px")
 	$("a.p-home").css("font-weight", "400")
@@ -36,6 +38,7 @@ function go_allgames() {
 	$("a.p-installed").css("font-weight", "400")
 	$("a.p-allgames").css("font-weight", "700")
 	$("a.p-steam").css("font-weight", "400")
+	$("a.p-settings").css("font-weight", "400")
 	$(".top-bar-arrow").css("display", "block")
 	$("ul#top-menu").css("margin-left", "80px")
 	$("a.p-home").css("font-weight", "400")
@@ -48,12 +51,26 @@ function go_steam() {
 	$("a.p-installed").css("font-weight", "400")
 	$("a.p-allgames").css("font-weight", "400")
 	$("a.p-steam").css("font-weight", "700")
+	$("a.p-settings").css("font-weight", "400")
 	$(".top-bar-arrow").css("display", "block")
 	$("ul#top-menu").css("margin-left", "80px")
 	$("a.p-home").css("font-weight", "400")
 	$(".text-app").css("font-weight", "400")
 
 	document.getElementById("iframegcs").contentWindow.document.location.href="pages/steam-games.html";
+}
+
+function go_settings() {
+	$("a.p-installed").css("font-weight", "400")
+	$("a.p-allgames").css("font-weight", "400")
+	$("a.p-steam").css("font-weight", "400")
+	$("a.p-settings").css("font-weight", "700")
+	$(".top-bar-arrow").css("display", "block")
+	$("ul#top-menu").css("margin-left", "80px")
+	$("a.p-home").css("font-weight", "400")
+	$(".text-app").css("font-weight", "400")
+
+	document.getElementById("iframegcs").contentWindow.document.location.href="pages/settings.html";
 }
 
 function go_to_page() {

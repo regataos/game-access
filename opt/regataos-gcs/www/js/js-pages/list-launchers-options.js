@@ -31,14 +31,6 @@ function list_launchers_options() {
 			<div class="text-app-top">' + launchersdata.launcher_name + '</div> \
 			<div class="div-line"></div> \
 			<div id="block-remove"> \
-				<div class="checkbox-apps ' + launchersdata.launcher_nickname + '-fps fpson"> \
-					<label class="checkbox fpshud" onclick="showfps();"><p class="checkbox-fpstxt">Exibir contador de FPS</p> \
-						<input type="checkbox" checked="checked" id="' + launchersdata.launcher_nickname + 'fps"><span class="checkmark"></span></label> \
-				</div> \
-				<div class="checkbox-apps ' + launchersdata.launcher_nickname + '-nonfps fpsoff"> \
-					<label class="checkbox fpshud" onclick="hidefps();"><p class="checkbox-fpstxt">Exibir contador de FPS</p> \
-						<input type="checkbox" id="' + launchersdata.launcher_nickname + 'nonfps"><span class="checkmark"></span></label> \
-				</div> \
 				<div class="div-buttons"> \
 					<div class="div-label"> \
 						<label class="label-run" id="' + launchersdata.launcher_nickname + '" onclick="window.launcher_name=this.id; run_launcher_exe();" title="Rode um arquivo .exe neste drive virtual." for="run-' + launchersdata.launcher_nickname + '"> \

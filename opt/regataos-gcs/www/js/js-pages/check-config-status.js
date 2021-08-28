@@ -1,27 +1,19 @@
 // If necessary, activate the FPS counter
 function check_fps() {
-const fs = require('fs');
-	fs.readFile('/tmp/regataos-gcs/config/' + launchername + '.conf', (err, data) => {
-	if (err) throw err;
+	const fs = require('fs');
+	var read_settings = fs.readFileSync("/tmp/regataos-gcs/config/regataos-gcs.conf", "utf8");
 
-	var data = data
-	var fps = "FPS=1"
-	var nonfps = "FPS=0"
+	if ((read_settings.indexOf("fps=true") > -1) == "1") {
+		$(".option-fps-hud-enabled").css("display", "block")
+		$(".option-fps-hud-disabled").css("display", "none")
 
-	var showfps = data.indexOf(fps) > -1;
-	var hidefps = data.indexOf(nonfps) > -1;
+	} else if ((read_settings.indexOf("fps=false") > -1) == "1") {
+		$(".option-fps-hud-enabled").css("display", "none")
+		$(".option-fps-hud-disabled").css("display", "block")
 
-	if (showfps == '1') {
-		$(document).ready(function() {
-		$("." + launchername + "-fps").css("display", "block")
-		$("." + launchername + "-nonfps").css("display", "none")
-		});
-	} else if (hidefps == '1') {
-		$(document).ready(function() {
-		$("." + launchername + "-fps").css("display", "none")
-		$("." + launchername + "-nonfps").css("display", "block")
-		});
+	} else {
+		$(".option-fps-hud-enabled").css("display", "none")
+		$(".option-fps-hud-disabled").css("display", "block")
 	}
-
-	});
 }
+check_fps()

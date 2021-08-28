@@ -8,6 +8,8 @@ $("ul#top-menu").css("margin-left", "50px")
 $("a.p-home").css("font-weight", "700")
 $("a.p-installed").css("font-weight", "400")
 $("a.p-allgames").css("font-weight", "400")
+$("a.p-steam").css("font-weight", "400")
+$("a.p-settings").css("font-weight", "400")
 
 // Show progress bar if process starts
 function show_progressbarfull() {

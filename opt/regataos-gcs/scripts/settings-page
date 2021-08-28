@@ -1,0 +1,22 @@
+#!/bin/bash
+
+function fps_hud() {
+    if [[ $(grep -r fps "$HOME/.config/regataos-gcs/regataos-gcs.conf") == *"fps=true"* ]]; then
+        sed -i 's/\(fps=true\)/fps=false/' "$HOME/.config/regataos-gcs/regataos-gcs.conf"
+
+    elif [[ $(grep -r fps "$HOME/.config/regataos-gcs/regataos-gcs.conf") == *"fps=false"* ]]; then
+        sed -i 's/\(fps=false\)/fps=true/' "$HOME/.config/regataos-gcs/regataos-gcs.conf"
+
+    else
+        echo "fps=true" >> "$HOME/.config/regataos-gcs/regataos-gcs.conf"
+        sed -i '/^$/d' "$HOME/.config/regataos-gcs/regataos-gcs.conf"
+    fi
+}
+
+case $1 in
+   "-fpshud") fps_hud
+         ;;
+   *) echo "Invalid option!"
+      exit 1
+      ;;
+esac

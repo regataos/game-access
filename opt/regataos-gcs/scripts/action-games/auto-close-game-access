@@ -26,7 +26,7 @@ then
 			echo "Close the Game Access application"
 			kill -SIGTERM $(ps -C regataosgcs | head -2 | tail -1 | awk '{print $1}')
 			sleep 5
-			sed -i 's/\(closed-manually=1\)/closed-manually=0/' "$HOME/.config/regataos-gcs/regataos-gcs.conf"
+			sed -i 's/\(closed-manually=true\)/closed-manually=false/' "$HOME/.config/regataos-gcs/regataos-gcs.conf"
 
 		else
 			# Verify that the launcher is running
@@ -48,8 +48,8 @@ then
 
 			# If the launcher or game is closed, start Game Access
 			if test ! -e "/tmp/regataos-gcs/run-regataos-gcs.txt"; then
-				if [[ $(grep -r "closed-manually=" $HOME/.config/regataos-gcs/regataos-gcs.conf | cut -d"=" -f 2-) != *"1"* ]]; then
-					sed -i 's/\(closed-manually=1\)/closed-manually=0/' "$HOME/.config/regataos-gcs/regataos-gcs.conf"
+				if [[ $(grep -r "closed-manually=" $HOME/.config/regataos-gcs/regataos-gcs.conf | cut -d"=" -f 2-) != *"true"* ]]; then
+					sed -i 's/\(closed-manually=true\)/closed-manually=false/' "$HOME/.config/regataos-gcs/regataos-gcs.conf"
 
 					rm -f "/tmp/regataos-gcs/running-with-regataos-gcs.txt"
 					cd "/usr/share/applications/"
@@ -73,7 +73,7 @@ else
 			echo "Close the Game Access application"
 			kill -SIGTERM $(ps -C regataosgcs | head -2 | tail -1 | awk '{print $1}')
 			sleep 5
-			sed -i 's/\(closed-manually=1\)/closed-manually=0/' "$HOME/.config/regataos-gcs/regataos-gcs.conf"
+			sed -i 's/\(closed-manually=true\)/closed-manually=false/' "$HOME/.config/regataos-gcs/regataos-gcs.conf"
 
 		else
 			# Verify that the launcher is running
@@ -95,8 +95,8 @@ else
 
 			# If the launcher or game is closed, start Game Access
 			if test ! -e "/tmp/regataos-gcs/run-regataos-gcs.txt"; then
-				if [[ $(grep -r "closed-manually=" $HOME/.config/regataos-gcs/regataos-gcs.conf | cut -d"=" -f 2-) != *"1"* ]]; then
-					sed -i 's/\(closed-manually=1\)/closed-manually=0/' "$HOME/.config/regataos-gcs/regataos-gcs.conf"
+				if [[ $(grep -r "closed-manually=" $HOME/.config/regataos-gcs/regataos-gcs.conf | cut -d"=" -f 2-) != *"true"* ]]; then
+					sed -i 's/\(closed-manually=true\)/closed-manually=false/' "$HOME/.config/regataos-gcs/regataos-gcs.conf"
 
 					rm -f "/tmp/regataos-gcs/running-with-regataos-gcs.txt"
 					cd "/usr/share/applications/"

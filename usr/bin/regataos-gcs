@@ -36,7 +36,7 @@ fi
 
 # Update cache
 # /opt/regataos-gcs/scripts/update-cache start
-sed -i 's/\(closed-manually=1\)/closed-manually=0/' "$HOME/.config/regataos-gcs/regataos-gcs.conf"
+sed -i 's/\(closed-manually=true\)/closed-manually=false/' "$HOME/.config/regataos-gcs/regataos-gcs.conf"
 
 rm -f "/tmp/regataos-gcs/running-with-regataos-gcs.txt"
 rm -f "/tmp/regataos-gcs/run-regataos-gcs.txt"
@@ -66,7 +66,7 @@ else
 fi
 
 # Closed manually
-sed -i 's/\(closed-manually=0\)/closed-manually=1/' "$HOME/.config/regataos-gcs/regataos-gcs.conf"
+sed -i 's/\(closed-manually=false\)/closed-manually=true/' "$HOME/.config/regataos-gcs/regataos-gcs.conf"
 
 # If necessary, clear the cache
 ps -C ps -e | egrep 'battlenet-comp|epicstore-comp|gog-comp|lol-comp|origin-comp|rockstar-comp|ubisoftconnect|install-epics' > /dev/null

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Regata OS Game Access</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
+	<link rel="stylesheet" type="text/css" href="./../css/style.css">
+	<link rel="stylesheet" type="text/css" href="./../css/category-app.css">
+	<link rel="stylesheet" type="text/css" href="./../css/settings-page.css">
+	<link rel="stylesheet" type="text/css" href="./../css/responsive-style.css">
+	<link rel="stylesheet" type="text/css" href="./../css/roboto-style.css">
+	<script type="text/javascript" src="./../js/jquery.min.js"></script>
+	<script type="text/javascript" src="./../js/fas-icons.js"></script>
+	<script type="text/javascript" src="./../js/translations/language/pages-lang.js"></script>
+
+	<!-- Display content when everything is ready -->
+	<script type="text/javascript">
+		$(function(){
+			$("#loadscreen").fadeOut("slow");
+		});
+
+		$(function(){
+			$(".blocks").fadeIn("slow");
+		});
+	</script>
+</head>
+<body>
+	<div id='loadscreen'></div>
+
+<div class="blocks">
+<div class="blocks2">
+<div class="title-top-box">
+<div class="title-top settings-title">Configurações</div>
+</div>
+
+<div class="blocks3 game-access-blocks">
+	<div class="config-option">
+		<div class="config-option-title">Mostrar o FPS dos jogos</div>
+		<div class="config-option-desc">Esta opção habilita um HUD que exibe informações sobre o desempenho dos jogos e uso do hardware.</div>
+
+		<div class="checkbox-fps-hud option-fps-hud-disabled">
+			<label class="checkbox fpshud" for="fps-hud-disabled">
+				<p class="fps-hud-desc">Exibir o FPS HUD</p>
+				<input id="fps-hud-disabled" name="fps-hud-disabled" type="checkbox"><span class="checkmark-fpd-hud"></span>
+			</label>
+		</div>
+		<div class="checkbox-fps-hud option-fps-hud-enabled">
+			<label class="checkbox fpshud" for="fps-hud-enabled">
+				<p class="fps-hud-desc">Exibir o FPS HUD</p>
+				<input id="fps-hud-enabled" name="fps-hud-enabled" type="checkbox" checked="checked"><span class="checkmark-fpd-hud"></span>
+			</label>
+		</div>
+	</div>
+	<script type="text/javascript" src="./../js/js-pages/check-config-status.js"></script>
+	<script type="text/javascript" src="./../js/js-pages/action-config.js"></script>
+</div>
+
+</div>
+</div>
+
+</body>
+</html>

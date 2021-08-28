@@ -204,6 +204,10 @@ li.p-home-li {
 	display: inline-block !important;
 }
 
+li.p-settings-li {
+	display: inline-block !important;
+}
+
 li.p-allgames-li {
 	display: inline-block !important;
 }
