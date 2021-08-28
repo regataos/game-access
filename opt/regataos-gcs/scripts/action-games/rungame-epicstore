@@ -53,13 +53,16 @@ if test -e /tmp/regataos-prime/use-hybrid-graphics.txt ; then
 
 else
 	if test -e /usr/bin/nvidia-xconfig ; then
-		# Special configurations for DXVK with NVIDIA GPU
-		ln -sf "/opt/regataos-wine/custom-configs/epicstore/dxvk-nvidia.conf" "$PREFIX_LOCATION/dxvk.conf"
-
 		# For the NVIDIA proprietary driver
 		export GAMEMODERUNEXEC="env __GL_SHADER_DISK_CACHE=1 __GL_SHADER_DISK_CACHE_PATH=$PREFIX_LOCATION __GL_SHADER_DISK_CACHE_SKIP_CLEANUP=1 $(echo $MANGOHUD_GL)"
 
+		# Special configurations for DXVK with NVIDIA GPU
+		ln -sf "/opt/regataos-wine/custom-configs/epicstore/dxvk-nvidia.conf" "$PREFIX_LOCATION/dxvk.conf"
+
 	else
+		# For the MangoHud
+		export GAMEMODERUNEXEC="$(echo $MANGOHUD_GL)"
+
 		# Special configurations for DXVK with AMD/Intel GPU
 		ln -sf "/opt/regataos-wine/custom-configs/epicstore/dxvk.conf" "$PREFIX_LOCATION/dxvk.conf"
 	fi
