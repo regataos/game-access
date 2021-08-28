@@ -30,7 +30,7 @@ then
 
 		else
 			# Verify that the launcher is running
-        	ps -C "legendary | rungame-epicst | Battle.net.exe | Origin.exe | OriginThinSetup | EpicGamesLaunch | Uplay.exe | upc.exe | GalaxyClient.ex | SocialClubHelpe" > /dev/null
+        	ps -C "$(cat /tmp/regataos-gcs/game-executable.txt) | Battle.net.exe | Origin.exe | OriginThinSetup | EpicGamesLaunch | Uplay.exe | upc.exe | GalaxyClient.ex | SocialClubHelpe" > /dev/null
 			if [ $? = 0 ]; then
 				echo "" > "/tmp/regataos-gcs/run-regataos-gcs.txt"
 			fi
@@ -77,7 +77,7 @@ else
 
 		else
 			# Verify that the launcher is running
-        	ps -C "legendary | rungame-epicst | Battle.net.exe | Origin.exe | OriginThinSetup | EpicGamesLaunch | Uplay.exe | upc.exe | GalaxyClient.ex | SocialClubHelpe" > /dev/null
+        	ps -C "$(cat /tmp/regataos-gcs/game-executable.txt) | Battle.net.exe | Origin.exe | OriginThinSetup | EpicGamesLaunch | Uplay.exe | upc.exe | GalaxyClient.ex | SocialClubHelpe" > /dev/null
 			if [ $? = 0 ]; then
 				echo "" > "/tmp/regataos-gcs/run-regataos-gcs.txt"
 			fi
