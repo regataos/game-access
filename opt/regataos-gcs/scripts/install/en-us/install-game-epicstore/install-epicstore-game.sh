@@ -152,7 +152,8 @@ echo "legendary" > $progressbar_dir/legendary-pid
 
 echo 100% > $progressbar_dir/progress
 sleep 3
-rm -f $progressbar_dir/download-percentage
+rm -f $progressbar_dir/download-percentage-legendary
+rm -f $progressbar_dir/speed
 rm -f $progressbar_dir/download-download-size
 rm -f $progressbar_dir/download-speed
 rm -f $progressbar_dir/file-size

@@ -230,7 +230,6 @@ if (!err) {
 		$(".cancel").css("display", "none")
 	}
 	});
-
 }
 });
 }
