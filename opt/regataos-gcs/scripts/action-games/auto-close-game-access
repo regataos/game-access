@@ -8,107 +8,112 @@ cd /
 while :
 do
 
-# Check if the Regata OS Game Access is running
-ps -C "regataosgcs /opt/regataos-gcs" > /dev/null
-if [ $? = 0 ]
-then
-	# Check if any game or launcher has been run from the game access
-	if test -e "/tmp/regataos-gcs/running-with-regataos-gcs.txt" ; then
+if [[ $(grep -r "auto-close=" $HOME/.config/regataos-gcs/regataos-gcs.conf | cut -d"=" -f 2-) == *"true"* ]]; then
+	# Check if the Regata OS Game Access is running
+	ps -C "regataosgcs /opt/regataos-gcs" > /dev/null
+	if [ $? = 0 ]
+	then
+		# Check if any game or launcher has been run from the game access
+		if test -e "/tmp/regataos-gcs/running-with-regataos-gcs.txt" ; then
 
-		# When this file is removed, the scan restarts
-		if test -e "/tmp/regataos-gcs/run-regataos-gcs.txt"; then
-			rm -f "/tmp/regataos-gcs/run-regataos-gcs.txt"
-		fi
+			# When this file is removed, the scan restarts
+			if test -e "/tmp/regataos-gcs/run-regataos-gcs.txt"; then
+				rm -f "/tmp/regataos-gcs/run-regataos-gcs.txt"
+			fi
 
-		# If Game Access is running, close the application
-		ps -C "regataosgcs /opt/regataos-gcs" > /dev/null
-		if [ $? = 0 ]; then
-			echo "Close the Game Access application"
-			kill -SIGTERM $(ps -C regataosgcs | head -2 | tail -1 | awk '{print $1}')
-			sleep 5
-			sed -i 's/\(closed-manually=true\)/closed-manually=false/' "$HOME/.config/regataos-gcs/regataos-gcs.conf"
-
-		else
-			# Verify that the launcher is running
-        	ps -C "$(cat /tmp/regataos-gcs/game-executable.txt) | Battle.net.exe | Origin.exe | OriginThinSetup | EpicGamesLaunch | Uplay.exe | upc.exe | GalaxyClient.ex | SocialClubHelpe" > /dev/null
+			# If Game Access is running, close the application
+			ps -C "regataosgcs /opt/regataos-gcs" > /dev/null
 			if [ $? = 0 ]; then
-				echo "" > "/tmp/regataos-gcs/run-regataos-gcs.txt"
-			fi
+				echo "Close the Game Access application"
+				kill -SIGTERM $(ps -C regataosgcs | head -2 | tail -1 | awk '{print $1}')
+				sleep 5
+				sed -i 's/\(closed-manually=true\)/closed-manually=false/' "$HOME/.config/regataos-gcs/regataos-gcs.conf"
 
-			if test ! -e "/tmp/regataos-gcs/run-regataos-gcs.txt"; then
-        		for i in /opt/regataos-gcs/games-list/*.json; do
-            		executable="$(grep -R '"gameexecutable":' $i | awk '{print $2}' | sed 's/"\|,//g')"
-
-            		ps -C $executable > /dev/null
-					if [ $? = 0 ]; then
-						echo "" > "/tmp/regataos-gcs/run-regataos-gcs.txt"
-					fi
-        		done
-			fi
-
-			# If the launcher or game is closed, start Game Access
-			if test ! -e "/tmp/regataos-gcs/run-regataos-gcs.txt"; then
-				if [[ $(grep -r "closed-manually=" $HOME/.config/regataos-gcs/regataos-gcs.conf | cut -d"=" -f 2-) != *"true"* ]]; then
-					sed -i 's/\(closed-manually=true\)/closed-manually=false/' "$HOME/.config/regataos-gcs/regataos-gcs.conf"
-
-					rm -f "/tmp/regataos-gcs/running-with-regataos-gcs.txt"
-					cd "/usr/share/applications/"
-					gtk-launch "regataos-gcs.desktop"
+			else
+				# Verify that the launcher is running
+				ps -C "$(cat /tmp/regataos-gcs/game-executable.txt) | Battle.net.exe | Origin.exe | OriginThinSetup | EpicGamesLaunch | Uplay.exe | upc.exe | GalaxyClient.ex | SocialClubHelpe" > /dev/null
+				if [ $? = 0 ]; then
+					echo "" > "/tmp/regataos-gcs/run-regataos-gcs.txt"
 				fi
-			fi
-		fi
-	fi
 
-else
-	# Check if any game or launcher has been run from the game access
-	if test -e "/tmp/regataos-gcs/running-with-regataos-gcs.txt" ; then
-		# When this file is removed, the scan restarts
-		if test -e "/tmp/regataos-gcs/run-regataos-gcs.txt"; then
-			rm -f "/tmp/regataos-gcs/run-regataos-gcs.txt"
-		fi
+				if test ! -e "/tmp/regataos-gcs/run-regataos-gcs.txt"; then
+					for i in /opt/regataos-gcs/games-list/*.json; do
+						executable="$(grep -R '"gameexecutable":' $i | awk '{print $2}' | sed 's/"\|,//g')"
 
-		# If Game Access is running, close the application
-		ps -C "regataosgcs /opt/regataos-gcs" > /dev/null
-		if [ $? = 0 ]; then
-			echo "Close the Game Access application"
-			kill -SIGTERM $(ps -C regataosgcs | head -2 | tail -1 | awk '{print $1}')
-			sleep 5
-			sed -i 's/\(closed-manually=true\)/closed-manually=false/' "$HOME/.config/regataos-gcs/regataos-gcs.conf"
+						ps -C $executable > /dev/null
+						if [ $? = 0 ]; then
+							echo "" > "/tmp/regataos-gcs/run-regataos-gcs.txt"
+						fi
+					done
+				fi
 
-		else
-			# Verify that the launcher is running
-        	ps -C "$(cat /tmp/regataos-gcs/game-executable.txt) | Battle.net.exe | Origin.exe | OriginThinSetup | EpicGamesLaunch | Uplay.exe | upc.exe | GalaxyClient.ex | SocialClubHelpe" > /dev/null
-			if [ $? = 0 ]; then
-				echo "" > "/tmp/regataos-gcs/run-regataos-gcs.txt"
-			fi
+				# If the launcher or game is closed, start Game Access
+				if test ! -e "/tmp/regataos-gcs/run-regataos-gcs.txt"; then
+					if [[ $(grep -r "closed-manually=" $HOME/.config/regataos-gcs/regataos-gcs.conf | cut -d"=" -f 2-) != *"true"* ]]; then
+						sed -i 's/\(closed-manually=true\)/closed-manually=false/' "$HOME/.config/regataos-gcs/regataos-gcs.conf"
 
-			if test ! -e "/tmp/regataos-gcs/run-regataos-gcs.txt"; then
-        		for i in /opt/regataos-gcs/games-list/*.json; do
-            		executable="$(grep -R '"gameexecutable":' $i | awk '{print $2}' | sed 's/"\|,//g')"
-
-            		ps -C $executable > /dev/null
-					if [ $? = 0 ]; then
-						echo "" > "/tmp/regataos-gcs/run-regataos-gcs.txt"
+						rm -f "/tmp/regataos-gcs/running-with-regataos-gcs.txt"
+						cd "/usr/share/applications/"
+						gtk-launch "regataos-gcs.desktop"
 					fi
-        		done
-			fi
-
-			# If the launcher or game is closed, start Game Access
-			if test ! -e "/tmp/regataos-gcs/run-regataos-gcs.txt"; then
-				if [[ $(grep -r "closed-manually=" $HOME/.config/regataos-gcs/regataos-gcs.conf | cut -d"=" -f 2-) != *"true"* ]]; then
-					sed -i 's/\(closed-manually=true\)/closed-manually=false/' "$HOME/.config/regataos-gcs/regataos-gcs.conf"
-
-					rm -f "/tmp/regataos-gcs/running-with-regataos-gcs.txt"
-					cd "/usr/share/applications/"
-					gtk-launch "regataos-gcs.desktop"
 				fi
 			fi
 		fi
 
 	else
-		echo "Nothing to do..."
-		break
+		# Check if any game or launcher has been run from the game access
+		if test -e "/tmp/regataos-gcs/running-with-regataos-gcs.txt" ; then
+			# When this file is removed, the scan restarts
+			if test -e "/tmp/regataos-gcs/run-regataos-gcs.txt"; then
+				rm -f "/tmp/regataos-gcs/run-regataos-gcs.txt"
+			fi
+
+			# If Game Access is running, close the application
+			ps -C "regataosgcs /opt/regataos-gcs" > /dev/null
+			if [ $? = 0 ]; then
+				echo "Close the Game Access application"
+				kill -SIGTERM $(ps -C regataosgcs | head -2 | tail -1 | awk '{print $1}')
+				sleep 5
+				sed -i 's/\(closed-manually=true\)/closed-manually=false/' "$HOME/.config/regataos-gcs/regataos-gcs.conf"
+
+			else
+				# Verify that the launcher is running
+				ps -C "$(cat /tmp/regataos-gcs/game-executable.txt) | Battle.net.exe | Origin.exe | OriginThinSetup | EpicGamesLaunch | Uplay.exe | upc.exe | GalaxyClient.ex | SocialClubHelpe" > /dev/null
+				if [ $? = 0 ]; then
+					echo "" > "/tmp/regataos-gcs/run-regataos-gcs.txt"
+				fi
+
+				if test ! -e "/tmp/regataos-gcs/run-regataos-gcs.txt"; then
+					for i in /opt/regataos-gcs/games-list/*.json; do
+						executable="$(grep -R '"gameexecutable":' $i | awk '{print $2}' | sed 's/"\|,//g')"
+
+						ps -C $executable > /dev/null
+						if [ $? = 0 ]; then
+							echo "" > "/tmp/regataos-gcs/run-regataos-gcs.txt"
+						fi
+					done
+				fi
+
+				# If the launcher or game is closed, start Game Access
+				if test ! -e "/tmp/regataos-gcs/run-regataos-gcs.txt"; then
+					if [[ $(grep -r "closed-manually=" $HOME/.config/regataos-gcs/regataos-gcs.conf | cut -d"=" -f 2-) != *"true"* ]]; then
+						sed -i 's/\(closed-manually=true\)/closed-manually=false/' "$HOME/.config/regataos-gcs/regataos-gcs.conf"
+
+						rm -f "/tmp/regataos-gcs/running-with-regataos-gcs.txt"
+						cd "/usr/share/applications/"
+						gtk-launch "regataos-gcs.desktop"
+					fi
+				fi
+			fi
+
+		else
+			echo "Nothing to do..."
+			break
+		fi
 	fi
+
+else
+	echo "Nothing to do..."
 fi
 
    sleep 5

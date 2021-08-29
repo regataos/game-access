@@ -35,19 +35,37 @@
 
 <div class="blocks3 game-access-blocks">
 	<div class="config-option">
-		<div class="config-option-title">Mostrar o FPS dos jogos</div>
-		<div class="config-option-desc">Esta opção habilita um HUD que exibe informações sobre o desempenho dos jogos e uso do hardware.</div>
+		<div class="config-option-title option-fps-hud-title">Mostrar o FPS dos jogos</div>
+		<div class="config-option-desc option-fps-hud-desc">Esta opção habilita um HUD que exibe informações sobre o desempenho dos jogos e uso do hardware.</div>
 
 		<div class="checkbox-fps-hud option-fps-hud-disabled">
 			<label class="checkbox fpshud" for="fps-hud-disabled">
-				<p class="fps-hud-desc">Exibir o FPS HUD</p>
-				<input id="fps-hud-disabled" name="fps-hud-disabled" type="checkbox"><span class="checkmark-fpd-hud"></span>
+				<p class="option-settings-desc fps-hud-desc">Exibir o FPS HUD</p>
+				<input id="fps-hud-disabled" name="fps-hud-disabled" type="checkbox"><span class="checkmark-settings"></span>
 			</label>
 		</div>
 		<div class="checkbox-fps-hud option-fps-hud-enabled">
 			<label class="checkbox fpshud" for="fps-hud-enabled">
-				<p class="fps-hud-desc">Exibir o FPS HUD</p>
-				<input id="fps-hud-enabled" name="fps-hud-enabled" type="checkbox" checked="checked"><span class="checkmark-fpd-hud"></span>
+				<p class="option-settings-desc fps-hud-desc">Exibir o FPS HUD</p>
+				<input id="fps-hud-enabled" name="fps-hud-enabled" type="checkbox" checked="checked"><span class="checkmark-settings"></span>
+			</label>
+		</div>
+	</div>
+
+	<div class="config-option">
+		<div class="config-option-title option-auto-close-title">Fechar automaticamente o Game Access</div>
+		<div class="config-option-desc option-auto-close-desc">Esta opção permite que o Game Access seja fechado quando um jogos ou launcher estiver em execução.</div>
+
+		<div class="checkbox-auto-close option-auto-close-disabled">
+			<label class="checkbox autoclose" for="auto-close-disabled">
+				<p class="option-settings-desc auto-close-desc">Fechar automaticamente</p>
+				<input id="auto-close-disabled" name="auto-close-disabled" type="checkbox"><span class="checkmark-settings"></span>
+			</label>
+		</div>
+		<div class="checkbox-auto-close option-auto-close-enabled">
+			<label class="checkbox autoclose" for="auto-close-enabled">
+				<p class="option-settings-desc auto-close-desc">Fechar automaticamente</p>
+				<input id="auto-close-enabled" name="auto-close-enabled" type="checkbox" checked="checked"><span class="checkmark-settings"></span>
 			</label>
 		</div>
 	</div>

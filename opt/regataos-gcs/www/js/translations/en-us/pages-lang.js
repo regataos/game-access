@@ -88,7 +88,12 @@ $(document).ready(function() {
 	$(".settings-title").text("Settings");
 
 	//FPS option
-	$(".config-option-title").text("Show FPS of games");
-	$(".config-option-desc").text("This option enables a HUD that displays information about game performance and hardware usage.");
+	$(".option-fps-hud-title").text("Show FPS of games");
+	$(".option-fps-hud-desc").text("This option enables a HUD that displays information about game performance and hardware usage.");
 	$(".fps-hud-desc").text("View FPS HUD");
+
+	//Close automatically 
+	$(".option-auto-close-title").text("Automatically close Game Access");
+	$(".option-auto-close-desc").text("This option allows Game Access to close when a game or launcher is running.");
+	$(".auto-close-desc").text("Close automatically");
 });
