@@ -82,4 +82,13 @@ $(document).ready(function() {
 	$(".ubisoftconnect-title").text("Jogos acessíveis pelo Ubisoft Connect");
 	//View more
 	$(".ubisoftconnect-more").text("Ver mais no Ubisoft Connect");
+
+	// Settings
+	//Page title
+	$(".settings-title").text("Configurações");
+
+	//FPS option
+	$(".config-option-title").text("Mostrar o FPS dos jogos");
+	$(".config-option-desc").text("Esta opção habilita um HUD que exibe informações sobre o desempenho dos jogos e uso do hardware.");
+	$(".fps-hud-desc").text("Exibir FPS HUD");
 });

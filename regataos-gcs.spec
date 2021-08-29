@@ -63,8 +63,8 @@ fi
 users=`who | cut -d' ' -f1 | uniq`
 for user in $users
 do
-	su - $user -c "sed -i sed -i 's/\(closed-manually=1\)/closed-manually=true/' /tmp/regataos-gcs/config/regataos-gcs.conf"
-	su - $user -c "sed -i sed -i 's/\(closed-manually=0\)/closed-manually=false/' /tmp/regataos-gcs/config/regataos-gcs.conf"
+	su - $user -c "sed -i 's/\(closed-manually=1\)/closed-manually=true/' /tmp/regataos-gcs/config/regataos-gcs.conf"
+	su - $user -c "sed -i 's/\(closed-manually=0\)/closed-manually=false/' /tmp/regataos-gcs/config/regataos-gcs.conf"
 done
 
 # Start system services
