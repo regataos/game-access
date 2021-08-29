@@ -60,9 +60,9 @@ fi
 
 # Run app
 if [[ $(glxinfo | grep vendor) == *"Intel"* ]]; then
-	regataosgcs --disable-gpu /opt/regataos-gcs & sleep 1; /opt/regataos-gcs/scripts/progress-bar/capture-progress-download & /opt/regataos-gcs/scripts/progress-bar/create-process-queues & /opt/regataos-gcs/scripts/progress-bar/run-process-queues & /opt/regataos-gcs/scripts/search-installeds & /opt/regataos-gcs/scripts/action-games/auto-close-game-access
+	regataosgcs --disable-gpu /opt/regataos-gcs & sleep 1; /opt/regataos-gcs/scripts/progress-bar/capture-progress-download & /opt/regataos-gcs/scripts/progress-bar/create-process-queues & /opt/regataos-gcs/scripts/progress-bar/run-process-queues & /opt/regataos-gcs/scripts/search-installeds & ps -C "auto-close-game" > /dev/null; if [ $? = 1 ]; then /opt/regataos-gcs/scripts/action-games/auto-close-game-access; fi
 else
-	regataosgcs /opt/regataos-gcs & sleep 1; /opt/regataos-gcs/scripts/progress-bar/capture-progress-download & /opt/regataos-gcs/scripts/progress-bar/create-process-queues & /opt/regataos-gcs/scripts/progress-bar/run-process-queues & /opt/regataos-gcs/scripts/search-installeds & /opt/regataos-gcs/scripts/action-games/auto-close-game-access
+	regataosgcs /opt/regataos-gcs & sleep 1; /opt/regataos-gcs/scripts/progress-bar/capture-progress-download & /opt/regataos-gcs/scripts/progress-bar/create-process-queues & /opt/regataos-gcs/scripts/progress-bar/run-process-queues & /opt/regataos-gcs/scripts/search-installeds & ps -C "auto-close-game" > /dev/null; if [ $? = 1 ]; then /opt/regataos-gcs/scripts/action-games/auto-close-game-access; fi
 fi
 
 # Closed manually
