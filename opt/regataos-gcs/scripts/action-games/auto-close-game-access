@@ -113,7 +113,14 @@ if [[ $(grep -r "auto-close=" $HOME/.config/regataos-gcs/regataos-gcs.conf | cut
 	fi
 
 else
-	echo "Nothing to do..."
+	ps -C "regataosgcs /opt/regataos-gcs" > /dev/null
+	if [ $? = 1 ]
+	then
+		echo "Nothing to do..."
+		break
+	else
+		echo "Nothing to do..."
+	fi
 fi
 
    sleep 5
