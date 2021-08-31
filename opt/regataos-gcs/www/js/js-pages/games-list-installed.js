@@ -195,6 +195,10 @@ function installed_page() {
 	});
 }
 
+setInterval(function(){
+	installed_page()
+}, 100);
+
 // Game to hide as it will be removed
 function game_to_hide() {
 	var fs = require("fs");
@@ -213,6 +217,5 @@ function game_to_hide() {
 }
 
 setInterval(function(){
-	installed_page()
 	game_to_hide()
-}, 100);
+}, 1000);

@@ -352,3 +352,24 @@ if ((url.indexOf("-games") > -1) == "1") {
 } else {
 	games_list2();
 }
+
+// Game to hide as it will be removed
+function game_to_hide() {
+	var fs = require("fs");
+	var filePath = "/tmp/regataos-gcs/game-to-hide.txt"
+
+	if (fs.existsSync(filePath)) {
+		var gamenickname = fs.readFileSync(filePath, "utf8");
+		gamenickname = gamenickname.replace(/(\r\n|\n|\r)/gm, "");
+
+		$("div." + gamenickname + "-block").remove();
+
+		setTimeout(function(){
+			fs.unlinkSync(filePath);
+		}, 1000);
+	}
+}
+
+setInterval(function(){
+	game_to_hide()
+}, 1000);

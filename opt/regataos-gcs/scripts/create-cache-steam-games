@@ -4,7 +4,7 @@
 
 #Create JSON file
 if test ! -e "/tmp/regataos-gcs/config/steam-games/json/games/$gamename_lowercase-steam.json"; then
-cat > "/tmp/regataos-gcs/config/steam-games/json/games/$gamename_lowercase-steam.json" << STEAMGAMEJSON
+cat > "/tmp/regataos-gcs/config/steam-games/json/games/$gamename_lowercase-steam.json" << STEAMGAMEJSONCACHE
 [
 	{
 		"gamename": "$game_name",
@@ -17,8 +17,10 @@ cat > "/tmp/regataos-gcs/config/steam-games/json/games/$gamename_lowercase-steam
 		"gamenative": "$gamenative"
     }
 ]
-STEAMGAMEJSON
+STEAMGAMEJSONCACHE
+fi
 
+if test ! -e "/opt/regataos-gcs/games-list/$gamename_lowercase-steam.json"; then
 cat > "/opt/regataos-gcs/games-list/$gamename_lowercase-steam.json" << STEAMGAMEJSON
 [
 	{

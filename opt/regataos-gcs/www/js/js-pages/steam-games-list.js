@@ -104,6 +104,44 @@ if (!err) {
 				// No internet or something like that, unable to make the request on the site
 				console.error(error.message);
 			});
+
+		} else if (!fs.existsSync('/opt/regataos-gcs/games-list/' + gamename_lowercase + '-steam.json')) {
+			// Make the request, putting the id directly in the URL, and send the return to the variable "res"
+			const https = require('https');
+			https.get(`https://store.steampowered.com/api/appdetails?appids=${games.appid}&cc=br&l=br`, (res) => {
+				let data = "";
+
+				// Take the data from the url and put it into the variable "data"
+				res.on("data", (chunk) => {
+					data += chunk;
+				});
+
+				// Convert raw content to JSON and show return
+				res.on("end", () => {
+				try {
+					let json = JSON.parse(data);
+					let game_name = json[games.appid].data.name;
+					let game_id = json[games.appid].data.steam_appid;
+					let game_type = json[games.appid].data.type;
+					let game_native = json[games.appid].data.platforms.linux;
+					let gamekeywords = gamename_lowercase.replace(/(-)/g," ");
+
+					// Create JSON file with game information
+    				const exec = require('child_process').exec;
+					var command_line = 'export game_name="' + game_name + '"; export gamename_lowercase="' + gamename_lowercase + '"; export gamekeywords="' + gamekeywords + '"; export gameid="' + game_id + '"; export gametype="' + game_type + '"; export gamenative="' + game_native + '"; /opt/regataos-gcs/scripts/create-cache-steam-games';
+					exec(command_line,function(error,call,errlog){
+					});
+
+				} catch (error) {
+					console.error(error.message);
+				};
+				});
+
+			}).on("error", (error) => {
+				// No internet or something like that, unable to make the request on the site
+				console.error(error.message);
+			});
+
 		}
 	})
 return;
