@@ -32,6 +32,9 @@ function games_list_installed() {
 				//Add the game image in the background
 				new_game_blocks.style.backgroundImage = "url('./../images/games-backg/steam/steam.jpg')";
 
+				//Variable required for uninstall game button
+				var gamenickname = "'" + gamesdata.gamenickname + "'"
+
 				//Check game plataform
 				if ((gamesdata.gamenative.indexOf("true") > -1) == "1") {
 					var game_plataform = "nativegame"
@@ -43,7 +46,7 @@ function games_list_installed() {
 				new_game_blocks.innerHTML = ' \
 				<div class="universal-game-img" style="background-image: url(file:///tmp/regataos-gcs/config/steam-games/img/' + gamesdata.gamenickname + '.jpg)"></div> \
 					<div class="block-play-universal"> \
-					<div id="' + gamesdata.gameid + '" class="play-box-universal" onclick="window.gameid=this.id; run_steam_game();"> \
+					<div id="' + gamesdata.gameid + '" class="play-box-universal" onclick="window.gameid=this.id; window.gamenickname=' + gamenickname + '; run_steam_game();"> \
 						<div class="play-button"> \
 							<i class="fas fa-play"></i><div class="play-txt">Jogar</div> \
 						</div> \
@@ -58,7 +61,7 @@ function games_list_installed() {
 						</div> \
 					</div> \
 				</div>';
-	
+
 				//Finally, create the new game blocks dynamically
 				all_blocks.appendChild(new_game_blocks);
 				// Show Steam Games
@@ -160,7 +163,6 @@ function games_list_installed() {
 				//Finally, create the new game blocks dynamically
 				all_blocks.appendChild(new_game_blocks);
 			}
-
 		}
 	})
 	return;
@@ -193,6 +195,24 @@ function installed_page() {
 	});
 }
 
+// Game to hide as it will be removed
+function game_to_hide() {
+	var fs = require("fs");
+	var filePath = "/tmp/regataos-gcs/game-to-hide.txt"
+
+	if (fs.existsSync(filePath)) {
+		var gamenickname = fs.readFileSync(filePath, "utf8");
+		gamenickname = gamenickname.replace(/(\r\n|\n|\r)/gm, "");
+
+		$("div." + gamenickname + "-block").remove();
+
+		setTimeout(function(){
+			fs.unlinkSync(filePath);
+		}, 1000);
+	}
+}
+
 setInterval(function(){
 	installed_page()
+	game_to_hide()
 }, 100);

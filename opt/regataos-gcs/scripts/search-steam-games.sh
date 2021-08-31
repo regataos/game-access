@@ -101,10 +101,10 @@ if test ! -e "/tmp/regataos-gcs/config/steam-games/no-steam-games.txt" ;then
 		gamename_lowercase=$(echo $gamename_lowercase | sed 's/ /-/g')
 
 		if [ ! -z $game_appid ];then
-			if test ! -e "/opt/regataos-gcs/games-list/$gamename_lowercase-steam.json"; then
+			if test ! -e "/tmp/regataos-gcs/config/steam-games/json/games/$gamename_lowercase-steam.json"; then
 				search_steam_games
 			else
-				cp -f "/opt/regataos-gcs/games-list/$gamename_lowercase-steam.json" "/tmp/regataos-gcs/config/installed/$gamename_lowercase-steam.json"
+				cp -f "/tmp/regataos-gcs/config/steam-games/json/games/$gamename_lowercase-steam.json" "/tmp/regataos-gcs/config/installed/$gamename_lowercase-steam.json"
 			fi
 		fi
 	done

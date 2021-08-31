@@ -59,7 +59,7 @@ else
 
 	else
 		# For the MangoHud
-		export GAMEMODERUNEXEC="$(echo $MANGOHUD_GL)"
+		export GAMEMODERUNEXEC="env $(echo $MANGOHUD_GL)"
 
 		# Special configurations for DXVK with AMD/Intel GPU
 		ln -sf "/opt/regataos-wine/custom-configs/$LAUNCHER/dxvk.conf" "$PREFIX_LOCATION/dxvk.conf"

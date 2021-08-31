@@ -77,16 +77,46 @@ function run_steam_game() {
     const exec = require('child_process').exec;
 	const fs = require("fs");
 
-	// Verify that hybrid graphics are supported and run with the dGPU
-	if (fs.existsSync("/tmp/regataos-prime/use-hybrid-graphics.txt")) {
-    	var command_line = 'regataos-dgpu gamemoderun steam steam://rungameid/' + gameid;
-	} else {
-    	var command_line = 'gamemoderun steam steam://rungameid/' + gameid;
-	}
-
+	var command_line = 'export GAMEID="' + gameid + '"; /opt/regataos-gcs/scripts/action-games/rungame-steam';
     console.log(command_line);
     exec(command_line,function(error,call,errlog){
     });
+
+	var pageurl = window.location.href
+	var urlsplit = pageurl.split("pages/")[1];
+	var pagename = urlsplit.replace('.html', '');
+
+	if ((pagename.indexOf("installed") > -1) == "1") {
+		var command_line = 'echo "installed" > "/tmp/regataos-gcs/go-page-auto"';
+		console.log(command_line);
+		exec(command_line,function(error,call,errlog){
+		});
+
+	} else {
+		var command_line = 'echo "'+ pagename +'" > "/tmp/regataos-gcs/go-page-auto"';
+		console.log(command_line);
+		exec(command_line,function(error,call,errlog){
+		});
+	}
+
+	setTimeout(function(){
+		var command_line = 'echo "Game started" > "/tmp/regataos-gcs/running-with-regataos-gcs.txt"';
+		console.log(command_line);
+		exec(command_line,function(error,call,errlog){
+		});
+	}, 5000);
+
+	setTimeout(function(){
+		$("." + gamenickname + "-block .play-box-universal").css("opacity", ".5")
+		$("." + gamenickname + "-block .play-box-universal").css("cursor", "default")
+		$("." + gamenickname + "-block .play-box-universal").css("pointer-events", "none");
+	},1000);
+
+	setTimeout(function(){
+		$("." + gamenickname + "-block .play-box-universal").css("opacity", "1")
+		$("." + gamenickname + "-block .play-box-universal").css("cursor", "pointer")
+		$("." + gamenickname + "-block .play-box-universal").css("pointer-events", "auto");
+	},10000);
 }
 
 // Install Steam game
@@ -97,6 +127,18 @@ function install_steam_game() {
     console.log(command_line);
     exec(command_line,function(error,call,errlog){
     });
+
+	setTimeout(function(){
+		$("." + gamenickname + "-block .install-box-universal").css("opacity", ".5")
+		$("." + gamenickname + "-block .install-box-universal").css("cursor", "default")
+		$("." + gamenickname + "-block .install-box-universal").css("pointer-events", "none");
+	},1000);
+
+	setTimeout(function(){
+		$("." + gamenickname + "-block .install-box-universal").css("opacity", "1")
+		$("." + gamenickname + "-block .install-box-universal").css("cursor", "pointer")
+		$("." + gamenickname + "-block .install-box-universal").css("pointer-events", "auto");
+	},5000);
 }
 
 // Start installing game from Epic Games Store

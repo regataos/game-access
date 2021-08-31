@@ -5,6 +5,7 @@
 game_nickname="$(cat /tmp/regataos-gcs/start-uninstallation-epicstore.txt)"
 
 #Clear cache
+echo "$game_nickname" > "/tmp/regataos-gcs/game-to-hide.txt"
 rm -f "/tmp/regataos-gcs/start-uninstallation-epicstore.txt"
 
 game_name="$(grep -r "gamename" $HOME/.config/regataos-gcs/epicstore-games/json/$game_nickname-epicstore.json | awk '{print $2}' | sed 's/"\|,//g')"

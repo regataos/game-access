@@ -140,10 +140,13 @@ if (!err) {
 			steam_game_blocks.id = gamesdata.gamenickname + "-block";
 
 			//Add classes to the new game blocks
-			steam_game_blocks.classList.add("app-block-universal");
+			steam_game_blocks.classList.add("app-block-universal", gamesdata.gamenickname + "-block");
 
 			//Add the game image in the background
 			steam_game_blocks.style.backgroundImage = "url('./../images/games-backg/steam/steam.jpg')";
+
+			//Variable required for uninstall game button
+			var gamenickname = "'" + gamesdata.gamenickname + "'"
 
 			//Check game plataform
 			if ((gamesdata.gamenative.indexOf("true") > -1) == "1") {
@@ -156,7 +159,7 @@ if (!err) {
 			steam_game_blocks.innerHTML = ' \
 			<div class="universal-game-img" style="background-image: url(file:///tmp/regataos-gcs/config/steam-games/img/' + gamesdata.gamenickname + '.jpg)"></div> \
 				<div class="block-play-universal"> \
-					<div id="' + gamesdata.gameid + '" class="install-box-universal" onclick="window.gameid=this.id; install_steam_game();"> \
+					<div id="' + gamesdata.gameid + '" class="install-box-universal" onclick="window.gameid=this.id; window.gamenickname=' + gamenickname + '; install_steam_game();"> \
 					<div class="play-button"> \
 						<i class="fas fa-download"></i><div class="install-txt">Instalar</div> \
 					</div> \
@@ -176,7 +179,7 @@ if (!err) {
 			steam_all_games.appendChild(steam_game_blocks);
 		}
 
-		if (!fs.existsSync('/tmp/regataos-gcs/config/steam-games/json/installed/' + gamesdata.gamenickname + '-steam.json')) {
+		if (!fs.existsSync('/tmp/regataos-gcs/config/installed/' + gamesdata.gamenickname + '-steam.json')) {
 			$("div.universal-all-games div#" + gamesdata.gamenickname + "-block").css("display", "block")
 			$("div.universal-installed-games div#" + gamesdata.gamenickname + "-block").css("display", "none")
 		} else {
@@ -218,10 +221,13 @@ if (!err) {
 			steam_game_blocks.id = gamesdata.gamenickname + "-block";
 
 			//Add classes to the new game blocks
-			steam_game_blocks.classList.add("app-block-universal");
+			steam_game_blocks.classList.add("app-block-universal", gamesdata.gamenickname + "-block");
 
 			//Add the game image in the background
 			steam_game_blocks.style.backgroundImage = "url('./../images/games-backg/steam/steam.jpg')";
+
+			//Variable required for uninstall game button
+			var gamenickname = "'" + gamesdata.gamenickname + "'"
 
 			//Check game plataform
 			if ((gamesdata.gamenative.indexOf("true") > -1) == "1") {
@@ -234,7 +240,7 @@ if (!err) {
 			steam_game_blocks.innerHTML = ' \
 			<div class="universal-game-img" style="background-image: url(file:///tmp/regataos-gcs/config/steam-games/img/' + gamesdata.gamenickname + '.jpg)"></div> \
 				<div class="block-play-universal"> \
-				<div id="' + gamesdata.gameid + '" class="play-box-universal" onclick="window.gameid=this.id; run_steam_game();"> \
+					<div id="' + gamesdata.gameid + '" class="play-box-universal" onclick="window.gameid=this.id; window.gamenickname=' + gamenickname + '; run_steam_game();"> \
 					<div class="play-button"> \
 						<i class="fas fa-play"></i><div class="play-txt">Jogar</div> \
 					</div> \
@@ -254,7 +260,7 @@ if (!err) {
 			installed_games.appendChild(steam_game_blocks);
 		}
 
-		if (fs.existsSync('/tmp/regataos-gcs/config/steam-games/json/installed/' + gamesdata.gamenickname + '-steam.json')) {
+		if (fs.existsSync('/tmp/regataos-gcs/config/installed/' + gamesdata.gamenickname + '-steam.json')) {
 			$("div.universal-all-games div#" + gamesdata.gamenickname + "-block").css("display", "none")
 			$("div.universal-installed-games div#" + gamesdata.gamenickname + "-block").css("display", "block")
 		} else {
@@ -272,7 +278,7 @@ return;
 function show_steam_games() {
 	const exec = require('child_process').exec;
 
-    var command_line = "wc -l $HOME/.local/share/Steam/steamapps/ | grep acf";
+    var command_line = "ls $HOME/.local/share/Steam/steamapps/ | grep acf | cut -d'.' -f 2-";
     exec(command_line, (error, stdout, stderr) => {
     if (stdout) {
         var game_file = stdout

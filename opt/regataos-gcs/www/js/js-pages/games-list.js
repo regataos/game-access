@@ -103,6 +103,9 @@ function games_list2() {
 				//Add the game image in the background
 				new_game_blocks.style.backgroundImage = "url('./../images/games-backg/steam/steam.jpg')";
 	
+				//Variable required for uninstall game button
+				var gamenickname = "'" + gamesdata.gamenickname + "'"
+
 				//Check game plataform
 				if ((gamesdata.gamenative.indexOf("true") > -1) == "1") {
 					var game_plataform = "nativegame"
@@ -114,7 +117,7 @@ function games_list2() {
 				new_game_blocks.innerHTML = ' \
 				<div class="universal-game-img" style="background-image: url(file:///tmp/regataos-gcs/config/steam-games/img/' + gamesdata.gamenickname + '.jpg)"></div> \
 					<div class="block-play-universal"> \
-						<div id="' + gamesdata.gameid + '" class="install-box-universal" onclick="window.gameid=this.id; run_steam_game();"> \
+						<div id="' + gamesdata.gameid + '" class="install-box-universal" onclick="window.gameid=this.id; window.gamenickname=' + gamenickname + '; run_steam_game();"> \
 						<div class="play-button"> \
 							<i class="fas fa-download"></i><div class="install-txt">Instalar</div> \
 						</div> \
@@ -144,6 +147,9 @@ function games_list2() {
 				//Add the game image in the background
 				new_game_blocks.style.backgroundImage = "url('./../images/games-backg/steam/steam.jpg')";
 
+				//Variable required for uninstall game button
+				var gamenickname = "'" + gamesdata.gamenickname + "'"
+
 				//Check game plataform
 				if ((gamesdata.gamenative.indexOf("true") > -1) == "1") {
 					var game_plataform = "nativegame"
@@ -155,7 +161,7 @@ function games_list2() {
 				new_game_blocks.innerHTML = ' \
 				<div class="universal-game-img" style="background-image: url(file:///tmp/regataos-gcs/config/steam-games/img/' + gamesdata.gamenickname + '.jpg)"></div> \
 					<div class="block-play-universal"> \
-					<div id="' + gamesdata.gameid + '" class="play-box-universal" onclick="window.gameid=this.id; run_steam_game();"> \
+					<div id="' + gamesdata.gameid + '" class="play-box-universal" onclick="window.gameid=this.id; window.gamenickname=' + gamenickname + '; run_steam_game();"> \
 						<div class="play-button"> \
 							<i class="fas fa-play"></i><div class="play-txt">Jogar</div> \
 						</div> \
@@ -189,6 +195,9 @@ function games_list2() {
 				//Add the game image in the background
 				new_game_blocks.style.backgroundImage = "url('./../images/games-backg/steam/steam.jpg')";
 
+				//Variable required for uninstall game button
+				var gamenickname = "'" + gamesdata.gamenickname + "'"
+
 				//Set game image
 				if (fs.existsSync('/tmp/regataos-gcs/config/epicstore-games/img/' + gamesdata.gamenickname + '.jpg')) {
 					var background = "/tmp/regataos-gcs/config/epicstore-games/img/" + gamesdata.gamenickname + ".jpg"
@@ -210,7 +219,7 @@ function games_list2() {
 				new_game_blocks.innerHTML = ' \
 				<div class="universal-game-img epicstore-game-img" style="background-image: url(' + gamebackg + ')"></div> \
 					<div class="block-play-universal"> \
-						<div id="' + gamesdata.gamenickname + '" class="install-box-universal" onclick="window.gamenickname=this.id; install_epicstore_game();"> \
+						<div id="' + gamesdata.gamenickname + '" class="install-box-universal" onclick="window.gamenickname=this.id; window.gamenickname=' + gamenickname + '; install_epicstore_game();"> \
 						<div class="play-button"> \
 							<i class="fas fa-download"></i><div class="install-txt">Instalar</div> \
 						</div> \
