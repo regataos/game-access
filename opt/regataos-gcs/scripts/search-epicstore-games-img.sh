@@ -91,23 +91,47 @@ for i in $HOME/.config/legendary/metadata/*.json; do
 		image_type=$(echo $game_img1 | cut -d'.' -f 4-)
 		if [ -z $image_type ];then
 			if test ! -e "/tmp/regataos-gcs/config/epicstore-games/img/$gamename_lowercase"; then
-				sleep 1
+				# Download image
 				wget --no-check-certificate -O "/tmp/regataos-gcs/config/epicstore-games/img/$gamename_lowercase" "$game_img1"
-				sleep 1
-			fi
 
-			game_img1="/tmp/regataos-gcs/config/epicstore-games/img/$gamename_lowercase"
-			convert -resize 854 /tmp/regataos-gcs/config/epicstore-games/img/$gamename_lowercase /tmp/regataos-gcs/config/epicstore-games/img/$gamename_lowercase
+				# Reduce image size
+				game_img1="/tmp/regataos-gcs/config/epicstore-games/img/$gamename_lowercase"
+				convert -resize 854 /tmp/regataos-gcs/config/epicstore-games/img/$gamename_lowercase /tmp/regataos-gcs/config/epicstore-games/img/$gamename_lowercase
+
+			else
+				# Check image size and, if necessary, redownload and reduce image size
+				if [[ $(du -hs "/tmp/regataos-gcs/config/epicstore-games/img/$gamename_lowercase" | awk '{print $1}') == *"0"* ]]; then
+					# Download image
+					rm -f "/tmp/regataos-gcs/config/epicstore-games/img/$gamename_lowercase"
+					wget --no-check-certificate -O "/tmp/regataos-gcs/config/epicstore-games/img/$gamename_lowercase" "$game_img1"
+
+					# Reduce image size
+					game_img1="/tmp/regataos-gcs/config/epicstore-games/img/$gamename_lowercase"
+					convert -resize 854 /tmp/regataos-gcs/config/epicstore-games/img/$gamename_lowercase /tmp/regataos-gcs/config/epicstore-games/img/$gamename_lowercase
+				fi
+			fi
 
 		else
 			if test ! -e "/tmp/regataos-gcs/config/epicstore-games/img/$gamename_lowercase.$image_type"; then
-				sleep 1
+				# Download image
 				wget --no-check-certificate -O "/tmp/regataos-gcs/config/epicstore-games/img/$gamename_lowercase.$image_type" "$game_img1"
-				sleep 1
-			fi
 
-			game_img1="/tmp/regataos-gcs/config/epicstore-games/img/$gamename_lowercase.$image_type"
-			convert -resize 854 /tmp/regataos-gcs/config/epicstore-games/img/$gamename_lowercase.$image_type /tmp/regataos-gcs/config/epicstore-games/img/$gamename_lowercase.$image_type
+				# Reduce image size
+				game_img1="/tmp/regataos-gcs/config/epicstore-games/img/$gamename_lowercase.$image_type"
+				convert -resize 854 /tmp/regataos-gcs/config/epicstore-games/img/$gamename_lowercase.$image_type /tmp/regataos-gcs/config/epicstore-games/img/$gamename_lowercase.$image_type
+
+			else
+				# Check image size and, if necessary, redownload and reduce image size
+				if [[ $(du -hs "/tmp/regataos-gcs/config/epicstore-games/img/$gamename_lowercase.$image_type" | awk '{print $1}') == *"0"* ]]; then
+					# Download image
+					rm -f "/tmp/regataos-gcs/config/epicstore-games/img/$gamename_lowercase.$image_type"
+					wget --no-check-certificate -O "/tmp/regataos-gcs/config/epicstore-games/img/$gamename_lowercase.$image_type" "$game_img1"
+
+					# Reduce image size
+					game_img1="/tmp/regataos-gcs/config/epicstore-games/img/$gamename_lowercase.$image_type"
+					convert -resize 854 /tmp/regataos-gcs/config/epicstore-games/img/$gamename_lowercase.$image_type /tmp/regataos-gcs/config/epicstore-games/img/$gamename_lowercase.$image_type
+				fi
+			fi
 		fi
 
 		# Update cache only if game data does not exist
@@ -121,7 +145,7 @@ for i in $HOME/.config/legendary/metadata/*.json; do
 				rm -f "/tmp/regataos-gcs/config/epicstore-games/json/$gamename_lowercase-epicstore.json"
 				rm -f "/tmp/regataos-gcs/config/epicstore-games/img/$gamename_lowercase-logo"
 				rm -f "/tmp/regataos-gcs/config/epicstore-games/img/$gamename_lowercase-logo.$image_type2"
-				rm -f "/tmp/regataos-gcs/config/epicstore-games/img/$gamename_lowercase"
+				rm -f "/tmp/regataos-gcs/config/epicstore-games/img/$gamename_lowercase.$image_type"
 				rm -f "/tmp/regataos-gcs/config/epicstore-games/img/$gamename_lowercase.$image_type"
 			fi
 		fi
