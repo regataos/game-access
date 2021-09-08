@@ -28,12 +28,21 @@ function home_content() {
 
                 // Content of block 3
                 //Block image
-                $(".appbc3").css("background-image", 'url("https://i.ibb.co/bPzDBvg/block2.jpg")');
+                $(".appbc3").css("background-image", 'url("https://i.ibb.co/FD18q23/block3.jpg")');
                 $(".appbc3").css("background-position", "50% 0%")
 
                 //Title and description
-                $(".appbc3 .block-title").text("Rocket League");
-                $(".appbc3 .block-desc").text("Disponível de graça na Epic Games Store.");
+                $(".appbc3 .block-title").text("Far Cry 3");
+                $(".appbc3 .block-desc").text("Disponível de graça no Ubisoft Connect até 11 de setembro.");
+
+                // Content of block 3
+                //Block image
+                //$(".appbc3").css("background-image", 'url("https://i.ibb.co/bPzDBvg/block2.jpg")');
+                //$(".appbc3").css("background-position", "50% 0%")
+
+                //Title and description
+                //$(".appbc3 .block-title").text("Rocket League");
+                //$(".appbc3 .block-desc").text("Disponível de graça na Epic Games Store.");
             });
         
         } else if ((user_language.indexOf("pt_PT") > -1) == "1") {
@@ -58,12 +67,21 @@ function home_content() {
 
                 // Content of block 3
                 //Block image
-                $(".appbc3").css("background-image", 'url("https://i.ibb.co/bPzDBvg/block2.jpg")');
+                $(".appbc3").css("background-image", 'url("https://i.ibb.co/FD18q23/block3.jpg")');
                 $(".appbc3").css("background-position", "50% 0%")
 
                 //Title and description
-                $(".appbc3 .block-title").text("Rocket League");
-                $(".appbc3 .block-desc").text("Disponível de graça na Epic Games Store.");
+                $(".appbc3 .block-title").text("Far Cry 3");
+                $(".appbc3 .block-desc").text("Disponível de graça no Ubisoft Connect até 11 de setembro.");
+
+                // Content of block 3
+                //Block image
+                //$(".appbc3").css("background-image", 'url("https://i.ibb.co/bPzDBvg/block2.jpg")');
+                //$(".appbc3").css("background-position", "50% 0%")
+
+                //Title and description
+                //$(".appbc3 .block-title").text("Rocket League");
+                //$(".appbc3 .block-desc").text("Disponível de graça na Epic Games Store.");
             });
 
         } else if ((user_language.indexOf("en_US") > -1) == "1") {
@@ -88,12 +106,21 @@ function home_content() {
 
                 // Content of block 3
                 //Block image
-                $(".appbc3").css("background-image", 'url("https://i.ibb.co/bPzDBvg/block2.jpg")');
+                $(".appbc3").css("background-image", 'url("https://i.ibb.co/FD18q23/block3.jpg")');
                 $(".appbc3").css("background-position", "50% 0%")
 
                 //Title and description
-                $(".appbc3 .block-title").text("Rocket League");
-                $(".appbc3 .block-desc").text("Available for free on the Epic Games Store.");
+                $(".appbc3 .block-title").text("Far Cry 3");
+                $(".appbc3 .block-desc").text("Available for free on Ubisoft Connect until September 11th.");
+
+                // Content of block 3
+                //Block image
+                //$(".appbc3").css("background-image", 'url("https://i.ibb.co/bPzDBvg/block2.jpg")');
+                //$(".appbc3").css("background-position", "50% 0%")
+
+                //Title and description
+                //$(".appbc3 .block-title").text("Rocket League");
+                //$(".appbc3 .block-desc").text("Available for free on the Epic Games Store.");
             });
 
         } else {
@@ -118,12 +145,21 @@ function home_content() {
 
                 // Content of block 3
                 //Block image
-                $(".appbc3").css("background-image", 'url("https://i.ibb.co/bPzDBvg/block2.jpg")');
+                $(".appbc3").css("background-image", 'url("https://i.ibb.co/FD18q23/block3.jpg")');
                 $(".appbc3").css("background-position", "50% 0%")
 
                 //Title and description
-                $(".appbc3 .block-title").text("Rocket League");
-                $(".appbc3 .block-desc").text("Available for free on the Epic Games Store.");
+                $(".appbc3 .block-title").text("Far Cry 3");
+                $(".appbc3 .block-desc").text("Available for free on Ubisoft Connect until September 11th.");
+
+                // Content of block 3
+                //Block image
+                //$(".appbc3").css("background-image", 'url("https://i.ibb.co/bPzDBvg/block2.jpg")');
+                //$(".appbc3").css("background-position", "50% 0%")
+
+                //Title and description
+                //$(".appbc3 .block-title").text("Rocket League");
+                //$(".appbc3 .block-desc").text("Available for free on the Epic Games Store.");
             });
         }
     }
