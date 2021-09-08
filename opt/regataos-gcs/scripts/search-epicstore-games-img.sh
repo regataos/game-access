@@ -143,9 +143,7 @@ for i in $HOME/.config/legendary/metadata/*.json; do
 			# otherwise clear cache
 			if test ! -e "$HOME/.config/legendary/metadata/$game_name.json"; then
 				rm -f "/tmp/regataos-gcs/config/epicstore-games/json/$gamename_lowercase-epicstore.json"
-				rm -f "/tmp/regataos-gcs/config/epicstore-games/img/$gamename_lowercase-logo"
-				rm -f "/tmp/regataos-gcs/config/epicstore-games/img/$gamename_lowercase-logo.$image_type2"
-				rm -f "/tmp/regataos-gcs/config/epicstore-games/img/$gamename_lowercase.$image_type"
+				rm -f "/tmp/regataos-gcs/config/epicstore-games/img/$gamename_lowercase"
 				rm -f "/tmp/regataos-gcs/config/epicstore-games/img/$gamename_lowercase.$image_type"
 			fi
 		fi
