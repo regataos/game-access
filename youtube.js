@@ -6,7 +6,7 @@ function funcaoCallback(json){
      for(i = 0; i < videos.length; i++){
   output_html += "<div class=\"video-item\">";
   output_html += "<div class=\"content\">";
-  output_html += "<a href=\"" + youtubeUrl + videos[i].id.videoId + "\">";
+  output_html += "<a target='_blank' href=\"" + youtubeUrl + videos[i].id.videoId + "\">";
   output_html += "<img src=\""+ videos[i].snippet.thumbnails.medium.url+"\" width=\"" 
          + videos[i].snippet.thumbnails.medium.width + "\" height=\"" 
          + videos[i].snippet.thumbnails.medium.height +"\"/>";
