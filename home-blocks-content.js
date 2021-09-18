@@ -24,7 +24,7 @@ function home_content() {
 
                 //Title and description
                 $(".appbc2 .block-title").text("Tharsis");
-                $(".appbc2 .block-desc").text("Disponível de graça na Epic Games Store até 23 de setembro.");
+                $(".appbc2 .block-desc").text("Disponível de graça na Epic Games até 23 de setembro.");
 
                 // Content of block 3
                 //Block image
@@ -54,7 +54,7 @@ function home_content() {
 
                 //Title and description
                 $(".appbc2 .block-title").text("Tharsis");
-                $(".appbc2 .block-desc").text("Disponível de graça na Epic Games Store até 23 de setembro.");
+                $(".appbc2 .block-desc").text("Disponível de graça na Epic Games até 23 de setembro.");
 
                 // Content of block 3
                 //Block image
@@ -84,7 +84,7 @@ function home_content() {
 
                 //Title and description
                 $(".appbc2 .block-title").text("Tharsis");
-                $(".appbc2 .block-desc").text("Available for free at the Epic Games Store until September 23.");
+                $(".appbc2 .block-desc").text("Available for free at the Epic Games until September 23.");
 
                 // Content of block 3
                 //Block image
@@ -114,7 +114,7 @@ function home_content() {
 
                 //Title and description
                 $(".appbc2 .block-title").text("Tharsis");
-                $(".appbc2 .block-desc").text("Available for free at the Epic Games Store until September 23.");
+                $(".appbc2 .block-desc").text("Available for free at the Epic Games until September 23.");
 
                 // Content of block 3
                 //Block image
