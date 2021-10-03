@@ -32,7 +32,7 @@ function home_content() {
                 // Content of slide 1
                 //Title and description
                 $(".slide-content .slide-desc1 p").text("Explore o gigantesco e premiado mundo de Los Santos e Blaine County");
-                $(".slide-content .slide-button1").text("Jogue agora com Rockstar Games Launcher");
+                $(".slide-content .slide-button1").text("Jogue agora com Rockstar Launcher");
 
                 // Content of slide 2
                 //Title and description
@@ -58,7 +58,7 @@ function home_content() {
 
                 //Title and description
                 $(".slide-content .slide-desc1 p").text("Explore o gigantesco e premiado mundo de Los Santos e Blaine County");
-                $(".slide-content .slide-button1").text("Jogue agora com Rockstar Games Launcher");
+                $(".slide-content .slide-button1").text("Jogue agora com Rockstar Launcher");
 
                 // Content of slide 2
                 //Title and description
@@ -81,7 +81,7 @@ function home_content() {
                 // Content of slide 1
                 //Title and description
                 $(".slide-content .slide-desc1 p").text("Explore the award-winning world of Los Santos and Blaine County");
-                $(".slide-content .slide-button1").text("Play now with Rockstar Games Launcher");
+                $(".slide-content .slide-button1").text("Play now with Rockstar Launcher");
 
                 // Content of slide 2
                 //Title and description
@@ -104,7 +104,7 @@ function home_content() {
                 // Content of slide 1
                 //Title and description
                 $(".slide-content .slide-desc1 p").text("Explore the award-winning world of Los Santos and Blaine County");
-                $(".slide-content .slide-button1").text("Play now with Rockstar Games Launcher");
+                $(".slide-content .slide-button1").text("Play now with Rockstar Launcher");
 
                 // Content of slide 2
                 //Title and description
