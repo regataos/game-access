@@ -1,8 +1,5 @@
 #!/bin/bash
 
-# This script searches the game's installation directory, when searching for its executable,
-# and saves the information in the "installed-games.conf" file
-
 # Create config directory
 if test ! -e /tmp/regataos-gcs; then
 	mkdir -p /tmp/regataos-gcs

@@ -6,7 +6,8 @@ function back_button() {
 		$(".top-bar-arrow").css("display", "none")
 		$("#block-home").css("display", "block")
 		$("ul#top-menu").css("margin-left", "50px")
-		$("a.p-home").css("font-weight", "800")
+		$("a.p-home").css("font-weight", "700")
+		$(".text-app").css("font-weight", "400")
 	} else {
 		$(".top-bar-arrow").css("display", "block")
 		$("ul#top-menu").css("margin-left", "80px")
@@ -16,6 +17,7 @@ function back_button() {
 	if ((iframeurl.indexOf("installed") > -1) == "1") {
 		$("a.p-installed").css("font-weight", "700")
 		$("#block-home").css("display", "block")
+		$(".text-app").css("font-weight", "400")
 	} else {
 		$("a.p-installed").css("font-weight", "400")
 	}
@@ -23,6 +25,7 @@ function back_button() {
 	if ((iframeurl.indexOf("allgames") > -1) == "1") {
 		$("a.p-allgames").css("font-weight", "700")
 		$("#block-home").css("display", "block")
+		$(".text-app").css("font-weight", "400")
 	} else {
 		$("a.p-allgames").css("font-weight", "400")
 	}
@@ -30,6 +33,7 @@ function back_button() {
 	if ((iframeurl.indexOf("steam-games") > -1) == "1") {
 		$("a.p-steam").css("font-weight", "700")
 		$("#block-home").css("display", "block")
+		$(".text-app").css("font-weight", "400")
 	} else {
 		$("a.p-steam").css("font-weight", "400")
 	}
@@ -37,6 +41,7 @@ function back_button() {
 	if ((iframeurl.indexOf("settings") > -1) == "1") {
 		$("a.p-settings").css("font-weight", "700")
 		$("#block-home").css("display", "block")
+		$(".text-app").css("font-weight", "400")
 	} else {
 		$("a.p-settings").css("font-weight", "400")
 	}
@@ -45,6 +50,7 @@ function back_button() {
 		$(".top-bar-arrow").css("display", "block")
 		$("#block-home").css("display", "block")
 		$("ul#top-menu").css("margin-left", "80px")
+		$(".text-app").css("font-weight", "400")
 	}
 }
 
@@ -79,7 +85,9 @@ setTimeout(function() {
 		}, 100);
 
 	} else {
-		$(".text-app").css("font-weight", "400")
+		setTimeout(function() {
+			$(".text-app").css("font-weight", "400")
+		}, 100);
 	}
 }, 200);
 }

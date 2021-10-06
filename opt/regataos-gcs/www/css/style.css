@@ -923,11 +923,10 @@ color: #fff;
 }
 
 /* home buttons */
-
 .block-apps {
     display: inline-block;
     width: 100%;
-	height: 43px;
+	padding: 5px 0px;
 }
 
 .icon-app {
@@ -937,7 +936,7 @@ color: #fff;
     background-size: 100% 100%;
     background-repeat: no-repeat;
     float: left;
-    margin-bottom: 15px;
+    margin-bottom: 0px;
 	cursor: pointer;
 }
 
