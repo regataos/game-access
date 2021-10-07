@@ -23,7 +23,12 @@ fi
 
 # Check if the game installation directory exists, looking for the game executable
 function search_installed_games() {
-	game_dir=$(find /mnt /run/media /run/mount "$HOME/Game Access" -type f -iname "$(echo "$game_executable" | sed 's/ //')")
+	if test -e "/tmp/regataos-gcs/config/external-games-folder.txt"; then
+		game_dir=$(find $(cat /tmp/regataos-gcs/config/external-games-folder.txt) "$HOME/Game Access" -type f -iname "$(echo "$game_executable" | sed 's/ //')")
+	else
+		game_dir=$(find "$HOME/Game Access" -type f -iname "$(echo "$game_executable" | sed 's/ //')")
+	fi
+
 	echo "$game_dir"
 	if [[ "$game_dir" == *"$(echo "$game_executable" | sed 's/ //')"* ]]; then
 		if [[ $(grep -wr "$(echo "$game_executable" | sed 's/ //')" "/tmp/regataos-gcs/config/game-install-dir.conf") != *"$game_dir"* ]]; then

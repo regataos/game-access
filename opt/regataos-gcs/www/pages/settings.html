@@ -69,6 +69,24 @@
 			</label>
 		</div>
 	</div>
+
+	<div class="config-option">
+		<div class="config-option-title option-find-games-external-folder">Localizar automaticamente jogos em uma pasta externa</div>
+		<div class="config-option-desc option-find-games-external-folder-desc">Esta opção permite ao Game Access buscar também jogos em um outro diretório/disco externo.</div>
+
+		<div class="donwload-import-button external-games-folder-button">
+			<label class="label-run-game" id="capture-patch" for="add-external-games-folder" onclick="add_external_games_folder();">
+				<div class="external-games-folder-button-txt">Adicionar pasta externa</div>
+			</label>
+			<input id="add-external-games-folder" type="file" nwdirectory/>
+		</div>
+
+		<div class="external-games-folder-dir">
+			<div class="external-games-folder-dir-desc"></div>
+			<div id="remove-external-games-folder-dir" type="button" onclick="remove_external_games_folder();" style="background-image:url(./../images/close.png); background-repeat: no-repeat; background-size: 17px 17px;" title="Remover"></div>
+		</div>
+
+	</div>
 	<script type="text/javascript" src="./../js/js-pages/check-config-status.js"></script>
 	<script type="text/javascript" src="./../js/js-pages/action-config.js"></script>
 </div>

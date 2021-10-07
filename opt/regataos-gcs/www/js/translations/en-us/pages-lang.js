@@ -96,4 +96,10 @@ $(document).ready(function() {
 	$(".option-auto-close-title").text("Automatically close Game Access");
 	$(".option-auto-close-desc").text("This option allows Game Access to close when a game or launcher is running.");
 	$(".auto-close-desc").text("Close automatically");
+
+	//Add external games folder
+	$(".option-find-games-external-folder").text("Automatically find games in an external folder");
+	$(".option-find-games-external-folder-desc").text("This option allows Game Access to also search for games in another external directory/disk.");
+	$(".external-games-folder-button-txt").text("Add external folder");
+	$("#remove-external-games-folder-dir").attr({title:"Remove"});
 });

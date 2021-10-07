@@ -1063,3 +1063,45 @@ color: #fff;
 .fa-download {
 	margin-right: 6px;
 }
+
+.external-games-folder-button {
+	margin-bottom: 16px;
+}
+
+.external-games-folder-dir {
+	float: left;
+	width: 450px;
+	background-color: #383e42;
+    border-radius: 3px;
+	padding: 10px;
+    margin-left: 20px;
+    margin-top: 15px;
+    transition: all .3s;
+}
+
+.external-games-folder-dir:hover {
+	background-color: #43494d;
+}
+
+.external-games-folder-dir-desc {
+	float: left;
+	font-family: Roboto;
+    font-size: 15px;
+	max-width: 50ch;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+#remove-external-games-folder-dir {
+    cursor: pointer;
+    float: right;
+    width: 17px;
+    height: 17px;
+    margin-top: 1px;
+}
+
+.external-games-folder-button-txt {
+	font-size: 16px;
+    padding: 1px;
+}

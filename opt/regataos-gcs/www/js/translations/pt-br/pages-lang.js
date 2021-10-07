@@ -92,8 +92,14 @@ $(document).ready(function() {
 	$(".option-fps-hud-desc").text("Esta opção habilita um HUD que exibe informações sobre o desempenho dos jogos e uso do hardware.");
 	$(".fps-hud-desc").text("Exibir FPS HUD");
 
-	//Close automatically 
+	//Close automatically
 	$(".option-auto-close-title").text("Fechar automaticamente o Game Access");
 	$(".option-auto-close-desc").text("Esta opção permite que o Game Access seja fechado quando um jogos ou launcher estiver em execução.");
 	$(".auto-close-desc").text("Fechar automaticamente");
+
+	//Add external games folder
+	$(".option-find-games-external-folder").text("Localizar automaticamente jogos em uma pasta externa");
+	$(".option-find-games-external-folder-desc").text("Esta opção permite ao Game Access buscar também jogos em um outro diretório/disco externo.");
+	$(".external-games-folder-button-txt").text("Adicionar pasta externa");
+	$("#remove-external-games-folder-dir").attr({title:"Remover"});
 });

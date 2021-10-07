@@ -37,3 +37,23 @@ function check_auto_close() {
 	}
 }
 check_auto_close()
+
+function check_external_games_folder() {
+	const fs = require('fs');
+
+	fs.access("/tmp/regataos-gcs/config/external-games-folder.txt", (err) => {
+	if (!err) {
+		var external_games_dir = fs.readFileSync("/tmp/regataos-gcs/config/external-games-folder.txt", "utf8");
+		var external_games_dir = external_games_dir.replace(/(\r\n|\n|\r)/gm, "");
+		$(".external-games-folder-dir-desc").text(external_games_dir);
+		$(".external-games-folder-dir").css("display", "block")
+
+
+		return;
+	} else {
+		$(".external-games-folder-dir").css("display", "none")
+	}
+	});
+}
+
+check_external_games_folder()
