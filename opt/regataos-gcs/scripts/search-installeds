@@ -1,20 +1,7 @@
 #!/bin/bash
 
-cd /
-
-while :
-do
-
-# Check if the Regata OS Game Access is running
-ps -C "regataosgcs /opt/regataos-gcs" > /dev/null
-if [ $? = 0 ]
-then
-	# Search for installed games
-	/bin/bash /opt/regataos-gcs/scripts/search-installed-games.sh & /bin/bash /opt/regataos-gcs/scripts/search-steam-games.sh
-else
-	echo "Nothing to do..."
-	break
-fi
+# Search for installed games
+/bin/bash /opt/regataos-gcs/scripts/search-installed-games.sh & /bin/bash /opt/regataos-gcs/scripts/search-steam-games.sh
 
 # Capture the games installation folder from the Epic Games Store
 if test -e "/tmp/progressbar-gcs/download-percentage-legendary"; then
@@ -33,11 +20,3 @@ if [[ $(ls "/tmp/regataos-gcs/config/installed/" | grep json) == *".json"* ]]; t
 else
 	rm -f "/tmp/regataos-gcs/config/installed/show-installed-games.txt"
 fi
-
-# Check if you have logged in to the Epic Games Store
-if [[ $(ls "$HOME/.config/regataos-gcs/epicstore-games/json/" | grep json) == *".json"* ]]; then
-	/bin/bash /opt/regataos-gcs/scripts/search-epicstore-games.sh & sleep 5; /bin/bash /opt/regataos-gcs/scripts/search-epicstore-games.sh
-fi
-
-   sleep 5
-done
