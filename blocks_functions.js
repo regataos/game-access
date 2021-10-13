@@ -41,7 +41,7 @@ function block_function2() {
 	}
 }
 
-function block_function3() {
+function block_function3_ubi() {
 	const exec = require('child_process').exec;
 	const fs = require('fs');
 
@@ -59,7 +59,7 @@ function block_function3() {
 	}
 }
 
-function block_function3_epic() {
+function block_function3() {
 	const exec = require('child_process').exec;
 	const fs = require('fs');
 
