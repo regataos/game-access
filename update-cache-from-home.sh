@@ -42,11 +42,11 @@ fi
 
 # Home block images
 #Image 1
-if test ! -e "$image_download_cache_dir/block-europa-universalis-iv.jpg"; then
-	wget --no-check-certificate -O "$image_download_cache_dir/block-europa-universalis-iv.jpg" \
-	"https://cdn1.epicgames.com/salesEvent/salesEvent/EGS_EuropaUniversalisIV_ParadoxDevelopmentStudioParadoxTinto_S3_2560x1440-aa3002ec221d43dcd7e49f5458e74766?h=480&resize=1&w=854"
+if test ! -e "$image_download_cache_dir/block-pc-bs.jpeg"; then
+	wget --no-check-certificate -O "$image_download_cache_dir/block-pc-bs.jpeg" \
+	"https://cdn1.epicgames.com/salesEvent/salesEvent/EGS_PCBuildingSimulator_TheIrregularCorporation_S1_2560x1440-48cc12f45bf3eaaaae79cba6594b06d8?h=480&resize=1&w=854"
 
-	ln -sf "$image_download_cache_dir/block-europa-universalis-iv.jpg" "$image_download_cache_dir/block-img1.jpg"
+	ln -sf "$image_download_cache_dir/block-pc-bs.jpeg" "$image_download_cache_dir/block-img1.jpeg"
 fi
 
 #Image 2
