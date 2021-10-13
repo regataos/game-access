@@ -46,7 +46,7 @@ if test ! -e "$image_download_cache_dir/block-pc-bs.jpeg"; then
 	wget --no-check-certificate -O "$image_download_cache_dir/block-pc-bs.jpeg" \
 	"https://cdn1.epicgames.com/salesEvent/salesEvent/EGS_PCBuildingSimulator_TheIrregularCorporation_S1_2560x1440-48cc12f45bf3eaaaae79cba6594b06d8?h=480&resize=1&w=854"
 
-	ln -sf "$image_download_cache_dir/block-pc-bs.jpeg" "$image_download_cache_dir/block-img1.jpeg"
+	ln -sf "$image_download_cache_dir/block-pc-bs.jpeg" "$image_download_cache_dir/block-img1.jpg"
 fi
 
 #Image 2
