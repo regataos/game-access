@@ -42,11 +42,11 @@ fi
 
 # Home block images
 #Image 1
-if test ! -e "$image_download_cache_dir/block-pc-bs.jpg"; then
-	wget --no-check-certificate -O "$image_download_cache_dir/block-pc-bs.jpg" \
-	"https://cdn1.epicgames.com/salesEvent/salesEvent/EGS_PCBuildingSimulator_TheIrregularCorporation_S1_2560x1440-48cc12f45bf3eaaaae79cba6594b06d8?h=480&resize=1&w=854"
+if test ! -e "$image_download_cache_dir/block-SZRWP.jpg"; then
+	wget --no-check-certificate -O "$image_download_cache_dir/block-SZRWP.jpg" \
+	"https://i.ibb.co/6XVk0zh/SZRWP.jpg"
 
-	ln -sf "$image_download_cache_dir/block-pc-bs.jpeg" "$image_download_cache_dir/block-img1.jpg"
+	ln -sf "$image_download_cache_dir/block-SZRWP.jpg" "$image_download_cache_dir/block-img1.jpg"
 fi
 
 #Image 2
