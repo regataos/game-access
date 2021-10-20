@@ -6,7 +6,7 @@
 # Check if the file with the login id exists
 if test -e "/tmp/regataos-gcs/login-id.txt"; then
     # Separate and save only the login id
-    login_id=$(cat /tmp/regataos-gcs/login-id.txt | sed 's/{\|}//g' | sed 's/"//g' | cut -d"," -f 2- | cut -d":" -f 2-)
+    login_id=$(cat /tmp/regataos-gcs/login-id.txt | sed 's/{\|}//g' | sed 's/"//g' | cut -d"," -f 2- | cut -d":" -f 3-)
 
     # Use the saved id to login with the Epic Games Store account with legendary
     /opt/regataos-gcs/legendary/legendary auth --sid $login_id
