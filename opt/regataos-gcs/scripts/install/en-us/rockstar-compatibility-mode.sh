@@ -29,7 +29,7 @@ install_dotnet_status="This may take a few minutes..."
 
 #Download information
 app_download_status="Downloading Rockstar Launcher installer..."
-app_download_link="https://gamedownloads.rockstargames.com/public/installer/Rockstar-Games-Launcher.exe"
+app_download_link="https://dw94.uptodown.com/dwn/5CPYoAPJu-f9RyNVBxEUHQOf3NuvsJd4XHRc5UC-Q0CQUm87-3OybVpGYho1fjZ1wU1G8vmaBL6UuR_5R6ApaWz3QqWeY_5Gj4W27-YSig6bZjbi17d-EO42AsOjBcBT/g7ipeocdfJeoCrrCSJgly7WA7HtarBBcIEnF1Ry5rO1CQ-GjqYZcaPukx480f1fll0prLotlja4U8Fve-bro7N_PpTAoUb1YOOJIBeyefF2Icw_Tc13TKDavuv-_CVtS/xkrpjSNbEQeYaqnRh7ylm5BDxwXP1XLXl0ePqTvEIbhqejge3LblZw35DPSlE_4FnqWqqw_3mij0y37fWttNpIrWnuB5ayZDzH32lLs8hOzYZGwYv0-xhYcz3PjUEO97/rockstar-games-launcher-1-0-36-344.exe"
 app_download_file_name="Rockstar-Games-Launcher.exe"
 
 #Default settings
