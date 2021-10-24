@@ -18,10 +18,10 @@ fi
 
 # Enable performance info
 if [[ $(grep -r fps $GCS_CONFIG) == *"fps=true"* ]]; then
-	export MANGOHUD_CONFIG=ram,vram,gpu_core_clock,cpu_temp,gpu_temp,core_load,gpu_name,font_size=19
-	export MANGOHUD=1
-	export MANGOHUD_GL="mangohud"
-	#export DXVK_HUD=devinfo,fps,frametimes,gpuload,api,compiler
+	#export MANGOHUD_CONFIG=ram,vram,gpu_core_clock,cpu_temp,gpu_temp,core_load,gpu_name,font_size=19
+	#export MANGOHUD=1
+	#export MANGOHUD_GL="mangohud"
+	export DXVK_HUD=devinfo,fps,frametimes,gpuload,api,compiler
 fi
 
 # If necessary, run osftware with the dGPU
