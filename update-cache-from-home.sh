@@ -42,11 +42,11 @@ fi
 
 # Home block images
 #Image 1
-if test ! -e "$image_download_cache_dir/block-SZRWP.jpg"; then
-	wget --no-check-certificate -O "$image_download_cache_dir/block-SZRWP.jpg" \
-	"https://i.ibb.co/6XVk0zh/SZRWP.jpg"
+if test ! -e "$image_download_cache_dir/block-asee.jpg"; then
+	wget --no-check-certificate -O "$image_download_cache_dir/block-asee.jpg" \
+	"https://i.ibb.co/rb4CqN4/block-asee.jpg"
 
-	ln -sf "$image_download_cache_dir/block-SZRWP.jpg" "$image_download_cache_dir/block-img1.jpg"
+	ln -sf "$image_download_cache_dir/block-asee.jpg" "$image_download_cache_dir/block-img1.jpg"
 fi
 
 #Image 2
