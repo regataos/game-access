@@ -44,7 +44,7 @@ fi
 #Image 1
 if test ! -e "$image_download_cache_dir/block-asee.jpg"; then
 	wget --no-check-certificate -O "$image_download_cache_dir/block-asee.jpg" \
-	"https://i.ibb.co/rb4CqN4/block-asee.jpg"
+	"https://cdn1.epicgames.com/salesEvent/salesEvent/EGS_AvenColony_MothershipEntertainmentLLC_S3_2560x1440-3276f29fde89052103f0b650420d256b?h=480&resize=1&w=854"
 
 	ln -sf "$image_download_cache_dir/block-asee.jpg" "$image_download_cache_dir/block-img1.jpg"
 fi
