@@ -357,7 +357,7 @@ echo "installing" > $progressbar_dir/progress-movement
 install_app
 
 # Confirm installation
-if [[ $(cat /tmp/regataos-gcs/instalation-legendary) == *"Game has been imported"* ]]; then
+if [[ $(cat /tmp/regataos-gcs/instalation-legendary) == *"has been imported"* ]]; then
 	rm -f $progressbar_dir/progress-movement
 	echo "completed" > $progressbar_dir/progress-full
 	echo "" > $progressbar_dir/status
