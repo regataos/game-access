@@ -30,7 +30,7 @@ install_dotnet_status="Isso pode demorar alguns minutos..."
 
 #Download information
 app_download_status="Baixando o instalador do GOG Galaxy..."
-app_download_link="https://cdn.gog.com/open/galaxy/client/setup_galaxy_2.0.19.37.exe"
+app_download_link="https://content-system.gog.com/open_link/download?path=/open/galaxy/client/2.0.43.71/setup_galaxy_2.0.43.71.exe"
 app_download_file_name="setup_galaxy.exe"
 
 #Default settings
@@ -269,7 +269,7 @@ else
 	#winetricks prefix=default-compatibility-mode -q -f corefonts
 	wine msiexec /i /usr/share/wine/gecko/wine-gecko-*-x86.msi
 	wine msiexec /i /usr/share/wine/gecko/wine-gecko-*-x86_64.msi
-	wine msiexec /i /usr/share/wine/mono/wine-mono-*.msi
+	wine msiexec /i /usr/share/wine/mono/wine-mono-*.msi 
 
 	echo "18%" > $progressbar_dir/progress
 	winetricks prefix=default-compatibility-mode -q -f nocrashdialog
@@ -290,7 +290,7 @@ else
 	winetricks prefix=default-compatibility-mode -q -f physx d3dcompiler_43
 
 	echo "52%" > $progressbar_dir/progress
-	winetricks prefix=default-compatibility-mode -q -f mdx
+	winetricks prefix=default-compatibility-mode -q -f mdx mfc140
 
 	# Install special DLLs
 	echo "65%" > $progressbar_dir/progress

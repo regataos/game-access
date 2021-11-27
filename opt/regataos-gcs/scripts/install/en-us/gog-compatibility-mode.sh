@@ -30,7 +30,7 @@ install_dotnet_status="This may take a few minutes..."
 
 #Download information
 app_download_status="Downloading GOG Galaxy installer..."
-app_download_link="https://cdn.gog.com/open/galaxy/client/setup_galaxy_2.0.19.37.exe"
+app_download_link="https://content-system.gog.com/open_link/download?path=/open/galaxy/client/2.0.43.71/setup_galaxy_2.0.43.71.exe"
 app_download_file_name="setup_galaxy.exe"
 
 #Default settings
@@ -290,7 +290,7 @@ else
 	winetricks prefix=default-compatibility-mode -q -f physx d3dcompiler_43
 
 	echo "52%" > $progressbar_dir/progress
-	winetricks prefix=default-compatibility-mode -q -f mdx
+	winetricks prefix=default-compatibility-mode -q -f mdx mfc140
 
 	# Install special DLLs
 	echo "65%" > $progressbar_dir/progress
