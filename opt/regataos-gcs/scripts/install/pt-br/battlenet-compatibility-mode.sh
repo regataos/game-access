@@ -130,6 +130,24 @@ else
 	fi
 fi
 
+# If Vulkan is supported, enable DXVK and VKD3D-Proton
+function enable_dxvk_vkd3d() {
+	vulkan_test=$(vulkaninfo)
+	if [[ $vulkan_test == *"Instance Extensions"* ]]; then
+		if [[ $vulkan_test != *"Vulkan support is incomplete"* ]]; then
+			# Enable DXVK for Direct3D 9/10/11 over Vulkan
+			export WINEDLLOVERRIDES="mscoree,mshtml="
+			export WINEPREFIX="$HOME/.local/share/wineprefixes/default-compatibility-mode"
+			/bin/sh /opt/regataos-wine/dxvk/setup_dxvk.sh install --symlink
+
+			# Enable VKD3D-Proton for Direct3D 12 over Vulkan
+			export WINEDLLOVERRIDES="mscoree,mshtml="
+			export WINEPREFIX="$HOME/.local/share/wineprefixes/default-compatibility-mode"
+			/bin/sh /opt/regataos-wine/vkd3d-proton/setup_vkd3d_proton.sh install --symlink
+		fi
+	fi
+}
+
 # Start installation
 function start_installation() {
 
@@ -189,6 +207,12 @@ if test -e "$HOME/.local/share/wineprefixes/default-compatibility-mode" ; then
 	echo $conf_prefix_status > $progressbar_dir/status
 	sleep 1
 	echo "show progress bar" > $progressbar_dir/progressbar
+
+	# Enable DXVK and VKD3D-Proton
+	if test ! -e "$HOME/.local/share/wineprefixes/default-compatibility-mode/vulkan.txt"; then
+		enable_dxvk_vkd3d
+		echo -e "DXVK\nVKD3D-Proton" > "$HOME/.local/share/wineprefixes/default-compatibility-mode/vulkan.txt"
+	fi
 
 	cp -rf "$HOME/.local/share/wineprefixes/default-compatibility-mode" \
 	"$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"
@@ -332,20 +356,10 @@ else
 	/bin/sh install-mf.sh
 
 	echo "82%" > $progressbar_dir/progress
-	# If Vulkan is supported, enable DXVK and VKD3D-Proton
-	vulkan_test=$(vulkaninfo)
-	if [[ $vulkan_test == *"Instance Extensions"* ]]; then
-		if [[ $vulkan_test != *"Vulkan support is incomplete"* ]]; then
-			# Enable DXVK for Direct3D 9/10/11 over Vulkan
-			export WINEDLLOVERRIDES="mscoree,mshtml="
-			export WINEPREFIX="$HOME/.local/share/wineprefixes/default-compatibility-mode"
-			/bin/sh /opt/regataos-wine/dxvk/setup_dxvk.sh install --symlink
-
-			# Enable VKD3D-Proton for Direct3D 12 over Vulkan
-			export WINEDLLOVERRIDES="mscoree,mshtml="
-			export WINEPREFIX="$HOME/.local/share/wineprefixes/default-compatibility-mode"
-			/bin/sh /opt/regataos-wine/vkd3d-proton/setup_vkd3d_proton.sh install --symlink
-		fi
+	# Enable DXVK and VKD3D-Proton
+	if test ! -e "$HOME/.local/share/wineprefixes/default-compatibility-mode/vulkan.txt"; then
+		enable_dxvk_vkd3d
+		echo -e "DXVK\nVKD3D-Proton" > "$HOME/.local/share/wineprefixes/default-compatibility-mode/vulkan.txt"
 	fi
 
 	# Copy the default wineprefix to the new directory
