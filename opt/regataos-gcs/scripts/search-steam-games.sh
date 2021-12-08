@@ -94,7 +94,7 @@ if test ! -e "/tmp/regataos-gcs/config/steam-games/no-steam-games.txt" ;then
 		game_name="$(grep -R '"name"' $i | cut -d'"' -f 4- | cut -d'"' -f -1)"
 
 		#Make the game name lowercase
-		gamename_lowercase=$(echo "$game_name" | tr 'A-Z' 'a-z' | sed 's/: \|- \|(\|)\|, \|™//g')
+		gamename_lowercase=$(echo "$game_name" | tr 'A-Z' 'a-z' | sed 's/: \|- \|(\|)\|, \|™\|\.//g')
 		gamename_lowercase=$(echo $gamename_lowercase | sed 's/ /-/g')
 
 		if [ ! -z $game_appid ];then
