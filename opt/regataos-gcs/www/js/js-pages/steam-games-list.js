@@ -15,9 +15,9 @@ if (!err) {
 		// Simplify game name to create a nickname
 		let gamename_lowercase = games.name.toLowerCase();
 		gamename_lowercase = gamename_lowercase.replace(/[:-]/g,"");
+		gamename_lowercase = gamename_lowercase.replace(/[.]/g,"")
 		gamename_lowercase = gamename_lowercase.replace(/(|)/g,"")
 		gamename_lowercase = gamename_lowercase.replace(/(,)/g,"")
-		gamename_lowercase = gamename_lowercase.replace(/(.)/g,"")
 		gamename_lowercase = gamename_lowercase.replace(/(&)/g,"and")
 		gamename_lowercase = gamename_lowercase.replace(/\s+/g,"-");
 		gamename_lowercase = gamename_lowercase.replace(/'|\(|\)/g, "")
