@@ -61,6 +61,9 @@ fi
 
 if [[ $(ls /tmp/regataos-gcs/config/steam-games/json/steam-id/ | grep json) != *"json"* ]]; then
 	rm -f "/tmp/regataos-gcs/config/steam-games/json/steam-id/show-steam-games.txt"
+else
+	rm -f "/tmp/regataos-gcs/config/steam-games/no-steam-games.txt"
+	echo "show steam games" > "/tmp/regataos-gcs/config/steam-games/json/steam-id/show-steam-games.txt"
 fi
 
 # Check if the game installation directory exists, looking for the game executable
