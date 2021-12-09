@@ -42,8 +42,8 @@ fi
 
 # Home block images
 #Image 1
-block1_image_name="block-pa.jpg"
-block1_image_code="RBWBTgm"
+block1_image_name="block-gce.jpg"
+block1_image_code="z2bkjW7"
 if test ! -e "$image_download_cache_dir/$block1_image_name"; then
 	wget --no-check-certificate -O "$image_download_cache_dir/$block1_image_name" \
 	"https://i.ibb.co/$block1_image_code/$block1_image_name"
@@ -52,8 +52,8 @@ if test ! -e "$image_download_cache_dir/$block1_image_name"; then
 fi
 
 #Image 2
-block2_image_name="block-gce.jpg"
-block2_image_code="z2bkjW7"
+block2_image_name="block-pa.jpg"
+block2_image_code="RBWBTgm"
 if test ! -e "$image_download_cache_dir/$block2_image_name"; then
 	wget --no-check-certificate -O "$image_download_cache_dir/$block2_image_name" \
 	"https://i.ibb.co/$block2_image_code/$block2_image_name"
