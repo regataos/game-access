@@ -2,14 +2,14 @@ function home_content() {
     $(document).ready(function() {
         // Content of block 1
         //Title
-        $(".appbc1 .block-title").text("Never Alone (Kisima Ingitchuna)");
+        $(".appbc1 .block-title").text("Godfall Challenger Edition");
         //Block image
         $(".appbc1").css("background-image", 'url("file:///tmp/regataos-gcs/config/cache/img/block-img1.jpg")');
         $(".appbc1").css("background-position", "50% 50%")
 
         // Content of block 2
         //Title
-        $(".appbc2 .block-title").text("Path of Exile");
+        $(".appbc2 .block-title").text("Prison Architect");
         //Block image
         $(".appbc2").css("background-image", 'url("file:///tmp/regataos-gcs/config/cache/img/block-img2.jpg")');
         $(".appbc2").css("background-position", "50% 0%")
@@ -32,7 +32,7 @@ function home_content() {
             $(document).ready(function() {
                 // Content of block 1
                 //Description
-                $(".appbc1 .block-desc").text("Disponível de graça na Epic Games Store até 25 de novembro.");
+                $(".appbc1 .block-desc").text("Disponível de graça na Epic Games Store até 16 de dezembro.");
 
                 // Content of block 2
                 //Description
@@ -47,7 +47,7 @@ function home_content() {
             $(document).ready(function() {
                 // Content of block 1
                 //Description
-                $(".appbc1 .block-desc").text("Disponível de graça na Epic Games Store até 25 de novembro.");
+                $(".appbc1 .block-desc").text("Disponível de graça na Epic Games Store até 16 de dezembro.");
 
                 // Content of block 2
                 //Description
@@ -62,7 +62,7 @@ function home_content() {
             $(document).ready(function() {
                 // Content of block 1
                 //Description
-                $(".appbc1 .block-desc").text("Available for free at the Epic Games Store until November 25.");
+                $(".appbc1 .block-desc").text("Available for free at the Epic Games Store until December 16.");
 
                 // Content of block 2
                 //Description
@@ -77,7 +77,7 @@ function home_content() {
             $(document).ready(function() {
                 // Content of block 1
                 //Description
-                $(".appbc1 .block-desc").text("Available for free at the Epic Games Store until November 25.");
+                $(".appbc1 .block-desc").text("Available for free at the Epic Games Store until December 16.");
 
                 // Content of block 2
                 //Description
