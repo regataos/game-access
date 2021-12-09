@@ -42,25 +42,31 @@ fi
 
 # Home block images
 #Image 1
-if test ! -e "$image_download_cache_dir/block-naki.jpg"; then
-	wget --no-check-certificate -O "$image_download_cache_dir/block-naki.jpg" \
-	"https://i.ibb.co/3vKkZRk/block-naki.jpg"
+block1_image_name="block-pa.jpg"
+block1_image_code="RBWBTgm"
+if test ! -e "$image_download_cache_dir/$block1_image_name"; then
+	wget --no-check-certificate -O "$image_download_cache_dir/$block1_image_name" \
+	"https://i.ibb.co/$block1_image_code/$block1_image_name"
 
-	ln -sf "$image_download_cache_dir/block-naki.jpg" "$image_download_cache_dir/block-img1.jpg"
+	ln -sf "$image_download_cache_dir/$block1_image_name" "$image_download_cache_dir/block-img1.jpg"
 fi
 
 #Image 2
-if test ! -e "$image_download_cache_dir/block-path-of-exile.jpg"; then
-	wget --no-check-certificate -O "$image_download_cache_dir/block-path-of-exile.jpg" \
-	"https://i.ibb.co/MhM2YBp/block-path-of-exile.jpg"
+block2_image_name="block-gce.jpg"
+block2_image_code="z2bkjW7"
+if test ! -e "$image_download_cache_dir/$block2_image_name"; then
+	wget --no-check-certificate -O "$image_download_cache_dir/$block2_image_name" \
+	"https://i.ibb.co/$block2_image_code/$block2_image_name"
 
-	ln -sf "$image_download_cache_dir/block-path-of-exile.jpg" "$image_download_cache_dir/block-img2.jpg"
+	ln -sf "$image_download_cache_dir/$block2_image_name" "$image_download_cache_dir/block-img2.jpg"
 fi
 
 #Image 3
-if test ! -e "$image_download_cache_dir/block-rocket-league.jpg"; then
-	wget --no-check-certificate -O "$image_download_cache_dir/block-rocket-league.jpg" \
-	"https://i.ibb.co/XpXFCbj/block-rocket-league.jpg"
+block3_image_name="block-rocket-league.jpg"
+block3_image_code="XpXFCbj"
+if test ! -e "$image_download_cache_dir/$block3_image_name"; then
+	wget --no-check-certificate -O "$image_download_cache_dir/$block3_image_name" \
+	"https://i.ibb.co/$block3_image_code/$block3_image_name"
 
-	ln -sf "$image_download_cache_dir/block-rocket-league.jpg" "$image_download_cache_dir/block-img3.jpg"
+	ln -sf "$image_download_cache_dir/$block3_image_name" "$image_download_cache_dir/block-img3.jpg"
 fi
