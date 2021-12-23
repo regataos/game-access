@@ -29,7 +29,12 @@ install_dotnet_status="This may take a few minutes..."
 
 #Download information
 app_download_status="Downloading Rockstar Launcher installer..."
-app_download_link="https://dw21.uptodown.com/dwn/yaGReiLB71HeMoNSrXb1dryqBy_o1QOfqgEU9WYYPjl3V8iLBFhRKO7MNtr_MUv1LvcLVrbRMQcO9w2CjeTqFa3ZpqMhE9Gyb5zb2bvPOfAfqUI7dOSlY5zOUR_qgtOo/QSBp1J2RjjwzDorMX4LLXFE480dyGirIsp3yMTsv6OPLkISGaaOE8jDyOlyFfvUUbfQ9n1cor-eSlml9WXhBoJCqkenyrjfM-7YthU_6aaaHFS9cFRkggROFuzZ1F-xS/k6nfFLBxCQD2x27dyS7lTLKYgCj-LzUK3Rh8ik3Vz-w_DKmmJl_LI1OtSbgWBoXteSfG9JmgglX8sMvVKQr7bPkkFDWKfdhWnjVM-NZVsGJ5jBjKJ9n0Mb7VeZZYyI9d/rockstar-games-launcher-1-0-36-344.exe"
+
+mkdir -p "/tmp/apps-scripts/"
+wget --no-check-certificate -O "/tmp/apps-scripts/3370768.txt" "https://rockstar-games-launcher.en.uptodown.com/windows/download/3370768"
+get_link_download=$(cat /tmp/apps-scripts/3370768.txt | grep detail-download-button | sed 's/ /\n/g' | grep href | sed 's/href\|=\|"//g')
+app_download_link="$(echo $get_link_download)"
+
 app_download_file_name="Rockstar-Games-Launcher.exe"
 
 #Default settings
