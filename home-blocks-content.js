@@ -2,7 +2,7 @@ function home_content() {
     $(document).ready(function() {
         // Content of block 1
         //Title
-        $(".appbc1 .block-title").text("Godfall Challenger Edition");
+        $(".appbc1 .block-title").text("Galactic Civilizations III");
         //Block image
         $(".appbc1").css("background-image", 'url("file:///tmp/regataos-gcs/config/cache/img/block-img1.jpg")');
         $(".appbc1").css("background-position", "50% 50%")
@@ -32,7 +32,7 @@ function home_content() {
             $(document).ready(function() {
                 // Content of block 1
                 //Description
-                $(".appbc1 .block-desc").text("Disponível de graça na Epic Games Store até 16 de dezembro.");
+                $(".appbc1 .block-desc").text("Disponível de graça na Epic Games Store até 20 de janeiro.");
 
                 // Content of block 2
                 //Description
@@ -47,7 +47,7 @@ function home_content() {
             $(document).ready(function() {
                 // Content of block 1
                 //Description
-                $(".appbc1 .block-desc").text("Disponível de graça na Epic Games Store até 16 de dezembro.");
+                $(".appbc1 .block-desc").text("Disponível de graça na Epic Games Store até 20 de janeiro.");
 
                 // Content of block 2
                 //Description
@@ -62,7 +62,7 @@ function home_content() {
             $(document).ready(function() {
                 // Content of block 1
                 //Description
-                $(".appbc1 .block-desc").text("Available for free at the Epic Games Store until December 16.");
+                $(".appbc1 .block-desc").text("Available for free at the Epic Games Store until January 20.");
 
                 // Content of block 2
                 //Description
@@ -77,7 +77,7 @@ function home_content() {
             $(document).ready(function() {
                 // Content of block 1
                 //Description
-                $(".appbc1 .block-desc").text("Available for free at the Epic Games Store until December 16.");
+                $(".appbc1 .block-desc").text("Available for free at the Epic Games Store until January 20.");
 
                 // Content of block 2
                 //Description
