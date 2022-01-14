@@ -52,8 +52,8 @@ if test ! -e "$image_download_cache_dir/$block1_image_name"; then
 fi
 
 #Image 2
-block2_image_name="block-pa2.jpg"
-block2_image_code="RBWBTgm"
+block2_image_name="block-pfe.jpg"
+block2_image_code="M6hq1rS"
 if test ! -e "$image_download_cache_dir/$block2_image_name"; then
 	wget --no-check-certificate -O "$image_download_cache_dir/$block2_image_name" \
 	"https://i.ibb.co/$block2_image_code/$block2_image_name"
