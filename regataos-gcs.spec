@@ -1,9 +1,10 @@
 Name: regataos-gcs
-Version: 5.1
+Version: 5.2
 Release: 0
 Url: https://github.com/regataos/game-access
 Summary: Access your Windows games from Regata OS
 Group: System/GUI/KDE
+License: MIT
 BuildRequires: desktop-file-utils
 BuildRequires: update-desktop-files
 BuildRequires: hicolor-icon-theme
@@ -13,9 +14,8 @@ BuildRequires: systemd
 BuildRequires: grep
 BuildRequires: xz
 Requires: xz
-Requires: magma >= 5.54.1
+Requires: magma >= 6.60.0
 Requires: regataos-wine-service >= 21.6.14
-License: MIT
 Source1: %{name}-%{version}.tar.xz
 Source2: regataos-gcs.desktop.txt
 BuildRoot: %{_tmppath}/%{name}-%{version}-build

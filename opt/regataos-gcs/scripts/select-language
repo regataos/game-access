@@ -6,8 +6,15 @@ while :
 do
 
 # Fix for progressbar-gcs folder
-if test ! -e /tmp/progressbar-gcs/installing ; then
-	rm -rf "/tmp/progressbar-gcs"
+user=$(users | awk '{print $1}')
+if test ! -e "/tmp/progressbar-gcs" ; then
+	if test -e "/home/$user/.config/regataos-gcs/progressbar-gcs" ; then
+		ln -sf "/home/$user/.config/regataos-gcs/progressbar-gcs" "/tmp/progressbar-gcs"
+	fi
+else
+	if test ! -e "/tmp/progressbar-gcs/installing" ; then
+		rm -f /tmp/progressbar-gcs/*
+	fi
 fi
 
 # Select language

@@ -14,7 +14,7 @@ installation_path="$GAME_PATH"
 # Import the game
 (
 	# Import the game from Epic Games Store with Legendary
-	/opt/regataos-gcs/legendary/legendary import-game -y $game_id "$installation_path/" 2>&1 | (pv -n > /var/log/regataos-logs/importing-$game_nickname-epicstore.log)
+	/opt/regataos-gcs/legendary/legendary import-game -y "$game_id" "$installation_path/" 2>&1 | (pv -n > /var/log/regataos-logs/importing-$game_nickname-epicstore.log)
 
 	# Put the game in the installed list
 	cp -f "$HOME/.config/regataos-gcs/epicstore-games/json/$game_nickname-epicstore.json" \

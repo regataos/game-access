@@ -12,6 +12,7 @@ rm -f "/tmp/regataos-gcs/start-installation-epicstore.txt"
 
 app_name="$(grep -r "gamename" $HOME/.config/regataos-gcs/epicstore-games/json/$game_nickname-epicstore.json | cut -d":" -f 2- | sed 's/ //' | sed 's/"\|,//g')"
 game_id="$(grep -r "gameid" $HOME/.config/regataos-gcs/epicstore-games/json/$game_nickname-epicstore.json | awk '{print $2}' | sed 's/"\|,//g')"
+game_folder="$(grep -r "game_folder" $HOME/.config/regataos-gcs/epicstore-games/json/$game_nickname-epicstore.json | cut -d":" -f 2- | sed 's/ //' | sed 's/"\|,//g')"
 GAME_INSTALL_DIR="$GAME_PATH"
 app_nickname="epicstore"
 app_name_down="Baixando $app_name"
@@ -48,8 +49,7 @@ app_nickname_dir="$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mo
 function install_app() {
 	winetricks prefix=$app_nickname-compatibility-mode -q win10
 
-	/opt/regataos-gcs/legendary/legendary import-game $game_id "$(cat /tmp/regataos-gcs/game-patch-epicstore.txt)" 2>&1 | (pv -n > /tmp/regataos-gcs/instalation-legendary)
-	# /opt/regataos-gcs/legendary/legendary repair -y $game_id
+	/opt/regataos-gcs/legendary/legendary import "$app_name" "$GAME_INSTALL_DIR/$game_folder" "$(cat /tmp/regataos-gcs/game-patch-epicstore.txt)" 2>&1 | (pv -n > /tmp/regataos-gcs/instalation-legendary)
 }
 
 # Successful installation
@@ -166,7 +166,9 @@ sleep 1
 echo "show progress bar" > $progressbar_dir/progressbar
 
 echo "legendary" > $progressbar_dir/legendary-pid
-/opt/regataos-gcs/legendary/legendary -y install --download-only $game_id --base-path "$GAME_INSTALL_DIR/" 2>&1 | (pv -n > $progressbar_dir/download-percentage-legendary)
+/opt/regataos-gcs/legendary/legendary -y install --download-only "$game_id" --base-path "$GAME_INSTALL_DIR/" 2>&1 | (pv -n > $progressbar_dir/download-percentage-legendary)
+/opt/regataos-gcs/legendary/legendary -y activate --uplay "$game_id"
+/opt/regataos-gcs/legendary/legendary -y activate --origin "$game_id"
 
 echo 100% > $progressbar_dir/progress
 sleep 3

@@ -31,6 +31,7 @@ cat > "/tmp/regataos-gcs/config/epicstore-games/json/$gamename_lowercase-epicsto
 		"gamenickname": "$gamename_lowercase",
 		"gameid": "$game_name",
 		"gametype": "game",
+		"game_folder": "$gamefolder",
 		"game_img1": "$game_img1",
 		"game_img2": "$game_img2",
 		"gamekeywords": "$game_title, $(echo $gamename_lowercase | sed 's/-/ /g'), epic games store",
@@ -48,6 +49,7 @@ cat > "/opt/regataos-gcs/games-list/$gamename_lowercase-epicstore.json" << EPICG
 		"gamenickname": "$gamename_lowercase",
 		"gameid": "$game_name",
 		"gametype": "game",
+		"game_folder": "$gamefolder",
 		"game_img1": "$game_img1",
 		"game_img2": "$game_img2",
 		"gamekeywords": "$game_title, $(echo $gamename_lowercase | sed 's/-/ /g'), epic games store",
@@ -78,6 +80,13 @@ for i in $HOME/.config/legendary/metadata/*.json; do
 	line_search2=$(cat -n $file_search2 | grep -w $search2 | head -4 | tail -1 | awk '{print $1}')
 	search_result2=$(qt=`wc -l $file_search2 | awk '{print $1}'`; sed -n ''$line_search2','$qt'p' $file_search2)
 	game_img2=$(echo "$search_result2" | head -4 | grep url | cut -d'"' -f 4- | cut -d'"' -f -1)
+
+	# Game Folder
+	file_search3="$i"
+	search3='"FolderName"'
+	line_search3=$(cat -n $file_search3 | grep -w $search3 | head -4 | tail -1 | awk '{print $1}')
+	search_result3=$(qt=`wc -l $file_search3 | awk '{print $1}'`; sed -n ''$line_search3','$qt'p' $file_search3)
+	gamefolder=$(echo "$search_result3" | head -4 | grep value | cut -d'"' -f 4- | cut -d'"' -f -1)
 
 	# Make the game name lowercase
 	gamename_lowercase=$(echo "$game_title" | tr 'A-Z' 'a-z' | sed 's/: \|- \|(\|)\|, \|™\|+//g')
