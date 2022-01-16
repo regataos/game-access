@@ -6,6 +6,12 @@ PREFIX_LOCATION="$HOME/.local/share/wineprefixes/$LAUNCHER-compatibility-mode"
 GCS_CONFIG="$HOME/.config/regataos-gcs/regataos-gcs.conf"
 LOG_FILE="/var/log/regataos-logs/$LAUNCHER.log"
 
+# Variables for custom Wine
+CUSTOM_WINE_DIR="/opt/regataos-wine/wine-fshack"
+WINESERVER=$CUSTOM_WINE_DIR/bin/wineserver
+WINELOADER=$CUSTOM_WINE_DIR/bin/wine
+WINEDLLPATH=$CUSTOM_WINE_DIR/lib:$CUSTOM_WINE_DIR/lib64
+
 # Variables
 export WINEPREFIX="$PREFIX_LOCATION"
 export WINEDLLOVERRIDES="winemenubuilder,winedbg,nvapi,nvapi64="
@@ -18,10 +24,10 @@ fi
 
 # Enable performance info
 if [[ $(grep -r fps $GCS_CONFIG) == *"fps=true"* ]]; then
-	#export MANGOHUD_CONFIG=ram,vram,gpu_core_clock,cpu_temp,gpu_temp,core_load,gpu_name,font_size=19
-	#export MANGOHUD=1
-	#export MANGOHUD_GL="mangohud"
-	export DXVK_HUD=devinfo,fps,frametimes,gpuload,api,compiler
+	export MANGOHUD_CONFIG=cpu_temp,cpu_mhz,ram,vram,gpu_core_clock,gpu_temp,gpu_name,benchmark_percentiles,gamemode,font_size=19
+	export MANGOHUD=1
+	export MANGOHUD_GL="mangohud"
+	#export DXVK_HUD=devinfo,fps,frametimes,gpuload,api,compiler
 fi
 
 # If necessary, run osftware with the dGPU
@@ -58,4 +64,4 @@ else
 fi
 
 # Run launcher
-(env $LAUNCHERVAR gamemoderun wine "$PREFIX_LOCATION/$RUNLAUNCHER" $LAUNCHEROPTIONS) 2>&1 | tee $LOG_FILE
+(env $LAUNCHERVAR gamemoderun $CUSTOM_WINE_DIR/bin/wine "$PREFIX_LOCATION/$RUNLAUNCHER" $LAUNCHEROPTIONS) 2>&1 | tee $LOG_FILE
