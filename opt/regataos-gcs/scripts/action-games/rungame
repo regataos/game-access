@@ -26,6 +26,8 @@ export WINEPREFIX="$PREFIX_LOCATION"
 export WINEDLLOVERRIDES="winemenubuilder,winedbg,nvapi,nvapi64="
 export DXVK_STATE_CACHE_PATH="$PREFIX_LOCATION"
 export DXVK_LOG_PATH="$PREFIX_LOCATION"
+export WINEFSYNC=1
+export WINEFSYNC_FUTEX2=1
 
 if test -e "$PREFIX_LOCATION/dxvk.conf"; then
 	export DXVK_CONFIG_FILE="$PREFIX_LOCATION/dxvk.conf"
