@@ -217,3 +217,18 @@ function run_epicstore_game() {
 		$("." + gamenickname + "-block .play-box-universal").css("pointer-events", "auto");
 	},10000);
 }
+
+// Show suggested games or titles available in the user's library
+function run_search_gog_games() {
+	const exec = require('child_process').exec;
+	var command_line = '/opt/regataos-gcs/scripts/search-gog-games.sh';
+	exec(command_line,function(error,call,errlog){
+	});
+}
+run_search_gog_games()
+
+setTimeout(function(){
+	setInterval(function(){
+		run_search_gog_games()
+	}, 1000);
+}, 1000);

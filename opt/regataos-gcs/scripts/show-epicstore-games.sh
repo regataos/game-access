@@ -9,10 +9,10 @@ if test -e "/tmp/regataos-gcs/login-id.txt"; then
     login_id=$(cat /tmp/regataos-gcs/login-id.txt | sed 's/{\|}//g' | sed 's/"//g' | cut -d"," -f 2- | cut -d":" -f 3-)
 
     # Use the saved id to login with the Epic Games Store account with legendary
-    /opt/regataos-gcs/legendary/legendary auth --sid $login_id
+    /opt/regataos-gcs/tools/legendary/legendary auth --sid $login_id
 
     # Update cache with game information
-    /opt/regataos-gcs/legendary/legendary status
+    /opt/regataos-gcs/tools/legendary/legendary status
 
     # Create cache with game files
 	/bin/bash /opt/regataos-gcs/scripts/search-epicstore-games.sh

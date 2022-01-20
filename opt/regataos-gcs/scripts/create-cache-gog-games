@@ -1,0 +1,44 @@
+#!/bin/bash
+
+# Create JSON files in game cache on GOG Galaxy account
+function create_gog_cache() {
+mkdir -p "/tmp/regataos-gcs/config/gog-games/json/"
+cat > "/tmp/regataos-gcs/config/gog-games/json/$gamename_lowercase-gog.json" << GOGGAMEJSONCACHE
+[
+	{
+		"gamename": "$game_name",
+		"gamenickname": "$gamename_lowercase",
+		"gamekeywords": "$game_name, $gamekeywords, gog galaxy",
+		"launcher": "GOG Galaxy",
+		"launchernickname": "gog",
+		"gameinstallfolder": "$gameinstallfolder"
+    }
+]
+GOGGAMEJSONCACHE
+}
+
+# Update JSON files in game cache
+function update_games_cache() {
+cat > "/opt/regataos-gcs/games-list/$gamename_lowercase-gog.json" << GOGGAMEJSON
+[
+	{
+		"gamename": "$game_name",
+		"gamenickname": "$gamename_lowercase",
+		"gamekeywords": "$game_name, $gamekeywords, gog galaxy",
+		"launcher": "GOG Galaxy",
+		"launchernickname": "gog",
+		"gameinstallfolder": "$gameinstallfolder"
+    }
+]
+GOGGAMEJSON
+}
+
+case $1 in
+   "-create-gog-cache") create_gog_cache
+         ;;
+   "-up-games-cache") update_games_cache
+         ;;
+   *) echo "Invalid option!"
+      exit 1
+      ;;
+esac

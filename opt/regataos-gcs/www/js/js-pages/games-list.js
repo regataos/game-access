@@ -63,7 +63,6 @@ function games_list1() {
 			//Finally, create the new game blocks dynamically
 			all_blocks.appendChild(new_game_blocks);
 		}
-
 		});
 		return;
 	}
@@ -89,258 +88,390 @@ function games_list2() {
 		//Read the list of games that should appear in each block
 		//for (var i = 0; i < games.length; i++) {
 		games.forEach(gamesdata => {
-
-		//Configure according to game launcher
-		if ((gamesdata.launchernickname.indexOf("steam") > -1) == "1") {
-			if (!fs.existsSync('/tmp/regataos-gcs/config/installed/' + gamesdata.gamenickname + '-steam.json')) {
+			//Configure according to game launcher
+			if (typeof gamesdata.gameorigin !== 'undefined') {
 				//Request the creation of the new element (block) for each game
 				var new_game_blocks = document.createElement("div");
-				new_game_blocks.id = gamesdata.gamenickname + "-block";
-	
-				//Add classes to the new game blocks
-				new_game_blocks.classList.add("app-block-universal", gamesdata.gamenickname + "-block", gamesdata.gamenickname);
-		
-				//Add the game image in the background
-				new_game_blocks.style.backgroundImage = "url('./../images/games-backg/steam/steam.jpg')";
-	
-				//Variable required for uninstall game button
-				var gamenickname = "'" + gamesdata.gamenickname + "'"
-
-				//Check game plataform
-				if ((gamesdata.gamenative.indexOf("true") > -1) == "1") {
-					var game_plataform = "nativegame"
-				} else {
-					var game_plataform = "steamplay"
-				}
-
-				//Add game details within the newly created block
-				new_game_blocks.innerHTML = ' \
-				<div class="universal-game-img" style="background-image: url(file:///tmp/regataos-gcs/config/steam-games/img/' + gamesdata.gamenickname + '.jpg)"></div> \
-					<div class="block-play-universal"> \
-						<div id="' + gamesdata.gameid + '" class="install-box-universal" onclick="window.gameid=this.id; window.gamenickname=' + gamenickname + '; run_steam_game();"> \
-						<div class="play-button"> \
-							<i class="fas fa-download"></i><div class="install-txt">Instalar</div> \
-						</div> \
-					</div> \
-					</div> \
-					<div class="block-text-universal" title="' + gamesdata.gamename + '"> \
-						<div class="block-title">' + gamesdata.gamename + '</div> \
-						<div class="block-desc">Steam</div> \
-						<div class="native-game"> \
-							<div class="native-game-img" style="background-image: url(./../images/' + game_plataform + '.png)"></div> \
-							<div class="native-game-desc ' + game_plataform + '">Native</div> \
-						</div> \
-					</div> \
-				</div>';
-	
-				//Finally, create the new game blocks dynamically
-				all_blocks.appendChild(new_game_blocks);
-	
-			} else {
-				//Request the creation of the new element (block) for each game
-				var new_game_blocks = document.createElement("div");
-				new_game_blocks.id = gamesdata.gamenickname + "-block";
 
 				//Add classes to the new game blocks
-				new_game_blocks.classList.add("app-block-universal", gamesdata.gamenickname + "-block", gamesdata.gamenickname);
-	
+				new_game_blocks.classList.add("app-block", gamesdata.launchernickname+"-block", gamesdata.gamenickname + "-block", gamesdata.gamenickname);
+
 				//Add the game image in the background
-				new_game_blocks.style.backgroundImage = "url('./../images/games-backg/steam/steam.jpg')";
+				new_game_blocks.style.backgroundImage = "url('./../images/games-backg/" + gamesdata.launchernickname + "/" + gamesdata.gamenickname + ".jpg')";
 
-				//Variable required for uninstall game button
-				var gamenickname = "'" + gamesdata.gamenickname + "'"
-
-				//Check game plataform
-				if ((gamesdata.gamenative.indexOf("true") > -1) == "1") {
-					var game_plataform = "nativegame"
-				} else {
-					var game_plataform = "steamplay"
-				}
-	
 				//Add game details within the newly created block
+				//Special variables for running games
+				var winevariable = "'" + gamesdata.winevariable + "'";
+				var launchername = "'" + gamesdata.launchernickname + "'";
+				var rungame = "'" + gamesdata.gamerun_appid + "'";
+
 				new_game_blocks.innerHTML = ' \
-				<div class="universal-game-img" style="background-image: url(file:///tmp/regataos-gcs/config/steam-games/img/' + gamesdata.gamenickname + '.jpg)"></div> \
-					<div class="block-play-universal"> \
-					<div id="' + gamesdata.gameid + '" class="play-box-universal" onclick="window.gameid=this.id; window.gamenickname=' + gamenickname + '; run_steam_game();"> \
+				<div class="block-play ' + gamesdata.gamenickname + '-hover"> \
+					<div id="' + gamesdata.gamenickname + '" class="play-box" onclick="window.gamename=this.id; window.winevariable=' + winevariable + '; window.launchername=' + launchername + '; window.rungame=' + rungame + '; run_game();"> \
 						<div class="play-button"> \
 							<i class="fas fa-play"></i><div class="play-txt">Jogar</div> \
 						</div> \
 					</div> \
-					</div> \
-					<div class="block-text-universal" title="' + gamesdata.gamename + '"> \
-						<div class="block-title">' + gamesdata.gamename + '</div> \
-						<div class="block-desc">Steam</div> \
-						<div class="native-game"> \
-							<div class="native-game-img" style="background-image: url(./../images/' + game_plataform + '.png)"></div> \
-							<div class="native-game-desc ' + game_plataform + '">Native</div> \
-						</div> \
-					</div> \
-				</div>';
-	
-				//Finally, create the new game blocks dynamically
-				all_blocks.appendChild(new_game_blocks);
-			}
-			// Show Steam Games
-			$("div.app-block-steam").css("display", "block")
-
-		} else	if ((gamesdata.launchernickname.indexOf("epicstore") > -1) == "1") {
-			if (!fs.existsSync('/tmp/regataos-gcs/config/installed/' + gamesdata.gamenickname + '-epicstore.json')) {
-				//Request the creation of the new element (block) for each game
-				var new_game_blocks = document.createElement("div");
-				new_game_blocks.id = gamesdata.gameid + "-block";
-
-				//Add classes to the new game blocks
-				new_game_blocks.classList.add("app-block-universal", gamesdata.gamenickname + "-block", gamesdata.gamenickname);
-
-				//Add the game image in the background
-				new_game_blocks.style.backgroundImage = "url('./../images/games-backg/steam/steam.jpg')";
-
-				//Variable required for uninstall game button
-				var gamenickname = "'" + gamesdata.gamenickname + "'"
-
-				//Set game image
-				if (fs.existsSync('/tmp/regataos-gcs/config/epicstore-games/img/' + gamesdata.gamenickname + '.jpg')) {
-					var background = "/tmp/regataos-gcs/config/epicstore-games/img/" + gamesdata.gamenickname + ".jpg"
-					var gamebackg = "file://" + background
-
-				} else if (fs.existsSync('/tmp/regataos-gcs/config/epicstore-games/img/' + gamesdata.gamenickname + '.png')) {
-					var background = "/tmp/regataos-gcs/config/epicstore-games/img/" + gamesdata.gamenickname + ".png"
-					var gamebackg = "file://" + background
-
-				} else if (fs.existsSync('/tmp/regataos-gcs/config/epicstore-games/img/' + gamesdata.gamenickname)) {
-					var background = "/tmp/regataos-gcs/config/epicstore-games/img/" + gamesdata.gamenickname
-					var gamebackg = "file://" + background
-
-				} else {
-					var gamebackg = "'" + gamesdata.game_img1 + "'"
-				}
-
-				//Add game details within the newly created block
-				new_game_blocks.innerHTML = ' \
-				<div class="universal-game-img epicstore-game-img" style="background-image: url(' + gamebackg + ')"></div> \
-					<div class="block-play-universal"> \
-						<div id="' + gamesdata.gamenickname + '" class="install-box-universal" onclick="window.gamenickname=this.id; window.gamenickname=' + gamenickname + '; install_epicstore_game();"> \
+					<div id="' + gamesdata.gamenickname + '" class="install-box" onclick="window.gamename=this.id; window.winevariable=' + winevariable + '; window.launchername=' + launchername + '; window.rungame=' + rungame + '; run_game();"> \
 						<div class="play-button"> \
 							<i class="fas fa-download"></i><div class="install-txt">Instalar</div> \
 						</div> \
 					</div> \
-					</div> \
-					<div class="block-text-universal" title="' + gamesdata.gamename + '"> \
-						<div class="block-title">' + gamesdata.gamename + '</div> \
-						<div class="block-desc">Epic Games Store</div> \
-						<div class="native-game"> \
-							<div class="native-game-img" style="background-image: url(./../images/gcs.png)"></div> \
-							<div class="native-game-desc gcs">Game Access</div> \
-						</div> \
+				</div> \
+				<div class="block-text ' + gamesdata.gamenickname +'" title="' + gamesdata.gamename +'"> \
+					<div class="block-title">' + gamesdata.gamename + '</div> \
+					<div class="block-desc">' + gamesdata.launcher + '</div> \
+					<div class="native-game"> \
+						<div class="native-game-img" style="background-image: url(./../images/gcs.png)"></div> \
+						<div class="native-game-desc gcs">Game Access</div> \
 					</div> \
 				</div>';
-	
+
 				//Finally, create the new game blocks dynamically
 				all_blocks.appendChild(new_game_blocks);
-	
+
 			} else {
-				//Request the creation of the new element (block) for each game
-				var new_game_blocks = document.createElement("div");
-				new_game_blocks.id = gamesdata.gameid + "-block";
-	
-				//Add classes to the new game blocks
-				new_game_blocks.classList.add("app-block-universal", gamesdata.gamenickname + "-block", gamesdata.gamenickname);
-	
-				//Add the game image in the background
-				new_game_blocks.style.backgroundImage = "url('./../images/games-backg/steam/steam.jpg')";
-	
-				//Variable required for uninstall game button
-				var gamenickname = "'" + gamesdata.gamenickname + "'"
+				if ((gamesdata.launchernickname.indexOf("steam") > -1) == "1") {
+					if (!fs.existsSync('/tmp/regataos-gcs/config/installed/' + gamesdata.gamenickname + '-steam.json')) {
+						//Request the creation of the new element (block) for each game
+						var new_game_blocks = document.createElement("div");
+						new_game_blocks.id = gamesdata.gamenickname + "-block";
+			
+						//Add classes to the new game blocks
+						new_game_blocks.classList.add("app-block-universal", gamesdata.gamenickname + "-block", gamesdata.gamenickname);
+				
+						//Add the game image in the background
+						new_game_blocks.style.backgroundImage = "url('./../images/games-backg/steam/steam.jpg')";
+			
+						//Variable required for uninstall game button
+						var gamenickname = "'" + gamesdata.gamenickname + "'"
 
-				//Set game image
-				if (fs.existsSync('/tmp/regataos-gcs/config/epicstore-games/img/' + gamesdata.gamenickname + '.jpg')) {
-					var background = "/tmp/regataos-gcs/config/epicstore-games/img/" + gamesdata.gamenickname + ".jpg"
-					var gamebackg = "file://" + background
+						//Check game plataform
+						if ((gamesdata.gamenative.indexOf("true") > -1) == "1") {
+							var game_plataform = "nativegame"
+						} else {
+							var game_plataform = "steamplay"
+						}
 
-				} else if (fs.existsSync('/tmp/regataos-gcs/config/epicstore-games/img/' + gamesdata.gamenickname + '.png')) {
-					var background = "/tmp/regataos-gcs/config/epicstore-games/img/" + gamesdata.gamenickname + ".png"
-					var gamebackg = "file://" + background
+						//Add game details within the newly created block
+						new_game_blocks.innerHTML = ' \
+						<div class="universal-game-img" style="background-image: url(file:///tmp/regataos-gcs/config/steam-games/img/' + gamesdata.gamenickname + '.jpg)"></div> \
+							<div class="block-play-universal"> \
+								<div id="' + gamesdata.gameid + '" class="install-box-universal" onclick="window.gameid=this.id; window.gamenickname=' + gamenickname + '; run_steam_game();"> \
+								<div class="play-button"> \
+									<i class="fas fa-download"></i><div class="install-txt">Instalar</div> \
+								</div> \
+							</div> \
+							</div> \
+							<div class="block-text-universal" title="' + gamesdata.gamename + '"> \
+								<div class="block-title">' + gamesdata.gamename + '</div> \
+								<div class="block-desc">Steam</div> \
+								<div class="native-game"> \
+									<div class="native-game-img" style="background-image: url(./../images/' + game_plataform + '.png)"></div> \
+									<div class="native-game-desc ' + game_plataform + '">Native</div> \
+								</div> \
+							</div> \
+						</div>';
+			
+						//Finally, create the new game blocks dynamically
+						all_blocks.appendChild(new_game_blocks);
+			
+					} else {
+						//Request the creation of the new element (block) for each game
+						var new_game_blocks = document.createElement("div");
+						new_game_blocks.id = gamesdata.gamenickname + "-block";
 
-				} else if (fs.existsSync('/tmp/regataos-gcs/config/epicstore-games/img/' + gamesdata.gamenickname)) {
-					var background = "/tmp/regataos-gcs/config/epicstore-games/img/" + gamesdata.gamenickname
-					var gamebackg = "file://" + background
+						//Add classes to the new game blocks
+						new_game_blocks.classList.add("app-block-universal", gamesdata.gamenickname + "-block", gamesdata.gamenickname);
+			
+						//Add the game image in the background
+						new_game_blocks.style.backgroundImage = "url('./../images/games-backg/steam/steam.jpg')";
+
+						//Variable required for uninstall game button
+						var gamenickname = "'" + gamesdata.gamenickname + "'"
+
+						//Check game plataform
+						if ((gamesdata.gamenative.indexOf("true") > -1) == "1") {
+							var game_plataform = "nativegame"
+						} else {
+							var game_plataform = "steamplay"
+						}
+			
+						//Add game details within the newly created block
+						new_game_blocks.innerHTML = ' \
+						<div class="universal-game-img" style="background-image: url(file:///tmp/regataos-gcs/config/steam-games/img/' + gamesdata.gamenickname + '.jpg)"></div> \
+							<div class="block-play-universal"> \
+							<div id="' + gamesdata.gameid + '" class="play-box-universal" onclick="window.gameid=this.id; window.gamenickname=' + gamenickname + '; run_steam_game();"> \
+								<div class="play-button"> \
+									<i class="fas fa-play"></i><div class="play-txt">Jogar</div> \
+								</div> \
+							</div> \
+							</div> \
+							<div class="block-text-universal" title="' + gamesdata.gamename + '"> \
+								<div class="block-title">' + gamesdata.gamename + '</div> \
+								<div class="block-desc">Steam</div> \
+								<div class="native-game"> \
+									<div class="native-game-img" style="background-image: url(./../images/' + game_plataform + '.png)"></div> \
+									<div class="native-game-desc ' + game_plataform + '">Native</div> \
+								</div> \
+							</div> \
+						</div>';
+			
+						//Finally, create the new game blocks dynamically
+						all_blocks.appendChild(new_game_blocks);
+					}
+					// Show Steam Games
+					$("div.app-block-steam").css("display", "block")
+
+				} else if ((gamesdata.launchernickname.indexOf("epicstore") > -1) == "1") {
+					if (!fs.existsSync('/tmp/regataos-gcs/config/installed/' + gamesdata.gamenickname + '-epicstore.json')) {
+						//Request the creation of the new element (block) for each game
+						var new_game_blocks = document.createElement("div");
+						new_game_blocks.id = gamesdata.gameid + "-block";
+
+						//Add classes to the new game blocks
+						new_game_blocks.classList.add("app-block-universal", gamesdata.gamenickname + "-block", gamesdata.gamenickname);
+
+						//Add the game image in the background
+						new_game_blocks.style.backgroundImage = "url('./../images/games-backg/steam/steam.jpg')";
+
+						//Variable required for uninstall game button
+						var gamenickname = "'" + gamesdata.gamenickname + "'"
+
+						//Set game image
+						if (fs.existsSync('/tmp/regataos-gcs/config/epicstore-games/img/' + gamesdata.gamenickname + '.jpg')) {
+							var background = "/tmp/regataos-gcs/config/epicstore-games/img/" + gamesdata.gamenickname + ".jpg"
+							var gamebackg = "file://" + background
+
+						} else if (fs.existsSync('/tmp/regataos-gcs/config/epicstore-games/img/' + gamesdata.gamenickname + '.png')) {
+							var background = "/tmp/regataos-gcs/config/epicstore-games/img/" + gamesdata.gamenickname + ".png"
+							var gamebackg = "file://" + background
+
+						} else if (fs.existsSync('/tmp/regataos-gcs/config/epicstore-games/img/' + gamesdata.gamenickname)) {
+							var background = "/tmp/regataos-gcs/config/epicstore-games/img/" + gamesdata.gamenickname
+							var gamebackg = "file://" + background
+
+						} else {
+							var gamebackg = "'" + gamesdata.game_img1 + "'"
+						}
+
+						//Add game details within the newly created block
+						new_game_blocks.innerHTML = ' \
+						<div class="universal-game-img epicstore-game-img" style="background-image: url(' + gamebackg + ')"></div> \
+							<div class="block-play-universal"> \
+								<div id="' + gamesdata.gamenickname + '" class="install-box-universal" onclick="window.gamenickname=this.id; window.gamenickname=' + gamenickname + '; install_epicstore_game();"> \
+								<div class="play-button"> \
+									<i class="fas fa-download"></i><div class="install-txt">Instalar</div> \
+								</div> \
+							</div> \
+							</div> \
+							<div class="block-text-universal" title="' + gamesdata.gamename + '"> \
+								<div class="block-title">' + gamesdata.gamename + '</div> \
+								<div class="block-desc">Epic Games Store</div> \
+								<div class="native-game"> \
+									<div class="native-game-img" style="background-image: url(./../images/gcs.png)"></div> \
+									<div class="native-game-desc gcs">Game Access</div> \
+								</div> \
+							</div> \
+						</div>';
+			
+						//Finally, create the new game blocks dynamically
+						all_blocks.appendChild(new_game_blocks);
+			
+					} else {
+						//Request the creation of the new element (block) for each game
+						var new_game_blocks = document.createElement("div");
+						new_game_blocks.id = gamesdata.gameid + "-block";
+			
+						//Add classes to the new game blocks
+						new_game_blocks.classList.add("app-block-universal", gamesdata.gamenickname + "-block", gamesdata.gamenickname);
+			
+						//Add the game image in the background
+						new_game_blocks.style.backgroundImage = "url('./../images/games-backg/steam/steam.jpg')";
+			
+						//Variable required for uninstall game button
+						var gamenickname = "'" + gamesdata.gamenickname + "'"
+
+						//Set game image
+						if (fs.existsSync('/tmp/regataos-gcs/config/epicstore-games/img/' + gamesdata.gamenickname + '.jpg')) {
+							var background = "/tmp/regataos-gcs/config/epicstore-games/img/" + gamesdata.gamenickname + ".jpg"
+							var gamebackg = "file://" + background
+
+						} else if (fs.existsSync('/tmp/regataos-gcs/config/epicstore-games/img/' + gamesdata.gamenickname + '.png')) {
+							var background = "/tmp/regataos-gcs/config/epicstore-games/img/" + gamesdata.gamenickname + ".png"
+							var gamebackg = "file://" + background
+
+						} else if (fs.existsSync('/tmp/regataos-gcs/config/epicstore-games/img/' + gamesdata.gamenickname)) {
+							var background = "/tmp/regataos-gcs/config/epicstore-games/img/" + gamesdata.gamenickname
+							var gamebackg = "file://" + background
+
+						} else {
+							var gamebackg = "'" + gamesdata.game_img1 + "'"
+						}
+
+						//Add game details within the newly created block
+						new_game_blocks.innerHTML = ' \
+						<div class="universal-game-img epicstore-game-img" style="background-image: url(' + gamesdata.game_img1 + ')"></div> \
+							<div class="block-play-universal"> \
+								<div title="Desinstalar jogo" class="remove-game-button" onclick="window.game_for_remove=' + gamenickname + '; uninstall_epicstore_game();"> \
+									<i class="fas fa-trash-alt"></i> \
+								</div> \
+								<div id="' + gamesdata.gameid + '" class="play-box-universal" onclick="window.gameid=this.id; window.gamenickname=' + gamenickname + '; run_epicstore_game();"> \
+								<div class="play-button"> \
+									<i class="fas fa-play"></i><div class="play-txt">Jogar</div> \
+								</div> \
+							</div> \
+							</div> \
+							<div class="block-text-universal" title="' + gamesdata.gamename + '"> \
+								<div class="block-title">' + gamesdata.gamename + '</div> \
+								<div class="block-desc">Epic Games Store</div> \
+								<div class="native-game"> \
+									<div class="native-game-img" style="background-image: url(./../images/gcs.png)"></div> \
+									<div class="native-game-desc gcs">Game Access</div> \
+								</div> \
+							</div> \
+						</div>';
+			
+						//Finally, create the new game blocks dynamically
+						all_blocks.appendChild(new_game_blocks);
+					}
+
+				} else if ((gamesdata.launchernickname.indexOf("gog") > -1) == "1") {
+					if (!fs.existsSync('/tmp/regataos-gcs/config/installed/' + gamesdata.gamenickname + '-gog.json')) {
+						//Request the creation of the new element (block) for each game
+						var new_game_blocks = document.createElement("div");
+						new_game_blocks.id = gamesdata.gameid + "-block";
+
+						//Add classes to the new game blocks
+						new_game_blocks.classList.add("app-block-universal", gamesdata.gamenickname + "-block", gamesdata.gamenickname);
+
+						//Add the game image in the background
+						new_game_blocks.style.backgroundImage = "url('./../images/games-backg/steam/steam.jpg')";
+
+						//Variable required for uninstall game button
+						var gamenickname = "'" + gamesdata.gamenickname + "'"
+
+						//Set game image
+						if (fs.existsSync('/tmp/regataos-gcs/config/gog-games/img/' + gamesdata.gamenickname + '.webp')) {
+							var background = "/tmp/regataos-gcs/config/gog-games/img/" + gamesdata.gamenickname + ".webp"
+							var gamebackg = "file://" + background
+						}
+
+						//Add game details within the newly created block
+						new_game_blocks.innerHTML = ' \
+						<div class="universal-game-img gog-game-img" style="background-image: url(' + gamebackg + ')"></div> \
+							<div class="block-play-universal"> \
+								<div id="' + gamesdata.gamenickname + '" class="install-box-universal" onclick="window.gamenickname=this.id; window.gamenickname=' + gamenickname + '; install_gog_game();"> \
+								<div class="play-button"> \
+									<i class="fas fa-download"></i><div class="install-txt">Instalar</div> \
+								</div> \
+							</div> \
+							</div> \
+							<div class="block-text-universal" title="' + gamesdata.gamename + '"> \
+								<div class="block-title">' + gamesdata.gamename + '</div> \
+								<div class="block-desc">GOG Galaxy</div> \
+								<div class="native-game"> \
+									<div class="native-game-img" style="background-image: url(./../images/gcs.png)"></div> \
+									<div class="native-game-desc gcs">Game Access</div> \
+								</div> \
+							</div> \
+						</div>';
+
+						//Finally, create the new game blocks dynamically
+						all_blocks.appendChild(new_game_blocks);
+			
+					} else {
+						//Request the creation of the new element (block) for each game
+						var new_game_blocks = document.createElement("div");
+						new_game_blocks.id = gamesdata.gameid + "-block";
+			
+						//Add classes to the new game blocks
+						new_game_blocks.classList.add("app-block-universal", gamesdata.gamenickname + "-block", gamesdata.gamenickname);
+			
+						//Add the game image in the background
+						new_game_blocks.style.backgroundImage = "url('./../images/games-backg/steam/steam.jpg')";
+			
+						//Variable required for uninstall game button
+						var gamenickname = "'" + gamesdata.gamenickname + "'"
+
+						//Set game image
+						if (fs.existsSync('/tmp/regataos-gcs/config/gog-games/img/' + gamesdata.gamenickname + '.webp')) {
+							var background = "/tmp/regataos-gcs/config/gog-games/img/" + gamesdata.gamenickname + ".webp"
+							var gamebackg = "file://" + background
+						}
+
+						//Add game details within the newly created block
+						new_game_blocks.innerHTML = ' \
+						<div class="universal-game-img gog-game-img" style="background-image: url(' + gamebackg + ')"></div> \
+							<div class="block-play-universal"> \
+								<div title="Desinstalar jogo" class="remove-game-button" onclick="window.game_for_remove=' + gamenickname + '; uninstall_gog_game();"> \
+									<i class="fas fa-trash-alt"></i> \
+								</div> \
+								<div id="' + gamesdata.gameid + '" class="play-box-universal" onclick="window.gameid=this.id; window.gamenickname=' + gamenickname + '; run_gog_game();"> \
+								<div class="play-button"> \
+									<i class="fas fa-play"></i><div class="play-txt">Jogar</div> \
+								</div> \
+							</div> \
+							</div> \
+							<div class="block-text-universal" title="' + gamesdata.gamename + '"> \
+								<div class="block-title">' + gamesdata.gamename + '</div> \
+								<div class="block-desc">GOG Galaxy</div> \
+								<div class="native-game"> \
+									<div class="native-game-img" style="background-image: url(./../images/gcs.png)"></div> \
+									<div class="native-game-desc gcs">Game Access</div> \
+								</div> \
+							</div> \
+						</div>';
+			
+						//Finally, create the new game blocks dynamically
+						all_blocks.appendChild(new_game_blocks);
+					}
 
 				} else {
-					var gamebackg = "'" + gamesdata.game_img1 + "'"
-				}
+					//Request the creation of the new element (block) for each game
+					var new_game_blocks = document.createElement("div");
 
-				//Add game details within the newly created block
-				new_game_blocks.innerHTML = ' \
-				<div class="universal-game-img epicstore-game-img" style="background-image: url(' + gamesdata.game_img1 + ')"></div> \
-					<div class="block-play-universal"> \
-						<div title="Desinstalar jogo" class="remove-game-button" onclick="window.game_for_remove=' + gamenickname + '; uninstall_epicstore_game();"> \
-							<i class="fas fa-trash-alt"></i> \
+					//Add classes to the new game blocks
+					new_game_blocks.classList.add("app-block", gamesdata.launchernickname+"-block", gamesdata.gamenickname + "-block", gamesdata.gamenickname);
+
+					//Add the game image in the background
+					new_game_blocks.style.backgroundImage = "url('./../images/games-backg/" + gamesdata.launchernickname + "/" + gamesdata.gamenickname + ".jpg')";
+
+					//Add game details within the newly created block
+					//Special variables for running games
+					var winevariable = "'" + gamesdata.winevariable + "'";
+					var launchername = "'" + gamesdata.launchernickname + "'";
+					var rungame = "'" + gamesdata.gamerun_appid + "'";
+
+					new_game_blocks.innerHTML = ' \
+					<div class="block-play ' + gamesdata.gamenickname + '-hover"> \
+						<div id="' + gamesdata.gamenickname + '" class="play-box" onclick="window.gamename=this.id; window.winevariable=' + winevariable + '; window.launchername=' + launchername + '; window.rungame=' + rungame + '; run_game();"> \
+							<div class="play-button"> \
+								<i class="fas fa-play"></i><div class="play-txt">Jogar</div> \
+							</div> \
 						</div> \
-						<div id="' + gamesdata.gameid + '" class="play-box-universal" onclick="window.gameid=this.id; window.gamenickname=' + gamenickname + '; run_epicstore_game();"> \
-						<div class="play-button"> \
-							<i class="fas fa-play"></i><div class="play-txt">Jogar</div> \
+						<div id="' + gamesdata.gamenickname + '" class="install-box" onclick="window.gamename=this.id; window.winevariable=' + winevariable + '; window.launchername=' + launchername + '; window.rungame=' + rungame + '; run_game();"> \
+							<div class="play-button"> \
+								<i class="fas fa-download"></i><div class="install-txt">Instalar</div> \
+							</div> \
 						</div> \
 					</div> \
-					</div> \
-					<div class="block-text-universal" title="' + gamesdata.gamename + '"> \
+					<div class="block-text ' + gamesdata.gamenickname +'" title="' + gamesdata.gamename +'"> \
 						<div class="block-title">' + gamesdata.gamename + '</div> \
-						<div class="block-desc">Epic Games Store</div> \
+						<div class="block-desc">' + gamesdata.launcher + '</div> \
 						<div class="native-game"> \
 							<div class="native-game-img" style="background-image: url(./../images/gcs.png)"></div> \
 							<div class="native-game-desc gcs">Game Access</div> \
 						</div> \
-					</div> \
-				</div>';
-	
-				//Finally, create the new game blocks dynamically
-				all_blocks.appendChild(new_game_blocks);
-			}
-			// Show Steam Games
-			$("div.app-block-steam").css("display", "block")
+					</div>';
 
-		} else {
-			//Request the creation of the new element (block) for each game
-			var new_game_blocks = document.createElement("div");
+					//Finally, create the new game blocks dynamically
+					all_blocks.appendChild(new_game_blocks);
+				}
+			} 
 
-			//Add classes to the new game blocks
-			new_game_blocks.classList.add("app-block", gamesdata.launchernickname+"-block", gamesdata.gamenickname + "-block", gamesdata.gamenickname);
-
-			//Add the game image in the background
-			new_game_blocks.style.backgroundImage = "url('./../images/games-backg/" + gamesdata.launchernickname + "/" + gamesdata.gamenickname + ".jpg')";
-
-			//Add game details within the newly created block
-			//Special variables for running games
-			var winevariable = "'" + gamesdata.winevariable + "'";
-			var launchername = "'" + gamesdata.launchernickname + "'";
-			var rungame = "'" + gamesdata.gamerun_appid + "'";
-
-			new_game_blocks.innerHTML = ' \
-			<div class="block-play ' + gamesdata.gamenickname + '-hover"> \
-				<div id="' + gamesdata.gamenickname + '" class="play-box" onclick="window.gamename=this.id; window.winevariable=' + winevariable + '; window.launchername=' + launchername + '; window.rungame=' + rungame + '; run_game();"> \
-					<div class="play-button"> \
-						<i class="fas fa-play"></i><div class="play-txt">Jogar</div> \
-					</div> \
-				</div> \
-				<div id="' + gamesdata.gamenickname + '" class="install-box" onclick="window.gamename=this.id; window.winevariable=' + winevariable + '; window.launchername=' + launchername + '; window.rungame=' + rungame + '; run_game();"> \
-					<div class="play-button"> \
-						<i class="fas fa-download"></i><div class="install-txt">Instalar</div> \
-					</div> \
-				</div> \
-			</div> \
-			<div class="block-text ' + gamesdata.gamenickname +'" title="' + gamesdata.gamename +'"> \
-				<div class="block-title">' + gamesdata.gamename + '</div> \
-				<div class="block-desc">' + gamesdata.launcher + '</div> \
-				<div class="native-game"> \
-					<div class="native-game-img" style="background-image: url(./../images/gcs.png)"></div> \
-					<div class="native-game-desc gcs">Game Access</div> \
-				</div> \
-			</div>';
-
-			//Finally, create the new game blocks dynamically
-			all_blocks.appendChild(new_game_blocks);
-		}
 		})
-		return;
+	return;
 	}
 	});
 	});

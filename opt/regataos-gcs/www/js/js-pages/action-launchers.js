@@ -127,7 +127,7 @@ function legendary_status() {
 	const fs = require("fs");
 
 	if (fs.existsSync("/tmp/regataos-gcs/config/epicstore-games/show-egs.txt")) {
-		var command_line = '/opt/regataos-gcs/legendary/legendary status';
+		var command_line = '/opt/regataos-gcs/tools/legendary/legendary status';
 		exec(command_line,function(error,call,errlog){
 		});
 	}

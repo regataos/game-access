@@ -77,4 +77,4 @@ else
 fi
 
 # Run game
-(gamemoderun /opt/regataos-gcs/legendary/legendary launch "$GAMEID" --wine "$CUSTOM_WINE_DIR/bin/wine" --wine-prefix "$PREFIX_LOCATION") 2>&1 | tee $LOG_FILE
+(gamemoderun /opt/regataos-gcs/tools/legendary/legendary launch "$GAMEID" --wine "$CUSTOM_WINE_DIR/bin/wine" --wine-prefix "$PREFIX_LOCATION") 2>&1 | tee $LOG_FILE

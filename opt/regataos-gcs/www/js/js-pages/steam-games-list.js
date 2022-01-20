@@ -21,6 +21,8 @@ if (!err) {
 		gamename_lowercase = gamename_lowercase.replace(/(&)/g,"and")
 		gamename_lowercase = gamename_lowercase.replace(/\s+/g,"-");
 		gamename_lowercase = gamename_lowercase.replace(/'|\(|\)/g, "")
+		gamename_lowercase = gamename_lowercase.replace(/[!-]/g,            '');
+		gamename_lowercase = gamename_lowercase.replace(/[!?]/g,            '');
 		gamename_lowercase = gamename_lowercase.replace(/(™)/g,             '');
 		gamename_lowercase = gamename_lowercase.replace(/(ç)/g,             'c');
 		gamename_lowercase = gamename_lowercase.replace(/(á)|(â)|(ã)|(à)/g, 'a');
@@ -105,8 +107,9 @@ if (!err) {
 				// No internet or something like that, unable to make the request on the site
 				console.error(error.message);
 			});
+		}
 
-		} else if (!fs.existsSync('/opt/regataos-gcs/games-list/' + gamename_lowercase + '-steam.json')) {
+		if (!fs.existsSync('/opt/regataos-gcs/games-list/' + gamename_lowercase + '-steam.json')) {
 			// Make the request, putting the id directly in the URL, and send the return to the variable "res"
 			const https = require('https');
 			https.get(`https://store.steampowered.com/api/appdetails?appids=${games.appid}&cc=br&l=br`, (res) => {
@@ -142,7 +145,6 @@ if (!err) {
 				// No internet or something like that, unable to make the request on the site
 				console.error(error.message);
 			});
-
 		}
 	})
 return;

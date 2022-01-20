@@ -1,22 +1,32 @@
 #!/bin/bash
 
 # Search for installed games
-/bin/bash /opt/regataos-gcs/scripts/search-installed-games.sh & /bin/bash /opt/regataos-gcs/scripts/search-steam-games.sh
+function search_installeds() {
+	/bin/bash /opt/regataos-gcs/scripts/search-installed-games.sh & \
+	/bin/bash /opt/regataos-gcs/scripts/search-steam-games.sh & \
+	/bin/bash /opt/regataos-gcs/scripts/search-gog-games.sh
 
-# Capture the games installation folder from the Epic Games Store
-if test -e "/tmp/progressbar-gcs/download-percentage-legendary"; then
-	if test ! -e "/tmp/regataos-gcs/game-patch-epicstore.txt"; then
-		if [[ $(grep -r "Install path" "/tmp/progressbar-gcs/download-percentage-legendary") == *"Install path"* ]]; then
-			install_path="$(grep -r "Install path" "/tmp/progressbar-gcs/download-percentage-legendary" | cut -d":" -f 3- | cut -d" " -f 2-)"
+	# Capture the games installation folder from the Epic Games Store
+	if test -e "/tmp/progressbar-gcs/download-percentage-legendary"; then
+		if test ! -e "/tmp/regataos-gcs/game-patch-epicstore.txt"; then
+			if [[ $(grep -r "Install path" "/tmp/progressbar-gcs/download-percentage-legendary") == *"Install path"* ]]; then
+				install_path="$(grep -r "Install path" "/tmp/progressbar-gcs/download-percentage-legendary" | cut -d":" -f 3- | cut -d" " -f 2-)"
 
-			echo "$install_path" > "/tmp/regataos-gcs/game-patch-epicstore.txt"
+				echo "$install_path" > "/tmp/regataos-gcs/game-patch-epicstore.txt"
+			fi
 		fi
 	fi
-fi
 
-# Check for JSON files in the directory listing installed games
-if [[ $(ls "/tmp/regataos-gcs/config/installed/" | grep json) == *".json"* ]]; then
-	echo "Show installed games" > "/tmp/regataos-gcs/config/installed/show-installed-games.txt"
-else
-	rm -f "/tmp/regataos-gcs/config/installed/show-installed-games.txt"
+	# Check for JSON files in the directory listing installed games
+	if [[ $(ls "/tmp/regataos-gcs/config/installed/" | grep json) == *".json"* ]]; then
+		echo "Show installed games" > "/tmp/regataos-gcs/config/installed/show-installed-games.txt"
+	else
+		rm -f "/tmp/regataos-gcs/config/installed/show-installed-games.txt"
+	fi
+}
+
+ps -C "search_installeds" > /dev/null
+if [ $? = 1 ]
+then
+	search_installeds
 fi

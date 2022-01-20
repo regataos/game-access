@@ -42,7 +42,7 @@ $(document).ready(function() {
 
 	// Battle.net page
 	//Page title
-	$(".battlenet-title").text("Games accessible through Battle.net");
+	$(".battlenet-title").text("Games to play with Battle.net");
 	//View more
 	$(".battlenet-more").text("See more at Battle.net");
 
@@ -61,25 +61,25 @@ $(document).ready(function() {
 
 	// GOG Galaxy page
 	//Page title
-	$(".gog-title").text("Games accessible through GOG Galaxy");
+	$(".gog-title").text("Games to play with GOG Galaxy");
 	//View more
 	$(".gog-more").text("See more at GOG Galaxy");
 
 	// Origin page
 	//Page title
-	$(".origin-title").text("Games accessible through Origin");
+	$(".origin-title").text("Games to play with Origin");
 	//View more
 	$(".origin-more").text("See more at Origin");
 
 	// Rockstar Games Launcher page
 	//Page title
-	$(".rockstar-title").text("Games accessible through Rockstar Games Launcher");
+	$(".rockstar-title").text("Games to play with Rockstar Games Launcher");
 	//View more
 	$(".rockstar-more").text("See more at Rockstar Games Launcher");
 
 	// Ubisoft Connect page
 	//Page title
-	$(".ubisoftconnect-title").text("Games accessible through Ubisoft Connect");
+	$(".ubisoftconnect-title").text("Games to play with Ubisoft Connect");
 	//View more
 	$(".ubisoftconnect-more").text("See more at Ubisoft Connect");
 

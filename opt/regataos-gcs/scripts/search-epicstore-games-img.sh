@@ -84,7 +84,7 @@ for i in $HOME/.config/legendary/metadata/*.json; do
 	# Game Folder
 	file_search3="$i"
 	search3='"FolderName"'
-	line_search3=$(cat -n $file_search3 | grep -w $search3 | head -4 | tail -1 | awk '{print $1}')
+	line_search3=$(cat -n $file_search3 | grep -w $search3 | head -1 | tail -1 | awk '{print $1}')
 	search_result3=$(qt=`wc -l $file_search3 | awk '{print $1}'`; sed -n ''$line_search3','$qt'p' $file_search3)
 	gamefolder=$(echo "$search_result3" | head -4 | grep value | cut -d'"' -f 4- | cut -d'"' -f -1)
 

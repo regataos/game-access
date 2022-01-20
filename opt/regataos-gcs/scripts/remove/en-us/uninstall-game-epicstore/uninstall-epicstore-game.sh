@@ -14,7 +14,7 @@ game_id="$(grep -r "gameid" $HOME/.config/regataos-gcs/epicstore-games/json/$gam
 # Uninstall game
 (
 	# Uninstall game from Epic Games Store with Legendary
-	/opt/regataos-gcs/legendary/legendary uninstall -y $game_id 2>&1 | (pv -n > /var/log/regataos-logs/uninstall-$game_nickname-epicstore.log)
+	/opt/regataos-gcs/tools/legendary/legendary uninstall -y $game_id 2>&1 | (pv -n > /var/log/regataos-logs/uninstall-$game_nickname-epicstore.log)
 
 	# Remove game from installed list
 	rm -f "$HOME/.config/regataos-gcs/installed/$game_nickname-epicstore.json"

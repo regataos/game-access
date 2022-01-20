@@ -67,16 +67,20 @@ function search_installed_games() {
 }
 
 # Get game information and check if they are installed
+installed_launchers=$(cat "/tmp/regataos-gcs/config/installed-launchers.conf")
+launcher_blacklist=$(cat "/opt/regataos-gcs/scripts/blacklist-launchers-from-game-search.txt")
+
 for i in /opt/regataos-gcs/games-list/*.json; do
 	game_nickname="$(grep -R '"gamenickname":' $i | awk '{print $2}' | sed 's/"\|,//g')"
 	game_executable="$(grep -R '"gameexecutable":' $i | awk -F: '{print $2 $3}' | sed 's/"\|,//g')"
 	game_launcher="$(grep -R '"launchernickname":' $i | awk '{print $2}' | sed 's/"\|,//g')"
-	installed_launchers="$(grep -wr $game_launcher /tmp/regataos-gcs/config/installed-launchers.conf)"
-	launcher_blacklist=$(grep -wr "$game_launcher" "/opt/regataos-gcs/scripts/blacklist-launchers-from-game-search.txt")
+	game_origin="$(grep -R '"gameorigin":' $i | awk '{print $2}' | sed 's/"\|,//g')"
 
-	if [[ $(echo $installed_launchers) == *"$game_launcher"* ]]; then
-		if [[ $(echo $launcher_blacklist) != *"$game_launcher"* ]]; then
-			search_installed_games
+	if [[ $(echo $game_origin) == *"suggestedgame"* ]]; then
+		if [[ $(echo $installed_launchers) == *"$game_launcher"* ]]; then
+			if [[ $(echo $launcher_blacklist) != *"$game_launcher"* ]]; then
+				search_installed_games
+			fi
 		fi
 	fi
 done

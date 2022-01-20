@@ -127,6 +127,52 @@ function games_list_installed() {
 				// Show Steam Games
 				$("div.app-block-steam").css("display", "block")
 
+			} else	if ((gamesdata.launchernickname.indexOf("gog") > -1) == "1") {
+				//Request the creation of the new element (block) for each game
+				var new_game_blocks = document.createElement("div");
+				new_game_blocks.id = gamesdata.gameid + "-block";
+
+				//Add classes to the new game blocks
+				new_game_blocks.classList.add("app-block-universal", gamesdata.gamenickname + "-block", gamesdata.gamenickname);
+
+				//Add the game image in the background
+				new_game_blocks.style.backgroundImage = "url('./../images/games-backg/steam/steam.jpg')";
+
+				//Variable required for uninstall game button
+				var gamenickname = "'" + gamesdata.gamenickname + "'"
+
+				//Set game image
+				if (fs.existsSync('/tmp/regataos-gcs/config/gog-games/img/' + gamesdata.gamenickname + '.webp')) {
+					var background = "/tmp/regataos-gcs/config/gog-games/img/" + gamesdata.gamenickname + ".webp"
+					var gamebackg = "file://" + background
+				}
+
+				//Add game details within the newly created block
+				new_game_blocks.innerHTML = ' \
+				<div class="universal-game-img gog-game-img" style="background-image: url(' + gamebackg + ')"></div> \
+					<div class="block-play-universal"> \
+						<div title="Desinstalar jogo" class="remove-game-button" onclick="window.game_for_remove=' + gamenickname + '; uninstall_gog_game();"> \
+							<i class="fas fa-trash-alt"></i> \
+						</div> \
+						<div id="' + gamesdata.gameid + '" class="play-box-universal" onclick="window.gameid=this.id; window.gamenickname=' + gamenickname + '; run_gog_game();"> \
+						<div class="play-button"> \
+							<i class="fas fa-play"></i><div class="play-txt">Jogar</div> \
+						</div> \
+					</div> \
+					</div> \
+					<div class="block-text-universal" title="' + gamesdata.gamename + '"> \
+						<div class="block-title">' + gamesdata.gamename + '</div> \
+						<div class="block-desc">GOG Galaxy</div> \
+						<div class="native-game"> \
+							<div class="native-game-img" style="background-image: url(./../images/gcs.png)"></div> \
+							<div class="native-game-desc gcs">Game Access</div> \
+						</div> \
+					</div> \
+				</div>';
+
+				//Finally, create the new game blocks dynamically
+				all_blocks.appendChild(new_game_blocks);
+
 			} else {
 				//Request the creation of the new element (block) for each game
 				var new_game_blocks = document.createElement("div");
