@@ -17,7 +17,6 @@ function search_for_games() {
             gamenickname=$(grep -R '"gamenickname":' $game_json_file | awk '{print $2}' | sed 's/"\|,//g')
 
             if test -e "$GAMES_INSTALL_DIR$game_install_folder/goglog.ini"; then
-                echo "$GAMES_INSTALL_DIR$game_install_folder/goglog.ini"
                 if [[ $(echo "$game_json_file" | cut -d'/' -f 7-) == *"$(echo $gamenickname)"* ]]; then
                     echo "$gamenickname: $(echo '"')$GAMES_INSTALL_DIR$game_install_folder$(echo '"')"
 
@@ -52,12 +51,15 @@ function search_for_games() {
 if test -e "$HOME/.local/share/wineprefixes/gog-compatibility-mode/drive_c/ProgramData/GOG.com/Galaxy/config.json"; then
     # Get the default installation directory for GOG Galaxy games
     GAMES_INSTALL_DIR=$(grep -r libraryPath $HOME/.local/share/wineprefixes/gog-compatibility-mode/drive_c/ProgramData/GOG.com/Galaxy/config.json | cut -d':' -f 3- | sed 's,\\\\\|"\,,/,g')
+    GAMES_INSTALL_DIR="$HOME/.local/share/wineprefixes/gog-compatibility-mode/dosdevices/c:$GAMES_INSTALL_DIR"
 
     # Cache a list of all folders located within the game installation directory
-    echo "$(ls "$GAMES_INSTALL_DIR/" | sed "s/' '/\n/g")" > "/tmp/regataos-gcs/config/gog-games/games-folders1.txt"
+    echo "$(ls "$GAMES_INSTALL_DIR" | sed "s/' '/\n/g")" > "/tmp/regataos-gcs/config/gog-games/games-folders1.txt"
 
     # If the game's installation folder is not found, remove the game's JSON file from the installed games directory
-    games_install_folders=$(cat /tmp/regataos-gcs/config/gog-games/games-folders2.txt)
+    if test -e "/tmp/regataos-gcs/config/gog-games/games-folders2.txt"; then
+        games_install_folders=$(cat /tmp/regataos-gcs/config/gog-games/games-folders2.txt)
+    fi
 
     # Check for game folders in default installation directory before running main function
     if test -s "/tmp/regataos-gcs/config/gog-games/games-folders1.txt"; then

@@ -221,3 +221,17 @@ setTimeout(function(){
 		run_search_gog_games()
 	}, 1000);
 }, 1000);
+
+
+var uppage = setInterval(up_page_gog, 1000);
+function up_page_gog() {
+    const fs = require('fs');
+	fs.access("/tmp/regataos-gcs/up-page-gog.txt", (err) => {
+	if (!err) {
+		fs.unlinkSync("/tmp/regataos-gcs/up-page-gog.txt");
+		location.reload()
+		clearInterval(uppage);
+		return;
+	}
+	});
+}

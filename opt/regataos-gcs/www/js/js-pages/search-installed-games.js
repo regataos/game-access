@@ -18,3 +18,18 @@ function run_search_installed_games() {
 	exec(command_line,function(error,call,errlog){
 	});
 }
+
+// Show suggested games or titles available in the user's library
+function run_search_gog_games() {
+	const exec = require('child_process').exec;
+	var command_line = '/opt/regataos-gcs/scripts/search-gog-games.sh; /opt/regataos-gcs/scripts/search-installed-games-gog.sh';
+	exec(command_line,function(error,call,errlog){
+	});
+}
+run_search_gog_games()
+
+setTimeout(function(){
+	setInterval(function(){
+		run_search_gog_games()
+	}, 1000);
+}, 1000);
