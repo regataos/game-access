@@ -7,10 +7,10 @@ GCS_CONFIG="$HOME/.config/regataos-gcs/regataos-gcs.conf"
 LOG_FILE="/var/log/regataos-logs/$LAUNCHER.log"
 
 # Variables for custom Wine
-CUSTOM_WINE_DIR="/opt/regataos-wine/wine-fshack-6.21-6"
-WINESERVER=$CUSTOM_WINE_DIR/bin/wineserver
-WINELOADER=$CUSTOM_WINE_DIR/bin/wine
-WINEDLLPATH=$CUSTOM_WINE_DIR/lib:$CUSTOM_WINE_DIR/lib64
+export CUSTOM_WINE_DIR="/opt/regataos-wine/wine-fshack-6.21-6"
+export WINESERVER=$CUSTOM_WINE_DIR/bin/wineserver
+export WINELOADER=$CUSTOM_WINE_DIR/bin/wine
+export WINEDLLPATH=$CUSTOM_WINE_DIR/lib:$CUSTOM_WINE_DIR/lib64
 
 # Variables
 export WINEPREFIX="$PREFIX_LOCATION"

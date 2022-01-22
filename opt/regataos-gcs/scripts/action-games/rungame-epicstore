@@ -15,10 +15,10 @@ executable=$(echo "$search_result" | head -12 | grep executable | cut -d'"' -f 4
 echo "$executable" > "/tmp/regataos-gcs/game-executable.txt"
 
 # Variables for custom Wine
-CUSTOM_WINE_DIR="/opt/regataos-wine/wine-fshack-6.21-6"
-WINESERVER=$CUSTOM_WINE_DIR/bin/wineserver
-WINELOADER=$CUSTOM_WINE_DIR/bin/wine
-WINEDLLPATH=$CUSTOM_WINE_DIR/lib:$CUSTOM_WINE_DIR/lib64
+export CUSTOM_WINE_DIR="/opt/regataos-wine/wine-fshack-6.21-6"
+export WINESERVER=$CUSTOM_WINE_DIR/bin/wineserver
+export WINELOADER=$CUSTOM_WINE_DIR/bin/wine
+export WINEDLLPATH=$CUSTOM_WINE_DIR/lib:$CUSTOM_WINE_DIR/lib64
 
 # Variables
 export WINEPREFIX="$PREFIX_LOCATION"

@@ -40,7 +40,7 @@ cancel_install();
 
 // Start installing game from Epic Games Store
 function show_confirmbox_installing_game_epicstore() {
-const fs = require('fs');
+	const fs = require('fs');
 	fs.access("/tmp/regataos-gcs/start-installation-epicstore.txt", (err) => {
 	if (!err) {
 		$('.confirm-start-game-installation').css('display', 'block')
@@ -51,10 +51,18 @@ const fs = require('fs');
 
 // Start uninstall game from Epic Games Store
 function show_confirmbox_uninstall_game_epicstore() {
-const fs = require('fs');
+	const fs = require('fs');
+
 	fs.access("/tmp/regataos-gcs/start-uninstallation-epicstore.txt", (err) => {
 	if (!err) {
 		$('.confirm-start-game-uninstallation').css('display', 'block')
+	return;
+	}
+	});
+
+	fs.access("/tmp/regataos-gcs/start-uninstallation-gog.txt", (err) => {
+	if (!err) {
+		$('.confirm-start-game-uninstallation-gog').css('display', 'block')
 	return;
 	}
 	});
@@ -190,4 +198,24 @@ function cancel_uninstall_epicstore_game() {
 	});
 
 	$('.confirm-start-game-uninstallation').css('display', 'none')
+}
+
+// Uninstall game from GOG Galaxy
+function start_uninstall_gog_game() {
+	const exec = require('child_process').exec;
+	var command_line = '/opt/regataos-gcs/scripts/action-games/remove-game';
+	exec(command_line,function(error,call,errlog){
+	});
+
+	$('.confirm-start-game-uninstallation-gog').css('display', 'none')
+}
+
+function cancel_uninstall_gog_game() {
+	const exec = require('child_process').exec;
+	var command_line = 'rm -f /tmp/regataos-gcs/start-uninstallation-gog.txt';
+	console.log(command_line);
+	exec(command_line,function(error,call,errlog){
+	});
+
+	$('.confirm-start-game-uninstallation-gog').css('display', 'none')
 }

@@ -1,13 +1,23 @@
 #!/bin/bash
 
+# Try to find the gameId
+function forGameId() {
+	search_dir="$HOME/.local/share/wineprefixes/gog-compatibility-mode/drive_c/ProgramData/GOG.com/Galaxy/webcache/"
+	search_gameid=$(echo "$for_id" | sed 's/\// /g' | cut -d'?' -f -1 | awk '{print $3}')
+	game_id=$(find "$search_dir" -type f -iname "$search_gameid" | sed 's/\// /g' | awk '{print $14}')
+}
+
 # Create JSON files in game cache on GOG Galaxy account
 function create_gog_cache() {
+forGameId
+
 mkdir -p "/tmp/regataos-gcs/config/gog-games/json/"
 cat > "/tmp/regataos-gcs/config/gog-games/json/$gamename_lowercase-gog.json" << GOGGAMEJSONCACHE
 [
 	{
 		"gamename": "$game_name",
 		"gamenickname": "$gamename_lowercase",
+		"gameid": "$game_id",
 		"gamekeywords": "$game_name, $gamekeywords, gog galaxy",
 		"launcher": "GOG Galaxy",
 		"launchernickname": "gog",
@@ -19,11 +29,14 @@ GOGGAMEJSONCACHE
 
 # Update JSON files in game cache
 function update_games_cache() {
+forGameId
+
 cat > "/opt/regataos-gcs/games-list/$gamename_lowercase-gog.json" << GOGGAMEJSON
 [
 	{
 		"gamename": "$game_name",
 		"gamenickname": "$gamename_lowercase",
+		"gameid": "$game_id",
 		"gamekeywords": "$game_name, $gamekeywords, gog galaxy",
 		"launcher": "GOG Galaxy",
 		"launchernickname": "gog",

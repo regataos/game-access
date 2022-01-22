@@ -9,7 +9,7 @@ LOG_FILE="/var/log/regataos-logs/steam-$GAMEID.log"
 if test ! -e "$HOME/.local/share/Steam/nvidia-gl-shader-disk-cache-patch"; then
 	mkdir -p "$HOME/.local/share/Steam/nvidia-gl-shader-disk-cache-patch"
 fi
-NVIDIA_GL_SHADER_DISK_CACHE_PATH="$HOME/.local/share/Steam/nvidia-gl-shader-disk-cache-patch"
+export NVIDIA_GL_SHADER_DISK_CACHE_PATH="$HOME/.local/share/Steam/nvidia-gl-shader-disk-cache-patch"
 
 # Enable performance info
 if [[ $(grep -r fps $GCS_CONFIG) == *"fps=true"* ]]; then

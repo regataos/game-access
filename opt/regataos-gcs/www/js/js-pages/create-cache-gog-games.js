@@ -40,6 +40,7 @@ if (!err) {
 			var command_line = 'export game_name="' + game_name + '"; \
 			export gamename_lowercase="' + gamename_lowercase + '"; \
 			export gamekeywords="' + game_keywords + '"; \
+			export for_id="' + game_img + '"; \
 			export gameinstallfolder="' + game_installation_folder + '"; \
 			/opt/regataos-gcs/scripts/create-cache-gog-games -create-gog-cache';
 
@@ -47,12 +48,13 @@ if (!err) {
 			});
 		}
 
-			// Create JSON file with game information
+		// Create JSON file with game information
 		if (!fs.existsSync('/opt/regataos-gcs/games-list/' + gamename_lowercase + '-gog.json')) {
     		const exec = require('child_process').exec;
 			var command_line = 'export game_name="' + game_name + '"; \
 			export gamename_lowercase="' + gamename_lowercase + '"; \
 			export gamekeywords="' + game_keywords + '"; \
+			export for_id="' + game_img + '"; \
 			export gameinstallfolder="' + game_installation_folder + '"; \
 			/opt/regataos-gcs/scripts/create-cache-gog-games -up-games-cache';
 

@@ -1,0 +1,57 @@
+#!/bin/sh
+
+# Remove games when requested by the user
+function remove_game() {
+    # Remove game from GOG Galaxy
+    if test -e "/tmp/regataos-gcs/start-uninstallation-gog.txt"; then
+        rm -f "/tmp/regataos-gcs/start-uninstallation-gog.txt"
+
+        (
+            rm -rf "$game_install_folder"
+            sed -i "/$gamenickname/d" "$HOME/.config/regataos-gcs/gog-games/games-folders2.txt"
+            sed -i '/^$/d' "$HOME/.config/regataos-gcs/gog-games/games-folders2.txt"
+            rm -f "$HOME/.config/regataos-gcs/installed/$gamenickname-gog.json"
+        ) | env GTK_THEME=Adwaita:dark zenity --progress --pulsate --width 450 --window-icon "/usr/share/pixmaps/regataos-gcs.png" \
+        --title "Regata OS Game Access" --text "$zenity_text" --auto-close --auto-kill --no-cancel
+
+        notify-send -i regataos-gcs -u normal -a 'Regata OS Game Access' "$notify_text1" "$notify_text2"
+    fi
+}
+
+# Collect game data from GOG Galaxy
+if test -e "/tmp/regataos-gcs/start-uninstallation-gog.txt"; then
+    gamenickname=$(cat /tmp/regataos-gcs/start-uninstallation-gog.txt)
+    game_name=$(grep -R '"gamename":' "$HOME/.config/regataos-gcs/installed/$gamenickname-gog.json" | awk '{print $2}' | sed 's/"\|,//g')
+    game_install_folder=$(grep -r "$gamenickname" "$HOME/.config/regataos-gcs/gog-games/games-folders2.txt" | cut -d':' -f 2- | sed 's/ //')
+fi
+
+# Run zenity and desktop notification with translations
+user_language=$(echo $LANG)
+if [[ $lang == *"pt_BR"* ]]; then
+    zenity_text="<big>Desinstalando o jogo $game_name.\nIsso pode levar alguns minutos...</big>"
+    notify_text1="$game_name foi desinstalado!"
+    notify_text2="$game_name foi desinstalado com sucesso."
+
+    remove_game
+
+elif [[ $lang == *"pt_PT"* ]]; then
+    zenity_text="<big>Desinstalando o jogo $game_name.\nIsso pode levar alguns minutos...</big>"
+    notify_text1="$game_name foi desinstalado!"
+    notify_text2="$game_name foi desinstalado com sucesso."
+
+    remove_game
+
+elif [[ $lang == *"en_US"* ]]; then
+    zenity_text="<big>Uninstalling $game_name game.\nThis may take a few minutes...</big>"
+    notify_text1="$game_name has been uninstalled!"
+    notify_text2="$game_name was successfully uninstalled."
+
+    remove_game
+
+else
+    zenity_text="<big>Uninstalling $game_name game.\nThis may take a few minutes...</big>"
+    notify_text1="$game_name has been uninstalled!"
+    notify_text2="$game_name was successfully uninstalled."
+
+    remove_game
+fi
