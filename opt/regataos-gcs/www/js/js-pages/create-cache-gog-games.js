@@ -17,9 +17,14 @@ if (!err) {
 		gamename_lowercase = gamename_lowercase.replace(/[.]/g,"")
 		gamename_lowercase = gamename_lowercase.replace(/(|)/g,"")
 		gamename_lowercase = gamename_lowercase.replace(/(,)/g,"")
+		gamename_lowercase = gamename_lowercase.replace(/(>)/g,"")
+		gamename_lowercase = gamename_lowercase.replace(/(_)/g,"")
+		gamename_lowercase = gamename_lowercase.replace(/[+®]/g,"")
 		gamename_lowercase = gamename_lowercase.replace(/(&)/g,"and")
 		gamename_lowercase = gamename_lowercase.replace(/\s+/g,"-");
 		gamename_lowercase = gamename_lowercase.replace(/'|\(|\)/g, "")
+		gamename_lowercase = gamename_lowercase.replace(/[!-]/g,            '');
+		gamename_lowercase = gamename_lowercase.replace(/[!?]/g,            '');
 		gamename_lowercase = gamename_lowercase.replace(/(™)/g,             '');
 		gamename_lowercase = gamename_lowercase.replace(/(ç)/g,             'c');
 		gamename_lowercase = gamename_lowercase.replace(/(á)|(â)|(ã)|(à)/g, 'a');
