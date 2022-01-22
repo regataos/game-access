@@ -44,7 +44,8 @@ function restore_suggested_games() {
 
 # Make sure the GOG Galaxy client is installed to start collecting user game data
 if [[ $(cat "$HOME/.config/regataos-gcs/installed-launchers.conf") == *"gog"* ]]; then
-	if [[ $(grep -r userId "$HOME/.local/share/wineprefixes/gog-compatibility-mode/drive_c/users/josue/AppData/Local/GOG.com/Galaxy/Configuration/config.json") == *"userId"* ]]; then
+	user=$(users | awk '{print $1}')
+	if [[ $(grep -r userId "$HOME/.local/share/wineprefixes/gog-compatibility-mode/drive_c/users/$user/AppData/Local/GOG.com/Galaxy/Configuration/config.json") == *"userId"* ]]; then
 		# Use GOG-Galaxy-Export-Script to collect the data
 		if test -e "$HOME/.local/share/wineprefixes/gog-compatibility-mode/drive_c/ProgramData/GOG.com/Galaxy/storage/galaxy-2.0.db"; then
 			mkdir -p "$HOME/.config/regataos-gcs/gog-games/"
