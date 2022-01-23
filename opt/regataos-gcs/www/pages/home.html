@@ -25,22 +25,6 @@
 	<script type="text/javascript" src="https://regataos.github.io/game-access/slide_functions.js"></script>
 	<script type="text/javascript" src="./../js/check-network.js"></script>
 	<script type="text/javascript" src="./../js/translations/language/pages-lang.js"></script>
-
-	<!-- Display content when everything is ready -->
-	<script type="text/javascript">
-		$(function(){
-			$("#loadscreen").fadeOut("slow");
-		});
-
-		$(function(){
-			$(".blocks").fadeIn("slow");
-		});
-
-		// Check Steam Games
-		setTimeout(function(){
-    		create_cache_steam_games();
-    	}, 500);
-	</script>
 </head>
 
 <body>
@@ -418,5 +402,20 @@ if($('.main-content .slideshow').length > 1) {
   <div class="networkoff-desc">Verifique os cabos de rede, modem e roteador ou<br/> conecte à rede Wi-Fi novamente.</div>
 </div>
 
+	<!-- Display content when everything is ready -->
+	<script type="text/javascript">
+		$(function(){
+			$("#loadscreen").fadeOut("slow");
+		});
+
+		$(function(){
+			$(".blocks").fadeIn("slow");
+		});
+
+		// Check Steam Games
+		setTimeout(function(){
+    		create_cache_steam_games();
+    	}, 500);
+	</script>
 </body>
 </html>

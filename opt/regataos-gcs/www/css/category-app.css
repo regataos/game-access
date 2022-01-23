@@ -257,6 +257,7 @@ div.universal-account-title {
 .app-block {
 	position: relative;
 	float: left;
+	opacity: 1;
     width: 310px;
     height: 240px;
 	background-color: #262626;
@@ -271,6 +272,8 @@ div.universal-account-title {
 	padding: 10px;
     -webkit-transition: all 0.3s ease-in-out;
     transition: all 0.3s ease-in-out;
+	animation-name: opacityEfect;
+	animation-duration: 1s;
 }
 
 .app-block:hover {
@@ -296,6 +299,7 @@ div.universal-account-title {
 .app-block-universal {
 	position: relative;
 	float: left;
+	opacity: 1;
     width: 330px;
     height: 260px;
 	background-color: #262626;
@@ -310,6 +314,8 @@ div.universal-account-title {
 	padding: 0px;
     -webkit-transition: all 0.3s ease-in-out;
     transition: all 0.3s ease-in-out;
+	animation-name: opacityEfect;
+	animation-duration: 1s;
 }
 
 .app-block-universal:hover {
@@ -685,4 +691,9 @@ div.universal-account-title {
 @keyframes animatebottom { 
     from{ bottom:-30px; opacity:0 } 
     to{ bottom:0; opacity:1 }
+}
+
+@keyframes opacityEfect {
+	from {opacity: 0;}
+	to {opacity: 1;}
 }

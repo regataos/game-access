@@ -30,7 +30,7 @@
 .app-block {
 	display: inline-block;
 	position: relative;
-	float: left;
+	opacity: 1;
     width: 270px;
     height: 250px;
 	background-color: #262626;
@@ -44,6 +44,8 @@
 	background-repeat: no-repeat;
     -webkit-transition: all 0.3s ease-in-out;
     transition: all 0.3s ease-in-out;
+	animation-name: opacityEfect;
+	animation-duration: 1s;
 }
 
 .app-block:hover {
@@ -103,4 +105,9 @@
 @keyframes animatebottom { 
     from{ bottom:-30px; opacity:0 } 
     to{ bottom:0; opacity:1 }
+}
+
+@keyframes opacityEfect {
+	from {opacity: 0;}
+	to {opacity: 1;}
 }

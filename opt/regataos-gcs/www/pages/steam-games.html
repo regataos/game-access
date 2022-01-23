@@ -16,22 +16,6 @@
 	<script type="text/javascript" src="./../js/js-pages/action-launchers.js"></script>
 	<script type="text/javascript" src="./../js/js-pages/action-games.js"></script>
 	<script type="text/javascript" src="./../js/translations/language/pages-lang.js"></script>
-
-	<!-- Display content when everything is ready -->
-	<script type="text/javascript">
-		$(function(){
-			$("#loadscreen").fadeOut("slow");
-		});
-
-		$(function(){
-			$(".blocks").fadeIn("slow");
-		});
-
-		// Check Steam Games
-		setTimeout(function(){
-    		create_cache_steam_games();
-    	}, 1000);
-	</script>
 </head>
 <body>
 <div id='loadscreen'></div>
@@ -55,5 +39,20 @@
 	</div>
 </div>
 
+	<!-- Display content when everything is ready -->
+	<script type="text/javascript">
+		$(function(){
+			$("#loadscreen").fadeOut("slow");
+		});
+
+		$(function(){
+			$(".blocks").fadeIn("slow");
+		});
+
+		// Check Steam Games
+		setTimeout(function(){
+    		create_cache_steam_games();
+    	}, 1000);
+	</script>
 </body>
 </html>
