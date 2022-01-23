@@ -15,7 +15,13 @@ BuildRequires: grep
 BuildRequires: xz
 Requires: xz
 Requires: magma >= 6.60.0
-Requires: regataos-wine-service >= 21.6.14
+Requires: regataos-wine-service >= 21.6.21
+Requires: python3-PyICU
+Requires: python3-csvkit
+Requires: python3-fastnumbers
+Requires: python3-natsort
+Requires: python3-unicodecsv
+Requires: python3-json5
 Source1: %{name}-%{version}.tar.xz
 Source2: regataos-gcs.desktop.txt
 BuildRoot: %{_tmppath}/%{name}-%{version}-build
