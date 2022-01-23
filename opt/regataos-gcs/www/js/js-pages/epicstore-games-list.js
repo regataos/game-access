@@ -4,6 +4,7 @@ var fs = require("fs");
 
 var files = [];
 var child = [];
+window.content_brake_epicstore = 0
 
 // Read JSON files with the list of games
 fs.readdirSync("/tmp/regataos-gcs/config/epicstore-games/json").forEach(files => {
@@ -13,53 +14,52 @@ if (!err) {
 	// Request the dynamic creation of game blocks on the HTML page
 	//Capture the main element where the game blocks will be created
 	var epicstore_all_games = document.querySelector("div.universal-all-games");
-
-	var epicstore_games_json = JSON.parse(data);
+	var games = JSON.parse(data);
 
 	//Read the list of games that should appear in each block
-	epicstore_games_json.forEach(gamesdata => {
-		const child = epicstore_all_games.querySelector("div." + gamesdata.gamenickname + "-block");
+	for (var i = 0; i < games.length; i++) {
+		const child = epicstore_all_games.querySelector("div." + games[i].gamenickname + "-block");
 
 		if (child == null) {
 			//Request the creation of the new element (block) for each game
 			var epicstore_game_blocks = document.createElement("div");
-			epicstore_game_blocks.id = gamesdata.gameid + "-block";
+			epicstore_game_blocks.id = games[i].gameid + "-block";
 
 			//Add classes to the new game blocks
-			epicstore_game_blocks.classList.add("app-block-universal", gamesdata.gamenickname + "-block");
+			epicstore_game_blocks.classList.add("app-block-universal", games[i].gamenickname + "-block");
 
 			//Add the game image in the background
 			epicstore_game_blocks.style.backgroundImage = "url('./../images/games-backg/steam/steam.jpg')";
 
 			//Set game image
-			if (fs.existsSync('/tmp/regataos-gcs/config/epicstore-games/img/' + gamesdata.gamenickname + '.jpg')) {
-				var background = "/tmp/regataos-gcs/config/epicstore-games/img/" + gamesdata.gamenickname + ".jpg"
+			if (fs.existsSync('/tmp/regataos-gcs/config/epicstore-games/img/' + games[i].gamenickname + '.jpg')) {
+				var background = "/tmp/regataos-gcs/config/epicstore-games/img/" + games[i].gamenickname + ".jpg"
 				var gamebackg = "file://" + background
 
-			} else if (fs.existsSync('/tmp/regataos-gcs/config/epicstore-games/img/' + gamesdata.gamenickname + '.png')) {
-				var background = "/tmp/regataos-gcs/config/epicstore-games/img/" + gamesdata.gamenickname + ".png"
+			} else if (fs.existsSync('/tmp/regataos-gcs/config/epicstore-games/img/' + games[i].gamenickname + '.png')) {
+				var background = "/tmp/regataos-gcs/config/epicstore-games/img/" + games[i].gamenickname + ".png"
 				var gamebackg = "file://" + background
 
-			} else if (fs.existsSync('/tmp/regataos-gcs/config/epicstore-games/img/' + gamesdata.gamenickname)) {
-				var background = "/tmp/regataos-gcs/config/epicstore-games/img/" + gamesdata.gamenickname
+			} else if (fs.existsSync('/tmp/regataos-gcs/config/epicstore-games/img/' + games[i].gamenickname)) {
+				var background = "/tmp/regataos-gcs/config/epicstore-games/img/" + games[i].gamenickname
 				var gamebackg = "file://" + background
 
 			} else {
-				var gamebackg = "'" + gamesdata.game_img1 + "'"
+				var gamebackg = "'" + games[i].game_img1 + "'"
 			}
 
 			//Add game details within the newly created block
 			epicstore_game_blocks.innerHTML = ' \
 			<div class="universal-game-img epicstore-game-img" style="background-image: url(' + gamebackg + ')"></div> \
 				<div class="block-play-universal"> \
-					<div id="' + gamesdata.gamenickname + '" class="install-box-universal" onclick="window.gamenickname=this.id; install_epicstore_game();"> \
+					<div id="' + games[i].gamenickname + '" class="install-box-universal" onclick="window.gamenickname=this.id; install_epicstore_game();"> \
 					<div class="play-button"> \
 						<i class="fas fa-download"></i><div class="install-txt">Instalar</div> \
 					</div> \
 				</div> \
 				</div> \
-				<div class="block-text-universal" title="' + gamesdata.gamename + '"> \
-					<div class="block-title">' + gamesdata.gamename + '</div> \
+				<div class="block-text-universal" title="' + games[i].gamename + '"> \
+					<div class="block-title">' + games[i].gamename + '</div> \
 					<div class="block-desc">Epic Games Store</div> \
 					<div class="native-game"> \
 						<div class="native-game-img" style="background-image: url(./../images/gcs.png)"></div> \
@@ -69,22 +69,34 @@ if (!err) {
 			</div>';
 
 			//Finally, create the new game blocks dynamically
-			epicstore_all_games.appendChild(epicstore_game_blocks);
+			if ( content_brake_epicstore >= 16) {
+				break;
+			} else {
+				window.content_brake_epicstore = content_brake_epicstore + 1
+				epicstore_all_games.appendChild(epicstore_game_blocks);
+			}
 		}
 
-		if (!fs.existsSync('/tmp/regataos-gcs/config/installed/' + gamesdata.gamenickname + '-epicstore.json')) {
-			$("div.universal-all-games div." + gamesdata.gamenickname + "-block").css("display", "block")
-			$("div#universal-installed div." + gamesdata.gamenickname + "-block").css("display", "none")
+		if (!fs.existsSync('/tmp/regataos-gcs/config/installed/' + games[i].gamenickname + '-epicstore.json')) {
+			$("div.universal-all-games div." + games[i].gamenickname + "-block").css("display", "block")
+			$("div#universal-installed div." + games[i].gamenickname + "-block").css("display", "none")
 		} else {
-			$("div.universal-all-games div." + gamesdata.gamenickname + "-block").css("display", "none")
-			$("div#universal-installed div." + gamesdata.gamenickname + "-block").css("display", "block")
+			$("div.universal-all-games div." + games[i].gamenickname + "-block").css("display", "none")
+			$("div#universal-installed div." + games[i].gamenickname + "-block").css("display", "block")
 		}
-	})
+	}
 return;
 }
 });
 });
 }
+list_epicstore_account()
+
+$(window).scroll(function() {
+	if ( $(document).height() == $(window).scrollTop() + $(window).height()) {
+		list_epicstore_account();
+	}
+});
 
 // Dynamically display installed games
 function list_installed_epicstore_games() {
@@ -180,6 +192,34 @@ return;
 });
 }
 
+//Read the list of games that should appear in each block
+function list_epicstore_account_load() {
+var fs = require("fs");
+
+var files = [];
+var child = [];
+
+// Read JSON files with the list of games
+fs.readdirSync("/tmp/regataos-gcs/config/epicstore-games/json").forEach(files => {
+fs.readFile("/tmp/regataos-gcs/config/epicstore-games/json/" + files, "utf8", function (err, data) {
+if (!err) {
+	var epicstore_games_json = JSON.parse(data);
+
+	epicstore_games_json.forEach(gamesdata => {
+		if (!fs.existsSync('/tmp/regataos-gcs/config/installed/' + gamesdata.gamenickname + '-epicstore.json')) {
+			$("div.universal-all-games div." + gamesdata.gamenickname + "-block").css("display", "block")
+			$("div#universal-installed div." + gamesdata.gamenickname + "-block").css("display", "none")
+		} else {
+			$("div.universal-all-games div." + gamesdata.gamenickname + "-block").css("display", "none")
+			$("div#universal-installed div." + gamesdata.gamenickname + "-block").css("display", "block")
+		}
+	});
+return;
+}
+});
+});
+}
+
 // Check for installed games
 function show_installed_games() {
 	var fs = require("fs");
@@ -242,7 +282,7 @@ function start_list_games() {
 		}
 
 		show_installed_games();
-		list_epicstore_account();
+		list_epicstore_account_load();
 		return;
 
 	} else {
