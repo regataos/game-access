@@ -1,8 +1,16 @@
 #!/bin/bash
 
 # If necessary, create the application settings directory
-if test ! -e "/tmp/regataos-gcs/config" ; then
+if test ! -e "/tmp/regataos-gcs/config"; then
 	ln -sf "$HOME/.config/regataos-gcs" "/tmp/regataos-gcs/config"
+fi
+
+if test ! -e "/tmp/regataos-gcs/config/gog-games/json"; then
+    mkdir -p "/tmp/regataos-gcs/config/gog-games/json"
+fi
+
+if test ! -e "/tmp/regataos-gcs/config/gog-games/img"; then
+    mkdir -p "/tmp/regataos-gcs/config/gog-games/img"
 fi
 
 # Search for installed games from GOG Galaxy

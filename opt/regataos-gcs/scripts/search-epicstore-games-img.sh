@@ -98,7 +98,7 @@ for i in $HOME/.config/legendary/metadata/*.json; do
 		if [ -z $image_type ];then
 			if test ! -e "/tmp/regataos-gcs/config/epicstore-games/img/$gamename_lowercase"; then
 				# Download image
-				wget --no-check-certificate -O "/tmp/regataos-gcs/config/epicstore-games/img/$gamename_lowercase" "$game_img1"
+				aria2c -d "/tmp/regataos-gcs/config/epicstore-games/img/" -o "$gamename_lowercase" "$game_img1"
 
 				# Reduce image size
 				game_img1="/tmp/regataos-gcs/config/epicstore-games/img/$gamename_lowercase"
@@ -109,7 +109,7 @@ for i in $HOME/.config/legendary/metadata/*.json; do
 				if [[ $(du -hs "/tmp/regataos-gcs/config/epicstore-games/img/$gamename_lowercase" | awk '{print $1}') == *"0"* ]]; then
 					# Download image
 					rm -f "/tmp/regataos-gcs/config/epicstore-games/img/$gamename_lowercase"
-					wget --no-check-certificate -O "/tmp/regataos-gcs/config/epicstore-games/img/$gamename_lowercase" "$game_img1"
+					aria2c -d "/tmp/regataos-gcs/config/epicstore-games/img/" -o "$gamename_lowercase" "$game_img1"
 
 					# Reduce image size
 					game_img1="/tmp/regataos-gcs/config/epicstore-games/img/$gamename_lowercase"
@@ -120,7 +120,7 @@ for i in $HOME/.config/legendary/metadata/*.json; do
 		else
 			if test ! -e "/tmp/regataos-gcs/config/epicstore-games/img/$gamename_lowercase.$image_type"; then
 				# Download image
-				wget --no-check-certificate -O "/tmp/regataos-gcs/config/epicstore-games/img/$gamename_lowercase.$image_type" "$game_img1"
+				aria2c -d "/tmp/regataos-gcs/config/epicstore-games/img" -o "$gamename_lowercase.$image_type" "$game_img1"
 
 				# Reduce image size
 				game_img1="/tmp/regataos-gcs/config/epicstore-games/img/$gamename_lowercase.$image_type"
@@ -131,7 +131,7 @@ for i in $HOME/.config/legendary/metadata/*.json; do
 				if [[ $(du -hs "/tmp/regataos-gcs/config/epicstore-games/img/$gamename_lowercase.$image_type" | awk '{print $1}') == *"0"* ]]; then
 					# Download image
 					rm -f "/tmp/regataos-gcs/config/epicstore-games/img/$gamename_lowercase.$image_type"
-					wget --no-check-certificate -O "/tmp/regataos-gcs/config/epicstore-games/img/$gamename_lowercase.$image_type" "$game_img1"
+					aria2c -d "/tmp/regataos-gcs/config/epicstore-games/img" -o "$gamename_lowercase.$image_type" "$game_img1"
 
 					# Reduce image size
 					game_img1="/tmp/regataos-gcs/config/epicstore-games/img/$gamename_lowercase.$image_type"

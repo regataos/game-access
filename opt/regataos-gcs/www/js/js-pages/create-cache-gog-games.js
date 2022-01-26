@@ -42,60 +42,131 @@ if (!err) {
 		if (!fs.existsSync('/tmp/regataos-gcs/config/gog-games/json/' + gamename_lowercase + '-gog.json')) {
 			// Create JSON file with game information
     		const exec = require('child_process').exec;
-			var command_line = 'export game_name="' + game_name + '"; \
+			var command_line = 'echo "show loading" > "/tmp/regataos-gcs/show-loading-gog.txt"; \
+			export game_name="' + game_name + '"; \
 			export gamename_lowercase="' + gamename_lowercase + '"; \
 			export gamekeywords="' + game_keywords + '"; \
 			export for_id="' + game_img + '"; \
 			export gameinstallfolder="' + game_installation_folder + '"; \
 			/opt/regataos-gcs/scripts/create-cache-gog-games -create-gog-cache';
-
 			exec(command_line,function(error,call,errlog){
 			});
+
+			$("div.loading").css("display", "block")
+			$("div.loading-games").css("display", "block")
 		}
 
 		// Create JSON file with game information
 		if (!fs.existsSync('/opt/regataos-gcs/games-list/' + gamename_lowercase + '-gog.json')) {
     		const exec = require('child_process').exec;
-			var command_line = 'export game_name="' + game_name + '"; \
+			var command_line = 'echo "show loading" > "/tmp/regataos-gcs/show-loading-gog.txt"; \
+			export game_name="' + game_name + '"; \
 			export gamename_lowercase="' + gamename_lowercase + '"; \
 			export gamekeywords="' + game_keywords + '"; \
 			export for_id="' + game_img + '"; \
 			export gameinstallfolder="' + game_installation_folder + '"; \
 			/opt/regataos-gcs/scripts/create-cache-gog-games -up-games-cache';
-
 			exec(command_line,function(error,call,errlog){
 			});
+
+			$("div.loading").css("display", "block")
+			$("div.loading-games").css("display", "block")
 		}
 
 		// Create local cache of images
-		if (!fs.existsSync('/tmp/regataos-gcs/config/gog-games/img/' + gamename_lowercase + '.jpg')) {
+		if (!fs.existsSync('/tmp/regataos-gcs/config/gog-games/img/' + gamename_lowercase + '.webp')) {
     		const exec = require('child_process').exec;
-			var command_line = 'wget --no-check-certificate -O "/tmp/regataos-gcs/config/gog-games/img/' + gamename_lowercase + '.webp" ' + '"' + game_img + '"';
+			var command_line = 'echo "show loading" > "/tmp/regataos-gcs/show-loading-gog.txt"; wget --no-check-certificate -O "/tmp/regataos-gcs/config/gog-games/img/' + gamename_lowercase + '.webp" ' + '"' + game_img + '"';
 			exec(command_line,function(error,call,errlog){
 			});
 		}
-
 	})
+
+	setTimeout(function(){
+		const exec = require('child_process').exec;
+		var command_line = 'rm -f "/tmp/regataos-gcs/show-loading-gog.txt"';
+		exec(command_line,function(error,call,errlog){
+		});
+	}, 10000);
+
 return;
 }
 });
 });
 }
 
-var timer_cache_gog = setInterval(create_cache_gog, 1000);
+// Start creating JSON files for games and images
+var time_load_account_games = setInterval(create_cache_gog, 200);
 function create_cache_gog() {
     const fs = require('fs');
+
 	fs.access("/tmp/regataos-gcs/config/gog-games/gamedb.json", (err) => {
 	if (!err) {
 		create_cache_gog_games();
-
 		const exec = require('child_process').exec;
 		var command_line = '/opt/regataos-gcs/scripts/search-gog-games.sh';
 		exec(command_line,function(error,call,errlog){
 		});
-
-		clearInterval(timer_cache_gog);
+		clearInterval(time_load_account_games);
 		return;
+	}
+	});
+}
+
+// Show user game library loading message
+function stop_loading_games() {
+	var time_show_account_games = setInterval(show_account_games, 200);
+	function show_account_games() {
+		const fs = require('fs');
+
+		fs.access("/tmp/regataos-gcs/show-loading-gog.txt", (err) => {
+		if (err) {
+			location.reload()
+			clearInterval(time_show_account_games);
+			return;
+		}
+		});
+	}
+}
+
+var time_stop_load = setInterval(stop_loading, 200);
+function stop_loading() {
+	const fs = require('fs');
+
+	fs.access("/tmp/regataos-gcs/show-loading-gog.txt", (err) => {
+	if (!err) {
+		stop_loading_games();
+		clearInterval(time_stop_load);
+	return;
+	}
+	});
+}
+
+// Refresh page when user logs out of GOG Galaxy
+function refresh_page_logoff_start() {
+	var time_refresh_on_logoff = setInterval(refresh_on_logoff, 200);
+	function refresh_on_logoff() {
+		const fs = require('fs');
+
+		fs.access("/tmp/regataos-gcs/config/gog-games/gamedb.json", (err) => {
+		if (err) {
+			location.reload()
+			clearInterval(time_refresh_on_logoff);
+			return;
+		}
+		});
+	}
+}
+
+var time_refresh_page_logoff = setInterval(refresh_page_logoff, 200);
+function refresh_page_logoff() {
+	const fs = require('fs');
+
+	fs.access("/tmp/regataos-gcs/config/gog-games/gamedb.json", (err) => {
+	if (!err) {
+		refresh_page_logoff_start();
+		clearInterval(time_refresh_page_logoff);
+	return;
 	}
 	});
 }

@@ -413,6 +413,10 @@ if test -e "$app_nickname_dir/$app_executable" ; then
 		rm -f $progressbar_dir/progressbar
 		rm -f $progressbar_dir/*
 	fi
+
+	# Start GOG Galaxy
+	/opt/regataos-wine/apps-exec/gog start
+
 elif test -e "$app_nickname_dir/$app_executable2" ; then
 	rm -f $progressbar_dir/progress-movement
 	echo "completed" > $progressbar_dir/progress-full
@@ -431,6 +435,10 @@ elif test -e "$app_nickname_dir/$app_executable2" ; then
 		rm -f $progressbar_dir/progressbar
 		rm -f $progressbar_dir/*
 	fi
+
+	# Start GOG Galaxy
+	/opt/regataos-wine/apps-exec/gog start
+
 else
 	rm -f $progressbar_dir/progress-movement
 	rm -f $progressbar_dir/progress-full

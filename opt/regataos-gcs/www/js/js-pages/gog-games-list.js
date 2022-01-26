@@ -241,12 +241,10 @@ function start_list_games() {
 }
 start_list_games()
 
-setTimeout(function(){
-	setInterval(function(){
-		start_list_games()
-		show_installed_games();
-	}, 500);
-}, 500);
+setInterval(function(){
+	start_list_games()
+	show_installed_games();
+}, 200);
 
 var time_load_account_games = setInterval(load_account_games, 1000);
 function load_account_games() {

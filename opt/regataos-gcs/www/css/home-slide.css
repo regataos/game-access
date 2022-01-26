@@ -137,9 +137,9 @@ body {
 }
 .slideshow .slide .image {
   width: 100%;
-  object-fit: cover;
-  height: 650px;
   background-position: 50% 30%;
+  background-size: 100%;
+  background-repeat: no-repeat;
   object-fit: cover;
   height: 100%;
 }
