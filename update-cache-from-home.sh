@@ -46,7 +46,7 @@ fi
 
 #Image from slide 4
 slide4_image_name="slide-control.jpg"
-slide4_image_code="BCbWHJF"
+slide4_image_code="J3y8RPC"
 if test ! -e "$image_download_cache_dir/$slide4_image_name"; then
 	wget --no-check-certificate -O "$image_download_cache_dir/$slide4_image_name" \
 	"https://i.ibb.co/$slide4_image_code/$slide4_image_name"
