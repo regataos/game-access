@@ -34,10 +34,10 @@ fi
 
 #Image from slide 4
 if test ! -e "$image_download_cache_dir/slide-anthem.jpg"; then
-	wget --no-check-certificate -O "$image_download_cache_dir/slide-anthem.jpg" \
-	"https://i.ibb.co/XSrB4Cs/slide-anthem.jpg"
+	wget --no-check-certificate -O "$image_download_cache_dir/slide-control.jpg" \
+	"https://i.ibb.co/BCbWHJF/slide-control.jpg"
 
-	ln -sf "$image_download_cache_dir/slide-anthem.jpg" "$image_download_cache_dir/slide-img4.jpg"
+	ln -sf "$image_download_cache_dir/slide-control.jpg" "$image_download_cache_dir/slide-img4.jpg"
 fi
 
 # Home block images
