@@ -18,7 +18,7 @@ function home_content() {
         // Content of slide 4
         //Block image
         $(".slideshow .slide .slide-img4").css("background-image", 'url("file:///tmp/regataos-gcs/config/cache/img/slide-img4.jpg")');
-        $(".slide-content .slide-title4").text("Anthem");
+        $(".slide-content .slide-title4").text("Control");
     });
 
     // Detect User Language
@@ -46,8 +46,8 @@ function home_content() {
 
                 // Content of slide 4
                 //Title and description
-                $(".slide-content .slide-desc4 p").text("Um RPG de ação cooperativo que se passa em um mundo novo e misterioso");
-                $(".slide-content .slide-button4").text("Jogue agora com Origin");
+                $(".slide-content .slide-desc4 p").text("O mundo agora é sua arma em uma luta épica contra um inimigo assustador");
+                $(".slide-content .slide-button4").text("Jogue agora com a Epic Games Store");
             });
 
         } else if ((user_language.indexOf("pt_PT") > -1) == "1") {
@@ -72,8 +72,8 @@ function home_content() {
 
                 // Content of slide 4
                 //Title and description
-                $(".slide-content .slide-desc4 p").text("Um RPG de ação cooperativo que se passa em um mundo novo e misterioso");
-                $(".slide-content .slide-button4").text("Jogue agora com Origin");
+                $(".slide-content .slide-desc4 p").text("O mundo agora é sua arma em uma luta épica contra um inimigo assustador");
+                $(".slide-content .slide-button4").text("Jogue agora com a Epic Games Store");
             });
 
         } else if ((user_language.indexOf("en_US") > -1) == "1") {
@@ -95,8 +95,8 @@ function home_content() {
 
                 // Content of slide 4
                 //Title and description
-                $(".slide-content .slide-desc4 p").text("A cooperative action RPG set in a new and mysterious world");
-                $(".slide-content .slide-button4").text("Play now with Origin");
+                $(".slide-content .slide-desc4 p").text("The world is now your weapon in an epic fight against a terrifying enemy");
+                $(".slide-content .slide-button4").text("Play now with the Epic Games Store");
             });
 
         } else {
@@ -118,8 +118,8 @@ function home_content() {
 
                 // Content of slide 4
                 //Title and description
-                $(".slide-content .slide-desc4 p").text("A cooperative action RPG set in a new and mysterious world");
-                $(".slide-content .slide-button4").text("Play now with Origin");
+                $(".slide-content .slide-desc4 p").text("The world is now your weapon in an epic fight against a terrifying enemy");
+                $(".slide-content .slide-button4").text("Play now with the Epic Games Store");
             });
         }
     }
