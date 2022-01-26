@@ -16,6 +16,8 @@ if test ! -e "$image_download_cache_dir/$slide1_image_name"; then
 	"https://i.ibb.co/$slide1_image_code/$slide1_image_name"
 
 	ln -sf "$image_download_cache_dir/$slide1_image_name" "$image_download_cache_dir/slide-img1.jpg"
+else
+	ln -sf "$image_download_cache_dir/$slide1_image_name" "$image_download_cache_dir/slide-img1.jpg"
 fi
 
 #Image from slide 2
@@ -25,7 +27,9 @@ if test ! -e "$image_download_cache_dir/$slide2_image_name"; then
 	wget --no-check-certificate -O "$image_download_cache_dir/$slide2_image_name" \
 	"https://i.ibb.co/$slide2_image_code/$slide2_image_name"
 
-	ln -sf "$image_download_cache_dir/$slide2_image_name" "$image_download_cache_dir/slide-img1.jpg"
+	ln -sf "$image_download_cache_dir/$slide2_image_name" "$image_download_cache_dir/slide-img2.jpg"
+else
+	ln -sf "$image_download_cache_dir/$slide2_image_name" "$image_download_cache_dir/slide-img2.jpg"
 fi
 
 #Image from slide 3
@@ -35,7 +39,9 @@ if test ! -e "$image_download_cache_dir/$slide3_image_name"; then
 	wget --no-check-certificate -O "$image_download_cache_dir/$slide3_image_name" \
 	"https://i.ibb.co/$slide3_image_code/$slide3_image_name"
 
-	ln -sf "$image_download_cache_dir/$slide3_image_name" "$image_download_cache_dir/slide-img1.jpg"
+	ln -sf "$image_download_cache_dir/$slide3_image_name" "$image_download_cache_dir/slide-img3.jpg"
+else
+	ln -sf "$image_download_cache_dir/$slide3_image_name" "$image_download_cache_dir/slide-img3.jpg"
 fi
 
 #Image from slide 4
@@ -45,7 +51,9 @@ if test ! -e "$image_download_cache_dir/$slide4_image_name"; then
 	wget --no-check-certificate -O "$image_download_cache_dir/$slide4_image_name" \
 	"https://i.ibb.co/$slide4_image_code/$slide4_image_name"
 
-	ln -sf "$image_download_cache_dir/$slide4_image_name" "$image_download_cache_dir/slide-img1.jpg"
+	ln -sf "$image_download_cache_dir/$slide4_image_name" "$image_download_cache_dir/slide-img4.jpg"
+else
+	ln -sf "$image_download_cache_dir/$slide4_image_name" "$image_download_cache_dir/slide-img4.jpg"
 fi
 
 # Home block images
@@ -57,6 +65,8 @@ if test ! -e "$image_download_cache_dir/$block1_image_name"; then
 	"https://i.ibb.co/$block1_image_code/$block1_image_name"
 
 	ln -sf "$image_download_cache_dir/$block1_image_name" "$image_download_cache_dir/block-img1.jpg"
+else
+	ln -sf "$image_download_cache_dir/$block1_image_name" "$image_download_cache_dir/block-img1.jpg"
 fi
 
 #Image 2
@@ -67,6 +77,8 @@ if test ! -e "$image_download_cache_dir/$block2_image_name"; then
 	"https://i.ibb.co/$block2_image_code/$block2_image_name"
 
 	ln -sf "$image_download_cache_dir/$block2_image_name" "$image_download_cache_dir/block-img2.jpg"
+else
+	ln -sf "$image_download_cache_dir/$block2_image_name" "$image_download_cache_dir/block-img2.jpg"
 fi
 
 #Image 3
@@ -76,5 +88,7 @@ if test ! -e "$image_download_cache_dir/$block3_image_name"; then
 	wget --no-check-certificate -O "$image_download_cache_dir/$block3_image_name" \
 	"https://i.ibb.co/$block3_image_code/$block3_image_name"
 
+	ln -sf "$image_download_cache_dir/$block3_image_name" "$image_download_cache_dir/block-img3.jpg"
+else
 	ln -sf "$image_download_cache_dir/$block3_image_name" "$image_download_cache_dir/block-img3.jpg"
 fi
