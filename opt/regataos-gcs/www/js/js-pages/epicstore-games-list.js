@@ -90,7 +90,17 @@ return;
 });
 });
 }
-list_epicstore_account()
+
+// Start showing games only if JSON files are found.
+function start_showing_games() {
+	var fs = require("fs");
+	fs.access('/tmp/regataos-gcs/config/epicstore-games/show-egs.txt', (err) => {
+	if (!err) {
+		list_epicstore_account()
+	}
+	});
+}
+start_showing_games();
 
 $(window).scroll(function() {
 	if ( $(document).height() == $(window).scrollTop() + $(window).height()) {
@@ -313,6 +323,30 @@ function start_list_games() {
 	});
 }
 start_list_games()
+
+// Refresh the page once the games are loaded
+function page_reload_process() {
+	var page_reload_time = setInterval(page_reload, 200);
+	function page_reload() {
+		const fs = require('fs');
+		if (!fs.existsSync('/tmp/regataos-gcs/login-id.txt')) {
+			location.reload();
+			clearInterval(page_reload_time);
+		}
+	}
+}
+
+var check_page_reload_time = setInterval(check_page_reload, 1000);
+function check_page_reload() {
+	const fs = require('fs');
+	if (fs.existsSync('/tmp/regataos-gcs/login-id.txt')) {
+		page_reload_process();
+		clearInterval(check_page_reload_time);
+
+	} else if (fs.existsSync('/tmp/regataos-gcs/config/epicstore-games/show-egs.txt')) {
+		clearInterval(check_page_reload_time);
+	}
+}
 
 setTimeout(function(){
 	setInterval(function(){
