@@ -11,7 +11,7 @@ function block_function1() {
 
 	} else {
 		if (fs.existsSync("/tmp/regataos-gcs/config/epicstore-games/show-egs.txt")) {
-			window.open("https://www.epicgames.com/store/pt-BR/free-games", 'popup')
+			window.open("https://www.epicgames.com/store/free-games", 'popup')
 
 		} else {
 			url = "./../pages/epicstore-games.html";
@@ -32,7 +32,7 @@ function block_function2() {
 
 	} else {
 		if (fs.existsSync("/tmp/regataos-gcs/config/epicstore-games/show-egs.txt")) {
-			window.open("https://www.epicgames.com/store/pt-BR/free-games", 'popup')
+			window.open("https://www.epicgames.com/store/free-games", 'popup')
 
 		} else {
 			url = "./../pages/epicstore-games.html";
@@ -71,7 +71,7 @@ function block_function3() {
 
 	} else {
 		if (fs.existsSync("/tmp/regataos-gcs/config/epicstore-games/show-egs.txt")) {
-			window.open("https://www.epicgames.com/store/pt-BR/free-games", 'popup')
+			window.open("https://www.epicgames.com/store/free-games", 'popup')
 
 		} else {
 			url = "./../pages/epicstore-games.html";
