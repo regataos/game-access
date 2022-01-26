@@ -9,35 +9,43 @@ fi
 
 # Home slide images
 #Image from slide 1
-if test ! -e "$image_download_cache_dir/slide-gtav.jpg"; then
-	wget --no-check-certificate -O "$image_download_cache_dir/slide-gtav.jpg" \
-	"https://i.ibb.co/fSsSMSD/slide-gtav.jpg"
+slide1_image_name="slide-gtav.jpg"
+slide1_image_code="fSsSMSD"
+if test ! -e "$image_download_cache_dir/$slide1_image_name"; then
+	wget --no-check-certificate -O "$image_download_cache_dir/$slide1_image_name" \
+	"https://i.ibb.co/$slide1_image_code/$slide1_image_name"
 
-	ln -sf "$image_download_cache_dir/slide-gtav.jpg" "$image_download_cache_dir/slide-img1.jpg"
+	ln -sf "$image_download_cache_dir/$slide1_image_name" "$image_download_cache_dir/slide-img1.jpg"
 fi
 
 #Image from slide 2
-if test ! -e "$image_download_cache_dir/slide-overwatch.jpg"; then
-	wget --no-check-certificate -O "$image_download_cache_dir/slide-overwatch.jpg" \
-	"https://i.ibb.co/7NDK1cL/slide-overwatch.jpg"
+slide2_image_name="slide-overwatch.jpg"
+slide2_image_code="7NDK1cL"
+if test ! -e "$image_download_cache_dir/$slide2_image_name"; then
+	wget --no-check-certificate -O "$image_download_cache_dir/$slide2_image_name" \
+	"https://i.ibb.co/$slide2_image_code/$slide2_image_name"
 
-	ln -sf "$image_download_cache_dir/slide-overwatch.jpg" "$image_download_cache_dir/slide-img2.jpg"
+	ln -sf "$image_download_cache_dir/$slide2_image_name" "$image_download_cache_dir/slide-img1.jpg"
 fi
 
 #Image from slide 3
-if test ! -e "$image_download_cache_dir/slide-bfv.jpg"; then
-	wget --no-check-certificate -O "$image_download_cache_dir/slide-bfv.jpg" \
-	"https://i.ibb.co/cgwKmzK/slide-bfv.jpg"
+slide3_image_name="slide-bfv.jpg"
+slide3_image_code="cgwKmzK"
+if test ! -e "$image_download_cache_dir/$slide3_image_name"; then
+	wget --no-check-certificate -O "$image_download_cache_dir/$slide3_image_name" \
+	"https://i.ibb.co/$slide3_image_code/$slide3_image_name"
 
-	ln -sf "$image_download_cache_dir/slide-bfv.jpg" "$image_download_cache_dir/slide-img3.jpg"
+	ln -sf "$image_download_cache_dir/$slide3_image_name" "$image_download_cache_dir/slide-img1.jpg"
 fi
 
 #Image from slide 4
-if test ! -e "$image_download_cache_dir/slide-anthem.jpg"; then
-	wget --no-check-certificate -O "$image_download_cache_dir/slide-control.jpg" \
-	"https://i.ibb.co/BCbWHJF/slide-control.jpg"
+slide4_image_name="slide-control.jpg"
+slide4_image_code="BCbWHJF"
+if test ! -e "$image_download_cache_dir/$slide4_image_name"; then
+	wget --no-check-certificate -O "$image_download_cache_dir/$slide4_image_name" \
+	"https://i.ibb.co/$slide4_image_code/$slide4_image_name"
 
-	ln -sf "$image_download_cache_dir/slide-control.jpg" "$image_download_cache_dir/slide-img4.jpg"
+	ln -sf "$image_download_cache_dir/$slide4_image_name" "$image_download_cache_dir/slide-img1.jpg"
 fi
 
 # Home block images
