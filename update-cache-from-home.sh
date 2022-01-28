@@ -58,8 +58,8 @@ fi
 
 # Home block images
 #Image 1
-block1_image_name="block-gc3.jpg"
-block1_image_code="cgT2dC4"
+block1_image_name="block-dxm.jpg"
+block1_image_code="cNm6KhM"
 if test ! -e "$image_download_cache_dir/$block1_image_name"; then
 	wget --no-check-certificate -O "$image_download_cache_dir/$block1_image_name" \
 	"https://i.ibb.co/$block1_image_code/$block1_image_name"
