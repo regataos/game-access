@@ -136,7 +136,7 @@ function install_steam_game() {
 		$("." + gamenickname + "-block .install-box-universal").css("opacity", "1")
 		$("." + gamenickname + "-block .install-box-universal").css("cursor", "pointer")
 		$("." + gamenickname + "-block .install-box-universal").css("pointer-events", "auto");
-	},5000);
+	},15000);
 }
 
 // Start installing game from Epic Games Store

@@ -93,12 +93,14 @@ if test ! -e "/tmp/regataos-gcs/config/steam-games/no-steam-games.txt" ;then
 
 	# Get game information and check if they are installed
 	for i in $HOME/.local/share/Steam/steamapps/*.acf; do
-		game_appid="$(grep -R '"appid"' $i | awk '{print $2}' | sed 's/"\|,//g')"
 		game_name="$(grep -R '"name"' $i | cut -d'"' -f 4- | cut -d'"' -f -1)"
+		game_appid="$(grep -R '"appid"' $i | awk '{print $2}' | sed 's/"\|,//g')"
+		echo "Installed game name: $game_name, ID: $game_appid"
 
 		#Make the game name lowercase
 		gamename_lowercase=$(echo "$game_name" | tr 'A-Z' 'a-z' | sed 's/: \|- \|(\|)\|, \|™\|\.//g')
-		gamename_lowercase=$(echo $gamename_lowercase | sed 's/ /-/g')
+		gamename_lowercase=$(echo $gamename_lowercase | sed 's/ \|-//g')
+		echo "$gamename_lowercase"
 
 		if [ ! -z $game_appid ];then
 			if test ! -e "/tmp/regataos-gcs/config/steam-games/json/games/$gamename_lowercase-steam.json"; then
