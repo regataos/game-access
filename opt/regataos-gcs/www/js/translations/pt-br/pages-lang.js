@@ -98,7 +98,7 @@ $(document).ready(function() {
 	$(".amd-fsr-desc").text("Ativar o AMD FSR");
 
 	//Close automatically
-	$(".option-auto-close-title").text("Fechar automaticamente o Game Access");
+	$(".option-auto-close-title").text("Fechar o aplicativo Game Access automaticamente");
 	$(".option-auto-close-desc").text("Esta opção permite que o Game Access seja fechado quando um jogos ou launcher estiver em execução.");
 	$(".auto-close-desc").text("Fechar automaticamente");
 

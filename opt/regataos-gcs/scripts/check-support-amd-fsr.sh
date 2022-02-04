@@ -10,7 +10,7 @@ function check_hardware() {
 	if [[ $vulkan_test == *"Instance Extensions"* ]]; then
 		if [[ $vulkan_test != *"Vulkan support is incomplete"* ]]; then
 			if test ! -e "/tmp/regataos-prime/use-hybrid-graphics.txt"; then
-				if [[ $(lscpu | grep -i model | tail -n 1 | cut -d':' -f 2 | sed 's/^ \+//') == *"Radeon Vega"* ]]; then
+				if [[ $(inxi -G | egrep -i "Card-1|Device-1" | cut -d":" -f 3- | cut -d"[" -f 2- | cut -d"]" -f -1) == *"Radeon Vega"* ]]; then
 					vulkan_support="vulkan_supported"
 				fi
 			fi
