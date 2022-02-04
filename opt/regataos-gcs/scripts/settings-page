@@ -28,10 +28,26 @@ function auto_close() {
     fi
 }
 
+# Enable/desable AMD FSR
+function amd_fsr() {
+    if [[ $(grep -r amd-fsr "$HOME/.config/regataos-gcs/regataos-gcs.conf") == *"amd-fsr=true"* ]]; then
+        sed -i 's/\(amd-fsr=true\)/amd-fsr=false/' "$HOME/.config/regataos-gcs/regataos-gcs.conf"
+
+    elif [[ $(grep -r amd-fsr "$HOME/.config/regataos-gcs/regataos-gcs.conf") == *"amd-fsr=false"* ]]; then
+        sed -i 's/\(amd-fsr=false\)/amd-fsr=true/' "$HOME/.config/regataos-gcs/regataos-gcs.conf"
+
+    else
+        /opt/regataos-gcs/scripts/check-support-amd-fsr.sh start
+        sed -i '/^$/d' "$HOME/.config/regataos-gcs/regataos-gcs.conf"
+    fi
+}
+
 case $1 in
    "-fpshud") fps_hud
          ;;
    "-autoclose") auto_close
+         ;;
+   "-amd-fsr") amd_fsr
          ;;
    *) echo "Invalid option!"
       exit 1

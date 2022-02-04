@@ -6,7 +6,7 @@ function check_url() {
 }
 check_url();
 
-// Enable/desable FPS
+// Enable/disable FPS
 function enable_fps() {
 	const exec = require('child_process').exec;
 	var command_line = "sed -i 's/FPS=0/FPS=1/' $HOME/.config/regataos-gcs/" + gamename + ".conf";

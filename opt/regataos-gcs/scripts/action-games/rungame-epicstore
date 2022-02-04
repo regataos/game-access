@@ -34,6 +34,12 @@ if test -e "$PREFIX_LOCATION/dxvk.conf"; then
 	export DXVK_CONFIG_FILE="$PREFIX_LOCATION/dxvk.conf"
 fi
 
+# Enable AMD FSR
+if [[ $(grep -r amd-fsr $GCS_CONFIG) == *"amd-fsr=true"* ]]; then
+	export WINE_FULLSCREEN_FSR=1
+	export WINE_FULLSCREEN_FSR_STRENGTH=5
+fi
+
 # Enable performance info
 if [[ $(grep -r fps $GCS_CONFIG) == *"fps=true"* ]]; then
 	export MANGOHUD_CONFIG=cpu_temp,cpu_mhz,ram,vram,gpu_core_clock,gpu_temp,gpu_name,benchmark_percentiles,gamemode,font_size=19

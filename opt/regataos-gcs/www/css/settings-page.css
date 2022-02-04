@@ -96,6 +96,10 @@
     display: none;
 }
 
+.option-amd-fsr-enabled {
+    display: none;
+}
+
 .option-auto-close-enabled {
     display: none;
 }

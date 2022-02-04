@@ -92,6 +92,11 @@ $(document).ready(function() {
 	$(".option-fps-hud-desc").text("This option enables a HUD that displays information about game performance and hardware usage.");
 	$(".fps-hud-desc").text("View FPS HUD");
 
+	//AMD FSR option
+	$(".option-amd-fsr-title").text("Enable AMD FidelityFX Super Resolution (FSR)");
+	$(".option-amd-fsr-desc").text("This option enables the AMD FSR feature to help boost your gaming frame rates.");
+	$(".amd-fsr-desc").text("Enable AMD FSR");
+
 	//Close automatically 
 	$(".option-auto-close-title").text("Automatically close Game Access");
 	$(".option-auto-close-desc").text("This option allows Game Access to close when a game or launcher is running.");

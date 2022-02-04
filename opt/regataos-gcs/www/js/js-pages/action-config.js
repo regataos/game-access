@@ -1,4 +1,4 @@
-// Enable/desable FPS
+// Enable/disable FPS
 var checkbox_fps_hud = $(".fpshud input[type='checkbox']");
 checkbox_fps_hud.change(function(event) {
 	var checkbox_fps_hud = event.target;
@@ -27,6 +27,23 @@ checkbox_fps_hud.change(function(event) {
 	} else {
 		const exec = require('child_process').exec;
 		var command_line = "/opt/regataos-gcs/scripts/settings-page -autoclose";
+		exec(command_line,function(error,call,errlog){
+		});
+	}
+});
+
+// Enable/disable AMD FSR
+var checkbox_fps_hud = $(".amdfsr input[type='checkbox']");
+checkbox_fps_hud.change(function(event) {
+	var checkbox_fps_hud = event.target;
+	if (checkbox_fps_hud.checked) {
+		const exec = require('child_process').exec;
+		var command_line = "/opt/regataos-gcs/scripts/settings-page -amd-fsr";
+		exec(command_line,function(error,call,errlog){
+		});
+	} else {
+		const exec = require('child_process').exec;
+		var command_line = "/opt/regataos-gcs/scripts/settings-page -amd-fsr";
 		exec(command_line,function(error,call,errlog){
 		});
 	}

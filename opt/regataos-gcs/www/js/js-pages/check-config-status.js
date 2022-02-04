@@ -57,3 +57,23 @@ function check_external_games_folder() {
 }
 
 check_external_games_folder()
+
+// Check if AMD FSR is enabled
+function check_amdfsr() {
+	const fs = require('fs');
+	var read_settings = fs.readFileSync("/tmp/regataos-gcs/config/regataos-gcs.conf", "utf8");
+
+	if ((read_settings.indexOf("amd-fsr=true") > -1) == "1") {
+		$(".option-amd-fsr-enabled").css("display", "block")
+		$(".option-amd-fsr-disabled").css("display", "none")
+
+	} else if ((read_settings.indexOf("amd-fsr=false") > -1) == "1") {
+		$(".option-amd-fsr-enabled").css("display", "none")
+		$(".option-amd-fsr-disabled").css("display", "block")
+
+	} else {
+		$(".option-amd-fsr-enabled").css("display", "none")
+		$(".option-amd-fsr-disabled").css("display", "block")
+	}
+}
+check_amdfsr()
