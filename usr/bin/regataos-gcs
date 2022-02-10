@@ -49,7 +49,7 @@ rm -f "/tmp/regataos-gcs/config/gog-games/games-folders2.txt"
 # /opt/regataos-help/scripts/regataos-help-check-network.sh start
 
 # Checks that the AMD FidelityFX Super Resolution (FSR) has been configured by the user
-/opt/regataos-gcs/scripts/check-support-amd-fsr.sh start
+/bin/bash /opt/regataos-gcs/scripts/check-support-amd-fsr.sh
 
 # Check if you have logged in to the Epic Games Store
 if [[ $(ls "$HOME/.config/regataos-gcs/epicstore-games/json/" | grep json) == *".json"* ]]; then
