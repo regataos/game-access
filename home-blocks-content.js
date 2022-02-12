@@ -2,7 +2,7 @@ function home_content() {
     $(document).ready(function() {
         // Content of block 1
         //Title
-        $(".appbc1 .block-title").text("Daemon X Machina");
+        $(".appbc1 .block-title").text("Windbound");
         //Block image
         $(".appbc1").css("background-image", 'url("file:///tmp/regataos-gcs/config/cache/img/block-img1.jpg")');
         $(".appbc1").css("background-position", "50% 50%")
@@ -32,7 +32,7 @@ function home_content() {
             $(document).ready(function() {
                 // Content of block 1
                 //Description
-                $(".appbc1 .block-desc").text("Disponível de graça na Epic Games Store até 03 de fevereiro.");
+                $(".appbc1 .block-desc").text("Disponível de graça na Epic Games Store até 17 de fevereiro.");
 
                 // Content of block 2
                 //Description
@@ -47,7 +47,7 @@ function home_content() {
             $(document).ready(function() {
                 // Content of block 1
                 //Description
-                $(".appbc1 .block-desc").text("Disponível de graça na Epic Games Store até 03 de fevereiro.");
+                $(".appbc1 .block-desc").text("Disponível de graça na Epic Games Store até 17 de fevereiro.");
 
                 // Content of block 2
                 //Description
@@ -62,7 +62,7 @@ function home_content() {
             $(document).ready(function() {
                 // Content of block 1
                 //Description
-                $(".appbc1 .block-desc").text("Available for free at the Epic Games Store until february 03.");
+                $(".appbc1 .block-desc").text("Available for free at the Epic Games Store until february 17.");
 
                 // Content of block 2
                 //Description
@@ -77,7 +77,7 @@ function home_content() {
             $(document).ready(function() {
                 // Content of block 1
                 //Description
-                $(".appbc1 .block-desc").text("Available for free at the Epic Games Store until february 03.");
+                $(".appbc1 .block-desc").text("Available for free at the Epic Games Store until february 17.");
 
                 // Content of block 2
                 //Description
