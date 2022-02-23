@@ -18,7 +18,7 @@ export WINEDLLPATH=$CUSTOM_WINE_DIR/lib:$CUSTOM_WINE_DIR/lib64
 
 # Variables
 export WINEPREFIX="$PREFIX_LOCATION"
-export WINEDLLOVERRIDES="winemenubuilder,winedbg,nvapi,nvapi64="
+export WINEDLLOVERRIDES="mscoree,mshtml,winemenubuilder,winedbg,nvapi,nvapi64="
 export WINEESYNC=1
 export WINEFSYNC=1
 export WINEFSYNC_FUTEX2=1

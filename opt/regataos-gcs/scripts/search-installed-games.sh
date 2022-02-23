@@ -29,19 +29,21 @@ function search_installed_games() {
 		game_dir=$(find "$HOME/Game Access" -type f -iname "$(echo "$game_executable" | sed 's/ //')")
 	fi
 
-	echo "$game_dir"
-	if [[ $(echo "$game_dir" | tr 'A-Z' 'a-z') == *"$(echo "$game_executable" | tr 'A-Z' 'a-z' | sed 's/ //')"* ]]; then
-		if [[ $(grep -wr "$(echo "$game_executable" | tr 'A-Z' 'a-z' | sed 's/ //')" "/tmp/regataos-gcs/config/game-install-dir.conf") != *"$game_dir"* ]]; then
-			if [[ $(grep -r "$game_nickname" "/tmp/regataos-gcs/config/game-install-dir.conf") != *"$game_nickname"* ]]; then
-				echo "$game_nickname=$game_dir" >> "/tmp/regataos-gcs/config/game-install-dir.conf"
-				sed -i '/^$/d' "/tmp/regataos-gcs/config/game-install-dir.conf"
-				sed -i '/.egstore/d' "/tmp/regataos-gcs/config/game-install-dir.conf"
-				cp -f "/opt/regataos-gcs/games-list/$game_nickname.json" "/tmp/regataos-gcs/config/installed/$game_nickname.json"
+	if [[ $(echo "$game_dir") != *"steamapps"* ]]; then
+		echo "$game_dir"
+		if [[ $(echo "$game_dir" | tr 'A-Z' 'a-z') == *"$(echo "$game_executable" | tr 'A-Z' 'a-z' | sed 's/ //')"* ]]; then
+			if [[ $(grep -wr "$(echo "$game_executable" | tr 'A-Z' 'a-z' | sed 's/ //')" "/tmp/regataos-gcs/config/game-install-dir.conf") != *"$game_dir"* ]]; then
+				if [[ $(grep -r "$game_nickname" "/tmp/regataos-gcs/config/game-install-dir.conf") != *"$game_nickname"* ]]; then
+					echo "$game_nickname=$game_dir" >> "/tmp/regataos-gcs/config/game-install-dir.conf"
+					sed -i '/^$/d' "/tmp/regataos-gcs/config/game-install-dir.conf"
+					sed -i '/.egstore/d' "/tmp/regataos-gcs/config/game-install-dir.conf"
+					cp -f "/opt/regataos-gcs/games-list/$game_nickname.json" "/tmp/regataos-gcs/config/installed/$game_nickname.json"
+				fi
 			fi
 		fi
 
 	else
-		echo "Game not installed or not found."
+		echo "$game_nickname: game not installed or not found."
 		game_dir_cache=$(grep -wr "$(echo "$game_executable" | sed 's/ //')" "/tmp/regataos-gcs/config/game-install-dir.conf")
 		echo $game_dir_cache
 		if [[ $game_dir_cache == *"$(echo "$game_executable" | sed 's/ //')"* ]]; then

@@ -133,12 +133,12 @@ function enable_dxvk_vkd3d() {
 	if [[ $vulkan_test == *"Instance Extensions"* ]]; then
 		if [[ $vulkan_test != *"Vulkan support is incomplete"* ]]; then
 			# Enable DXVK for Direct3D 9/10/11 over Vulkan
-			export WINEDLLOVERRIDES="mscoree,mshtml="
+			export WINEDLLOVERRIDES="mscoree,mshtml,winemenubuilder,winedbg,nvapi,nvapi64="
 			export WINEPREFIX="$HOME/.local/share/wineprefixes/default-compatibility-mode"
 			/bin/sh /opt/regataos-wine/dxvk/setup_dxvk.sh install --symlink
 
 			# Enable VKD3D-Proton for Direct3D 12 over Vulkan
-			export WINEDLLOVERRIDES="mscoree,mshtml="
+			export WINEDLLOVERRIDES="mscoree,mshtml,winemenubuilder,winedbg,nvapi,nvapi64="
 			export WINEPREFIX="$HOME/.local/share/wineprefixes/default-compatibility-mode"
 			/bin/sh /opt/regataos-wine/vkd3d-proton/setup_vkd3d_proton.sh install --symlink
 		fi
@@ -238,12 +238,12 @@ elif test -e "/usr/share/regataos/compatibility-mode/default-wineprefix.tar.xz" 
 		if [[ $vulkan_test == *"Instance Extensions"* ]]; then
 			if [[ $vulkan_test != *"Vulkan support is incomplete"* ]]; then
 				# Enable DXVK for Direct3D 9/10/11 over Vulkan
-				export WINEDLLOVERRIDES="mscoree,mshtml="
+				export WINEDLLOVERRIDES="mscoree,mshtml,winemenubuilder,winedbg,nvapi,nvapi64="
 				export WINEPREFIX="$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"
 				/bin/sh /opt/regataos-wine/dxvk/setup_dxvk.sh install --symlink
 
 				# Enable VKD3D-Proton for Direct3D 12 over Vulkan
-				export WINEDLLOVERRIDES="mscoree,mshtml="
+				export WINEDLLOVERRIDES="mscoree,mshtml,winemenubuilder,winedbg,nvapi,nvapi64="
 				export WINEPREFIX="$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"
 				/bin/sh /opt/regataos-wine/vkd3d-proton/setup_vkd3d_proton.sh install --symlink
 			
@@ -258,7 +258,7 @@ elif test -e "/usr/share/regataos/compatibility-mode/default-wineprefix.tar.xz" 
 else
 	# Environment variables for Wine
 	export WINEPREFIX="$HOME/.local/share/wineprefixes/default-compatibility-mode";
-	export WINEDLLOVERRIDES="mscoree,mshtml=";
+	export WINEDLLOVERRIDES="mscoree,mshtml,winemenubuilder,winedbg,nvapi,nvapi64=";
 	export WINEDEBUG=-all;
 
 	# Installing .NET Framework 4.0
