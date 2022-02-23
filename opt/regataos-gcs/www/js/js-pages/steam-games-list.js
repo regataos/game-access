@@ -73,7 +73,9 @@ if (!err) {
 				console.error(error.message);
 			});
 
-		} else if (!fs.existsSync('/tmp/regataos-gcs/config/steam-games/img/' + gamename_lowercase + '.jpg')) {
+		}
+
+		if (!fs.existsSync('/tmp/regataos-gcs/config/steam-games/img/' + gamename_lowercase + '.jpg')) {
 			// Make the request, putting the id directly in the URL, and send the return to the variable "res"
 			const https = require('https');
 			https.get(`https://store.steampowered.com/api/appdetails?appids=${games.appid}&cc=br&l=br`, (res) => {

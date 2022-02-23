@@ -30,12 +30,14 @@ function search_installed_games() {
 	fi
 
 	echo "$game_dir"
-	if [[ "$game_dir" == *"$(echo "$game_executable" | sed 's/ //')"* ]]; then
-		if [[ $(grep -wr "$(echo "$game_executable" | sed 's/ //')" "/tmp/regataos-gcs/config/game-install-dir.conf") != *"$game_dir"* ]]; then
-			echo "$game_nickname=$game_dir" >> "/tmp/regataos-gcs/config/game-install-dir.conf"
-			sed -i '/^$/d' "/tmp/regataos-gcs/config/game-install-dir.conf"
-			sed -i '/.egstore/d' "/tmp/regataos-gcs/config/game-install-dir.conf"
-			cp -f "/opt/regataos-gcs/games-list/$game_nickname.json" "/tmp/regataos-gcs/config/installed/$game_nickname.json"
+	if [[ $(echo "$game_dir" | tr 'A-Z' 'a-z') == *"$(echo "$game_executable" | tr 'A-Z' 'a-z' | sed 's/ //')"* ]]; then
+		if [[ $(grep -wr "$(echo "$game_executable" | tr 'A-Z' 'a-z' | sed 's/ //')" "/tmp/regataos-gcs/config/game-install-dir.conf") != *"$game_dir"* ]]; then
+			if [[ $(grep -r "$game_nickname" "/tmp/regataos-gcs/config/game-install-dir.conf") != *"$game_nickname"* ]]; then
+				echo "$game_nickname=$game_dir" >> "/tmp/regataos-gcs/config/game-install-dir.conf"
+				sed -i '/^$/d' "/tmp/regataos-gcs/config/game-install-dir.conf"
+				sed -i '/.egstore/d' "/tmp/regataos-gcs/config/game-install-dir.conf"
+				cp -f "/opt/regataos-gcs/games-list/$game_nickname.json" "/tmp/regataos-gcs/config/installed/$game_nickname.json"
+			fi
 		fi
 
 	else
@@ -51,7 +53,7 @@ function search_installed_games() {
 	fi
 
 	# If the executable was found, add the name of the game to the list of installed games
-	if [[ $(grep -wr "$(echo "$game_executable" | sed 's/ //')" "/tmp/regataos-gcs/config/game-install-dir.conf") == *"$(echo "$game_executable" | sed 's/ //')"* ]]; then
+	if [[ $(grep -wr "$game_nickname" "/tmp/regataos-gcs/config/game-install-dir.conf") == *".exe"* ]]; then
 		if [[ $(grep -wr "$game_nickname" "/tmp/regataos-gcs/config/installed-games.conf") != *"$game_nickname"* ]]; then
 			echo "$game_nickname" >> "/tmp/regataos-gcs/config/installed-games.conf"
 			sed -i '/^$/d' "/tmp/regataos-gcs/config/installed-games.conf"

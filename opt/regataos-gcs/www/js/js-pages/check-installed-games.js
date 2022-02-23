@@ -11,7 +11,6 @@ if(!err) {
 var games = JSON.parse(data);
 
 for (var i = 0; i < games.length; i++) {
-
 	// Capture the nicknames of the games and make sure they are in the list of installed games
     var url = window.location.href;
     var url_split1 = url.split("pages/")[1];
