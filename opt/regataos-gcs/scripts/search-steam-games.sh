@@ -29,15 +29,17 @@ fi
 # Check if there are any Steam games installed
 if [[ $(ls $HOME/.local/share/Steam/steamapps/ | grep acf) == *"acf"* ]]; then
 	if test -e "/tmp/regataos-gcs/config/steam-games/no-steam-games.txt" ;then
+		echo "Steam games installeds" > "/tmp/regataos-gcs/config/installed/show-installed-games.txt"
 		rm -f "/tmp/regataos-gcs/config/steam-games/no-steam-games.txt"
 	fi
 
 elif test -e "/tmp/regataos-gcs/config/external-games-folder.txt"; then
-	external_steam_folder=$(find $(cat /tmp/regataos-gcs/config/external-games-folder.txt) -type f -iname appmanifest_*.acf | head -1 | tail -2 | sed 's/appmanifest//' | cut -d'_' -f -1 | sed 's/steamapps\//steamapps/')
+	external_steam_folder=$(find "$(cat /tmp/regataos-gcs/config/external-games-folder.txt)" -type f -iname appmanifest_*.acf | head -1 | tail -2 | sed 's/appmanifest//' | cut -d'_' -f -1 | sed 's/steamapps\//steamapps/')
 
-	if test -e $(echo "$external_steam_folder"); then
+	if test -e "$(echo "$external_steam_folder")"; then
 		if [[ $(ls "$external_steam_folder/" | grep acf) == *"acf"* ]]; then
 			if test -e "/tmp/regataos-gcs/config/steam-games/no-steam-games.txt" ;then
+				echo "Steam games installeds" > "/tmp/regataos-gcs/config/installed/show-installed-games.txt"
 				rm -f "/tmp/regataos-gcs/config/steam-games/no-steam-games.txt"
 			fi
 		fi
@@ -57,6 +59,7 @@ else
 	if [[ $(grep -r "appid" "/tmp/regataos-gcs/config/steam-games/json/steam-id/$steam_games.json") != *"appid"* ]]; then
 		if test ! -e "/tmp/regataos-gcs/config/steam-games/no-steam-games.txt" ;then
 			echo "No Steam games" > "/tmp/regataos-gcs/config/steam-games/no-steam-games.txt"
+			rm -f "/tmp/regataos-gcs/config/installed/show-installed-games.txt"
 			rm -f /tmp/regataos-gcs/config/installed/*-steam.json
 			rm -f /tmp/regataos-gcs/config/steam-games/json/steam-id/*
 			rm -f /opt/regataos-gcs/games-list/*-steam.json
@@ -123,10 +126,10 @@ if test ! -e "/tmp/regataos-gcs/config/steam-games/no-steam-games.txt" ;then
 	done
 
 	if test -e "/tmp/regataos-gcs/config/external-games-folder.txt"; then
-		external_steam_folder=$(find $(cat /tmp/regataos-gcs/config/external-games-folder.txt) -type f -iname appmanifest_*.acf | head -1 | tail -2 | sed 's/appmanifest//' | cut -d'_' -f -1 | sed 's/steamapps\//steamapps/')
-		for i in $(echo "$external_steam_folder")/*acf; do
-			game_name="$(grep -R '"name"' $i | cut -d'"' -f 4- | cut -d'"' -f -1)"
-			game_appid="$(grep -R '"appid"' $i | awk '{print $2}' | sed 's/"\|,//g')"
+		external_steam_folder=$(find "$(echo $(cat /tmp/regataos-gcs/config/external-games-folder.txt))" -type f -iname appmanifest_*.acf | head -1 | tail -2 | sed 's/appmanifest//' | cut -d'_' -f -1 | sed 's/steamapps\//steamapps/')
+		for i in "$(echo "$external_steam_folder")"/*acf; do
+			game_name="$(grep -R '"name"' "$i" | cut -d'"' -f 4- | cut -d'"' -f -1)"
+			game_appid="$(grep -R '"appid"' "$i" | awk '{print $2}' | sed 's/"\|,//g')"
 			echo "Installed game name: $game_name, ID: $game_appid"
 
 			#Make the game name lowercase
@@ -177,9 +180,9 @@ for i in /tmp/regataos-gcs/config/installed/*-steam.json; do
 
 	if test ! -e "$HOME/.local/share/Steam/steamapps/appmanifest_$(echo $game_id).acf"; then
 		if test -e "/tmp/regataos-gcs/config/external-games-folder.txt"; then
-			external_steam_folder=$(find $(cat /tmp/regataos-gcs/config/external-games-folder.txt) -type f -iname "appmanifest_$(echo $game_id).acf")
+			external_steam_folder=$(find "$(echo $(cat /tmp/regataos-gcs/config/external-games-folder.txt))" -type f -iname "appmanifest_$(echo $game_id).acf")
 
-			if test ! -e $(echo "$external_steam_folder"); then
+			if test ! -e "$(echo "$external_steam_folder")"; then
 				rm -f "/tmp/regataos-gcs/config/installed/$game_name-steam.json"
 			fi
 

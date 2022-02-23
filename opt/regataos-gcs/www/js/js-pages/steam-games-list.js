@@ -362,28 +362,18 @@ return;
 
 // Show list of games in user account
 function show_steam_games() {
-	const exec = require('child_process').exec;
+	var fs = require("fs");
 
-    var command_line = "ls $HOME/.local/share/Steam/steamapps/ | grep acf | cut -d'.' -f 2-";
-    exec(command_line, (error, stdout, stderr) => {
-    if (stdout) {
-        var game_file = stdout
+	if (fs.existsSync('/tmp/regataos-gcs/config/installed/show-installed-games.txt')) {
+		$(".universal-installed-games").css("display", "block");
+		$(".universal-account-title").css("margin-top", "30px");
+		$(".universal-installed-title").css("display", "block");
 
-		if ((game_file.indexOf("acf") > -1) == "1") {
-			$(".universal-installed-games").css("display", "block");
-			$(".universal-account-title").css("margin-top", "30px");
-			$(".universal-installed-title").css("display", "block");
-		} else {
-			$(".universal-installed-games").css("display", "none");
-			$(".universal-account-title").css("margin-top", "100px");
-			$(".universal-installed-title").css("display", "none");
-		}
 	} else {
 		$(".universal-installed-games").css("display", "none");
 		$(".universal-account-title").css("margin-top", "100px");
 		$(".universal-installed-title").css("display", "none");
 	}
-	});
 }
 
 // Show the list of installed games

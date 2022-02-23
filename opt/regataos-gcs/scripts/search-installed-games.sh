@@ -24,16 +24,16 @@ fi
 # Check if the game installation directory exists, looking for the game executable
 function search_installed_games() {
 	if test -e "/tmp/regataos-gcs/config/external-games-folder.txt"; then
-		game_dir=$(find $(cat /tmp/regataos-gcs/config/external-games-folder.txt) "$HOME/Game Access" -type f -iname "$(echo "$game_executable" | sed 's/ //')")
+		game_dir=$(find "$(cat /tmp/regataos-gcs/config/external-games-folder.txt)" "$HOME/Game Access" -type f -iname "$(echo "$game_executable" | sed 's/ //')")
 	else
 		game_dir=$(find "$HOME/Game Access" -type f -iname "$(echo "$game_executable" | sed 's/ //')")
 	fi
 
 	if [[ $(echo "$game_dir") != *"steamapps"* ]]; then
-		echo "$game_dir"
 		if [[ $(echo "$game_dir" | tr 'A-Z' 'a-z') == *"$(echo "$game_executable" | tr 'A-Z' 'a-z' | sed 's/ //')"* ]]; then
 			if [[ $(grep -wr "$(echo "$game_executable" | tr 'A-Z' 'a-z' | sed 's/ //')" "/tmp/regataos-gcs/config/game-install-dir.conf") != *"$game_dir"* ]]; then
 				if [[ $(grep -r "$game_nickname" "/tmp/regataos-gcs/config/game-install-dir.conf") != *"$game_nickname"* ]]; then
+					echo "$game_nickname: $game_dir"
 					echo "$game_nickname=$game_dir" >> "/tmp/regataos-gcs/config/game-install-dir.conf"
 					sed -i '/^$/d' "/tmp/regataos-gcs/config/game-install-dir.conf"
 					sed -i '/.egstore/d' "/tmp/regataos-gcs/config/game-install-dir.conf"
