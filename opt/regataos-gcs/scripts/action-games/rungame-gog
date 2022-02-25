@@ -11,7 +11,7 @@ game_install_folder=$(grep -r "$GAME_NIcKNAME" "$HOME/.config/regataos-gcs/gog-g
 gameid=$(grep -r "gameId" "$game_install_folder"/goggame-*.info | awk '{print $2}' | sed 's/"\|,//g')
 
 # Variables for custom Wine
-export CUSTOM_WINE_DIR="/opt/regataos-wine/wine-fshack-6.21-6"
+export CUSTOM_WINE_DIR="$(cat /opt/regataos-wine/wine-gcs-version.txt)"
 export WINESERVER=$CUSTOM_WINE_DIR/bin/wineserver
 export WINELOADER=$CUSTOM_WINE_DIR/bin/wine
 export WINEDLLPATH=$CUSTOM_WINE_DIR/lib:$CUSTOM_WINE_DIR/lib64

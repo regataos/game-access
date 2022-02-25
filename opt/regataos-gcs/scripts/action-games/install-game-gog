@@ -10,7 +10,7 @@ LOG_FILE="/var/log/regataos-logs/gog-$GAME_NIcKNAME.log"
 gameid=$(grep -R '"gameid":' "/tmp/regataos-gcs/config/gog-games/json/$GAME_NIcKNAME-gog.json" | awk '{print $2}' | sed 's/"\|,//g')
 
 # Variables for custom Wine
-export CUSTOM_WINE_DIR="/opt/regataos-wine/wine-fshack-6.21-6"
+export CUSTOM_WINE_DIR="$(cat /opt/regataos-wine/wine-gcs-version.txt)"
 export WINESERVER=$CUSTOM_WINE_DIR/bin/wineserver
 export WINELOADER=$CUSTOM_WINE_DIR/bin/wine
 export WINEDLLPATH=$CUSTOM_WINE_DIR/lib:$CUSTOM_WINE_DIR/lib64
