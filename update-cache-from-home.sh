@@ -61,6 +61,9 @@ fi
 block1_image_name="block-ct.jpg"
 block1_image_code="pJ7wRR6"
 if test ! -e "$image_download_cache_dir/$block1_image_name"; then
+	# Clear cache
+	rm -f $image_download_cache_dir/block-*.jpg
+
 	wget --no-check-certificate -O "$image_download_cache_dir/$block1_image_name" \
 	"https://i.ibb.co/$block1_image_code/$block1_image_name"
 
