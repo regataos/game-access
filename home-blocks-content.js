@@ -2,7 +2,7 @@ function home_content() {
     $(document).ready(function() {
         // Content of block 1
         //Title
-        $(".appbc1 .block-title").text("Brothers: A Tale of Two Sons");
+        $(".appbc1 .block-title").text("Cris Tales");
         //Block image
         $(".appbc1").css("background-image", 'url("file:///tmp/regataos-gcs/config/cache/img/block-img1.jpg")');
         $(".appbc1").css("background-position", "50% 50%")
@@ -32,7 +32,7 @@ function home_content() {
             $(document).ready(function() {
                 // Content of block 1
                 //Description
-                $(".appbc1 .block-desc").text("Disponível de graça na Epic Games Store até 24 de fevereiro.");
+                $(".appbc1 .block-desc").text("Disponível de graça na Epic Games Store até 03 de março.");
 
                 // Content of block 2
                 //Description
@@ -47,7 +47,7 @@ function home_content() {
             $(document).ready(function() {
                 // Content of block 1
                 //Description
-                $(".appbc1 .block-desc").text("Disponível de graça na Epic Games Store até 24 de fevereiro.");
+                $(".appbc1 .block-desc").text("Disponível de graça na Epic Games Store até 03 de março.");
 
                 // Content of block 2
                 //Description
@@ -62,7 +62,7 @@ function home_content() {
             $(document).ready(function() {
                 // Content of block 1
                 //Description
-                $(".appbc1 .block-desc").text("Available for free at the Epic Games Store until february 24.");
+                $(".appbc1 .block-desc").text("Available for free at the Epic Games Store until March 03.");
 
                 // Content of block 2
                 //Description
@@ -77,7 +77,7 @@ function home_content() {
             $(document).ready(function() {
                 // Content of block 1
                 //Description
-                $(".appbc1 .block-desc").text("Available for free at the Epic Games Store until february 24.");
+                $(".appbc1 .block-desc").text("Available for free at the Epic Games Store until March 03.");
 
                 // Content of block 2
                 //Description
