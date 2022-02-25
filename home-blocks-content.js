@@ -6,6 +6,9 @@ function home_content() {
         //Block image
         $(".appbc1").css("background-image", 'url("file:///tmp/regataos-gcs/config/cache/img/block-img1.jpg")');
         $(".appbc1").css("background-position", "50% 50%")
+        //Date
+        date_pt_br="03 de março"
+        date_en_us="March 03"
 
         // Content of block 2
         //Title
@@ -32,7 +35,7 @@ function home_content() {
             $(document).ready(function() {
                 // Content of block 1
                 //Description
-                $(".appbc1 .block-desc").text("Disponível de graça na Epic Games Store até 03 de março.");
+                $(".appbc1 .block-desc").text("Disponível de graça na Epic Games Store até " + date_pt_br + ".");
 
                 // Content of block 2
                 //Description
@@ -47,7 +50,7 @@ function home_content() {
             $(document).ready(function() {
                 // Content of block 1
                 //Description
-                $(".appbc1 .block-desc").text("Disponível de graça na Epic Games Store até 03 de março.");
+                $(".appbc1 .block-desc").text("Disponível de graça na Epic Games Store até " + date_pt_br + ".");
 
                 // Content of block 2
                 //Description
@@ -62,7 +65,7 @@ function home_content() {
             $(document).ready(function() {
                 // Content of block 1
                 //Description
-                $(".appbc1 .block-desc").text("Available for free at the Epic Games Store until March 03.");
+                $(".appbc1 .block-desc").text("Available for free at the Epic Games Store until " + date_en_us + ".");
 
                 // Content of block 2
                 //Description
@@ -77,7 +80,7 @@ function home_content() {
             $(document).ready(function() {
                 // Content of block 1
                 //Description
-                $(".appbc1 .block-desc").text("Available for free at the Epic Games Store until March 03.");
+                $(".appbc1 .block-desc").text("Available for free at the Epic Games Store until " + date_en_us + ".");
 
                 // Content of block 2
                 //Description
