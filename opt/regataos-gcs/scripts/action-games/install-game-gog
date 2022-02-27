@@ -15,6 +15,10 @@ export WINESERVER=$CUSTOM_WINE_DIR/bin/wineserver
 export WINELOADER=$CUSTOM_WINE_DIR/bin/wine
 export WINEDLLPATH=$CUSTOM_WINE_DIR/lib:$CUSTOM_WINE_DIR/lib64
 
+# Try specifying the wine-mono and wine-gecko directory
+export WINE_MONO_CACHE_DIR="$CUSTOM_WINE_DIR/mono"
+export WINE_GECKO_CACHE_DIR="$CUSTOM_WINE_DIR/gecko"
+
 # Variables
 export WINEPREFIX="$PREFIX_LOCATION"
 export WINEDLLOVERRIDES="winemenubuilder,winedbg,nvapi,nvapi64="

@@ -45,6 +45,11 @@ install_dotnet_status="This may take a few minutes..."
 #Default settings
 app_nickname_dir="$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"
 
+# Try specifying the wine-mono and wine-gecko directory
+export CUSTOM_WINE_DIR="$(cat /opt/regataos-wine/wine-gcs-version.txt)"
+export WINE_MONO_CACHE_DIR="$CUSTOM_WINE_DIR/mono"
+export WINE_GECKO_CACHE_DIR="$CUSTOM_WINE_DIR/gecko"
+
 # Application setup function
 function install_app() {
 	winetricks prefix=$app_nickname-compatibility-mode -q win10

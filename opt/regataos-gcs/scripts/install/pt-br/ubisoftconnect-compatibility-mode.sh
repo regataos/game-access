@@ -38,6 +38,10 @@ app_nickname_dir="$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mo
 
 # Application setup function
 function install_app() {
+	export CUSTOM_WINE_DIR="$(cat /opt/regataos-wine/wine-gcs-version.txt)"
+	export WINE_MONO_CACHE_DIR="$CUSTOM_WINE_DIR/mono"
+	export WINE_GECKO_CACHE_DIR="$CUSTOM_WINE_DIR/gecko"
+
 	winetricks prefix=$app_nickname-compatibility-mode -q win10
 	export WINEDEBUG=-all; WINEPREFIX="$app_nickname_dir" wine /tmp/regataos-gcs/$app_download_file_name /S
 }

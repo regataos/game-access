@@ -14,6 +14,11 @@ app_name_dotnet48="Installing .NET Framework 4.8"
 app_name_directx="Installing DirectX Redistributable"
 install_dotnet_status="This may take a few minutes..."
 
+# Try specifying the wine-mono and wine-gecko directory
+export CUSTOM_WINE_DIR="$(cat /opt/regataos-wine/wine-gcs-version.txt)"
+export WINE_MONO_CACHE_DIR="$CUSTOM_WINE_DIR/mono"
+export WINE_GECKO_CACHE_DIR="$CUSTOM_WINE_DIR/gecko"
+
 # If Vulkan is supported, enable DXVK and VKD3D-Proton
 function enable_dxvk_vkd3d() {
 	vulkan_test=$(vulkaninfo)
