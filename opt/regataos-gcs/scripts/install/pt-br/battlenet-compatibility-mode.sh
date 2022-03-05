@@ -102,16 +102,18 @@ rm -rf $HOME/.local/share/applications/applications
 
 # Search for processes
 if test -e "$progressbar_dir/installing" ; then
-	# Put the process in the installation queue
-	kmsg=$(grep -r $app_nickname $progressbar_dir/queued-process)
-	if [[ $kmsg == *"$app_nickname"* ]]; then
-		echo "Nothing to do."
-	else
-		echo "$app_nickname=install process-$app_name_process" >> $progressbar_dir/queued-process
-	fi
+	if test ! -e "/tmp/progressbar-gcs/download-percentage-legendary"; then
+		# Put the process in the installation queue
+		kmsg=$(grep -r $app_nickname $progressbar_dir/queued-process)
+		if [[ $kmsg == *"$app_nickname"* ]]; then
+			echo "Nothing to do."
+		else
+			echo "$app_nickname=install process-$app_name_process" >> $progressbar_dir/queued-process
+		fi
 
-	#I'm in the process queue, see you later
-	exit 0
+		#I'm in the process queue, see you later
+		exit 0
+	fi
 
 else
 	# Start dependences Download
@@ -440,17 +442,189 @@ else
 		rm -f $progressbar_dir/*
 	fi
 fi
+}
 
+# Start Hidden app install
+function start_hidden_installation() {
+	# Download
+	export appName="Baixando $app_name"
+	export total="de"
+	export estimatedTime="Tempo estimado"
+
+	cd /tmp/regataos-gcs/
+	/opt/regataos-gcs/tools/download_wget_zenity/download.sh "$app_download_link"
+
+	# Prepare wineprefix to run the launcher and games
+	(
+	if test -e "$HOME/.local/share/wineprefixes/default-compatibility-mode" ; then
+		# Enable DXVK and VKD3D-Proton
+		if test ! -e "$HOME/.local/share/wineprefixes/default-compatibility-mode/vulkan.txt"; then
+			enable_dxvk_vkd3d
+			echo -e "DXVK\nVKD3D-Proton" > "$HOME/.local/share/wineprefixes/default-compatibility-mode/vulkan.txt"
+		fi
+
+		cp -rf "$HOME/.local/share/wineprefixes/default-compatibility-mode" \
+		"$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"
+
+	elif test -e "/usr/share/regataos/compatibility-mode/default-wineprefix.tar.xz" ; then
+		if test ! -e "$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode" ; then
+			# Configuring compatibility mode
+			if test -e "/usr/share/regataos/compatibility-mode/default-wineprefix.tar.xz" ; then
+				mkdir -p "$HOME/.local/share/wineprefixes/"
+				tar xf "/usr/share/regataos/compatibility-mode/default-wineprefix.tar.xz" -C "$HOME/.local/share/wineprefixes/"
+			fi
+
+			mv -f "$HOME/.local/share/wineprefixes/default-compatibility-mode" "$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"
+
+			# If Vulkan is supported, enable DXVK and VKD3D-Proton
+			vulkan_test=$(vulkaninfo)
+			if [[ $vulkan_test == *"Instance Extensions"* ]]; then
+				if [[ $vulkan_test != *"Vulkan support is incomplete"* ]]; then
+					# Enable DXVK for Direct3D 9/10/11 over Vulkan
+					export WINEDLLOVERRIDES="mscoree,mshtml,winemenubuilder,winedbg,nvapi,nvapi64="
+					export WINEPREFIX="$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"
+					/bin/sh /opt/regataos-wine/dxvk/setup_dxvk.sh install --symlink
+
+					# Enable VKD3D-Proton for Direct3D 12 over Vulkan
+					export WINEDLLOVERRIDES="mscoree,mshtml,winemenubuilder,winedbg,nvapi,nvapi64="
+					export WINEPREFIX="$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"
+					/bin/sh /opt/regataos-wine/vkd3d-proton/setup_vkd3d_proton.sh install --symlink
+				
+					echo -e "DXVK\nVKD3D-Proton" > "$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode/vulkan.txt"
+				fi
+			fi
+
+			wineboot -u
+			winetricks prefix=epicstore-compatibility-mode -q -f win10
+		fi
+
+	else
+		# Environment variables for Wine
+		export WINEPREFIX="$HOME/.local/share/wineprefixes/default-compatibility-mode";
+		export WINEDLLOVERRIDES="mscoree,mshtml,winemenubuilder,winedbg,nvapi,nvapi64=";
+		export WINEDEBUG=-all;
+
+		winetricks prefix=default-compatibility-mode -q -f win10
+
+		# Extract the DirectX files
+		if test ! -e "$HOME/.cache/winetricks/directx9/DXSETUP.exe" ; then
+			cabextract -d "$HOME/.cache/winetricks/directx9/" "$HOME/.cache/winetricks/directx9/directx_Jun2010_redist.exe"
+		fi
+
+		# Install DirectX
+		wine $HOME/.cache/winetricks/directx9/DXSETUP.exe /silent
+
+		# winetricks prefix=default-compatibility-mode -q -f corefonts
+		wine msiexec /i /usr/share/wine/gecko/wine-gecko-*-x86.msi
+		wine msiexec /i /usr/share/wine/gecko/wine-gecko-*-x86_64.msi
+		wine msiexec /i /usr/share/wine/mono/wine-mono-*.msi
+
+		winetricks prefix=default-compatibility-mode -q -f nocrashdialog
+		winetricks prefix=default-compatibility-mode -q -f vcrun2012 vcrun2013
+
+		# Download vcrun2019
+		mkdir -p "$HOME/.cache/winetricks/vcrun2019/"
+		wget --no-check-certificate -O "$HOME/.cache/winetricks/vcrun2019/vc_redist.x86.exe" "https://aka.ms/vs/16/release/vc_redist.x86.exe"
+		wget --no-check-certificate -O "$HOME/.cache/winetricks/vcrun2019/vc_redist.x64.exe" "https://aka.ms/vs/16/release/vc_redist.x64.exe"
+
+		export WINEPREFIX="$HOME/.local/share/wineprefixes/default-compatibility-mode";
+		wine $HOME/.cache/winetricks/vcrun2019/vc_redist.x86.exe /q
+		wine $HOME/.cache/winetricks/vcrun2019/vc_redist.x64.exe /q
+
+		winetricks prefix=default-compatibility-mode -q -f physx d3dcompiler_43
+		winetricks prefix=default-compatibility-mode -q -f mdx
+
+		# Install special DLLs
+		cp -f /opt/regataos-wine/dlls/default/win32/* $HOME/.local/share/wineprefixes/default-compatibility-mode/drive_c/windows/system32/
+		cp -f /opt/regataos-wine/dlls/default/win64/* $HOME/.local/share/wineprefixes/default-compatibility-mode/drive_c/windows/syswow64/
+
+		override_dll() {
+			wine reg add "HKEY_CURRENT_USER\Software\Wine\DllOverrides" /v $1 /d native /f
+		}
+
+		for i in $(ls /opt/regataos-wine/dlls/default/win32/); do
+			override_dll $(echo "$i" | sed s/.dll//)
+		done
+
+		for i in $(ls /opt/regataos-wine/dlls/default/win64/); do
+			override_dll $(echo "$i" | sed s/.dll//)
+		done
+
+		# Install Media Foundation workaround for Wine
+		#Download
+		wget --no-check-certificate -O /tmp/regataos-gcs/mf-install-master.zip https://lutris.nyc3.cdn.digitaloceanspaces.com/games/epic-games-store/mf-install-master.zip
+
+		#Extract
+		rm -rf "/tmp/regataos-gcs/mf-install-master"
+		cd /tmp/regataos-gcs/
+		unzip mf-install-master.zip
+
+		#Install
+		cd /tmp/regataos-gcs/mf-install-master/
+		export WINEPREFIX="$HOME/.local/share/wineprefixes/default-compatibility-mode";
+		sed -i 's/cp -v/cp -vf/g' install-mf.sh
+		/bin/sh install-mf.sh
+
+		# Enable DXVK and VKD3D-Proton
+		if test ! -e "$HOME/.local/share/wineprefixes/default-compatibility-mode/vulkan.txt"; then
+			enable_dxvk_vkd3d
+			echo -e "DXVK\nVKD3D-Proton" > "$HOME/.local/share/wineprefixes/default-compatibility-mode/vulkan.txt"
+		fi
+
+		# Copy the default wineprefix to the new directory
+		cp -rf "$HOME/.local/share/wineprefixes/default-compatibility-mode" \
+		"$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"
+	fi
+
+	# Set up the desktop location for Wine
+	rm -rf $HOME/.local/share/applications/wine
+	ln -s $HOME/.local/share/applications/ $HOME/.local/share/applications/wine
+	mkdir -p $HOME/.local/share/applications/Programs
+
+	# Fix the wineprefix desktop folder
+	rm -rf "$app_nickname_dir/drive_c/users/$user/Área de Trabalho"
+	rm -rf "$app_nickname_dir/drive_c/users/$user/Desktop"
+
+	ln -sf $HOME/.local/share/applications "$app_nickname_dir/drive_c/users/$user/Área de Trabalho"
+	ln -sf $HOME/.local/share/applications "$app_nickname_dir/drive_c/users/$user/Desktop"
+
+	# Fix app
+	fix_app
+
+	# Install app
+	gameinstall_folder
+	install_app
+
+	# Fix Wine applications folder
+	rm -rf $HOME/.local/share/applications/applications
+
+	) | env GTK_THEME=Adwaita:dark zenity --progress --pulsate --width 350 --window-icon "/usr/share/pixmaps/regataos-gcs.png" \
+	--title "Regata OS Game Access" \
+	--text "$app_name_process.\nIsso pode levar alguns minutos..." \
+	--auto-close --auto-kill --no-cancel
+
+	# Confirm installation
+	if test -e "$app_nickname_dir/$app_executable" ; then
+		success_installation
+	else
+		installation_failed
+	fi
 }
 
 # Verify that the installation is already in place.
-if [[ $(ps aux | egrep "$app_nickname-compatibility-mode.sh") == *"$app_nickname-compatibility-mode.sh start"* ]]; then
-	if test -e "$progressbar_dir/download-extra.txt" ; then
-		rm -f "$progressbar_dir/download-extra.txt"
-		start_installation
+if test ! -e "/tmp/progressbar-gcs/download-percentage-legendary"; then
+	if [[ $(ps aux | egrep "$app_nickname-compatibility-mode.sh") == *"$app_nickname-compatibility-mode.sh start"* ]]; then
+		if test -e "$progressbar_dir/download-extra.txt" ; then
+			rm -f "$progressbar_dir/download-extra.txt"
+			start_installation
+		else
+			echo "Installation in progress..."
+		fi
 	else
-		echo "Installation in progress..."
+		start_installation
 	fi
+
 else
-	start_installation
+	# Progress bar is busy downloading some game, start hidden app install.
+	start_hidden_installation
 fi

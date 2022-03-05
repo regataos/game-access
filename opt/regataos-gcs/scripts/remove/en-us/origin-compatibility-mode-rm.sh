@@ -41,30 +41,12 @@ function uninstall_failed() {
 	notify-send -i regataos-gcs -u normal -a 'Regata OS Game Access' "$error_notify_title $app_name!" "$error_notify_text $app_name."
 }
 
-# Search for processes
-if test -e "$progressbar_dir/installing" ; then
-	# Put the process in the uninstall queue
-	echo "$app_nickname=remove process-$app_name_process" >> $progressbar_dir/queued-process
-
-	#I'm in the process queue, see you later
-	exit 0
-fi
-
-# Start uninstall
-rm -f $progressbar_dir/download-percentage
-rm -f $progressbar_dir/download-size
-rm -f $progressbar_dir/download-speed
-rm -f $progressbar_dir/file-size
-rm -f $progressbar_dir/eta
-rm -f $progressbar_dir/progress
-
-echo "installing" > $progressbar_dir/installing
-echo $app_name_process > $progressbar_dir/app-name
-echo $app_remove_status > $progressbar_dir/status
-echo "installing" > $progressbar_dir/progress-movement
-echo "show progress bar" > $progressbar_dir/progressbar
-
-remove_app
+(
+	remove_app
+) | env GTK_THEME=Adwaita:dark zenity --progress --pulsate --width 350 --window-icon "/usr/share/pixmaps/regataos-gcs.png" \
+--title "Regata OS Game Access" \
+--text "$app_remove_status" \
+--auto-close --auto-kill --no-cancel
 
 # Check desktop and Remove files
 test -f "${XDG_CONFIG_HOME:-$HOME/.config}/user-dirs.dirs" && source "${XDG_CONFIG_HOME:-$HOME/.config}/user-dirs.dirs"
@@ -76,37 +58,9 @@ rm -f "$app_name.desktop"
 # Confirm uninstall
 if test -e "$app_nickname_dir/$app_executable" ; then
 	uninstall_failed
-
-	rm -f $progressbar_dir/progress-movement
-	rm -f $progressbar_dir/progress-full
-	echo $removal_error > $progressbar_dir/progress
-	echo $removal_error_status > $progressbar_dir/status
-
-	sleep 5
-	rm -f $progressbar_dir/installing
-
-	# If there are no more processes, clear the progress bar cache
-	if test ! -e "$progressbar_dir/queued-1" ; then
-		rm -f $progressbar_dir/progressbar
-		rm -f $progressbar_dir/*
-	fi
 else
 	sed -i "s/$app_nickname//" "$HOME/.config/regataos-gcs/installed-launchers.conf"
 	sed -i '/^$/d' "$HOME/.config/regataos-gcs/installed-launchers.conf"
 
-	rm -f $progressbar_dir/progress-movement
-	echo "completed" > $progressbar_dir/progress-full
-	echo "" > $progressbar_dir/status
-	# echo $success_removal > $progressbar_dir/progress
-
 	success_uninstall
-
-	# sleep 5
-	rm -f $progressbar_dir/installing
-
-	# If there are no more processes, clear the progress bar cache
-	if test ! -e "$progressbar_dir/queued-1" ; then
-		rm -f $progressbar_dir/progressbar
-		rm -f $progressbar_dir/*
-	fi
 fi
