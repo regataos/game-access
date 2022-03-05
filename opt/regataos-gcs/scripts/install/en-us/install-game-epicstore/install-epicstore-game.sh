@@ -27,7 +27,7 @@ installation_error="Error"
 error_notify_title="installation error!"
 error_notify_text="There was an error installing"
 installation_error_status="Installation error"
-progressbar_dir="/tmp/progressbar-gcs-game"
+progressbar_dir="/tmp/progressbar-gcs"
 user=$(users | awk '{print $1}')
 
 # Check the game's installation folder
