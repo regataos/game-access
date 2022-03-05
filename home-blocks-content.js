@@ -2,13 +2,13 @@ function home_content() {
     $(document).ready(function() {
         // Content of block 1
         //Title
-        $(".appbc1 .block-title").text("Cris Tales");
+        $(".appbc1 .block-title").text("Black Widow: Recharged");
         //Block image
         $(".appbc1").css("background-image", 'url("file:///tmp/regataos-gcs/config/cache/img/block-img1.jpg")');
         $(".appbc1").css("background-position", "50% 50%")
         //Date
-        date_pt_br="03 de março"
-        date_en_us="March 03"
+        date_pt_br="10 de março"
+        date_en_us="March 10"
 
         // Content of block 2
         //Title
