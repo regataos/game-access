@@ -27,7 +27,7 @@ installation_error="Error"
 error_notify_title="installation error!"
 error_notify_text="There was an error installing"
 installation_error_status="Installation error"
-progressbar_dir="/tmp/progressbar-gcs"
+progressbar_dir="/tmp/progressbar-gcs-game"
 user=$(users | awk '{print $1}')
 
 # Check the game's installation folder
@@ -169,9 +169,14 @@ echo "0%" > $progressbar_dir/progress
 echo $app_download_status > $progressbar_dir/status
 sleep 1
 echo "show progress bar" > $progressbar_dir/progressbar
-
 echo "legendary" > $progressbar_dir/legendary-pid
-/opt/regataos-gcs/tools/legendary/legendary -y install --download-only "$game_id" --base-path "$GAME_INSTALL_DIR/" 2>&1 | (pv -n > $progressbar_dir/download-percentage-legendary)
+
+if test -e "$GAME_INSTALL_DIR/$game_folder/.egstore"; then
+	/opt/regataos-gcs/tools/legendary/legendary -y install --repair "$game_id" --base-path "$GAME_INSTALL_DIR/" 2>&1 | (pv -n > $progressbar_dir/download-percentage-legendary)
+else
+	/opt/regataos-gcs/tools/legendary/legendary -y install --download-only "$game_id" --base-path "$GAME_INSTALL_DIR/" 2>&1 | (pv -n > $progressbar_dir/download-percentage-legendary)
+fi
+
 /opt/regataos-gcs/tools/legendary/legendary -y activate --uplay "$game_id"
 /opt/regataos-gcs/tools/legendary/legendary -y activate --origin "$game_id"
 
