@@ -14,8 +14,13 @@ app_name_dotnet48="Installing .NET Framework 4.8"
 app_name_directx="Installing DirectX Redistributable"
 install_dotnet_status="This may take a few minutes..."
 
-# Try specifying the wine-mono and wine-gecko directory
+# Variables for custom Wine
 export CUSTOM_WINE_DIR="$(cat /opt/regataos-wine/wine-gcs-version.txt)"
+export WINESERVER=$CUSTOM_WINE_DIR/bin/wineserver
+export WINELOADER=$CUSTOM_WINE_DIR/bin/wine
+export WINEDLLPATH=$CUSTOM_WINE_DIR/lib:$CUSTOM_WINE_DIR/lib64
+
+# Try specifying the wine-mono and wine-gecko directory
 export WINE_MONO_CACHE_DIR="$CUSTOM_WINE_DIR/mono"
 export WINE_GECKO_CACHE_DIR="$CUSTOM_WINE_DIR/gecko"
 
@@ -25,14 +30,32 @@ function enable_dxvk_vkd3d() {
 	if [[ $vulkan_test == *"Instance Extensions"* ]]; then
 		if [[ $vulkan_test != *"Vulkan support is incomplete"* ]]; then
 			# Enable DXVK for Direct3D 9/10/11 over Vulkan
-			export WINEDLLOVERRIDES="mscoree,mshtml,winemenubuilder,winedbg,nvapi,nvapi64="
+			export WINEDLLOVERRIDES="mscoree,mshtml,winemenubuilder,winedbg="
 			export WINEPREFIX="$HOME/.local/share/wineprefixes/default-compatibility-mode"
 			/bin/sh /opt/regataos-wine/dxvk/setup_dxvk.sh install --symlink
 
 			# Enable VKD3D-Proton for Direct3D 12 over Vulkan
-			export WINEDLLOVERRIDES="mscoree,mshtml,winemenubuilder,winedbg,nvapi,nvapi64="
+			export WINEDLLOVERRIDES="mscoree,mshtml,winemenubuilder,winedbg="
 			export WINEPREFIX="$HOME/.local/share/wineprefixes/default-compatibility-mode"
 			/bin/sh /opt/regataos-wine/vkd3d-proton/setup_vkd3d_proton.sh install --symlink
+
+			# If GPU is NVIDIA, install DXVK-NVAPI
+			if test -e /usr/bin/nvidia-xconfig; then
+				ln -sf /opt/regataos-wine/dxvk-nvapi/x32/*.dll $HOME/.local/share/wineprefixes/default-compatibility-mode/drive_c/windows/syswow64/
+				ln -sf /opt/regataos-wine/dxvk-nvapi/x64/*.dll $HOME/.local/share/wineprefixes/default-compatibility-mode/drive_c/windows/system32/
+
+				override_dll() {
+					$CUSTOM_WINE_DIR/bin/wine reg add "HKEY_CURRENT_USER\Software\Wine\DllOverrides" /v $1 /d native /f
+				}
+
+				for i in $(ls /opt/regataos-wine/dxvk-nvapi/x32/ | grep "dll"); do
+					override_dll $(echo "$i" | sed s/.dll//)
+				done
+
+				for i in $(ls /opt/regataos-wine/dxvk-nvapi/x64/ | grep "dll"); do
+					override_dll $(echo "$i" | sed s/.dll//)
+				done
+			fi
 		fi
 	fi
 }
@@ -95,15 +118,33 @@ elif test -e "/usr/share/regataos/compatibility-mode/default-wineprefix.tar.xz" 
 		if [[ $vulkan_test == *"Instance Extensions"* ]]; then
 			if [[ $vulkan_test != *"Vulkan support is incomplete"* ]]; then
 				# Enable DXVK for Direct3D 9/10/11 over Vulkan
-				export WINEDLLOVERRIDES="mscoree,mshtml,winemenubuilder,winedbg,nvapi,nvapi64="
+				export WINEDLLOVERRIDES="mscoree,mshtml,winemenubuilder,winedbg="
 				export WINEPREFIX="$HOME/.local/share/wineprefixes/epicstore-compatibility-mode"
 				/bin/sh /opt/regataos-wine/dxvk/setup_dxvk.sh install --symlink
 
 				# Enable VKD3D-Proton for Direct3D 12 over Vulkan
-				export WINEDLLOVERRIDES="mscoree,mshtml,winemenubuilder,winedbg,nvapi,nvapi64="
+				export WINEDLLOVERRIDES="mscoree,mshtml,winemenubuilder,winedbg="
 				export WINEPREFIX="$HOME/.local/share/wineprefixes/epicstore-compatibility-mode"
 				/bin/sh /opt/regataos-wine/vkd3d-proton/setup_vkd3d_proton.sh install --symlink
-			
+
+				# If GPU is NVIDIA, install DXVK-NVAPI
+				if test -e /usr/bin/nvidia-xconfig; then
+					ln -sf /opt/regataos-wine/dxvk-nvapi/x32/*.dll $HOME/.local/share/wineprefixes/default-compatibility-mode/drive_c/windows/syswow64/
+					ln -sf /opt/regataos-wine/dxvk-nvapi/x64/*.dll $HOME/.local/share/wineprefixes/default-compatibility-mode/drive_c/windows/system32/
+
+					override_dll() {
+						$CUSTOM_WINE_DIR/bin/wine reg add "HKEY_CURRENT_USER\Software\Wine\DllOverrides" /v $1 /d native /f
+					}
+
+					for i in $(ls /opt/regataos-wine/dxvk-nvapi/x32/ | grep "dll"); do
+						override_dll $(echo "$i" | sed s/.dll//)
+					done
+
+					for i in $(ls /opt/regataos-wine/dxvk-nvapi/x64/ | grep "dll"); do
+						override_dll $(echo "$i" | sed s/.dll//)
+					done
+				fi
+
 				echo -e "DXVK\nVKD3D-Proton" > "$HOME/.local/share/wineprefixes/epicstore-compatibility-mode/vulkan.txt"
 			fi
 		fi
@@ -141,7 +182,7 @@ fi
 # Environment variables for Wine
 echo "0%" > $progressbar_dir/progress
 export WINEPREFIX="$HOME/.local/share/wineprefixes/default-compatibility-mode";
-export WINEDLLOVERRIDES="mscoree,mshtml,winemenubuilder,winedbg,nvapi,nvapi64=";
+export WINEDLLOVERRIDES="mscoree,mshtml,winemenubuilder,winedbg=";
 export WINEDEBUG=-all;
 
 # Installing .NET Framework 4.0
@@ -210,7 +251,7 @@ cp -f /opt/regataos-wine/dlls/default/win32/* $HOME/.local/share/wineprefixes/de
 cp -f /opt/regataos-wine/dlls/default/win64/* $HOME/.local/share/wineprefixes/default-compatibility-mode/drive_c/windows/syswow64/
 
 override_dll() {
-    wine reg add "HKEY_CURRENT_USER\Software\Wine\DllOverrides" /v $1 /d native /f
+    $CUSTOM_WINE_DIR/bin/wine reg add "HKEY_CURRENT_USER\Software\Wine\DllOverrides" /v $1 /d native /f
 }
 
 for i in $(ls /opt/regataos-wine/dlls/default/win32/); do

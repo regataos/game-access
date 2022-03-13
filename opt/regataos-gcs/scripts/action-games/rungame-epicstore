@@ -26,17 +26,13 @@ export WINE_GECKO_CACHE_DIR="$CUSTOM_WINE_DIR/gecko"
 
 # Variables
 export WINEPREFIX="$PREFIX_LOCATION"
-export WINEDLLOVERRIDES="mscoree,mshtml,winemenubuilder,winedbg,nvapi,nvapi64="
+export WINEDLLOVERRIDES="mscoree,mshtml,winemenubuilder,winedbg="
 export WINEESYNC=1
 export WINEFSYNC=1
 export WINEFSYNC_FUTEX2=1
 export WINE_LARGE_ADDRESS_AWARE=1
 export DXVK_STATE_CACHE_PATH="$PREFIX_LOCATION"
 export DXVK_LOG_PATH="$PREFIX_LOCATION"
-
-if test -e "$PREFIX_LOCATION/dxvk.conf"; then
-	export DXVK_CONFIG_FILE="$PREFIX_LOCATION/dxvk.conf"
-fi
 
 # Enable AMD FSR
 if [[ $(grep -r amd-fsr $GCS_CONFIG) == *"amd-fsr=true"* ]]; then
@@ -84,6 +80,11 @@ else
 		# Special configurations for DXVK with AMD/Intel GPU
 		ln -sf "/opt/regataos-wine/custom-configs/epicstore/dxvk.conf" "$PREFIX_LOCATION/dxvk.conf"
 	fi
+fi
+
+# DXVK configuration file
+if test -e "$PREFIX_LOCATION/dxvk.conf"; then
+	export DXVK_CONFIG_FILE="$PREFIX_LOCATION/dxvk.conf"
 fi
 
 # Run game

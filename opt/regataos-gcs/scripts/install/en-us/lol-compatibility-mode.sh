@@ -34,6 +34,16 @@ app_download_file_name="lol.exe"
 #Default settings
 app_nickname_dir="$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"
 
+# Variables for custom Wine
+export CUSTOM_WINE_DIR="$(cat /opt/regataos-wine/wine-gcs-version.txt)"
+export WINESERVER=$CUSTOM_WINE_DIR/bin/wineserver
+export WINELOADER=$CUSTOM_WINE_DIR/bin/wine
+export WINEDLLPATH=$CUSTOM_WINE_DIR/lib:$CUSTOM_WINE_DIR/lib64
+
+# Try specifying the wine-mono and wine-gecko directory
+export WINE_MONO_CACHE_DIR="$CUSTOM_WINE_DIR/mono"
+export WINE_GECKO_CACHE_DIR="$CUSTOM_WINE_DIR/gecko"
+
 # Create game install folder
 #function gameinstall_folder() {
 #    mkdir -p "$HOME/Game Access/$app_name"
@@ -43,7 +53,7 @@ app_nickname_dir="$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mo
 
 # Application setup function
 function install_app() {
-	export WINEDLLOVERRIDES="nvapi,nvapi64="; WINEPREFIX="$app_nickname_dir" wine /tmp/regataos-gcs/$app_download_file_name --mode unattended
+	export WINEDLLOVERRIDES="nvapi,nvapi64="; WINEPREFIX="$app_nickname_dir" $CUSTOM_WINE_DIR/bin/wine /tmp/regataos-gcs/$app_download_file_name --mode unattended
 }
 
 # Fix app
