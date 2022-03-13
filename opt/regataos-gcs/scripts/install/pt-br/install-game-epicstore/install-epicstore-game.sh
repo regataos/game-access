@@ -50,6 +50,7 @@ export CUSTOM_WINE_DIR="$(cat /opt/regataos-wine/wine-gcs-version.txt)"
 export WINESERVER=$CUSTOM_WINE_DIR/bin/wineserver
 export WINELOADER=$CUSTOM_WINE_DIR/bin/wine
 export WINEDLLPATH=$CUSTOM_WINE_DIR/lib:$CUSTOM_WINE_DIR/lib64
+export WINE="$CUSTOM_WINE_DIR/bin/wine"
 
 # Try specifying the wine-mono and wine-gecko directory
 export WINE_MONO_CACHE_DIR="$CUSTOM_WINE_DIR/mono"
