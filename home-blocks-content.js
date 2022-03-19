@@ -2,13 +2,13 @@ function home_content() {
     $(document).ready(function() {
         // Content of block 1
         //Title
-        $(".appbc1 .block-title").text("Black Widow: Recharged");
+        $(".appbc1 .block-title").text("In Sound Mind");
         //Block image
         $(".appbc1").css("background-image", 'url("file:///tmp/regataos-gcs/config/cache/img/block-img1.jpg")');
         $(".appbc1").css("background-position", "50% 50%")
         //Date
-        date_pt_br="10 de março"
-        date_en_us="March 10"
+        date_pt_br="24 de março"
+        date_en_us="March 24"
 
         // Content of block 2
         //Title
