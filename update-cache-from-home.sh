@@ -58,8 +58,8 @@ fi
 
 # Home block images
 #Image 1
-block1_image_name="block-bwr.jpg"
-block1_image_code="RynYFpX"
+block1_image_name="block-nsm.jpg"
+block1_image_code="gJS3zrv"
 if test ! -e "$image_download_cache_dir/$block1_image_name"; then
 	# Clear cache
 	rm -f $image_download_cache_dir/block-*.jpg
