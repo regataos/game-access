@@ -24,6 +24,7 @@ const exec = require('child_process').exec;
 	setTimeout(function(){
 		var command_line = 'rm -f "/tmp/regataos-gcs/remove-user-account-epicstore.txt"; \
 		rm -f "/tmp/regataos-gcs/config/epicstore-games/show-egs.txt"; \
+		rm -rf "$HOME/.local/share/wineprefixes/epicstore-compatibility-mode"\
 		/opt/regataos-gcs/tools/legendary/legendary auth --delete';
 		console.log(command_line);
 		exec(command_line,function(error,call,errlog){
