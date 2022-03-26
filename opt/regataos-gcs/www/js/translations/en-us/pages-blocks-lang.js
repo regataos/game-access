@@ -1,5 +1,5 @@
 // English language translation for all pages
-setInterval(function(){
+function pagesBlocksLang() {
 	// For all pages
 	//Install/Play button
 	$(".install-txt").text("Install");
@@ -13,4 +13,4 @@ setInterval(function(){
 	//Native game
 	$(".nativegame").text("Native");
 	$(".steamplay").text("Steam Play");
-}, 500);
+}

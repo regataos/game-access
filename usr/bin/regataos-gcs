@@ -62,13 +62,19 @@ function legendary_egl_sync() {
 		/opt/regataos-gcs/tools/legendary/legendary egl-sync -y --egl-wine-prefix "$HOME/.local/share/wineprefixes/epicstore-compatibility-mode/"
 		/opt/regataos-gcs/tools/legendary/legendary egl-sync -y --enable-sync
 	fi
+
+	# Create cache with game files
+	/bin/bash /opt/regataos-gcs/scripts/search-epicstore-games.sh
+
+	# Check game json files and create image cache
+	/opt/regataos-gcs/scripts/search-epicstore-games-img.sh start
 }
 
 # Run app
 if [[ $(glxinfo | grep vendor) == *"Intel"* ]]; then
-	legendary_egl_sync & sleep 3; regataosgcs --disable-gpu /opt/regataos-gcs & sleep 1; /opt/regataos-gcs/scripts/progress-bar/capture-progress-download & /opt/regataos-gcs/scripts/progress-bar/create-process-queues & /opt/regataos-gcs/scripts/progress-bar/run-process-queues & /opt/regataos-gcs/scripts/search-installeds & ps -C "auto-close-game" > /dev/null; if [ $? = 1 ]; then /opt/regataos-gcs/scripts/action-games/auto-close-game-access; fi
+	legendary_egl_sync & sleep 2; regataosgcs --disable-gpu /opt/regataos-gcs & sleep 1; /opt/regataos-gcs/scripts/progress-bar/capture-progress-download & /opt/regataos-gcs/scripts/progress-bar/create-process-queues & /opt/regataos-gcs/scripts/progress-bar/run-process-queues & /opt/regataos-gcs/scripts/search-installeds & ps -C "auto-close-game" > /dev/null; if [ $? = 1 ]; then /opt/regataos-gcs/scripts/action-games/auto-close-game-access; fi
 else
-	legendary_egl_sync & sleep 3; regataosgcs /opt/regataos-gcs & sleep 1; /opt/regataos-gcs/scripts/progress-bar/capture-progress-download & /opt/regataos-gcs/scripts/progress-bar/create-process-queues & /opt/regataos-gcs/scripts/progress-bar/run-process-queues & /opt/regataos-gcs/scripts/search-installeds & ps -C "auto-close-game" > /dev/null; if [ $? = 1 ]; then /opt/regataos-gcs/scripts/action-games/auto-close-game-access; fi
+	legendary_egl_sync & sleep 2; regataosgcs /opt/regataos-gcs & sleep 1; /opt/regataos-gcs/scripts/progress-bar/capture-progress-download & /opt/regataos-gcs/scripts/progress-bar/create-process-queues & /opt/regataos-gcs/scripts/progress-bar/run-process-queues & /opt/regataos-gcs/scripts/search-installeds & ps -C "auto-close-game" > /dev/null; if [ $? = 1 ]; then /opt/regataos-gcs/scripts/action-games/auto-close-game-access; fi
 fi
 
 # Closed manually

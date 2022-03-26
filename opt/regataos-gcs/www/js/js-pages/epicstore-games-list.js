@@ -74,6 +74,7 @@ if (!err) {
 			} else {
 				window.content_brake_epicstore = content_brake_epicstore + 1
 				epicstore_all_games.appendChild(epicstore_game_blocks);
+				pagesBlocksLang();
 			}
 		}
 
@@ -186,6 +187,7 @@ if (!err) {
 
 			//Finally, create the new game blocks dynamically
 			epicstore_installed_games.appendChild(epicstore_game_blocks);
+			pagesBlocksLang();
 		}
 
 		if (fs.existsSync('/tmp/regataos-gcs/config/installed/' + gamesdata.gamenickname + '-epicstore.json')) {

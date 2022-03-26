@@ -227,6 +227,7 @@ if (!err) {
 			} else {
 				window.content_brake_steam = content_brake_steam + 1
 				steam_all_games.appendChild(steam_game_blocks);
+				pagesBlocksLang();
 			}
 		}
 
@@ -344,6 +345,7 @@ if (!err) {
 
 			//Finally, create the new game blocks dynamically
 			installed_games.appendChild(steam_game_blocks);
+			pagesBlocksLang();
 		}
 
 		if (fs.existsSync('/tmp/regataos-gcs/config/installed/' + gamesdata.gamenickname + '-steam.json')) {

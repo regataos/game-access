@@ -1,4 +1,5 @@
 .nogamefound {
+    display: none;
 	width: 800px;
 	margin-top: 150px;
 	margin-left: auto;

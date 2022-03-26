@@ -62,6 +62,7 @@ function games_list1() {
 
 			//Finally, create the new game blocks dynamically
 			all_blocks.appendChild(new_game_blocks);
+			pagesBlocksLang();
 		}
 		});
 		return;
@@ -140,6 +141,7 @@ function games_list2() {
 					} else {
 						window.content_brake = content_brake + 1
 						all_blocks.appendChild(new_game_blocks);
+						pagesBlocksLang();
 					}
 
 				} else {
@@ -191,6 +193,7 @@ function games_list2() {
 							} else {
 								window.content_brake_steam = content_brake_steam + 1
 								all_blocks.appendChild(new_game_blocks);
+								pagesBlocksLang();
 							}
 				
 						} else {
@@ -240,6 +243,7 @@ function games_list2() {
 							} else {
 								window.content_brake_steam = content_brake_steam + 1
 								all_blocks.appendChild(new_game_blocks);
+								pagesBlocksLang();
 							}
 						}
 						// Show Steam Games
@@ -303,6 +307,7 @@ function games_list2() {
 							} else {
 								window.content_brake_epicstore = content_brake_epicstore + 1
 								all_blocks.appendChild(new_game_blocks);
+								pagesBlocksLang();
 							}
 
 						} else {
@@ -365,6 +370,7 @@ function games_list2() {
 							} else {
 								window.content_brake_epicstore = content_brake_epicstore + 1
 								all_blocks.appendChild(new_game_blocks);
+								pagesBlocksLang();
 							}
 						}
 
@@ -415,6 +421,7 @@ function games_list2() {
 							} else {
 								window.content_brake_gog = content_brake_gog + 1
 								all_blocks.appendChild(new_game_blocks);
+								pagesBlocksLang();
 							}
 				
 						} else {
@@ -466,6 +473,7 @@ function games_list2() {
 							} else {
 								window.content_brake_gog = content_brake_gog + 1
 								all_blocks.appendChild(new_game_blocks);
+								pagesBlocksLang();
 							}
 						}
 
@@ -513,6 +521,7 @@ function games_list2() {
 						} else {
 							window.content_brake = content_brake + 1
 							all_blocks.appendChild(new_game_blocks);
+							pagesBlocksLang();
 						}
 					}
 				}
@@ -591,6 +600,7 @@ function games_list3() {
 
 				//Finally, create the new game blocks dynamically
 				all_blocks.appendChild(new_game_blocks);
+				pagesBlocksLang();
 
 			} else {
 				if ((gamesdata.launchernickname.indexOf("steam") > -1) == "1") {
@@ -637,6 +647,7 @@ function games_list3() {
 			
 						//Finally, create the new game blocks dynamically
 						all_blocks.appendChild(new_game_blocks);
+						pagesBlocksLang();
 			
 					} else {
 						//Request the creation of the new element (block) for each game
@@ -681,6 +692,7 @@ function games_list3() {
 			
 						//Finally, create the new game blocks dynamically
 						all_blocks.appendChild(new_game_blocks);
+						pagesBlocksLang();
 					}
 					// Show Steam Games
 					$("div.app-block-steam").css("display", "block")
@@ -739,6 +751,7 @@ function games_list3() {
 			
 						//Finally, create the new game blocks dynamically
 						all_blocks.appendChild(new_game_blocks);
+						pagesBlocksLang();
 			
 					} else {
 						//Request the creation of the new element (block) for each game
@@ -796,6 +809,7 @@ function games_list3() {
 			
 						//Finally, create the new game blocks dynamically
 						all_blocks.appendChild(new_game_blocks);
+						pagesBlocksLang();
 					}
 
 				} else if ((gamesdata.launchernickname.indexOf("gog") > -1) == "1") {
@@ -841,6 +855,7 @@ function games_list3() {
 
 						//Finally, create the new game blocks dynamically
 						all_blocks.appendChild(new_game_blocks);
+						pagesBlocksLang();
 			
 					} else {
 						//Request the creation of the new element (block) for each game
@@ -887,6 +902,7 @@ function games_list3() {
 			
 						//Finally, create the new game blocks dynamically
 						all_blocks.appendChild(new_game_blocks);
+						pagesBlocksLang();
 					}
 
 				} else {
@@ -929,6 +945,7 @@ function games_list3() {
 
 					//Finally, create the new game blocks dynamically
 					all_blocks.appendChild(new_game_blocks);
+					pagesBlocksLang();
 				}
 			} 
 

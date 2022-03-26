@@ -64,7 +64,7 @@ EPICGAMEJSON
 
 	# If necessary, create the cache with game files
 	for i in $HOME/.config/legendary/metadata/*.json; do
-		game_title="$(grep -R '"app_title"' $i | cut -d'"' -f 4- | cut -d'"' -f -1 | head -1 | tail -2 | sed 's,\\u00ae,,g' | sed 's,\\u2122,,g')"
+		game_title="$(grep -R '"app_title"' $i | cut -d'"' -f 4- | cut -d'"' -f -1 | head -1 | tail -2 | sed 's|\\u00ae||g' | sed 's|\\u2122||g')"
 		game_name="$(grep -R '"app_name"' $i | cut -d'"' -f 4- | cut -d'"' -f -1 | head -1 | tail -2)"
 		categories="$(grep -R '"path": "games"' $i | cut -d'"' -f 4- | cut -d'"' -f -1 | head -1 | tail -2)"
 
@@ -90,8 +90,8 @@ EPICGAMEJSON
 		gamefolder=$(echo "$search_result3" | head -4 | grep value | cut -d'"' -f 4- | cut -d'"' -f -1)
 
 		# Make the game name lowercase
-		gamename_lowercase=$(echo "$game_title" | tr 'A-Z' 'a-z' | sed 's/: \|- \|(\|)\|, \|™\|+\|\.//g')
-		gamename_lowercase=$(echo $gamename_lowercase | sed 's/ /-/g' | sed "s/'//g")
+		gamename_lowercase=$(echo "$game_title" | tr 'A-Z' 'a-z' | sed 's/[[:punct:]]\|: \|- \|(\|)\|, \|™\|+\|\.//g')
+		gamename_lowercase=$(echo "$gamename_lowercase" | sed 's/[[:space:]]/-/g' | sed "s/'//g")
 
 		if [[ $(echo $categories) == *"games"* ]]; then
 			# Update cache only if game data does not exist
@@ -122,12 +122,14 @@ EPICGAMEJSON
 		game_id="$(grep -R '"gameid"' $i | awk '{print $2}' | sed 's/"\|,//g')"
 		game_nickname="$(grep -R '"gamenickname"' $i | awk '{print $2}' | sed 's/"\|,//g')"
 
-		if [[ $(cat $HOME/.config/legendary/installed.json | grep $game_id) == *"$game_id"* ]]; then
-			if test ! -e "/tmp/regataos-gcs/config/installed/$game_nickname-epicstore.json" ; then
-				cp -f "/tmp/regataos-gcs/config/epicstore-games/json/$game_nickname-epicstore.json" "/tmp/regataos-gcs/config/installed/$game_nickname-epicstore.json"
+		if test -e "$HOME/.config/legendary/installed.json"; then
+			if [[ $(cat $HOME/.config/legendary/installed.json | grep $game_id) == *"$game_id"* ]]; then
+				if test ! -e "/tmp/regataos-gcs/config/installed/$game_nickname-epicstore.json"; then
+					cp -f "/tmp/regataos-gcs/config/epicstore-games/json/$game_nickname-epicstore.json" "/tmp/regataos-gcs/config/installed/$game_nickname-epicstore.json"
+				fi
+			else
+				rm -f "/tmp/regataos-gcs/config/installed/$game_nickname-epicstore.json"
 			fi
-		else
-			rm -f "/tmp/regataos-gcs/config/installed/$game_nickname-epicstore.json"
 		fi
 	done
 }

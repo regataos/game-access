@@ -64,6 +64,7 @@ if (!err) {
 			} else {
 				window.content_brake_gog = content_brake_gog + 1
 				gog_all_games.appendChild(gog_game_blocks);
+				pagesBlocksLang();
 			}
 		}
 
@@ -184,6 +185,7 @@ if (!err) {
 
 			//Finally, create the new game blocks dynamically
 			gog_installed_games.appendChild(gog_game_blocks);
+			pagesBlocksLang();
 		}
 
 		if (fs.existsSync('/tmp/regataos-gcs/config/installed/' + gamesdata.gamenickname + '-gog.json')) {

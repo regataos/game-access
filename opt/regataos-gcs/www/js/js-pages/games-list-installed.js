@@ -72,6 +72,7 @@ function games_list_installed() {
 				} else {
 					window.content_brake_steam = content_brake_steam + 1
 					all_blocks.appendChild(new_game_blocks);
+					pagesBlocksLang();
 				}
 
 				// Show Steam Games
@@ -137,6 +138,7 @@ function games_list_installed() {
 				} else {
 					window.content_brake_epicstore = content_brake_epicstore + 1
 					all_blocks.appendChild(new_game_blocks);
+					pagesBlocksLang();
 				}
 
 				// Show Steam Games
@@ -191,6 +193,7 @@ function games_list_installed() {
 				} else {
 					window.content_brake_gog = content_brake_gog + 1
 					all_blocks.appendChild(new_game_blocks);
+					pagesBlocksLang();
 				}
 
 			} else {
@@ -232,6 +235,7 @@ function games_list_installed() {
 				} else {
 					window.content_brake = content_brake + 1
 					all_blocks.appendChild(new_game_blocks);
+					pagesBlocksLang();
 				}
 			}
 		}
@@ -250,7 +254,8 @@ $(window).scroll(function() {
 });
 
 // Notify me if no installed games are found
-function installed_page() {
+const ifInstalledGames = setInterval(installedPage, 100);
+function installedPage() {
 	var fs = require("fs");
 
 	fs.access('/tmp/regataos-gcs/config/installed/show-installed-games.txt', (err) => {
@@ -265,10 +270,6 @@ function installed_page() {
 	}
 	});
 }
-
-setInterval(function(){
-	installed_page()
-}, 100);
 
 // Game to hide as it will be removed
 function game_to_hide() {
