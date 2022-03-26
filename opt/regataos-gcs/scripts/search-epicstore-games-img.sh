@@ -89,7 +89,7 @@ for i in $HOME/.config/legendary/metadata/*.json; do
 	gamefolder=$(echo "$search_result3" | head -4 | grep value | cut -d'"' -f 4- | cut -d'"' -f -1)
 
 	# Make the game name lowercase
-	gamename_lowercase=$(echo "$game_title" | tr 'A-Z' 'a-z' | sed 's/: \|- \|(\|)\|, \|™\|+//g')
+	gamename_lowercase=$(echo "$game_title" | tr 'A-Z' 'a-z' | sed 's/: \|- \|(\|)\|, \|™\|+\|\.//g')
 	gamename_lowercase=$(echo $gamename_lowercase | sed 's/ /-/g' | sed "s/'//g")
 
 	if [[ $(echo $categories) == *"games"* ]]; then
