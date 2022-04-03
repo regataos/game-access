@@ -29,8 +29,8 @@ install_dotnet_status="Isso pode demorar alguns minutos..."
 
 #Download information
 app_download_status="Baixando o instalador do Origin..."
-app_download_link="https://download.dm.origin.com/origin/live/OriginUpdate_10_5_110_50000.zip"
-app_download_file_name="OriginUpdate_10_5_110_50000.zip"
+app_download_link="https://download.dm.origin.com/origin/live/OriginUpdate_10_5_111_50299.zip"
+app_download_file_name="OriginUpdate_10_5_111_50299.zip"
 
 #Default settings
 app_nickname_dir="$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"
@@ -152,38 +152,8 @@ fi
 
 # If Vulkan is supported, enable DXVK and VKD3D-Proton
 function enable_dxvk_vkd3d() {
-	vulkan_test=$(vulkaninfo)
-	if [[ $vulkan_test == *"Instance Extensions"* ]]; then
-		if [[ $vulkan_test != *"Vulkan support is incomplete"* ]]; then
-			# Enable DXVK for Direct3D 9/10/11 over Vulkan
-			export WINEDLLOVERRIDES="mscoree,mshtml,winemenubuilder,winedbg="
-			export WINEPREFIX="$HOME/.local/share/wineprefixes/default-compatibility-mode"
-			/bin/sh /opt/regataos-wine/dxvk/setup_dxvk.sh install --symlink
-
-			# Enable VKD3D-Proton for Direct3D 12 over Vulkan
-			export WINEDLLOVERRIDES="mscoree,mshtml,winemenubuilder,winedbg="
-			export WINEPREFIX="$HOME/.local/share/wineprefixes/default-compatibility-mode"
-			/bin/sh /opt/regataos-wine/vkd3d-proton/setup_vkd3d_proton.sh install --symlink
-
-			# If GPU is NVIDIA, install DXVK-NVAPI
-			if test -e /usr/bin/nvidia-xconfig; then
-				ln -sf /opt/regataos-wine/dxvk-nvapi/x32/*.dll $HOME/.local/share/wineprefixes/default-compatibility-mode/drive_c/windows/syswow64/
-				ln -sf /opt/regataos-wine/dxvk-nvapi/x64/*.dll $HOME/.local/share/wineprefixes/default-compatibility-mode/drive_c/windows/system32/
-
-				override_dll() {
-					$CUSTOM_WINE_DIR/bin/wine reg add "HKEY_CURRENT_USER\Software\Wine\DllOverrides" /v $1 /d native /f
-				}
-
-				for i in $(ls /opt/regataos-wine/dxvk-nvapi/x32/ | grep "dll"); do
-					override_dll $(echo "$i" | sed s/.dll//)
-				done
-
-				for i in $(ls /opt/regataos-wine/dxvk-nvapi/x64/ | grep "dll"); do
-					override_dll $(echo "$i" | sed s/.dll//)
-				done
-			fi
-		fi
-	fi
+	export WINEPREFIX="$HOME/.local/share/wineprefixes/default-compatibility-mode"
+	/bin/bash /opt/regataos-gcs/scripts/action-games/configure-compatibility-mode -configure-dxvk-vkd3d
 }
 
 # Start installation
@@ -249,7 +219,6 @@ if test -e "$HOME/.local/share/wineprefixes/default-compatibility-mode" ; then
 	# Enable DXVK and VKD3D-Proton
 	if test ! -e "$HOME/.local/share/wineprefixes/default-compatibility-mode/vulkan.txt"; then
 		enable_dxvk_vkd3d
-		echo -e "DXVK\nVKD3D-Proton" > "$HOME/.local/share/wineprefixes/default-compatibility-mode/vulkan.txt"
 	fi
 
 	cp -rf "$HOME/.local/share/wineprefixes/default-compatibility-mode" \
@@ -273,42 +242,8 @@ elif test -e "/usr/share/regataos/compatibility-mode/default-wineprefix.tar.xz" 
 		mv -f "$HOME/.local/share/wineprefixes/default-compatibility-mode" "$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"
 
 		# If Vulkan is supported, enable DXVK and VKD3D-Proton
-		vulkan_test=$(vulkaninfo)
-		if [[ $vulkan_test == *"Instance Extensions"* ]]; then
-			if [[ $vulkan_test != *"Vulkan support is incomplete"* ]]; then
-				# Enable DXVK for Direct3D 9/10/11 over Vulkan
-				export WINEDLLOVERRIDES="mscoree,mshtml,winemenubuilder,winedbg="
-				export WINEPREFIX="$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"
-				/bin/sh /opt/regataos-wine/dxvk/setup_dxvk.sh install --symlink
-
-				# Enable VKD3D-Proton for Direct3D 12 over Vulkan
-				export WINEDLLOVERRIDES="mscoree,mshtml,winemenubuilder,winedbg="
-				export WINEPREFIX="$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"
-				/bin/sh /opt/regataos-wine/vkd3d-proton/setup_vkd3d_proton.sh install --symlink
-
-				# If GPU is NVIDIA, install DXVK-NVAPI
-				if test -e /usr/bin/nvidia-xconfig; then
-					ln -sf /opt/regataos-wine/dxvk-nvapi/x32/*.dll $HOME/.local/share/wineprefixes/default-compatibility-mode/drive_c/windows/syswow64/
-					ln -sf /opt/regataos-wine/dxvk-nvapi/x64/*.dll $HOME/.local/share/wineprefixes/default-compatibility-mode/drive_c/windows/system32/
-
-					override_dll() {
-						$CUSTOM_WINE_DIR/bin/wine reg add "HKEY_CURRENT_USER\Software\Wine\DllOverrides" /v $1 /d native /f
-					}
-
-					for i in $(ls /opt/regataos-wine/dxvk-nvapi/x32/ | grep "dll"); do
-						override_dll $(echo "$i" | sed s/.dll//)
-					done
-
-					for i in $(ls /opt/regataos-wine/dxvk-nvapi/x64/ | grep "dll"); do
-						override_dll $(echo "$i" | sed s/.dll//)
-					done
-				fi
-
-				echo -e "DXVK\nVKD3D-Proton" > "$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode/vulkan.txt"
-			fi
-		fi
-
-		wineboot -u
+		export WINEPREFIX="$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"
+		/bin/bash /opt/regataos-gcs/scripts/action-games/configure-compatibility-mode -configure-dxvk-vkd3d
 		winetricks prefix=epicstore-compatibility-mode -q -f win10
 	fi
 
@@ -415,7 +350,6 @@ else
 	# Enable DXVK and VKD3D-Proton
 	if test ! -e "$HOME/.local/share/wineprefixes/default-compatibility-mode/vulkan.txt"; then
 		enable_dxvk_vkd3d
-		echo -e "DXVK\nVKD3D-Proton" > "$HOME/.local/share/wineprefixes/default-compatibility-mode/vulkan.txt"
 	fi
 
 	# Copy the default wineprefix to the new directory
@@ -510,7 +444,6 @@ function start_hidden_installation() {
 		# Enable DXVK and VKD3D-Proton
 		if test ! -e "$HOME/.local/share/wineprefixes/default-compatibility-mode/vulkan.txt"; then
 			enable_dxvk_vkd3d
-			echo -e "DXVK\nVKD3D-Proton" > "$HOME/.local/share/wineprefixes/default-compatibility-mode/vulkan.txt"
 		fi
 
 		cp -rf "$HOME/.local/share/wineprefixes/default-compatibility-mode" \
@@ -527,42 +460,7 @@ function start_hidden_installation() {
 			mv -f "$HOME/.local/share/wineprefixes/default-compatibility-mode" "$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"
 
 			# If Vulkan is supported, enable DXVK and VKD3D-Proton
-			vulkan_test=$(vulkaninfo)
-			if [[ $vulkan_test == *"Instance Extensions"* ]]; then
-				if [[ $vulkan_test != *"Vulkan support is incomplete"* ]]; then
-					# Enable DXVK for Direct3D 9/10/11 over Vulkan
-					export WINEDLLOVERRIDES="mscoree,mshtml,winemenubuilder,winedbg="
-					export WINEPREFIX="$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"
-					/bin/sh /opt/regataos-wine/dxvk/setup_dxvk.sh install --symlink
-
-					# Enable VKD3D-Proton for Direct3D 12 over Vulkan
-					export WINEDLLOVERRIDES="mscoree,mshtml,winemenubuilder,winedbg="
-					export WINEPREFIX="$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"
-					/bin/sh /opt/regataos-wine/vkd3d-proton/setup_vkd3d_proton.sh install --symlink
-
-					# If GPU is NVIDIA, install DXVK-NVAPI
-					if test -e /usr/bin/nvidia-xconfig; then
-						ln -sf /opt/regataos-wine/dxvk-nvapi/x32/*.dll $HOME/.local/share/wineprefixes/default-compatibility-mode/drive_c/windows/syswow64/
-						ln -sf /opt/regataos-wine/dxvk-nvapi/x64/*.dll $HOME/.local/share/wineprefixes/default-compatibility-mode/drive_c/windows/system32/
-
-						override_dll() {
-							$CUSTOM_WINE_DIR/bin/wine reg add "HKEY_CURRENT_USER\Software\Wine\DllOverrides" /v $1 /d native /f
-						}
-
-						for i in $(ls /opt/regataos-wine/dxvk-nvapi/x32/ | grep "dll"); do
-							override_dll $(echo "$i" | sed s/.dll//)
-						done
-
-						for i in $(ls /opt/regataos-wine/dxvk-nvapi/x64/ | grep "dll"); do
-							override_dll $(echo "$i" | sed s/.dll//)
-						done
-					fi
-
-					echo -e "DXVK\nVKD3D-Proton" > "$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode/vulkan.txt"
-				fi
-			fi
-
-			wineboot -u
+			enable_dxvk_vkd3d
 			winetricks prefix=epicstore-compatibility-mode -q -f win10
 		fi
 
@@ -636,7 +534,6 @@ function start_hidden_installation() {
 		# Enable DXVK and VKD3D-Proton
 		if test ! -e "$HOME/.local/share/wineprefixes/default-compatibility-mode/vulkan.txt"; then
 			enable_dxvk_vkd3d
-			echo -e "DXVK\nVKD3D-Proton" > "$HOME/.local/share/wineprefixes/default-compatibility-mode/vulkan.txt"
 		fi
 
 		# Copy the default wineprefix to the new directory

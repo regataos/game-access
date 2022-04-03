@@ -88,5 +88,8 @@ if test -e "$PREFIX_LOCATION/dxvk.conf"; then
 	export DXVK_CONFIG_FILE="$PREFIX_LOCATION/dxvk.conf"
 fi
 
+# Configure compatibility mode
+/bin/bash /opt/regataos-gcs/scripts/action-games/configure-compatibility-mode -configure-dxvk-vkd3d
+
 # Run game
 (gamemoderun /opt/regataos-gcs/tools/legendary/legendary launch "$GAMEID" --wine "$CUSTOM_WINE_DIR/bin/wine" --wine-prefix "$PREFIX_LOCATION") 2>&1 | tee $LOG_FILE
