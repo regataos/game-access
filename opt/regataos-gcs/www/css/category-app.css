@@ -15,8 +15,6 @@
 	padding-top: 5px;
 }
 
-
-
 div.universal-title {
 	transition: all .2s ease-in-out;
 }
@@ -54,15 +52,15 @@ div.universal-account-title {
 	font-size: 17px;
 	font-weight: 400;
 	cursor: pointer;
-	border-radius: 3px;
 	background-image: linear-gradient(to right, #36414d, #485563, #485563, #36414d);
 	background-size: 300% 100%;
 	transition: all .4s ease-in-out;
 	margin-right: 45px;
-	padding-top: 10px;
-	padding-right: 15px;
-	padding-left: 15px;
-	padding-bottom: 10px;
+    border-radius: 2em;
+	padding-top: 12px;
+	padding-right: 23px;
+	padding-left: 23px;
+	padding-bottom: 12px;
 	box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.1);
 }
 
@@ -114,14 +112,14 @@ div.universal-account-title {
 	font-size: 17px;
 	font-weight: 400;
 	cursor: pointer;
-	border-radius: 3px;
     background-image: linear-gradient(to right, #cc121a, #ee4248, #df4247, #cc121a);
 	background-size: 300% 100%;
 	transition: all .4s ease-in-out;
-	padding-top: 10px;
-	padding-right: 15px;
-	padding-left: 15px;
-	padding-bottom: 10px;
+    border-radius: 2em;
+	padding-top: 12px;
+	padding-right: 23px;
+	padding-left: 23px;
+	padding-bottom: 12px;
 	box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.1);
 }
 
@@ -509,12 +507,11 @@ div.universal-account-title {
     letter-spacing: 0.1em;
 	color: #beffcf;
 	cursor: pointer;
-	border-radius: 5px;
+	border-radius: 8px;
 	background-image: linear-gradient(to right, #18dc52, #2ab388, #30dd8a, #2bb673);
 	background-size: 300% 100%;
     transition: all .4s ease-in-out;
 	width: 135px;
-	border-radius: 3px;
 	margin-left: auto;
 	margin-right: auto;
 	margin-top: 70px;
@@ -541,12 +538,11 @@ div.universal-account-title {
     letter-spacing: 0.1em;
 	color: #beffcf;
 	cursor: pointer;
-	border-radius: 5px;
+	border-radius: 8px;
 	background-image: linear-gradient(to right, #18dc52, #2ab388, #30dd8a, #2bb673);
 	background-size: 300% 100%;
     transition: all .4s ease-in-out;
 	width: 135px;
-	border-radius: 3px;
 	margin-left: auto;
 	margin-right: auto;
 	margin-top: 70px;
@@ -572,12 +568,11 @@ div.universal-account-title {
     letter-spacing: 0.1em;
 	color: #dbe8ff;
 	cursor: pointer;
-	border-radius: 5px;
+	border-radius: 8px;
 	background-image: linear-gradient(to right, #0662f0, #309eff, #04befe, #3f86ed);
 	background-size: 300% 100%;
     transition: all .4s ease-in-out;
 	width: 165px;
-	border-radius: 3px;
 	margin-left: auto;
 	margin-right: auto;
 	margin-top: 70px;
@@ -603,12 +598,11 @@ div.universal-account-title {
     letter-spacing: 0.1em;
 	color: #dbe8ff;
 	cursor: pointer;
-	border-radius: 5px;
+	border-radius: 8px;
 	background-image: linear-gradient(to right, #0662f0, #309eff, #04befe, #3f86ed);
 	background-size: 300% 100%;
     transition: all .4s ease-in-out;
 	width: 165px;
-	border-radius: 3px;
 	margin-left: auto;
 	margin-right: auto;
 	margin-top: 70px;
