@@ -58,8 +58,8 @@ fi
 
 # Home block images
 #Image 1
-block1_image_name="block-nsm.jpg"
-block1_image_code="gJS3zrv"
+block1_image_name="block-mnr.jpg"
+block1_image_code="h9bLxJy"
 if test ! -e "$image_download_cache_dir/$block1_image_name"; then
 	# Clear cache
 	rm -f $image_download_cache_dir/block-*.jpg
@@ -73,8 +73,8 @@ else
 fi
 
 #Image 2
-block2_image_name="block-pfe.jpg"
-block2_image_code="M6hq1rS"
+block2_image_name="block-rvr.jpg"
+block2_image_code="4V4wyx4"
 if test ! -e "$image_download_cache_dir/$block2_image_name"; then
 	wget --no-check-certificate -O "$image_download_cache_dir/$block2_image_name" \
 	"https://i.ibb.co/$block2_image_code/$block2_image_name"
