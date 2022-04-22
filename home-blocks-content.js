@@ -2,17 +2,17 @@ function home_content() {
     $(document).ready(function() {
         // Content of block 1
         //Title
-        $(".appbc1 .block-title").text("In Sound Mind");
+        $(".appbc1 .block-title").text("Amnesia: Rebirth");
         //Block image
         $(".appbc1").css("background-image", 'url("file:///tmp/regataos-gcs/config/cache/img/block-img1.jpg")');
         $(".appbc1").css("background-position", "50% 50%")
         //Date
-        date_pt_br="24 de março"
-        date_en_us="March 24"
+        date_pt_br="28 de abril"
+        date_en_us="April 28"
 
         // Content of block 2
         //Title
-        $(".appbc2 .block-title").text("Path of Exile");
+        $(".appbc2 .block-title").text("Riverbond");
         //Block image
         $(".appbc2").css("background-image", 'url("file:///tmp/regataos-gcs/config/cache/img/block-img2.jpg")');
         $(".appbc2").css("background-position", "50% 0%")
