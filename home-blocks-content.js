@@ -2,17 +2,17 @@ function home_content() {
     $(document).ready(function() {
         // Content of block 1
         //Title
-        $(".appbc1 .block-title").text("Amnesia: Rebirth");
+        $(".appbc1 .block-title").text("Terraforming Mars");
         //Block image
         $(".appbc1").css("background-image", 'url("file:///tmp/regataos-gcs/config/cache/img/block-img1.jpg")');
         $(".appbc1").css("background-position", "50% 50%")
         //Date
-        date_pt_br="28 de abril"
-        date_en_us="April 28"
+        date_pt_br="12 de maio"
+        date_en_us="May 12"
 
         // Content of block 2
         //Title
-        $(".appbc2 .block-title").text("Riverbond");
+        $(".appbc2 .block-title").text("Jotun: Valhalla Edition");
         //Block image
         $(".appbc2").css("background-image", 'url("file:///tmp/regataos-gcs/config/cache/img/block-img2.jpg")');
         $(".appbc2").css("background-position", "50% 0%")
