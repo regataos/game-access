@@ -73,8 +73,8 @@ else
 fi
 
 #Image 2
-block2_image_name="block-jve.jpg"
-block2_image_code="6WVGtRT"
+block2_image_name="block-path-of-exile.jpg"
+block2_image_code="MhM2YBp"
 if test ! -e "$image_download_cache_dir/$block2_image_name"; then
 	wget --no-check-certificate -O "$image_download_cache_dir/$block2_image_name" \
 	"https://i.ibb.co/$block2_image_code/$block2_image_name"
