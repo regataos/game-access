@@ -12,7 +12,7 @@ function home_content() {
 
         // Content of block 2
         //Title
-        $(".appbc2 .block-title").text("Jotun: Valhalla Edition");
+        $(".appbc2 .block-title").text("Path of Exile");
         //Block image
         $(".appbc2").css("background-image", 'url("file:///tmp/regataos-gcs/config/cache/img/block-img2.jpg")');
         $(".appbc2").css("background-position", "50% 0%")
