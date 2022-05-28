@@ -2,13 +2,13 @@ function home_content() {
     $(document).ready(function() {
         // Content of block 1
         //Title
-        $(".appbc1 .block-title").text("Terraforming Mars");
+        $(".appbc1 .block-title").text("BioShock: The Collection");
         //Block image
         $(".appbc1").css("background-image", 'url("file:///tmp/regataos-gcs/config/cache/img/block-img1.jpg")');
         $(".appbc1").css("background-position", "50% 50%")
         //Date
-        date_pt_br="12 de maio"
-        date_en_us="May 12"
+        date_pt_br="02 de junho"
+        date_en_us="June 02"
 
         // Content of block 2
         //Title
