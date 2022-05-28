@@ -163,5 +163,12 @@
 
 	<iframe src="pages/home.html" frameborder="0" class="iframe_gcs" id="iframegcs"></iframe>
 
+    <script>
+		const gui = require('nw.gui');
+	
+		onload = function() {
+			gui.Window.get().show();
+		}
+		</script>
 </body>
 </html>

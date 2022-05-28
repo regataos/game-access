@@ -111,14 +111,37 @@ label.label-run-game {
 	cursor: pointer;
 }
 
-/* Display content when everything is ready */
 #loadscreen {
 	display: block;
+    opacity: 1;
 	width: 100%;
 	height: 100%;
 	position: absolute;
 	background-color: #2a2e33;
-	z-index: 10000;
+	z-index: 40000;
+    animation-name: initEffect;
+    animation-duration: 1.2s;
+}
+
+#loadscreen-search {
+	display: block;
+    opacity: 1;
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	background-color: #2a2e33;
+	z-index: 40000;
+    animation-name: initEffect;
+    animation-duration: 1.2s;
+	animation-delay: .5s;
+}
+
+@keyframes initEffect {
+    from {
+        opacity: 1;
+    } to {
+        opacity: 0;
+    }
 }
 
 /* scrollbar css */

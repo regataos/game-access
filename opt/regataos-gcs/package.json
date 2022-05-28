@@ -6,6 +6,7 @@
   "inject_js_start": "www/js/jquery.min.js",
   "inject_js_end": "www/js/scripts.js",
   "window": {
+    "show": false,
     "toolbar": false,
     "position": "center",
     "width": 1920,

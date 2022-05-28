@@ -29,7 +29,12 @@
 	</style>
 </head>
 <body>
-	<div id='loadscreen'></div>
+    <div id="loadscreen-search"></div>
+    <script>
+        setTimeout(function () {
+            document.getElementById("loadscreen-search").style.display= "none";
+        }, 1200);
+    </script>
 
 	<div class="blocks">
 	<div class="blocks2">
@@ -50,17 +55,5 @@
 	<script type="text/javascript" src="./../js/js-pages/gcs/check-installed-games.js"></script>
 	</div>
 	</div>
-	
-	<!-- Display content when everything is ready -->
-	<script type="text/javascript">
-		$(function(){
-			$("#loadscreen").fadeOut("slow");
-		});
-
-		$(function(){
-			$(".blocks").fadeIn("slow");
-		});
-	</script>
-
 </body>
 </html>

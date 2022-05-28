@@ -23,7 +23,12 @@
 </head>
 
 <body style="background: #1c1c1c url(./../images/games-backg/lol/lol-backg.jpg) no-repeat left top; background-size: 100% auto;">
-	<div id='loadscreen'></div>
+    <div id="loadscreen"></div>
+    <script>
+        setTimeout(function () {
+            document.getElementById("loadscreen").style.display= "none";
+        }, 1200);
+    </script>
 
 <div class="page-box">
 <div class="page-box2">
@@ -163,16 +168,5 @@
 	</div>
 </div>
 </div>
-
-	<!-- Display content when everything is ready -->
-	<script type="text/javascript">
-		$(function(){
-			$("#loadscreen").fadeOut("slow");
-		});
-
-		$(function(){
-			$(".blocks").fadeIn("slow");
-		});
-	</script>
 </body>
 </html>
