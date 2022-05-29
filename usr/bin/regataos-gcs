@@ -44,21 +44,17 @@ rm -f "/tmp/regataos-gcs/run-regataos-gcs.txt"
 rm -f /tmp/regataos-gcs/config/steam-games/json/steam-id/*
 rm -f "/tmp/regataos-gcs/config/gog-games/games-folders2.txt"
 
-# Check internet connection
-# /opt/regataos-help/scripts/regataos-help-check-network.sh start
-
-# Checks that the AMD FidelityFX Super Resolution (FSR) has been configured by the user
-/bin/bash /opt/regataos-gcs/scripts/check-support-amd-fsr.sh
-
-# Check if you have logged in to the Epic Games Store
-if [[ $(ls "$HOME/.config/regataos-gcs/epicstore-games/json/" | grep json) == *".json"* ]]; then
-	/opt/regataos-gcs/tools/legendary/legendary status
-fi
-
 # Verify that Epic Games Store is installed to sync information
 function legendary_egl_sync() {
+	# Check if you have logged in to the Epic Games Store
+	if [[ $(ls "$HOME/.config/regataos-gcs/epicstore-games/json/" | grep json) == *".json"* ]]; then
+		/opt/regataos-gcs/tools/legendary/legendary status
+	fi
+
 	if [[ $(cat /tmp/regataos-gcs/config/installed-launchers.conf) == *"epicstore"* ]]; then
-		/opt/regataos-gcs/tools/legendary/legendary egl-sync -y --egl-wine-prefix "$HOME/.local/share/wineprefixes/epicstore-compatibility-mode/"
+		/opt/regataos-gcs/tools/legendary/legendary egl-sync -y --egl-wine-prefix \
+			"$HOME/.local/share/wineprefixes/epicstore-compatibility-mode/"
+
 		/opt/regataos-gcs/tools/legendary/legendary egl-sync -y --enable-sync
 	fi
 
@@ -66,14 +62,15 @@ function legendary_egl_sync() {
 	/bin/bash /opt/regataos-gcs/scripts/search-epicstore-games.sh
 
 	# Check game json files and create image cache
-	/opt/regataos-gcs/scripts/search-epicstore-games-img.sh start
+	/opt/regataos-gcs/scripts/search-epicstore-games-img.sh start >/dev/null
 }
 
 # Run app
 if [[ $(glxinfo | grep vendor) == *"Intel"* ]]; then
-	legendary_egl_sync &
-	/opt/regataos-gcs/scripts/update-cache &
 	regataosgcs --disable-gpu /opt/regataos-gcs &
+	/bin/bash /opt/regataos-gcs/scripts/check-support-amd-fsr.sh &
+	/opt/regataos-gcs/scripts/update-cache &
+	legendary_egl_sync &
 	/opt/regataos-gcs/scripts/progress-bar/capture-progress-download &
 	/opt/regataos-gcs/scripts/progress-bar/create-process-queues &
 	/opt/regataos-gcs/scripts/progress-bar/run-process-queues &
@@ -85,9 +82,10 @@ if [[ $(glxinfo | grep vendor) == *"Intel"* ]]; then
 	fi
 
 else
-	legendary_egl_sync &
-	/opt/regataos-gcs/scripts/update-cache &
 	regataosgcs /opt/regataos-gcs &
+	/bin/bash /opt/regataos-gcs/scripts/check-support-amd-fsr.sh &
+	/opt/regataos-gcs/scripts/update-cache &
+	legendary_egl_sync &
 	/opt/regataos-gcs/scripts/progress-bar/capture-progress-download &
 	/opt/regataos-gcs/scripts/progress-bar/create-process-queues &
 	/opt/regataos-gcs/scripts/progress-bar/run-process-queues &

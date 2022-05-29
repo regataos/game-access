@@ -1,14 +1,12 @@
 #!/bin/bash
 
 # Download the script that updates the home content
-cache_download_dir="$HOME/.config/regataos-gcs/cache"
-download_link="https://regataos.github.io/game-access/update-cache-from-home.sh"
-
-if test ! -e "$cache_download_dir" ; then
-	mkdir -p "$cache_download_dir/"
+if test ! -e "$HOME/.config/regataos-gcs/cache"; then
+	mkdir -p "$HOME/.config/regataos-gcs/cache/"
 fi
 
-wget --no-check-certificate -O "$cache_download_dir/update-cache-from-home.sh" "$download_link"
+wget --no-check-certificate -O "$HOME/.config/regataos-gcs/cache/update-cache-from-home.sh" \
+	"https://regataos.github.io/game-access/update-cache-from-home.sh"
 
-chmod +x $cache_download_dir/update-cache-from-home.sh
-$cache_download_dir/update-cache-from-home.sh start
+chmod +x "$HOME/.config/regataos-gcs/cache/update-cache-from-home.sh"
+$HOME/.config/regataos-gcs/cache/update-cache-from-home.sh start
