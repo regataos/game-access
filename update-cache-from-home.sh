@@ -1,97 +1,153 @@
 #!/bin/bash
 
 # If necessary, update cache of home images
-image_download_cache_dir="$HOME/.config/regataos-gcs/cache/img"
-
-if test ! -e "$image_download_cache_dir"; then
-	mkdir -p "$image_download_cache_dir/"
+if test ! -e "$HOME/.config/regataos-gcs/cache/img"; then
+	mkdir -p "$HOME/.config/regataos-gcs/cache/img/"
 fi
 
 # Home slide images
-#Image from slide 1
-slide1_image_name="slide-gtav.jpg"
-slide1_image_code="fSsSMSD"
-if test ! -e "$image_download_cache_dir/$slide1_image_name"; then
-	wget --no-check-certificate -O "$image_download_cache_dir/$slide1_image_name" \
-	"https://i.ibb.co/$slide1_image_code/$slide1_image_name"
+function downloadSlideImages() {
+	#Image from slide 1
+	function slideImage1() {
+		slide1_image_name="slide-gtav.jpg"
+		slide1_image_code="fSsSMSD"
 
-	ln -sf "$image_download_cache_dir/$slide1_image_name" "$image_download_cache_dir/slide-img1.jpg"
-else
-	ln -sf "$image_download_cache_dir/$slide1_image_name" "$image_download_cache_dir/slide-img1.jpg"
-fi
+		if test ! -e "$HOME/.config/regataos-gcs/cache/img/$slide1_image_name"; then
+			wget --no-check-certificate -O "$HOME/.config/regataos-gcs/cache/img/$slide1_image_name" \
+				"https://i.ibb.co/$slide1_image_code/$slide1_image_name"
 
-#Image from slide 2
-slide2_image_name="slide-overwatch.jpg"
-slide2_image_code="7NDK1cL"
-if test ! -e "$image_download_cache_dir/$slide2_image_name"; then
-	wget --no-check-certificate -O "$image_download_cache_dir/$slide2_image_name" \
-	"https://i.ibb.co/$slide2_image_code/$slide2_image_name"
+			ln -sf "$HOME/.config/regataos-gcs/cache/img/$slide1_image_name" \
+				"$HOME/.config/regataos-gcs/cache/img/slide-img1.jpg"
 
-	ln -sf "$image_download_cache_dir/$slide2_image_name" "$image_download_cache_dir/slide-img2.jpg"
-else
-	ln -sf "$image_download_cache_dir/$slide2_image_name" "$image_download_cache_dir/slide-img2.jpg"
-fi
+		else
+			ln -sf "$HOME/.config/regataos-gcs/cache/img/$slide1_image_name" \
+				"$HOME/.config/regataos-gcs/cache/img/slide-img1.jpg"
+		fi
+	}
 
-#Image from slide 3
-slide3_image_name="slide-bfv.jpg"
-slide3_image_code="cgwKmzK"
-if test ! -e "$image_download_cache_dir/$slide3_image_name"; then
-	wget --no-check-certificate -O "$image_download_cache_dir/$slide3_image_name" \
-	"https://i.ibb.co/$slide3_image_code/$slide3_image_name"
+	#Image from slide 2
+	function slideImage2() {
+		slide2_image_name="slide-overwatch.jpg"
+		slide2_image_code="7NDK1cL"
 
-	ln -sf "$image_download_cache_dir/$slide3_image_name" "$image_download_cache_dir/slide-img3.jpg"
-else
-	ln -sf "$image_download_cache_dir/$slide3_image_name" "$image_download_cache_dir/slide-img3.jpg"
-fi
+		if test ! -e "$HOME/.config/regataos-gcs/cache/img/$slide2_image_name"; then
+			wget --no-check-certificate -O "$HOME/.config/regataos-gcs/cache/img/$slide2_image_name" \
+				"https://i.ibb.co/$slide2_image_code/$slide2_image_name"
 
-#Image from slide 4
-slide4_image_name="slide-control.jpg"
-slide4_image_code="J3y8RPC"
-if test ! -e "$image_download_cache_dir/$slide4_image_name"; then
-	wget --no-check-certificate -O "$image_download_cache_dir/$slide4_image_name" \
-	"https://i.ibb.co/$slide4_image_code/$slide4_image_name"
+			ln -sf "$HOME/.config/regataos-gcs/cache/img/$slide2_image_name" \
+				"$HOME/.config/regataos-gcs/cache/img/slide-img2.jpg"
 
-	ln -sf "$image_download_cache_dir/$slide4_image_name" "$image_download_cache_dir/slide-img4.jpg"
-else
-	ln -sf "$image_download_cache_dir/$slide4_image_name" "$image_download_cache_dir/slide-img4.jpg"
-fi
+		else
+			ln -sf "$HOME/.config/regataos-gcs/cache/img/$slide2_image_name" \
+				"$HOME/.config/regataos-gcs/cache/img/slide-img2.jpg"
+		fi
+	}
+
+	#Image from slide 3
+	function slideImage3() {
+		slide3_image_name="slide-bfv.jpg"
+		slide3_image_code="cgwKmzK"
+
+		if test ! -e "$HOME/.config/regataos-gcs/cache/img/$slide3_image_name"; then
+			wget --no-check-certificate -O "$HOME/.config/regataos-gcs/cache/img/$slide3_image_name" \
+				"https://i.ibb.co/$slide3_image_code/$slide3_image_name"
+
+			ln -sf "$HOME/.config/regataos-gcs/cache/img/$slide3_image_name" \
+				"$HOME/.config/regataos-gcs/cache/img/slide-img3.jpg"
+
+		else
+			ln -sf "$HOME/.config/regataos-gcs/cache/img/$slide3_image_name" \
+				"$HOME/.config/regataos-gcs/cache/img/slide-img3.jpg"
+		fi
+	}
+
+	#Image from slide 4
+	function slideImage4() {
+		slide4_image_name="slide-control.jpg"
+		slide4_image_code="J3y8RPC"
+
+		if test ! -e "$HOME/.config/regataos-gcs/cache/img/$slide4_image_name"; then
+			wget --no-check-certificate -O "$HOME/.config/regataos-gcs/cache/img/$slide4_image_name" \
+				"https://i.ibb.co/$slide4_image_code/$slide4_image_name"
+
+			ln -sf "$HOME/.config/regataos-gcs/cache/img/$slide4_image_name" \
+				"$HOME/.config/regataos-gcs/cache/img/slide-img4.jpg"
+
+		else
+			ln -sf "$HOME/.config/regataos-gcs/cache/img/$slide4_image_name" \
+				"$HOME/.config/regataos-gcs/cache/img/slide-img4.jpg"
+		fi
+	}
+
+	slideImage1 &
+	slideImage2 &
+	slideImage3 &
+	slideImage4
+}
 
 # Home block images
-#Image 1
-block1_image_name="block-bsh.jpg"
-block1_image_code="hgsxR5v"
-if test ! -e "$image_download_cache_dir/$block1_image_name"; then
-	# Clear cache
-	rm -f $image_download_cache_dir/block-*.jpg
+function downloadBlockImages() {
+	#Image 1
+	function blockImage1() {
+		block1_image_name="block-bsh.jpg"
+		block1_image_code="hgsxR5v"
 
-	wget --no-check-certificate -O "$image_download_cache_dir/$block1_image_name" \
-	"https://i.ibb.co/$block1_image_code/$block1_image_name"
+		if test ! -e "$HOME/.config/regataos-gcs/cache/img/$block1_image_name"; then
+			# Clear cache
+			rm -f $HOME/.config/regataos-gcs/cache/img/block-*.jpg
 
-	ln -sf "$image_download_cache_dir/$block1_image_name" "$image_download_cache_dir/block-img1.jpg"
-else
-	ln -sf "$image_download_cache_dir/$block1_image_name" "$image_download_cache_dir/block-img1.jpg"
-fi
+			wget --no-check-certificate -O "$HOME/.config/regataos-gcs/cache/img/$block1_image_name" \
+				"https://i.ibb.co/$block1_image_code/$block1_image_name"
 
-#Image 2
-block2_image_name="block-path-of-exile.jpg"
-block2_image_code="MhM2YBp"
-if test ! -e "$image_download_cache_dir/$block2_image_name"; then
-	wget --no-check-certificate -O "$image_download_cache_dir/$block2_image_name" \
-	"https://i.ibb.co/$block2_image_code/$block2_image_name"
+			ln -sf "$HOME/.config/regataos-gcs/cache/img/$block1_image_name" \
+				"$HOME/.config/regataos-gcs/cache/img/block-img1.jpg"
 
-	ln -sf "$image_download_cache_dir/$block2_image_name" "$image_download_cache_dir/block-img2.jpg"
-else
-	ln -sf "$image_download_cache_dir/$block2_image_name" "$image_download_cache_dir/block-img2.jpg"
-fi
+		else
+			ln -sf "$HOME/.config/regataos-gcs/cache/img/$block1_image_name" \
+				"$HOME/.config/regataos-gcs/cache/img/block-img1.jpg"
+		fi
+	}
 
-#Image 3
-block3_image_name="block-rocket-league.jpg"
-block3_image_code="XpXFCbj"
-if test ! -e "$image_download_cache_dir/$block3_image_name"; then
-	wget --no-check-certificate -O "$image_download_cache_dir/$block3_image_name" \
-	"https://i.ibb.co/$block3_image_code/$block3_image_name"
+	#Image 2
+	function blockImage2() {
+		block2_image_name="block-path-of-exile.jpg"
+		block2_image_code="MhM2YBp"
 
-	ln -sf "$image_download_cache_dir/$block3_image_name" "$image_download_cache_dir/block-img3.jpg"
-else
-	ln -sf "$image_download_cache_dir/$block3_image_name" "$image_download_cache_dir/block-img3.jpg"
-fi
+		if test ! -e "$HOME/.config/regataos-gcs/cache/img/$block2_image_name"; then
+			wget --no-check-certificate -O "$HOME/.config/regataos-gcs/cache/img/$block2_image_name" \
+				"https://i.ibb.co/$block2_image_code/$block2_image_name"
+
+			ln -sf "$HOME/.config/regataos-gcs/cache/img/$block2_image_name" \
+				"$HOME/.config/regataos-gcs/cache/img/block-img2.jpg"
+
+		else
+			ln -sf "$HOME/.config/regataos-gcs/cache/img/$block2_image_name" \
+				"$HOME/.config/regataos-gcs/cache/img/block-img2.jpg"
+		fi
+	}
+
+	#Image 3
+	function blockImage3() {
+		block3_image_name="block-rocket-league.jpg"
+		block3_image_code="XpXFCbj"
+
+		if test ! -e "$HOME/.config/regataos-gcs/cache/img/$block3_image_name"; then
+			wget --no-check-certificate -O "$HOME/.config/regataos-gcs/cache/img/$block3_image_name" \
+				"https://i.ibb.co/$block3_image_code/$block3_image_name"
+
+			ln -sf "$HOME/.config/regataos-gcs/cache/img/$block3_image_name" \
+				"$HOME/.config/regataos-gcs/cache/img/block-img3.jpg"
+
+		else
+			ln -sf "$HOME/.config/regataos-gcs/cache/img/$block3_image_name" \
+				"$HOME/.config/regataos-gcs/cache/img/block-img3.jpg"
+		fi
+	}
+
+	blockImage1 &
+	blockImage2 &
+	blockImage3
+}
+
+downloadSlideImages &
+downloadBlockImages
