@@ -1,41 +1,40 @@
 #!/bin/bash
 
 # If necessary, create the application settings directory
-if test ! -e "$HOME/.config/regataos-gcs" ; then
+if test ! -e "$HOME/.config/regataos-gcs"; then
 	mkdir -p "$HOME/.config/regataos-gcs/"
 fi
 
-if test ! -e "$HOME/.config/regataos-gcs/regataos-gcs.conf" ; then
+if test ! -e "$HOME/.config/regataos-gcs/regataos-gcs.conf"; then
 	cp -f "/opt/regataos-gcs/scripts/regataos-gcs.conf" "$HOME/.config/regataos-gcs/regataos-gcs.conf"
 fi
 
-if test ! -e "$HOME/.config/regataos-gcs/installed-launchers.conf" ; then
-	echo "" > "$HOME/.config/regataos-gcs/installed-launchers.conf"
-	echo "" > "$HOME/.config/regataos-gcs/game-install-dir.conf"
-	echo "" > "$HOME/.config/regataos-gcs/installed-games.conf"
+if test ! -e "$HOME/.config/regataos-gcs/installed-launchers.conf"; then
+	echo "" >"$HOME/.config/regataos-gcs/installed-launchers.conf"
+	echo "" >"$HOME/.config/regataos-gcs/game-install-dir.conf"
+	echo "" >"$HOME/.config/regataos-gcs/installed-games.conf"
 fi
 
-if test ! -e "/tmp/regataos-gcs/config" ; then
+if test ! -e "/tmp/regataos-gcs/config"; then
 	ln -sf "$HOME/.config/regataos-gcs" "/tmp/regataos-gcs/config"
 fi
 
 # Create download cache
-if test ! -e "$HOME/.config/regataos-gcs/progressbar-gcs" ; then
+if test ! -e "$HOME/.config/regataos-gcs/progressbar-gcs"; then
 	mkdir -p "$HOME/.config/regataos-gcs/progressbar-gcs/"
 fi
 
-if test ! -e "/tmp/progressbar-gcs" ; then
+if test ! -e "/tmp/progressbar-gcs"; then
 	ln -sf "$HOME/.config/regataos-gcs/progressbar-gcs" "/tmp/progressbar-gcs"
 fi
 
 # Check language
-if test ! -e "/tmp/regataos-configs/config/plasma-localerc" ; then
+if test ! -e "/tmp/regataos-configs/config/plasma-localerc"; then
 	mkdir -p /tmp/regataos-configs/config
 	ln -sf "$HOME/.config/plasma-localerc" "/tmp/regataos-configs/config/"
 fi
 
 # Update cache
-/opt/regataos-gcs/scripts/update-cache start
 sed -i 's/\(closed-manually=true\)/closed-manually=false/' "$HOME/.config/regataos-gcs/regataos-gcs.conf"
 
 rm -f "/tmp/regataos-gcs/running-with-regataos-gcs.txt"
@@ -72,17 +71,39 @@ function legendary_egl_sync() {
 
 # Run app
 if [[ $(glxinfo | grep vendor) == *"Intel"* ]]; then
-	legendary_egl_sync & sleep 2; regataosgcs --disable-gpu /opt/regataos-gcs & sleep 1; /opt/regataos-gcs/scripts/progress-bar/capture-progress-download & /opt/regataos-gcs/scripts/progress-bar/create-process-queues & /opt/regataos-gcs/scripts/progress-bar/run-process-queues & /opt/regataos-gcs/scripts/search-installeds & ps -C "auto-close-game" > /dev/null; if [ $? = 1 ]; then /opt/regataos-gcs/scripts/action-games/auto-close-game-access; fi
+	legendary_egl_sync &
+	/opt/regataos-gcs/scripts/update-cache &
+	regataosgcs --disable-gpu /opt/regataos-gcs &
+	/opt/regataos-gcs/scripts/progress-bar/capture-progress-download &
+	/opt/regataos-gcs/scripts/progress-bar/create-process-queues &
+	/opt/regataos-gcs/scripts/progress-bar/run-process-queues &
+	/opt/regataos-gcs/scripts/search-installeds &
+
+	ps -C "auto-close-game" >/dev/null
+	if [ $? = 1 ]; then
+		/opt/regataos-gcs/scripts/action-games/auto-close-game-access
+	fi
+
 else
-	legendary_egl_sync & sleep 2; regataosgcs /opt/regataos-gcs & sleep 1; /opt/regataos-gcs/scripts/progress-bar/capture-progress-download & /opt/regataos-gcs/scripts/progress-bar/create-process-queues & /opt/regataos-gcs/scripts/progress-bar/run-process-queues & /opt/regataos-gcs/scripts/search-installeds & ps -C "auto-close-game" > /dev/null; if [ $? = 1 ]; then /opt/regataos-gcs/scripts/action-games/auto-close-game-access; fi
+	legendary_egl_sync &
+	/opt/regataos-gcs/scripts/update-cache &
+	regataosgcs /opt/regataos-gcs &
+	/opt/regataos-gcs/scripts/progress-bar/capture-progress-download &
+	/opt/regataos-gcs/scripts/progress-bar/create-process-queues &
+	/opt/regataos-gcs/scripts/progress-bar/run-process-queues &
+	/opt/regataos-gcs/scripts/search-installeds &
+
+	ps -C "auto-close-game" >/dev/null
+	if [ $? = 1 ]; then
+		/opt/regataos-gcs/scripts/action-games/auto-close-game-access
+	fi
 fi
 
 # Closed manually
 sed -i 's/\(closed-manually=false\)/closed-manually=true/' "$HOME/.config/regataos-gcs/regataos-gcs.conf"
 
 # If necessary, clear the cache
-ps -C ps -e | egrep 'battlenet-comp|epicstore-comp|gog-comp|lol-comp|origin-comp|rockstar-comp|ubisoftconnect|install-epics' > /dev/null
-if [ $? = 1 ]
-then
+ps -C ps -e | egrep 'battlenet-comp|epicstore-comp|gog-comp|lol-comp|origin-comp|rockstar-comp|ubisoftconnect|install-epics' >/dev/null
+if [ $? = 1 ]; then
 	rm -f /tmp/progressbar-gcs/*
 fi
