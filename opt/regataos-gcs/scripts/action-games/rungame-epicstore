@@ -10,9 +10,12 @@ LOG_FILE="/var/log/regataos-logs/epicstore-$GAMEID.log"
 file_search="$HOME/.config/legendary/installed.json"
 search="$GAMEID"
 line_search=$(cat -n $file_search | grep -w $search | head -4 | tail -1 | awk '{print $1}')
-search_result=$(qt=`wc -l $file_search | awk '{print $1}'`; sed -n ''$line_search','$qt'p' $file_search)
+search_result=$(
+	qt=$(wc -l $file_search | awk '{print $1}')
+	sed -n ''$line_search','$qt'p' $file_search
+)
 executable=$(echo "$search_result" | head -12 | grep executable | cut -d'"' -f 4- | cut -d'"' -f -1)
-echo "$executable" > "/tmp/regataos-gcs/game-executable.txt"
+echo "$executable" >"/tmp/regataos-gcs/game-executable.txt"
 
 # Variables for custom Wine
 export CUSTOM_WINE_DIR="$(cat /opt/regataos-wine/wine-gcs-version.txt)"
@@ -58,8 +61,8 @@ if [[ $(grep -r fps $GCS_CONFIG) == *"fps=true"* ]]; then
 fi
 
 # If necessary, run osftware with the dGPU
-if test -e /tmp/regataos-prime/use-hybrid-graphics.txt ; then
-	if test -e /usr/bin/nvidia-xconfig ; then
+if test -e /tmp/regataos-prime/use-hybrid-graphics.txt; then
+	if test -e /usr/bin/nvidia-xconfig; then
 		# For the NVIDIA proprietary driver
 		export GAMEMODERUNEXEC="env __NV_PRIME_RENDER_OFFLOAD=1 __GLX_VENDOR_LIBRARY_NAME=nvidia __VK_LAYER_NV_optimus=NVIDIA_only __GL_SHADER_DISK_CACHE=1 __GL_SHADER_DISK_CACHE_PATH=$PREFIX_LOCATION __GL_SHADER_DISK_CACHE_SKIP_CLEANUP=1 $(echo $MANGOHUD_GL)"
 
@@ -75,7 +78,7 @@ if test -e /tmp/regataos-prime/use-hybrid-graphics.txt ; then
 	fi
 
 else
-	if test -e /usr/bin/nvidia-xconfig ; then
+	if test -e /usr/bin/nvidia-xconfig; then
 		# For the NVIDIA proprietary driver
 		export GAMEMODERUNEXEC="env __GL_SHADER_DISK_CACHE=1 __GL_SHADER_DISK_CACHE_PATH=$PREFIX_LOCATION __GL_SHADER_DISK_CACHE_SKIP_CLEANUP=1 $(echo $MANGOHUD_GL)"
 
@@ -99,5 +102,8 @@ fi
 # Configure compatibility mode
 /bin/bash /opt/regataos-gcs/scripts/action-games/configure-compatibility-mode -configure-dxvk-vkd3d
 
+# Fix for games
+ln -sf "/opt/regataos-gcs/tools/legendary/config.ini" "$HOME/.config/legendary/config.ini"
+
 # Run game
-(gamemoderun /opt/regataos-gcs/tools/legendary/legendary launch "$GAMEID" --wine "$CUSTOM_WINE_DIR/bin/wine" --wine-prefix "$PREFIX_LOCATION") 2>&1 | tee $LOG_FILE
+(/opt/regataos-gcs/tools/legendary/legendary launch "$GAMEID" --wine "$CUSTOM_WINE_DIR/bin/wine" --wine-prefix "$PREFIX_LOCATION") 2>&1 | tee $LOG_FILE
