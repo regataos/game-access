@@ -33,6 +33,16 @@ export WINEFSYNC=1
 export WINEFSYNC_FUTEX2=1
 export DXVK_STATE_CACHE_PATH="$PREFIX_LOCATION"
 export DXVK_LOG_PATH="$PREFIX_LOCATION"
+export DXVK_LOG_LEVEL=none
+export WINEDEBUG=-all
+
+# DXVK configuration file
+if test -e "$PREFIX_LOCATION/dxvk.conf"; then
+	export DXVK_CONFIG_FILE="$PREFIX_LOCATION/dxvk.conf"
+fi
+
+# GAMEMODE
+export LD_PRELOAD=/usr/\$LIB/libgamemodeauto.so.0
 
 # Enable AMD FSR
 if [[ $(grep -r amd-fsr $GCS_CONFIG) == *"amd-fsr=true"* ]]; then
@@ -49,42 +59,42 @@ if [[ $(grep -r fps $GCS_CONFIG) == *"fps=true"* ]]; then
 fi
 
 # If necessary, run osftware with the dGPU
-if test -e /tmp/regataos-prime/use-hybrid-graphics.txt ; then
-	if test -e /usr/bin/nvidia-xconfig ; then
+if test -e /tmp/regataos-prime/use-hybrid-graphics.txt; then
+	if test -e /usr/bin/nvidia-xconfig; then
 		# For the NVIDIA proprietary driver
-		export GAMEMODERUNEXEC="env __NV_PRIME_RENDER_OFFLOAD=1 __GLX_VENDOR_LIBRARY_NAME=nvidia __VK_LAYER_NV_optimus=NVIDIA_only __GL_SHADER_DISK_CACHE=1 __GL_SHADER_DISK_CACHE_PATH=$PREFIX_LOCATION __GL_SHADER_DISK_CACHE_SKIP_CLEANUP=1 $(echo $MANGOHUD_GL)"
+		export __NV_PRIME_RENDER_OFFLOAD=1
+		export __GLX_VENDOR_LIBRARY_NAME=nvidia
+		export __VK_LAYER_NV_optimus=NVIDIA_only
+		export __GL_SHADER_DISK_CACHE=1
+		export __GL_SHADER_DISK_CACHE_PATH=$PREFIX_LOCATION
+		export __GL_SHADER_DISK_CACHE_SKIP_CLEANUP=1
 
 		# Special configurations for DXVK with NVIDIA GPU
 		ln -sf "/opt/regataos-wine/custom-configs/$LAUNCHER/dxvk-nvidia.conf" "$PREFIX_LOCATION/dxvk.conf"
+
 	else
 		# For open source drivers
-		export GAMEMODERUNEXEC="env DRI_PRIME=1 $(echo $MANGOHUD_GL)"
+		export DRI_PRIME=1
 
 		# Special configurations for DXVK with AMD/Intel GPU
 		ln -sf "/opt/regataos-wine/custom-configs/$LAUNCHER/dxvk.conf" "$PREFIX_LOCATION/dxvk.conf"
 	fi
 
 else
-	if test -e /usr/bin/nvidia-xconfig ; then
+	if test -e /usr/bin/nvidia-xconfig; then
 		# For the NVIDIA proprietary driver
-		export GAMEMODERUNEXEC="env __GL_SHADER_DISK_CACHE=1 __GL_SHADER_DISK_CACHE_PATH=$PREFIX_LOCATION __GL_SHADER_DISK_CACHE_SKIP_CLEANUP=1 $(echo $MANGOHUD_GL)"
+		export __GL_SHADER_DISK_CACHE=1
+		export __GL_SHADER_DISK_CACHE_PATH=$PREFIX_LOCATION
+		export __GL_SHADER_DISK_CACHE_SKIP_CLEANUP=1
 
 		# Special configurations for DXVK with NVIDIA GPU
 		ln -sf "/opt/regataos-wine/custom-configs/$LAUNCHER/dxvk-nvidia.conf" "$PREFIX_LOCATION/dxvk.conf"
 
 	else
-		# For the MangoHud
-		export GAMEMODERUNEXEC="env $(echo $MANGOHUD_GL)"
-
 		# Special configurations for DXVK with AMD/Intel GPU
 		ln -sf "/opt/regataos-wine/custom-configs/$LAUNCHER/dxvk.conf" "$PREFIX_LOCATION/dxvk.conf"
 	fi
 fi
 
-# DXVK configuration file
-if test -e "$PREFIX_LOCATION/dxvk.conf"; then
-	export DXVK_CONFIG_FILE="$PREFIX_LOCATION/dxvk.conf"
-fi
-
 # Run launcher
-(env $LAUNCHERVAR gamemoderun $CUSTOM_WINE_DIR/bin/wine "$RUN_EXE") 2>&1 | tee $LOG_FILE
+(env $LAUNCHERVAR $CUSTOM_WINE_DIR/bin/wine "$RUN_EXE") 2>&1 | tee $LOG_FILE

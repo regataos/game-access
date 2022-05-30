@@ -5,7 +5,7 @@
 		"gameexecutable": "FarCry3.exe",
 		"gamerun_appid": "uplay://launch/46/0",
 		"winevariable": "WINEESYNC=1 WINE_LARGE_ADDRESS_AWARE=1",
-		"gamekeywords": "Far Cry 3, far cry 3, tiro em primeira pessoa, aventura, ação, açao, acao, first person shooter, fps, multiplayer, adventure, action, ubisoft connect",
+		"gamekeywords": "Far Cry 3, far cry 3, farcry 3, farcry, tiro em primeira pessoa, aventura, ação, açao, acao, first person shooter, fps, multiplayer, adventure, action, ubisoft connect",
 		"launcher": "Ubisoft Connect",
 		"launchernickname": "ubisoftconnect",
 		"gameorigin": "suggestedgame",
