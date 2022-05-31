@@ -29,8 +29,8 @@ install_dotnet_status="Isso pode demorar alguns minutos..."
 
 #Download information
 app_download_status="Baixando o instalador do Origin..."
-app_download_link="https://download.dm.origin.com/origin/live/OriginUpdate_10_5_111_50299.zip"
-app_download_file_name="OriginUpdate_10_5_111_50299.zip"
+app_download_link="https://download.dm.origin.com/origin/live/OriginUpdate_10_5_112_50486.zip"
+app_download_file_name="OriginUpdate_10_5_112_50486.zip"
 
 #Default settings
 app_nickname_dir="$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"
@@ -70,6 +70,8 @@ function install_app() {
 function fix_app() {
 	mkdir -p "$app_nickname_dir/drive_c/Program Files (x86)/Origin"
 	cp -f /opt/regataos-wine/dlls/origin/ucrtbase.dll "$app_nickname_dir/drive_c/Program Files (x86)/Origin/ucrtbase.dll"
+	cp -f /opt/regataos-wine/dlls/origin/Qt5Svg.dll "$app_nickname_dir/drive_c/Program Files (x86)/Origin/Qt5Svg.dll"
+
 	mkdir -p "$app_nickname_dir/drive_c/users/$user/AppData/Roaming/Origin"
 	cp -f /opt/regataos-wine/custom-configs/origin/local.xml "$app_nickname_dir/drive_c/users/$user/AppData/Roaming/Origin/local.xml"
 	cp -f /opt/regataos-gcs/launchers-configs/$app_nickname/$app_nickname.conf $HOME/.config/regataos-gcs/$app_nickname.conf
