@@ -19,7 +19,6 @@ error_notify_title="Erro na instalação da"
 error_notify_text="Ocorreu algum erro na instalação da"
 installation_error_status="Erro na instalação"
 progressbar_dir="/tmp/progressbar-gcs"
-user=$(users | awk '{print $1}')
 
 # Complements
 app_name_dotnet40="Instalando .NET Framework 4.0"
@@ -34,6 +33,7 @@ app_download_file_name="EpicGamesLauncherInstaller.msi"
 
 #Default settings
 app_nickname_dir="$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"
+user=$(ls $app_nickname_dir/drive_c/users/ | awk '{print $1}' | sed '/Public/d')
 
 # Variables for custom Wine
 export CUSTOM_WINE_DIR="$(cat /opt/regataos-wine/wine-gcs-version.txt)"
