@@ -45,8 +45,6 @@ export WINEFSYNC_FUTEX2=1
 export WINE_LARGE_ADDRESS_AWARE=1
 export DXVK_STATE_CACHE_PATH="$PREFIX_LOCATION"
 export DXVK_LOG_PATH="$PREFIX_LOCATION"
-export DXVK_LOG_LEVEL=none
-export WINEDEBUG=-all
 
 # DXVK configuration file
 if test -e "$PREFIX_LOCATION/dxvk.conf"; then
