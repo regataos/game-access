@@ -61,8 +61,6 @@ elif test -e "$HOME/.local/share/wineprefixes/default-compatibility-mode" ; then
 		cp -rf "$HOME/.local/share/wineprefixes/default-compatibility-mode" \
 		"$HOME/.local/share/wineprefixes/epicstore-compatibility-mode"
 
-		winetricks prefix=epicstore-compatibility-mode -q -f win10
-
 		rm -f $progressbar_dir/progress-movement
 		echo "completed" > $progressbar_dir/progress-full
 		echo "" > $progressbar_dir/status
@@ -85,16 +83,16 @@ elif test -e "/usr/share/regataos/compatibility-mode/default-wineprefix.tar.xz" 
 		echo "show progress bar" > $progressbar_dir/progressbar
 
 		if test -e "/usr/share/regataos/compatibility-mode/default-wineprefix.tar.xz" ; then
-			mkdir -p "$HOME/.local/share/wineprefixes/"
 			tar xf "/usr/share/regataos/compatibility-mode/default-wineprefix.tar.xz" -C "$HOME/.local/share/wineprefixes/"
 		fi
 
-		mv -f "$HOME/.local/share/wineprefixes/default-compatibility-mode" "$HOME/.local/share/wineprefixes/epicstore-compatibility-mode"
+		# Enable DXVK and VKD3D-Proton
+		if test ! -e "$HOME/.local/share/wineprefixes/default-compatibility-mode/vulkan.txt"; then
+			enable_dxvk_vkd3d
+		fi
 
-		# If Vulkan is supported, enable DXVK and VKD3D-Proton
-		export WINEPREFIX="$HOME/.local/share/wineprefixes/epicstore-compatibility-mode"
-		/bin/bash /opt/regataos-gcs/scripts/action-games/configure-compatibility-mode -configure-dxvk-vkd3d
-		winetricks prefix=epicstore-compatibility-mode -q -f win10
+		cp -rf "$HOME/.local/share/wineprefixes/default-compatibility-mode" \
+		"$HOME/.local/share/wineprefixes/epicstore-compatibility-mode"
 
 		rm -f $progressbar_dir/progress-movement
 		echo "completed" > $progressbar_dir/progress-full
@@ -108,83 +106,23 @@ elif test -e "/usr/share/regataos/compatibility-mode/default-wineprefix.tar.xz" 
 	exit 0
 
 else
-	# Prepare the progress bar
-	rm -f $progressbar_dir/progress-movement
-	echo "installing" > $progressbar_dir/installing
-	echo $app_name > $progressbar_dir/app-name
-	echo $conf_prefix_status > $progressbar_dir/status
-	sleep 1
-	echo "show progress bar" > $progressbar_dir/progressbar
-
-	# Start dependences Download
-	if test ! -e "$HOME/.cache/winetricks/directx9/directx_Jun2010_redist.exe" ; then
-		echo dotnet > /tmp/regataos-gcs/dotnet
-		/opt/regataos-gcs/scripts/install/scripts-install/directx-compatibility-mode.sh start
-	fi
-
-	# Environment variables for Wine
-	echo "0%" > $progressbar_dir/progress
-	export WINEPREFIX="$HOME/.local/share/wineprefixes/default-compatibility-mode";
-	export WINEDLLOVERRIDES="mscoree,mshtml,winemenubuilder,winedbg=";
-	export WINEDEBUG=-all;
-
 	# Configuring compatibility mode
 	echo "installing" > $progressbar_dir/progress-movement
 	echo "" > $progressbar_dir/progress
 	echo $app_name > $progressbar_dir/app-name
 	echo $conf_prefix_status > $progressbar_dir/status
+	sleep 1
+	echo "show progress bar" > $progressbar_dir/progressbar
 
-	echo "8%" > $progressbar_dir/progress
-	winetricks prefix=default-compatibility-mode -q -f d3dx9
+	/opt/regataos-gcs/scripts/prepare-default-compatibility-mode.sh start
 
-	echo "18%" > $progressbar_dir/progress
-	winetricks prefix=default-compatibility-mode -q -f corefonts
-
-	echo "32%" > $progressbar_dir/progress
-	winetricks prefix=default-compatibility-mode -q -f nocrashdialog
-
-	echo "47%" > $progressbar_dir/progress
-	winetricks prefix=default-compatibility-mode -q -f d3dcompiler_43
-
-	echo "52%" > $progressbar_dir/progress
-	winetricks prefix=default-compatibility-mode -q -f d3dcompiler_47
-
-	echo "65%" > $progressbar_dir/progress
-	winetricks prefix=default-compatibility-mode -q -f vcrun2019
-
-	# Install Media Foundation workaround for Wine
-	echo "78%" > $progressbar_dir/progress
-	#Download
-	wget --no-check-certificate -O /tmp/regataos-gcs/mf-install-master.zip https://lutris.nyc3.cdn.digitaloceanspaces.com/games/epic-games-store/mf-install-master.zip
-
-	#Extract
-	rm -rf "/tmp/regataos-gcs/mf-install-master"
-	cd /tmp/regataos-gcs/
-	unzip mf-install-master.zip
-
-	#Install
-	cd /tmp/regataos-gcs/mf-install-master/
-	export WINEPREFIX="$HOME/.local/share/wineprefixes/default-compatibility-mode";
-	sed -i 's/cp -v/cp -vf/g' install-mf.sh
-	/bin/bash install-mf.sh
-
-	echo "82%" > $progressbar_dir/progress
 	# Enable DXVK and VKD3D-Proton
 	if test ! -e "$HOME/.local/share/wineprefixes/default-compatibility-mode/vulkan.txt"; then
 		enable_dxvk_vkd3d
 	fi
 
-	echo "95%" > $progressbar_dir/progress
-	if test ! -e "$HOME/.local/share/wineprefixes/epicstore-compatibility-mode" ; then
-		cp -rf "$HOME/.local/share/wineprefixes/default-compatibility-mode" \
-		"$HOME/.local/share/wineprefixes/epicstore-compatibility-mode"
-	fi
-
-	winetricks prefix=default-compatibility-mode -q -f win10
-	winetricks prefix=epicstore-compatibility-mode -q -f win10
-
-	echo "100%" > $progressbar_dir/progress
-	sleep 3
+	cp -rf "$HOME/.local/share/wineprefixes/default-compatibility-mode" \
+	"$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"
 
 	rm -f $progressbar_dir/progress-movement
 	echo "completed" > $progressbar_dir/progress-full
