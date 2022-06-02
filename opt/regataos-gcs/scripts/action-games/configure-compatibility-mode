@@ -1,82 +1,108 @@
 #!/bin/sh
-#
-# Check if DXVK and VKD#D-Proton are correctly configured for wineprefix.
+
+# Update wineprefix username
+function update_wineprefix_username() {
+    user=$(users | awk '{print $1}')
+
+    if test ! -e "$WINEPREFIX/drive_c/users/$user"; then
+        cd $WINEPREFIX/
+        sed -i "s/marcos/$user/g" system.reg user.reg userdef.reg
+
+        mv -f "drive_c/users/marcos" "drive_c/users/$user"
+        cd "drive_c/users/$user/"
+
+        ln -sf "$HOME/.local/share/applications" "Desktop"
+        ln -sf "$(cat $HOME/.config/user-dirs.dirs | grep XDG_DOCUMENTS_DIR | cut -d"=" -f 2- | sed 's/"//g' | sed 's|$HOME|'/home/$user'|')" "Documents"
+        ln -sf "$(cat $HOME/.config/user-dirs.dirs | grep XDG_DOWNLOAD_DIR | cut -d"=" -f 2- | sed 's/"//g' | sed 's|$HOME|'/home/$user'|')" "Downloads"
+        ln -sf "$(cat $HOME/.config/user-dirs.dirs | grep XDG_MUSIC_DIR | cut -d"=" -f 2- | sed 's/"//g' | sed 's|$HOME|'/home/$user'|')" "Music"
+        ln -sf "$(cat $HOME/.config/user-dirs.dirs | grep XDG_PICTURES_DIR | cut -d"=" -f 2- | sed 's/"//g' | sed 's|$HOME|'/home/$user'|')" "Pictures"
+        ln -sf "$(cat $HOME/.config/user-dirs.dirs | grep XDG_VIDEOS_DIR | cut -d"=" -f 2- | sed 's/"//g' | sed 's|$HOME|'/home/$user'|')" "Videos"
+    fi
+}
 
 # If Vulkan is supported, enable DXVK and VKD3D-Proton.
 function configure_dxvk_vkd3d() {
-    if [ -z $WINEPREFIX ];then
+    if [ -z $WINEPREFIX ]; then
         echo 'The "$WINEPREFIX" environment variable is empty. Going out...'
         exit 1
     fi
 
-    vulkan_test=$(vulkaninfo)
-    if [[ $vulkan_test == *"Instance Extensions"* ]]; then
-        if [[ $vulkan_test != *"Vulkan support is incomplete"* ]]; then
-            # Function to set DLLs as native by default
-            overrideDll() {
-                export WINEDEBUG=-all
-                export WINEDLLOVERRIDES="mscoree,mshtml="
-                export WINEPREFIX=$(echo "$WINEPREFIX")
-                export CUSTOM_WINE_DIR="$(cat /opt/regataos-wine/wine-gcs-version.txt)"
-                $CUSTOM_WINE_DIR/bin/wine reg add 'HKEY_CURRENT_USER\Software\Wine\DllOverrides' /v $1 /d native /f > /dev/null 2>&1
-            }
+    update_wineprefix_username
 
-            # Enable DXVK for Direct3D 9/10/11 over Vulkan
-            for dll in $(ls /opt/regataos-wine/dxvk/x64/ | grep "dll"); do
-                mv -fv "$WINEPREFIX/drive_c/windows/system32/$dll" "$WINEPREFIX/drive_c/windows/system32/$dll.old"
-                ln -sfv "/opt/regataos-wine/dxvk/x64/$dll" "$WINEPREFIX/drive_c/windows/system32/$dll"
-                
-                overrideDll $(echo "$dll" | sed s/.dll//)
-            done
+    if test ! -e "$WINEPREFIX/vulkan.txt"; then
+        vulkan_test=$(vulkaninfo)
+        if [[ $vulkan_test == *"Instance Extensions"* ]]; then
+            if [[ $vulkan_test != *"Vulkan support is incomplete"* ]]; then
+                # Function to set DLLs as native by default
+                overrideDll() {
+                    export WINEDEBUG=-all
+                    export WINEDLLOVERRIDES="mscoree,mshtml="
+                    export WINEPREFIX=$(echo "$WINEPREFIX")
+                    export CUSTOM_WINE_DIR="$(cat /opt/regataos-wine/wine-gcs-version.txt)"
+                    $CUSTOM_WINE_DIR/bin/wine reg add 'HKEY_CURRENT_USER\Software\Wine\DllOverrides' /v $1 /d native /f >/dev/null 2>&1
+                }
 
-            for dll in $(ls /opt/regataos-wine/dxvk/x32/ | grep "dll"); do
-                mv -fv "$WINEPREFIX/drive_c/windows/syswow64/$dll" "$WINEPREFIX/drive_c/windows/syswow64/$dll.old"
-                ln -sfv "/opt/regataos-wine/dxvk/x32/$dll" "$WINEPREFIX/drive_c/windows/syswow64/$dll"
-                
-                overrideDll $(echo "$dll" | sed s/.dll//)
-            done
+                # Enable DXVK for Direct3D 9/10/11 over Vulkan
+                for dll in $(ls /opt/regataos-wine/dxvk/x64/ | grep "dll"); do
+                    mv -fv "$WINEPREFIX/drive_c/windows/system32/$dll" "$WINEPREFIX/drive_c/windows/system32/$dll.old"
+                    ln -sfv "/opt/regataos-wine/dxvk/x64/$dll" "$WINEPREFIX/drive_c/windows/system32/$dll"
 
-            # Enable VKD3D-Proton for Direct3D 12 over Vulkan
-            for dll in $(ls /opt/regataos-wine/vkd3d-proton/x64/ | grep "dll"); do
-                mv -fv "$WINEPREFIX/drive_c/windows/system32/$dll" "$WINEPREFIX/drive_c/windows/system32/$dll.old"
-                ln -sfv "/opt/regataos-wine/vkd3d-proton/x64/$dll" "$WINEPREFIX/drive_c/windows/system32/$dll"
-                
-                overrideDll $(echo "$dll" | sed s/.dll//)
-            done
-
-            for dll in $(ls /opt/regataos-wine/vkd3d-proton/x86/ | grep "dll"); do
-                mv -fv "$WINEPREFIX/drive_c/windows/syswow64/$dll" "$WINEPREFIX/drive_c/windows/syswow64/$dll.old"
-                ln -sfv "/opt/regataos-wine/vkd3d-proton/x86/$dll" "$WINEPREFIX/drive_c/windows/syswow64/$dll"
-                
-                overrideDll $(echo "$dll" | sed s/.dll//)
-            done
-
-            # If GPU is NVIDIA, install DXVK-NVAPI
-            if test -e /usr/bin/nvidia-xconfig; then
-                ln -sfv /opt/regataos-wine/dxvk-nvapi/x32/*.dll $WINEPREFIX/drive_c/windows/syswow64/
-                ln -sfv /opt/regataos-wine/dxvk-nvapi/x64/*.dll $WINEPREFIX/drive_c/windows/system32/
-
-                for dll in $(ls /opt/regataos-wine/dxvk-nvapi/x32/ | grep "dll"); do
                     overrideDll $(echo "$dll" | sed s/.dll//)
                 done
 
-                for dll in $(ls /opt/regataos-wine/dxvk-nvapi/x64/ | grep "dll"); do
+                for dll in $(ls /opt/regataos-wine/dxvk/x32/ | grep "dll"); do
+                    mv -fv "$WINEPREFIX/drive_c/windows/syswow64/$dll" "$WINEPREFIX/drive_c/windows/syswow64/$dll.old"
+                    ln -sfv "/opt/regataos-wine/dxvk/x32/$dll" "$WINEPREFIX/drive_c/windows/syswow64/$dll"
+
                     overrideDll $(echo "$dll" | sed s/.dll//)
                 done
 
-                echo -e "DXVK\nDXVK-NVAPI\nVKD3D-Proton" > "$WINEPREFIX/vulkan.txt"
+                # Enable VKD3D-Proton for Direct3D 12 over Vulkan
+                for dll in $(ls /opt/regataos-wine/vkd3d-proton/x64/ | grep "dll"); do
+                    mv -fv "$WINEPREFIX/drive_c/windows/system32/$dll" "$WINEPREFIX/drive_c/windows/system32/$dll.old"
+                    ln -sfv "/opt/regataos-wine/vkd3d-proton/x64/$dll" "$WINEPREFIX/drive_c/windows/system32/$dll"
 
-            else
-                echo -e "DXVK\nVKD3D-Proton" > "$WINEPREFIX/vulkan.txt"
+                    overrideDll $(echo "$dll" | sed s/.dll//)
+                done
+
+                for dll in $(ls /opt/regataos-wine/vkd3d-proton/x86/ | grep "dll"); do
+                    mv -fv "$WINEPREFIX/drive_c/windows/syswow64/$dll" "$WINEPREFIX/drive_c/windows/syswow64/$dll.old"
+                    ln -sfv "/opt/regataos-wine/vkd3d-proton/x86/$dll" "$WINEPREFIX/drive_c/windows/syswow64/$dll"
+
+                    overrideDll $(echo "$dll" | sed s/.dll//)
+                done
+
+                # If GPU is NVIDIA, install DXVK-NVAPI
+                if test -e /usr/bin/nvidia-xconfig; then
+                    ln -sfv /opt/regataos-wine/dxvk-nvapi/x32/*.dll $WINEPREFIX/drive_c/windows/syswow64/
+                    ln -sfv /opt/regataos-wine/dxvk-nvapi/x64/*.dll $WINEPREFIX/drive_c/windows/system32/
+
+                    for dll in $(ls /opt/regataos-wine/dxvk-nvapi/x32/ | grep "dll"); do
+                        overrideDll $(echo "$dll" | sed s/.dll//)
+                    done
+
+                    for dll in $(ls /opt/regataos-wine/dxvk-nvapi/x64/ | grep "dll"); do
+                        overrideDll $(echo "$dll" | sed s/.dll//)
+                    done
+
+                    echo -e "DXVK\nDXVK-NVAPI\nVKD3D-Proton" >"$WINEPREFIX/vulkan.txt"
+
+                else
+                    echo -e "DXVK\nVKD3D-Proton" >"$WINEPREFIX/vulkan.txt"
+                fi
             fi
         fi
     fi
+
+    sleep 10
 }
 
 case $1 in
-    "-configure-dxvk-vkd3d") configure_dxvk_vkd3d
-        ;;
-    *) echo "Invalid option!"
-        exit 1
-        ;;
+"-configure-dxvk-vkd3d")
+    configure_dxvk_vkd3d
+    ;;
+*)
+    echo "Invalid option!"
+    exit 1
+    ;;
 esac
