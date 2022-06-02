@@ -20,6 +20,7 @@ error_notify_title="installation error!"
 error_notify_text="There was an error installing"
 installation_error_status="Installation error"
 progressbar_dir="/tmp/progressbar-gcs"
+user=$(users | awk '{print $1}')
 
 # Complements
 app_name_dotnet40="Installing .NET Framework 4.0"
@@ -34,7 +35,6 @@ app_download_file_name="UbisoftConnectInstaller.exe"
 
 #Default settings
 app_nickname_dir="$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"
-user=$(ls $app_nickname_dir/drive_c/users/ | awk '{print $1}' | sed '/Public/d')
 
 # Variables for custom Wine
 export CUSTOM_WINE_DIR="$(cat /opt/regataos-wine/wine-gcs-version.txt)"
