@@ -74,6 +74,7 @@ function fix_app() {
 
 	mkdir -p "$app_nickname_dir/drive_c/users/$user/AppData/Roaming/Origin"
 	cp -f /opt/regataos-wine/custom-configs/origin/local.xml "$app_nickname_dir/drive_c/users/$user/AppData/Roaming/Origin/local.xml"
+
 	cp -f /opt/regataos-gcs/launchers-configs/$app_nickname/$app_nickname.conf $HOME/.config/regataos-gcs/$app_nickname.conf
 	sed -i '/^$/d' $HOME/.config/regataos-gcs/$app_nickname.conf
 }

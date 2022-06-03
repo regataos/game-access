@@ -5,18 +5,41 @@ function update_wineprefix_username() {
     user=$(users | awk '{print $1}')
 
     if test ! -e "$WINEPREFIX/drive_c/users/$user"; then
-        cd $WINEPREFIX/
-        sed -i "s/marcos/$user/g" system.reg user.reg userdef.reg
+        # Update files with username
+        mv -f "$WINEPREFIX/drive_c/users/marcos" "$WINEPREFIX/drive_c/users/$user"
 
-        mv -f "drive_c/users/marcos" "drive_c/users/$user"
-        cd "drive_c/users/$user/"
+        update_username=(
+            system.reg
+            user.reg
+            userdef.reg
+        )
 
-        ln -sf "$HOME/.local/share/applications" "Desktop"
-        ln -sf "$(cat $HOME/.config/user-dirs.dirs | grep XDG_DOCUMENTS_DIR | cut -d"=" -f 2- | sed 's/"//g' | sed 's|$HOME|'/home/$user'|')" "Documents"
-        ln -sf "$(cat $HOME/.config/user-dirs.dirs | grep XDG_DOWNLOAD_DIR | cut -d"=" -f 2- | sed 's/"//g' | sed 's|$HOME|'/home/$user'|')" "Downloads"
-        ln -sf "$(cat $HOME/.config/user-dirs.dirs | grep XDG_MUSIC_DIR | cut -d"=" -f 2- | sed 's/"//g' | sed 's|$HOME|'/home/$user'|')" "Music"
-        ln -sf "$(cat $HOME/.config/user-dirs.dirs | grep XDG_PICTURES_DIR | cut -d"=" -f 2- | sed 's/"//g' | sed 's|$HOME|'/home/$user'|')" "Pictures"
-        ln -sf "$(cat $HOME/.config/user-dirs.dirs | grep XDG_VIDEOS_DIR | cut -d"=" -f 2- | sed 's/"//g' | sed 's|$HOME|'/home/$user'|')" "Videos"
+        for files in "${update_username[@]}"; do
+            sed -i "s/marcos/$user/g" "$WINEPREFIX/drive_c/users/$user/$files"
+        done
+
+        # Create symbolic links to user folders
+        create_symbolic_links=(
+            Documents
+            Downloads
+            Music
+            Pictures
+            Videos
+        )
+
+        for link in "${create_symbolic_links[@]}"; do
+            rm -f "$WINEPREFIX/drive_c/users/$user/$link"
+
+            ln -sf "$(cat $HOME/.config/user-dirs.dirs | grep -i $link | cut -d"=" -f 2- | sed 's/"//g' | sed 's|$HOME|'/home/$user'|')" \
+                "$WINEPREFIX/drive_c/users/$user/$link"
+        done
+
+        rm -f "$WINEPREFIX/drive_c/users/$user/Desktop"
+        ln -sf "$HOME/.local/share/applications" "$WINEPREFIX/drive_c/users/$user/Desktop"
+
+    else
+        rm -f "$WINEPREFIX/drive_c/users/$user/Desktop"
+        ln -sf "$HOME/.local/share/applications" "$WINEPREFIX/drive_c/users/$user/Desktop"
     fi
 }
 

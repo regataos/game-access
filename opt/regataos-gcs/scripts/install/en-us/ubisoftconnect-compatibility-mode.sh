@@ -73,6 +73,9 @@ function fix_app() {
 	mkdir -p "$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode/drive_c/users/$user/Local Settings/Application Data/Ubisoft Game Launcher/"
 	cp -f /opt/regataos-wine/custom-configs/$app_nickname/settings.yml "$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode/drive_c/users/$user/Local Settings/Application Data/Ubisoft Game Launcher/settings.yml"
 
+	mkdir -p "$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode/drive_c/users/$user/AppData/Local/Ubisoft Game Launcher/"
+	cp -f /opt/regataos-wine/custom-configs/$app_nickname/settings.yml "$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode/drive_c/users/$user/AppData/Local/Ubisoft Game Launcher/settings.yaml"
+
 	sed -i '/^$/d' $HOME/.config/regataos-gcs/$app_nickname.conf
 }
 
