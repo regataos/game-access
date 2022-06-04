@@ -38,7 +38,6 @@ export WINE_GECKO_CACHE_DIR="$CUSTOM_WINE_DIR/gecko"
 
 # Variables
 export WINEPREFIX="$PREFIX_LOCATION"
-export WINEDLLOVERRIDES="mscoree,mshtml,winemenubuilder,winedbg="
 export WINEESYNC=1
 export WINEFSYNC=1
 export WINEFSYNC_FUTEX2=1
@@ -46,13 +45,20 @@ export WINE_LARGE_ADDRESS_AWARE=1
 export DXVK_STATE_CACHE_PATH="$PREFIX_LOCATION"
 export DXVK_LOG_PATH="$PREFIX_LOCATION"
 
+# DXVK-NVAPI
+if [[ $(cat "$PREFIX_LOCATION/vulkan.txt") == *"DXVK-NVAPI"* ]]; then
+	export WINEDLLOVERRIDES="mscoree,mshtml,winemenubuilder,winedbg="
+else
+	export WINEDLLOVERRIDES="mscoree,mshtml,winemenubuilder,winedbg,nvapi,nvapi64="
+fi
+
 # DXVK configuration file
 if test -e "$PREFIX_LOCATION/dxvk.conf"; then
 	export DXVK_CONFIG_FILE="$PREFIX_LOCATION/dxvk.conf"
 fi
 
 # GAMEMODE
-#export LD_PRELOAD=/usr/\$LIB/libgamemodeauto.so.0
+export LD_PRELOAD=/usr/\$LIB/libgamemodeauto.so.0
 
 # Enable AMD FSR
 if [[ $(grep -r amd-fsr $GCS_CONFIG) == *"amd-fsr=true"* ]]; then
