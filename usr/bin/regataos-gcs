@@ -44,6 +44,9 @@ sed -i 's/\(closed-manually=true\)/closed-manually=false/' "$HOME/.config/regata
 rm -f "/tmp/regataos-gcs/running-with-regataos-gcs.txt"
 rm -f "/tmp/regataos-gcs/run-regataos-gcs.txt"
 
+# Update cache images
+/opt/regataos-gcs/scripts/update-cache start
+
 # Clear cache
 rm -f /tmp/regataos-gcs/config/steam-games/json/steam-id/*
 rm -f "/tmp/regataos-gcs/config/gog-games/games-folders2.txt"
@@ -73,7 +76,6 @@ function legendary_egl_sync() {
 if [[ $(glxinfo | grep vendor) == *"Intel"* ]]; then
 	regataosgcs --disable-gpu /opt/regataos-gcs &
 	/bin/bash /opt/regataos-gcs/scripts/check-support-amd-fsr.sh &
-	/opt/regataos-gcs/scripts/update-cache &
 	legendary_egl_sync &
 	/opt/regataos-gcs/scripts/progress-bar/capture-progress-download &
 	/opt/regataos-gcs/scripts/progress-bar/create-process-queues &
@@ -88,7 +90,6 @@ if [[ $(glxinfo | grep vendor) == *"Intel"* ]]; then
 else
 	regataosgcs /opt/regataos-gcs &
 	/bin/bash /opt/regataos-gcs/scripts/check-support-amd-fsr.sh &
-	/opt/regataos-gcs/scripts/update-cache &
 	legendary_egl_sync &
 	/opt/regataos-gcs/scripts/progress-bar/capture-progress-download &
 	/opt/regataos-gcs/scripts/progress-bar/create-process-queues &
