@@ -78,6 +78,7 @@ if [[ $(glxinfo | grep vendor) == *"Intel"* ]]; then
 	regataosgcs --disable-gpu /opt/regataos-gcs &
 	/bin/bash /opt/regataos-gcs/scripts/check-support-amd-fsr.sh &
 	legendary_egl_sync &
+	sleep 1
 	/opt/regataos-gcs/scripts/progress-bar/capture-progress-download &
 	/opt/regataos-gcs/scripts/progress-bar/create-process-queues &
 	/opt/regataos-gcs/scripts/progress-bar/run-process-queues &
@@ -92,6 +93,7 @@ else
 	regataosgcs /opt/regataos-gcs &
 	/bin/bash /opt/regataos-gcs/scripts/check-support-amd-fsr.sh &
 	legendary_egl_sync &
+	sleep 1
 	/opt/regataos-gcs/scripts/progress-bar/capture-progress-download &
 	/opt/regataos-gcs/scripts/progress-bar/create-process-queues &
 	/opt/regataos-gcs/scripts/progress-bar/run-process-queues &
