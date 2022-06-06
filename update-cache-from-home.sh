@@ -89,12 +89,12 @@ function downloadSlideImages() {
 function downloadBlockImages() {
 	#Image 1
 	function blockImage1() {
-		block1_image_name="block-wtno.jpg"
+		block1_image_name="block1-wtno.jpg"
 		block1_image_code="SQjVVCP"
 
 		if test ! -e "$HOME/.config/regataos-gcs/cache/img/$block1_image_name"; then
 			# Clear cache
-			rm -f $HOME/.config/regataos-gcs/cache/img/block-*.jpg
+			rm -f $HOME/.config/regataos-gcs/cache/img/block1-*.jpg
 
 			wget --no-check-certificate -O "$HOME/.config/regataos-gcs/cache/img/$block1_image_name" \
 				"https://i.ibb.co/$block1_image_code/$block1_image_name"
@@ -110,7 +110,7 @@ function downloadBlockImages() {
 
 	#Image 2
 	function blockImage2() {
-		block2_image_name="block-path-of-exile.jpg"
+		block2_image_name="block2-path-of-exile.jpg"
 		block2_image_code="MhM2YBp"
 
 		if test ! -e "$HOME/.config/regataos-gcs/cache/img/$block2_image_name"; then
@@ -128,7 +128,7 @@ function downloadBlockImages() {
 
 	#Image 3
 	function blockImage3() {
-		block3_image_name="block-rocket-league.jpg"
+		block3_image_name="block3-rocket-league.jpg"
 		block3_image_code="XpXFCbj"
 
 		if test ! -e "$HOME/.config/regataos-gcs/cache/img/$block3_image_name"; then
