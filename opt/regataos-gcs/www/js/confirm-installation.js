@@ -31,7 +31,7 @@ const fs = require('fs');
 	var launcher = fs.readFileSync("/tmp/regataos-gcs/confirm-installation", "utf8");
 	var launchername = launcher.replace(/(\r\n|\n|\r)/gm, "");
 
-	var command_line = "/bin/bash /opt/regataos-gcs/scripts/install/scripts-install/" + launchername + "-compatibility-mode.sh";
+	var command_line = "/opt/regataos-gcs/scripts/install/scripts-install/" + launchername + "-compatibility-mode.sh";
 	console.log(command_line);
 	exec(command_line,function(error,call,errlog){
 	});

@@ -457,7 +457,11 @@ if test ! -e "/tmp/progressbar-gcs/download-percentage-legendary"; then
 			rm -f "$progressbar_dir/download-extra.txt"
 			start_installation
 		else
-			echo "Installation in progress..."
+			if test -e "$progressbar_dir/installing"; then
+				echo "Installation in progress..."
+			else
+				start_installation
+			fi
 		fi
 	else
 		start_installation

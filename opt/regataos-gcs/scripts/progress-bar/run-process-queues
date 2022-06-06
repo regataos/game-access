@@ -9,46 +9,40 @@ do
 ps -C "regataosgcs /opt/regataos-gcs" > /dev/null
 if [ $? = 0 ]
 then
+	progressbar_dir="/tmp/progressbar-gcs"
 
-progressbar_dir="/tmp/progressbar-gcs"
+	# Make sure there are no critical installation errors
+	if test ! -e "$progressbar_dir/installing" ; then
+		# Check process queue and sort by sequence
+		if test -e "$progressbar_dir/queued-process" ; then
+			check_process=$(cat $progressbar_dir/queued-process | awk '{print $1}' | head -1 | tail -1 | cut -d"=" -f 2-)
 
-#Make sure there are no critical installation errors
-if test ! -e "$progressbar_dir/installing" ; then
+			if [[ $check_process == *"install"* ]]; then
+				run_process=$(cat $progressbar_dir/queued-process | awk '{print $1}' | head -1 | tail -1 | cut -d"=" -f -1)
+				echo "Install: $run_process"
 
-# Check process queue and sort by sequence
-if test -e "$progressbar_dir/queued-process" ; then
+				# echo "installing" > $progressbar_dir/installing
+				sed -i 1d "$progressbar_dir/queued-process"
+				/opt/regataos-gcs/scripts/install/scripts-install/$run_process-compatibility-mode.sh start
 
-	check_process=$(cat $progressbar_dir/queued-process | awk '{print $1}' | head -1 | tail -1 | cut -d"=" -f 2-)
+			elif [[ $check_process == *"remove"* ]]; then
+				run_process=$(cat $progressbar_dir/queued-process | awk '{print $1}' | head -1 | tail -1 | cut -d"=" -f -1)
+				echo "Remove $run_process"
 
-	if [[ $check_process == *"install"* ]]; then
+				# echo "Removing" > $progressbar_dir/installing
+				sed -i 1d "$progressbar_dir/queued-process"
+				/opt/regataos-gcs/scripts/remove/scripts-remove/$run_process-compatibility-mode-rm.sh start
 
-		run_process=$(cat $progressbar_dir/queued-process | awk '{print $1}' | head -1 | tail -1 | cut -d"=" -f -1)
+			elif [[ $check_process == *"epicstore"* ]]; then
+				export game_nickname="$(cat $progressbar_dir/queued-process | awk '{print $1}' | head -1 | tail -1 | cut -d'=' -f -1)"
+				sed -i 1d "$progressbar_dir/queued-process"
+				/opt/regataos-gcs/scripts/install/scripts-install/install-game-epicstore/install-epicstore-game.sh start
 
-		# echo "installing" > $progressbar_dir/installing
-		sed -i 1d "$progressbar_dir/queued-process"
-		"/opt/regataos-gcs/scripts/install/scripts-install/$run_process-compatibility-mode.sh" start
-
-	elif [[ $check_process == *"remove"* ]]; then
-	
-		run_process=$(cat $progressbar_dir/queued-process | awk '{print $1}' | head -1 | tail -1 | cut -d"=" -f -1)
-
-		# echo "Removing" > $progressbar_dir/installing
-		sed -i 1d "$progressbar_dir/queued-process"
-		"/opt/regataos-gcs/scripts/remove/scripts-remove/$run_process-compatibility-mode-rm.sh" start
-
-	elif [[ $check_process == *"epicstore"* ]]; then
-
-		export game_nickname="$(cat $progressbar_dir/queued-process | awk '{print $1}' | head -1 | tail -1 | cut -d'=' -f -1)";
-		sed -i 1d "$progressbar_dir/queued-process"
-		/opt/regataos-gcs/scripts/install/scripts-install/install-game-epicstore/install-epicstore-game.sh start
-
-	else
-		echo "Nothing to do."
+			else
+				echo "Nothing to do."
+			fi
+		fi
 	fi
-
-fi
-
-fi
 
 else
 	echo "Nothing to do..."
