@@ -46,6 +46,7 @@ rm -f "/tmp/regataos-gcs/run-regataos-gcs.txt"
 
 # Update cache images
 /opt/regataos-gcs/scripts/update-cache start
+sleep 1
 
 # Clear cache
 rm -f /tmp/regataos-gcs/config/steam-games/json/steam-id/*
