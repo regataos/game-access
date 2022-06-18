@@ -37,7 +37,9 @@ app_nickname_dir="$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mo
 
 # Application setup function
 function install_app() {
+	export WINEDLLOVERRIDES="mscoree,mshtml,winemenubuilder="
 	export WINEPREFIX="$app_nickname_dir"
+
 	wine msiexec /i /tmp/regataos-gcs/$app_download_file_name /q
 	killall EpicGamesLauncher.exe
 }
