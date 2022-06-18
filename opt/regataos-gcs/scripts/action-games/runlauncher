@@ -6,25 +6,6 @@ PREFIX_LOCATION="$HOME/.local/share/wineprefixes/$LAUNCHER-compatibility-mode"
 GCS_CONFIG="$HOME/.config/regataos-gcs/regataos-gcs.conf"
 LOG_FILE="/var/log/regataos-logs/$LAUNCHER.log"
 
-# Variables for custom Wine
-export CUSTOM_WINE_DIR="$(cat /opt/regataos-wine/wine-gcs-version.txt)"
-
-export WINEDLLPATH="$CUSTOM_WINE_DIR/lib:$CUSTOM_WINE_DIR/lib64"
-export WINESERVER="$CUSTOM_WINE_DIR/bin/wineserver"
-export WINELOADER="$CUSTOM_WINE_DIR/bin/wine"
-export WINE="$CUSTOM_WINE_DIR/bin/wine"
-
-alias wine="$CUSTOM_WINE_DIR/bin/wine"
-alias wine64="$CUSTOM_WINE_DIR/bin/wine64"
-alias wineserver="$CUSTOM_WINE_DIR/bin/wineserver"
-alias wineboot="$CUSTOM_WINE_DIR/bin/wineboot"
-alias winecfg="$CUSTOM_WINE_DIR/bin/winecfg"
-alias msiexec="$CUSTOM_WINE_DIR/bin/msiexec"
-
-# Try specifying the wine-mono and wine-gecko directory
-export WINE_MONO_CACHE_DIR="$CUSTOM_WINE_DIR/mono"
-export WINE_GECKO_CACHE_DIR="$CUSTOM_WINE_DIR/gecko"
-
 # Variables
 export WINEPREFIX="$PREFIX_LOCATION"
 export WINEESYNC=1
@@ -104,4 +85,4 @@ fi
 /bin/bash /opt/regataos-gcs/scripts/action-games/configure-compatibility-mode -configure-dxvk-vkd3d
 
 # Run launcher
-(env $LAUNCHERVAR $CUSTOM_WINE_DIR/bin/wine "$PREFIX_LOCATION/$RUNLAUNCHER" $LAUNCHEROPTIONS) 2>&1 | tee $LOG_FILE
+(env $LAUNCHERVAR wine "$PREFIX_LOCATION/$RUNLAUNCHER" $LAUNCHEROPTIONS) 2>&1 | tee $LOG_FILE

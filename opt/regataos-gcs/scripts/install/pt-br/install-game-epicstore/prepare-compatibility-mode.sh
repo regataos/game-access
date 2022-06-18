@@ -14,25 +14,6 @@ app_name_dotnet48="Instalando .NET Framework 4.8"
 app_name_directx="Instalando DirectX Redistributable"
 install_dotnet_status="Isso pode demorar alguns minutos..."
 
-# Variables for custom Wine
-export CUSTOM_WINE_DIR="$(cat /opt/regataos-wine/wine-gcs-version.txt)"
-
-export WINEDLLPATH="$CUSTOM_WINE_DIR/lib:$CUSTOM_WINE_DIR/lib64"
-export WINESERVER="$CUSTOM_WINE_DIR/bin/wineserver"
-export WINELOADER="$CUSTOM_WINE_DIR/bin/wine"
-export WINE="$CUSTOM_WINE_DIR/bin/wine"
-
-alias wine="$CUSTOM_WINE_DIR/bin/wine"
-alias wine64="$CUSTOM_WINE_DIR/bin/wine64"
-alias wineserver="$CUSTOM_WINE_DIR/bin/wineserver"
-alias wineboot="$CUSTOM_WINE_DIR/bin/wineboot"
-alias winecfg="$CUSTOM_WINE_DIR/bin/winecfg"
-alias msiexec="$CUSTOM_WINE_DIR/bin/msiexec"
-
-# Try specifying the wine-mono and wine-gecko directory
-export WINE_MONO_CACHE_DIR="$CUSTOM_WINE_DIR/mono"
-export WINE_GECKO_CACHE_DIR="$CUSTOM_WINE_DIR/gecko"
-
 # If Vulkan is supported, enable DXVK and VKD3D-Proton
 function enable_dxvk_vkd3d() {
 	export WINEPREFIX="$HOME/.local/share/wineprefixes/default-compatibility-mode"

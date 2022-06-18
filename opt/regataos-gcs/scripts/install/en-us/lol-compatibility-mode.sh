@@ -34,17 +34,6 @@ app_download_file_name="lol.exe"
 #Default settings
 app_nickname_dir="$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"
 
-# Variables for custom Wine
-export CUSTOM_WINE_DIR="$(cat /opt/regataos-wine/wine-gcs-version.txt)"
-export WINESERVER=$CUSTOM_WINE_DIR/bin/wineserver
-export WINELOADER=$CUSTOM_WINE_DIR/bin/wine
-export WINEDLLPATH=$CUSTOM_WINE_DIR/lib:$CUSTOM_WINE_DIR/lib64
-export WINE="$CUSTOM_WINE_DIR/bin/wine"
-
-# Try specifying the wine-mono and wine-gecko directory
-export WINE_MONO_CACHE_DIR="$CUSTOM_WINE_DIR/mono"
-export WINE_GECKO_CACHE_DIR="$CUSTOM_WINE_DIR/gecko"
-
 # Create game install folder
 #function gameinstall_folder() {
 #    mkdir -p "$HOME/Game Access/$app_name"
@@ -54,7 +43,7 @@ export WINE_GECKO_CACHE_DIR="$CUSTOM_WINE_DIR/gecko"
 
 # Application setup function
 function install_app() {
-	export WINEDLLOVERRIDES="nvapi,nvapi64="; WINEPREFIX="$app_nickname_dir" $CUSTOM_WINE_DIR/bin/wine /tmp/regataos-gcs/$app_download_file_name --mode unattended
+	export WINEDLLOVERRIDES="nvapi,nvapi64="; WINEPREFIX="$app_nickname_dir" wine /tmp/regataos-gcs/$app_download_file_name --mode unattended
 }
 
 # Fix app
@@ -174,26 +163,26 @@ echo "" > $progressbar_dir/progress
 echo $app_name > $progressbar_dir/app-name
 echo $conf_prefix_status > $progressbar_dir/status
 #echo "8%" > $progressbar_dir/progress
-#export WINEDLLOVERRIDES="mscoree,mshtml="; export WINEDEBUG=-all; winetricks prefix=$app_nickname-compatibility-mode -q corefonts
+#export WINEDLLOVERRIDES="mscoree,mshtml="; winetricks prefix=$app_nickname-compatibility-mode -q corefonts
 
 echo "17%" > $progressbar_dir/progress
-export WINEDLLOVERRIDES="mscoree,mshtml="; export WINEDEBUG=-all; WINEPREFIX="$app_nickname_dir" wine msiexec /i /usr/share/wine/gecko/wine-gecko-*-x86.msi
-export WINEDLLOVERRIDES="mscoree,mshtml="; export WINEDEBUG=-all; WINEPREFIX="$app_nickname_dir" wine msiexec /i /usr/share/wine/gecko/wine-gecko-*-x86_64.msi
+export WINEDLLOVERRIDES="mscoree,mshtml="; WINEPREFIX="$app_nickname_dir" wine msiexec /i /usr/share/wine/gecko/wine-gecko-*-x86.msi
+export WINEDLLOVERRIDES="mscoree,mshtml="; WINEPREFIX="$app_nickname_dir" wine msiexec /i /usr/share/wine/gecko/wine-gecko-*-x86_64.msi
 
 echo "23%" > $progressbar_dir/progress
-export WINEDLLOVERRIDES="mscoree,mshtml="; export WINEDEBUG=-all; WINEPREFIX="$app_nickname_dir" wine msiexec /i /usr/share/wine/mono/wine-mono-*.msi
+export WINEDLLOVERRIDES="mscoree,mshtml="; WINEPREFIX="$app_nickname_dir" wine msiexec /i /usr/share/wine/mono/wine-mono-*.msi
 
 echo "38%" > $progressbar_dir/progress
-export WINEDEBUG=-all; winetricks prefix=$app_nickname-compatibility-mode -q nocrashdialog
+winetricks prefix=$app_nickname-compatibility-mode -q nocrashdialog
 
 echo "42%" > $progressbar_dir/progress
-export WINEDEBUG=-all; winetricks prefix=$app_nickname-compatibility-mode -q vcrun2019
+winetricks prefix=$app_nickname-compatibility-mode -q vcrun2019
 
 echo "65%" > $progressbar_dir/progress
-export WINEDEBUG=-all; winetricks prefix=$app_nickname-compatibility-mode -q d3dcompiler_43 d3dcompiler_47 d3dx9 d3dx10_43
+winetricks prefix=$app_nickname-compatibility-mode -q d3dcompiler_43 d3dcompiler_47 d3dx9 d3dx10_43
 
 echo "78%" > $progressbar_dir/progress
-export WINEDEBUG=-all; winetricks prefix=$app_nickname-compatibility-mode -q win7
+winetricks prefix=$app_nickname-compatibility-mode -q win7
 
 echo "90%" > $progressbar_dir/progress
 sleep 1

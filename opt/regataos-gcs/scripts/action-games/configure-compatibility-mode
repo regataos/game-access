@@ -58,17 +58,10 @@ function configure_dxvk_vkd3d() {
             if [[ $vulkan_test != *"Vulkan support is incomplete"* ]]; then
                 # Function to set DLLs as native by default
                 overrideDll() {
-                    export CUSTOM_WINE_DIR="$(cat /opt/regataos-wine/wine-gcs-version.txt)"
-                    export WINEDLLPATH="$CUSTOM_WINE_DIR/lib:$CUSTOM_WINE_DIR/lib64"
-                    export WINESERVER="$CUSTOM_WINE_DIR/bin/wineserver"
-                    export WINELOADER="$CUSTOM_WINE_DIR/bin/wine"
-                    export WINE="$CUSTOM_WINE_DIR/bin/wine"
-
-                    export WINEDEBUG=-all
                     export WINEDLLOVERRIDES="mscoree,mshtml="
                     export WINEPREFIX=$(echo "$WINEPREFIX")
 
-                    $CUSTOM_WINE_DIR/bin/wine reg add 'HKEY_CURRENT_USER\Software\Wine\DllOverrides' /v $1 /d native /f >/dev/null 2>&1
+                    wine reg add 'HKEY_CURRENT_USER\Software\Wine\DllOverrides' /v $1 /d native /f >/dev/null 2>&1
                 }
 
                 # Enable DXVK for Direct3D 9/10/11 over Vulkan
