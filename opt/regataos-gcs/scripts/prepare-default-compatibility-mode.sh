@@ -6,9 +6,11 @@ export WINEDLLOVERRIDES="mscoree,mshtml="
 export WINEPREFIX="$HOME/.local/share/wineprefixes/default-compatibility-mode"
 
 # Check the winetricks cache present on the system.
-if test -e "/opt/regataos-wine/winetricks-cache"; then
-    mkdir -p "$HOME/.cache/winetricks"
-    cp -f /opt/regataos-wine/winetricks-cache/* $HOME/.cache/winetricks/
+if test ! -e "$HOME/.cache/winetricks/vcrun2019"; then
+    if test -e "/opt/regataos-wine/winetricks-cache/winetricks.tar.xz"; then
+        mkdir -p "$HOME/.cache/winetricks"
+        tar xf "/opt/regataos-wine/winetricks-cache/winetricks.tar.xz" -C "$HOME/.cache/winetricks"
+    fi
 fi
 
 # Preparing the wineprefix with Winetricks
