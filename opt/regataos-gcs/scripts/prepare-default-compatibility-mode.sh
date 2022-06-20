@@ -8,8 +8,8 @@ export WINEPREFIX="$HOME/.local/share/wineprefixes/default-compatibility-mode"
 # Check the winetricks cache present on the system.
 if test ! -e "$HOME/.cache/winetricks/vcrun2019"; then
     if test -e "/opt/regataos-wine/winetricks-cache/winetricks.tar.xz"; then
-        mkdir -p "$HOME/.cache/winetricks"
-        tar xf "/opt/regataos-wine/winetricks-cache/winetricks.tar.xz" -C "$HOME/.cache/winetricks"
+        mkdir -p "$HOME/.cache"
+        tar xf "/opt/regataos-wine/winetricks-cache/winetricks.tar.xz" -C "$HOME/.cache/"
     fi
 fi
 
