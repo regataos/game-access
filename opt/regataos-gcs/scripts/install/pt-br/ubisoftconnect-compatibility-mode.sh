@@ -38,7 +38,8 @@ app_nickname_dir="$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mo
 
 # Application setup function
 function install_app() {
-	export WINEDLLOVERRIDES="mscoree,mshtml,winemenubuilder="
+	export WINEDEBUG=-all
+	export WINEDLLOVERRIDES="mscoree,mshtml,winemenubuilder,winedbg="
 	export WINEPREFIX="$app_nickname_dir"
 
 	wine /tmp/regataos-gcs/$app_download_file_name /S
@@ -46,9 +47,6 @@ function install_app() {
 
 # Fix app
 function fix_app() {
-	# Fix Ubisoft Connect
-	cp -f /opt/regataos-gcs/launchers-configs/$app_nickname/$app_nickname.conf $HOME/.config/regataos-gcs/$app_nickname.conf
-
 	mkdir -p "$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode/drive_c/users/$user/Local Settings/Application Data/Ubisoft Game Launcher/"
 	cp -f /opt/regataos-wine/custom-configs/$app_nickname/settings.yml "$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode/drive_c/users/$user/Local Settings/Application Data/Ubisoft Game Launcher/settings.yml"
 
@@ -67,12 +65,13 @@ function success_installation() {
 	notify-send -i regataos-gcs -u normal -a 'Regata OS Game Access' "$app_name $success_notify_title" "$app_name $success_notify_text"
 
 	# Create desktop shortcut
-	#Check desktop
-	test -f "${XDG_CONFIG_HOME:-$HOME/.config}/user-dirs.dirs" && source "${XDG_CONFIG_HOME:-$HOME/.config}/user-dirs.dirs"
-	DESKTOP_DIR="${XDG_DESKTOP_DIR:-$HOME/Desktop}"
-
+	echo "installing .desktop file..."
+	rm -rf "$HOME/.local/share/applications/Programs/Ubisoft"
 	rm -f "$HOME/.local/share/applications/Ubisoft Connect.desktop"
 	cp -f "/opt/regataos-wine/desktop-files/Ubisoft Connect.desktop" "$HOME/.local/share/applications/Ubisoft Connect.desktop"
+
+	test -f "${XDG_CONFIG_HOME:-$HOME/.config}/user-dirs.dirs" && source "${XDG_CONFIG_HOME:-$HOME/.config}/user-dirs.dirs"
+	DESKTOP_DIR="${XDG_DESKTOP_DIR:-$HOME/Desktop}"
 
 	if [ -d "$DESKTOP_DIR" ]; then
 		cd "/$DESKTOP_DIR"
@@ -285,6 +284,7 @@ if test -e "$app_nickname_dir/$app_executable" ; then
 	echo "completed" > $progressbar_dir/progress-full
 	echo "" > $progressbar_dir/status
 	echo $success_installation > $progressbar_dir/progress
+	sleep 5
 	success_installation
 	gameinstall_folder
 	sleep 2
@@ -303,6 +303,7 @@ elif test -e "$app_nickname_dir/$app_executable2" ; then
 	echo "completed" > $progressbar_dir/progress-full
 	echo "" > $progressbar_dir/status
 	echo $success_installation > $progressbar_dir/progress
+	sleep 5
 	success_installation
 	gameinstall_folder
 	sleep 2
@@ -435,9 +436,11 @@ function start_hidden_installation() {
 
 	# Confirm installation
 	if test -e "$app_nickname_dir/$app_executable" ; then
+		sleep 5
 		success_installation
 		gameinstall_folder
 	elif test -e "$app_nickname_dir/$app_executable2" ; then
+		sleep 5
 		success_installation
 		gameinstall_folder
 	else

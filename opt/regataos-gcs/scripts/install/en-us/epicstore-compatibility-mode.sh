@@ -37,7 +37,8 @@ app_nickname_dir="$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mo
 
 # Application setup function
 function install_app() {
-	export WINEDLLOVERRIDES="mscoree,mshtml,winemenubuilder="
+	export WINEDEBUG=-all
+	export WINEDLLOVERRIDES="mscoree,mshtml,winemenubuilder,winedbg="
 	export WINEPREFIX="$app_nickname_dir"
 
 	wine msiexec /i /tmp/regataos-gcs/$app_download_file_name /q
@@ -53,12 +54,12 @@ function success_installation() {
 	notify-send -i regataos-gcs -u normal -a 'Regata OS Game Access' "$app_name $success_notify_title" "$app_name $success_notify_text"
 
 	# Create desktop shortcut
-	#Check desktop
-	test -f "${XDG_CONFIG_HOME:-$HOME/.config}/user-dirs.dirs" && source "${XDG_CONFIG_HOME:-$HOME/.config}/user-dirs.dirs"
-	DESKTOP_DIR="${XDG_DESKTOP_DIR:-$HOME/Desktop}"
-
+	rm -f "$HOME/.local/share/applications/Programs/Epic Games Launcher.desktop"
 	rm -f "$HOME/.local/share/applications/Epic Games Launcher.desktop"
 	cp -f "/opt/regataos-wine/desktop-files/Epic Games Launcher.desktop" "$HOME/.local/share/applications/Epic Games Launcher.desktop"
+
+	test -f "${XDG_CONFIG_HOME:-$HOME/.config}/user-dirs.dirs" && source "${XDG_CONFIG_HOME:-$HOME/.config}/user-dirs.dirs"
+	DESKTOP_DIR="${XDG_DESKTOP_DIR:-$HOME/Desktop}"
 
 	if [ -d "$DESKTOP_DIR" ]; then
 		cd "/$DESKTOP_DIR"
@@ -256,9 +257,6 @@ EOM
 	# Remove cancel script
 	rm -f $progressbar_dir/script-cancel
 
-	# Fix app
-	fix_app
-
 	# Install app
 	echo $app_install_status >$progressbar_dir/status
 	echo "" >$progressbar_dir/progress
@@ -275,6 +273,7 @@ EOM
 		echo "completed" >$progressbar_dir/progress-full
 		echo "" >$progressbar_dir/status
 		echo $success_installation >$progressbar_dir/progress
+		sleep 5
 		success_installation
 		sleep 2
 		rm -f $progressbar_dir/progress-full
@@ -390,9 +389,6 @@ function start_hidden_installation() {
 		ln -sf $HOME/.local/share/applications "$app_nickname_dir/drive_c/users/$user/Área de Trabalho"
 		ln -sf $HOME/.local/share/applications "$app_nickname_dir/drive_c/users/$user/Desktop"
 
-		# Fix app
-		fix_app
-
 		# Install app
 		gameinstall_folder
 		install_app
@@ -407,6 +403,7 @@ function start_hidden_installation() {
 
 	# Confirm installation
 	if test -e "$app_nickname_dir/$app_executable"; then
+		sleep 5
 		success_installation
 	else
 		installation_failed

@@ -11,10 +11,10 @@
 	<script type="text/javascript" src="js/update-css.js"></script>
 	<script type="text/javascript" src="js/index.js"></script>
 	<script type="text/javascript" src="js/go-pagesfile.js"></script>
+	<script type="text/javascript" src="js/js-pages/highlighting-pages.js"></script>
 	<script type="text/javascript" src="js/go-pages.js"></script>
 	<script type="text/javascript" src="js/run-wineprefix.js"></script>
 	<script type="text/javascript" src="js/open-launcher-folder.js"></script>
-	<script type="text/javascript" src="js/js-pages/highlighting-pages.js"></script>
 	<script type="text/javascript" src="js/translations/language/confirm-box.js"></script>
 	<script type="text/javascript" src="js/translations/language/index-lang.js"></script>
 	<script type="text/javascript" src="js/js-pages/check-installed-launcher.js"></script>
@@ -161,7 +161,7 @@
 <script type="text/javascript" src="js/search.js"></script>
 </div>
 
-	<iframe src="pages/home.html" frameborder="0" class="iframe_gcs" id="iframegcs"></iframe>
+	<iframe onload="check_installed_launchers();" src="pages/home.html" frameborder="0" class="iframe_gcs" id="iframegcs"></iframe>
 
     <script>
 		const gui = require('nw.gui');

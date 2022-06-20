@@ -32,7 +32,13 @@ const fs = require('fs');
 	console.log(command_line);
 	exec(command_line,function(error,call,errlog){
 	});
-cancel_uninstall();	
+
+	cancel_uninstall();
+
+	setTimeout(() => {
+		$(".block-" + launchername).css("display", "none");
+		$("div#block-home").css("display", "block");
+	}, "300");
 }
 
 setInterval(function() {

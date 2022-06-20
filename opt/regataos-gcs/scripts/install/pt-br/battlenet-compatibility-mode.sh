@@ -37,22 +37,18 @@ app_nickname_dir="$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mo
 
 # Application setup function
 function install_app() {
-	export WINEDLLOVERRIDES="mscoree,mshtml,winemenubuilder="
+	export WINEDEBUG=-all
+	export WINEDLLOVERRIDES="mscoree,mshtml,winemenubuilder,winedbg="
 	export WINEPREFIX="$app_nickname_dir"
 
 	wine /tmp/regataos-gcs/$app_download_file_name
+	killall Battle.net.exe
 }
 
 # Fix app
 function fix_app() {
-	# Fix Battle.net
-	cp -f /opt/regataos-gcs/launchers-configs/$app_nickname/$app_nickname.conf $HOME/.config/regataos-gcs/$app_nickname.conf
-
 	mkdir -p "$HOME/.local/share/wineprefixes/battlenet-compatibility-mode/drive_c/users/$user/Application Data/Battle.net"
 	cp -f /opt/regataos-wine/custom-configs/$app_nickname/Battle.net.config "$HOME/.local/share/wineprefixes/battlenet-compatibility-mode/drive_c/users/$user/Application Data/Battle.net/Battle.net.config"
-
-	# Shader cache for Overwatch
-	tar xf /opt/regataos-wine/Overwatch.tar.xz -C $app_nickname_dir/
 
 	sed -i '/^$/d' $HOME/.config/regataos-gcs/$app_nickname.conf
 }
@@ -66,12 +62,12 @@ function success_installation() {
 	notify-send -i regataos-gcs -u normal -a 'Regata OS Game Access' "$app_name $success_notify_title" "$app_name $success_notify_text"
 
 	# Create desktop shortcut
-	#Check desktop
-	test -f "${XDG_CONFIG_HOME:-$HOME/.config}/user-dirs.dirs" && source "${XDG_CONFIG_HOME:-$HOME/.config}/user-dirs.dirs"
-	DESKTOP_DIR="${XDG_DESKTOP_DIR:-$HOME/Desktop}"
-
+	rm -rf "$HOME/.local/share/applications/Programs/Battle.net"
 	rm -f "$HOME/.local/share/applications/Battle.net.desktop"
 	cp -f "/opt/regataos-wine/desktop-files/Battle.net.desktop" "$HOME/.local/share/applications/Battle.net.desktop"
+
+	test -f "${XDG_CONFIG_HOME:-$HOME/.config}/user-dirs.dirs" && source "${XDG_CONFIG_HOME:-$HOME/.config}/user-dirs.dirs"
+	DESKTOP_DIR="${XDG_DESKTOP_DIR:-$HOME/Desktop}"
 
 	if [ -d "$DESKTOP_DIR" ]; then
 		cd "/$DESKTOP_DIR"
@@ -286,6 +282,7 @@ if test -e "$app_nickname_dir/$app_executable" ; then
 	echo "completed" > $progressbar_dir/progress-full
 	echo "" > $progressbar_dir/status
 	echo $success_installation > $progressbar_dir/progress
+	sleep 5
 	success_installation
 	sleep 2
 	rm -f $progressbar_dir/progress-full
@@ -418,6 +415,7 @@ function start_hidden_installation() {
 
 	# Confirm installation
 	if test -e "$app_nickname_dir/$app_executable" ; then
+		sleep 5
 		success_installation
 	else
 		installation_failed

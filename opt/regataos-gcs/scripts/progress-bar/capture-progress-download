@@ -21,6 +21,8 @@ if test -e /tmp/progressbar-gcs/download-percentage ; then
 
 		if [[ $progress == *"salvo"* ]]; then
 			echo "100%"
+		elif [[ $progress == *"saved"* ]]; then
+			echo "100%"
 		else
 			echo $progress > /tmp/progressbar-gcs/progress
 		fi

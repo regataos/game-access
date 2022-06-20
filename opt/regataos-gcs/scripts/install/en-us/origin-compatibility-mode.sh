@@ -51,7 +51,6 @@ function fix_app() {
 	mkdir -p "$app_nickname_dir/drive_c/users/$user/AppData/Roaming/Origin"
 	cp -f /opt/regataos-wine/custom-configs/origin/local.xml "$app_nickname_dir/drive_c/users/$user/AppData/Roaming/Origin/local.xml"
 
-	cp -f /opt/regataos-gcs/launchers-configs/$app_nickname/$app_nickname.conf $HOME/.config/regataos-gcs/$app_nickname.conf
 	sed -i '/^$/d' $HOME/.config/regataos-gcs/$app_nickname.conf
 }
 
@@ -289,6 +288,7 @@ if test -e "$app_nickname_dir/$app_executable" ; then
 	echo "completed" > $progressbar_dir/progress-full
 	echo "" > $progressbar_dir/status
 	echo $success_installation > $progressbar_dir/progress
+	sleep 5
 	success_installation
 	gameinstall_folder
 	sleep 2
@@ -423,6 +423,7 @@ function start_hidden_installation() {
 
 	# Confirm installation
 	if test -e "$app_nickname_dir/$app_executable" ; then
+		sleep 5
 		success_installation
 		gameinstall_folder
 	else

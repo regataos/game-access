@@ -57,6 +57,8 @@ function legendary_egl_sync() {
 	# Check if you have logged in to the Epic Games Store
 	if [[ $(ls "$HOME/.config/regataos-gcs/epicstore-games/json/" | grep json) == *".json"* ]]; then
 		/opt/regataos-gcs/tools/legendary/legendary status
+
+		ln -sf "/opt/regataos-gcs/tools/legendary/config.ini" "$HOME/.config/legendary/config.ini"
 	fi
 
 	if [[ $(cat /tmp/regataos-gcs/config/installed-launchers.conf) == *"epicstore"* ]]; then
