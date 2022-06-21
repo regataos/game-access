@@ -18,6 +18,7 @@ winetricks prefix=default-compatibility-mode -q -f nocrashdialog
 winetricks prefix=default-compatibility-mode -q -f d3dcompiler_43
 winetricks prefix=default-compatibility-mode -q -f d3dx9
 winetricks prefix=default-compatibility-mode -q -f xact
+winetricks prefix=default-compatibility-mode -q -f vcrun2013
 winetricks prefix=default-compatibility-mode -q -f vcrun2019
 winetricks prefix=default-compatibility-mode -q -f msls31
 
@@ -38,7 +39,7 @@ for dll in $(ls /opt/regataos-wine/dlls/default/x32/ | grep "dll"); do
     overrideDll $(echo "$dll" | sed s/.dll//)
 done
 
-# Install DirectX
+# Install DirectX Redistributable
 #cabextract $HOME/.cache/winetricks/directx9/directx_Jun2010_redist.exe -d $HOME/.cache/winetricks/directx9/
 #wine $HOME/.cache/winetricks/directx9/DXSETUP.exe /silent
 

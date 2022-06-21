@@ -4,6 +4,7 @@
 # Settings and variables
 # General information
 app_name="Compatibility mode"
+app_nickname="epicstore"
 conf_prefix_status="Preparing compatibility mode..."
 success_installation="Concluded"
 progressbar_dir="/tmp/progressbar-gcs"
@@ -20,12 +21,12 @@ function enable_dxvk_vkd3d() {
 	/bin/bash /opt/regataos-gcs/scripts/action-games/configure-compatibility-mode -configure-dxvk-vkd3d
 }
 
-if test -e "$HOME/.local/share/wineprefixes/epicstore-compatibility-mode" ; then
+if test -e "$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode" ; then
 	# We're finished!
 	exit 0
 
 elif test -e "$HOME/.local/share/wineprefixes/default-compatibility-mode" ; then
-	if test ! -e "$HOME/.local/share/wineprefixes/epicstore-compatibility-mode" ; then
+	if test ! -e "$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode" ; then
 		# Configuring compatibility mode
 		echo "installing" > $progressbar_dir/progress-movement
 		echo "" > $progressbar_dir/progress
@@ -40,7 +41,7 @@ elif test -e "$HOME/.local/share/wineprefixes/default-compatibility-mode" ; then
 		fi
 
 		cp -rf "$HOME/.local/share/wineprefixes/default-compatibility-mode" \
-		"$HOME/.local/share/wineprefixes/epicstore-compatibility-mode"
+		"$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"
 
 		rm -f $progressbar_dir/progress-movement
 		echo "completed" > $progressbar_dir/progress-full
@@ -54,7 +55,7 @@ elif test -e "$HOME/.local/share/wineprefixes/default-compatibility-mode" ; then
 	fi
 
 elif test -e "/usr/share/regataos/compatibility-mode/default-wineprefix.tar.xz" ; then
-	if test ! -e "$HOME/.local/share/wineprefixes/epicstore-compatibility-mode" ; then
+	if test ! -e "$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode" ; then
 		# Configuring compatibility mode
 		echo "installing" > $progressbar_dir/progress-movement
 		echo "" > $progressbar_dir/progress
@@ -73,7 +74,7 @@ elif test -e "/usr/share/regataos/compatibility-mode/default-wineprefix.tar.xz" 
 		fi
 
 		cp -rf "$HOME/.local/share/wineprefixes/default-compatibility-mode" \
-		"$HOME/.local/share/wineprefixes/epicstore-compatibility-mode"
+		"$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"
 
 		rm -f $progressbar_dir/progress-movement
 		echo "completed" > $progressbar_dir/progress-full

@@ -62,7 +62,6 @@ if test -e "$app_download_dir/$app_download_file_name" ; then
 	echo $extracting_status > $progressbar_dir/status
 	echo "" > $progressbar_dir/progress
 	echo "installing" > $progressbar_dir/progress-movement
-	cabextract -d "$app_download_dir/" "$app_download_dir/$app_download_file_name"
 
 	# Download .NET Framework 4.0
 	if test -e /tmp/regataos-gcs/dotnet ; then
