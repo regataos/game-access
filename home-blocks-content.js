@@ -2,13 +2,13 @@ function home_content() {
     $(document).ready(function() {
         // Content of block 1
         //Title
-        $(".appbc1 .block-title").text("Wolfenstein: The New Order");
+        $(".appbc1 .block-title").text("Car Mechanic Simulator 2018");
         //Block image
         $(".appbc1").css("background-image", 'url("file:///tmp/regataos-gcs/config/cache/img/block-img1.jpg")');
         $(".appbc1").css("background-position", "50% 50%")
         //Date
-        date_pt_br="09 de junho"
-        date_en_us="June 09"
+        date_pt_br="30 de junho"
+        date_en_us="June 30"
 
         // Content of block 2
         //Title
