@@ -12,7 +12,6 @@ gameid=$(grep -r "gameId" "$game_install_folder"/goggame-*.info | awk '{print $2
 
 # Variables
 export WINEPREFIX="$PREFIX_LOCATION"
-export WINEDEBUG=-all
 export WINEESYNC=1
 export WINEFSYNC=1
 export WINEFSYNC_FUTEX2=1

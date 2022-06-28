@@ -8,7 +8,6 @@ LOG_FILE="/var/log/regataos-logs/$LAUNCHER.log"
 
 # Variables
 export WINEPREFIX="$PREFIX_LOCATION"
-export WINEDEBUG=-all
 export WINEESYNC=1
 export WINEFSYNC=1
 export WINEFSYNC_FUTEX2=1

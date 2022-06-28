@@ -121,6 +121,7 @@ label.label-run-game {
 	z-index: 40000;
     animation-name: initEffect;
     animation-duration: 1.2s;
+	animation-delay: .5s;
 }
 
 #loadscreen-search {
