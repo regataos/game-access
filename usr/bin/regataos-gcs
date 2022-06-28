@@ -23,6 +23,10 @@ if test ! -e "$HOME/.local/share/wineprefixes"; then
 	mkdir -p "$HOME/.local/share/wineprefixes"
 fi
 
+if test ! -e "$HOME/.config/regataos-gcs/installed"; then
+	mkdir -p "$HOME/.config/regataos-gcs/installed"
+fi
+
 # Create download cache
 if test ! -e "$HOME/.config/regataos-gcs/progressbar-gcs"; then
 	mkdir -p "$HOME/.config/regataos-gcs/progressbar-gcs/"

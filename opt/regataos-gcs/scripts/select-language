@@ -48,7 +48,11 @@ if [ $? = 0 ]; then
 
 	user=$(users | awk '{print $1}')
 	if test -e "/home/$user/.config/plasma-localerc" ; then
-		lang=$(grep -r LANG "/home/$user/.config/plasma-localerc")
+		lang=$(grep -r LANGUAGE= "/home/$user/.config/plasma-localerc" | cut -d"=" -f 2- | cut -d":" -f -1)
+
+		if [ -z $lang ]; then
+			lang=$(grep -r LANG= "/home/$user/.config/plasma-localerc" | cut -d"=" -f 2-)
+		fi
 
 		if [[ $lang == *"pt_BR"* ]]; then
 			lang_clear_cache
