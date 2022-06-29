@@ -149,5 +149,5 @@ function downloadBlockImages() {
 	blockImage3
 }
 
-downloadSlideImages &
+downloadSlideImages
 downloadBlockImages
