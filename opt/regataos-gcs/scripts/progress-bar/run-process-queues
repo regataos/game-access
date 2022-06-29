@@ -6,11 +6,10 @@ while :
 do
 
 # Check if the Regata OS Game Access is running
-ps -C "regataosgcs /opt/regataos-gcs" > /dev/null
+ps -C "regataosgcs" > /dev/null
 if [ $? = 0 ]
 then
 	progressbar_dir="/tmp/progressbar-gcs"
-
 	# Make sure there are no critical installation errors
 	if test ! -e "$progressbar_dir/installing" ; then
 		# Check process queue and sort by sequence
