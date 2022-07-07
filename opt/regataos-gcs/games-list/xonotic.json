@@ -1,0 +1,52 @@
+[
+	{
+		"gamename": "Xonotic",
+		"gamenickname": "xonotic",
+		"gameexecutable": "xonotic",
+		"launcher": "Game Access",
+		"launchernickname": "gcs",
+		"gamedev": "Team Xonotic",
+		"publisher": "Team Xonotic",
+		"game_access": "true",
+		"releasedate": {
+			"pt": "8 de setembro de 2011",
+			"en": "september 8, 2011"
+		},
+		"gamegenre": {
+			"pt": "Tiro em primeira pessoa estilo arena",
+			"en": "Arena-style first person shooter"
+		},
+		"gameprice": {
+			"pt": "Gratuito",
+			"en": "Free"
+		},
+		"gameimages": {
+			"img1": "https://i.ibb.co/sbGT1d5/xonotic-img1.jpg",
+			"img2": "https://i.ibb.co/gJt1Mxf/xonotic-img2.jpg",
+			"img3": "https://i.ibb.co/GMM5B4Z/xonotic-img3.png",
+			"img4": "https://i.ibb.co/6sFbnWG/xonotic-img4.png"
+		},
+		"specifications": {
+			"minimum": {
+				"cpu": "Intel Core 2 Duo E6600, AMD Phenom X3 8750",
+				"gpu": "NVIDIA GeForce 8600/9600GT,<br />ATI/AMD Radeon HD2600/3600",
+				"memory": "4 GB",
+				"disk": "5 GB"
+			},
+			"recommended": {
+				"cpu": "Intel Core i3, AMD Ryzen",
+				"gpu": "NVIDIA GeForce GTX 660 2 GB,<br />ATI/AMD Radeon RX",
+				"memory": "8 GB",
+				"disk": "5 GB"
+			}
+		},
+		"gamekeywords": {
+			"pt": "Xonotic, xonotic, fps, acao, tiro, arena, tiro em primeira pessoa, gratuito",
+			"en": "Xonotic, xonotic, fps, action, shot, arena, first person shooter, free"
+		},
+		"gamedescription": {
+			"pt": "Xonotic é um jogo de tiro em primeira pessoa gratuito e rápido que combina uma jogabilidade viciante no estilo de arena com movimentos rápidos e uma ampla variedade de armas.<br /><br />Xonotic é fácil de aprender, mas difícil de dominar! Além de ação emocionante para o jogador casual, o jogo também oferece oportunidades de e-sport para os interessados em seus aspectos competitivos. De concursos de mapeamento e quick cups mensais a torneios patrocinados, a Xonotic permite que todos os entusiastas de e-sports participem de competições organizadas por sua comunidade de mente aberta.<br /><br />Recursos como itens simples, configurações e servidores totalmente personalizáveis, um sistema anti-cheat funcional, o modo espectador e a oportunidade de assistir e gravar jogos tornam o Xonotic atraente para jogadores competitivos.",
+			"en": "Xonotic is a free and fast-paced first person shooter which combines addictive, arena-style gameplay with rapid movement and a wide array of weapons.<br /><br />Xonotic is easy to learn, but hard to master! Besides thrilling action for the casual player, the game also provides e-sport opportunities for those interested in its competitive aspects. From mapping contests and monthly quick cups to sponsored tournaments, Xonotic allows every e-sport enthusiast to participate in competitions hosted by its open-minded community.<br /><br />Features such as simple items, fully customizable configs and servers, a functioning anticheat system, the spectator mode, and the opportunity to watch and record games makes Xonotic attractive to competitive players."
+		}
+    }
+]

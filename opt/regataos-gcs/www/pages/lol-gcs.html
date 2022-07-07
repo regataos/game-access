@@ -13,31 +13,140 @@
 	<script type="text/javascript" src="./../js/jquery.min.js"></script>
 	<script type="text/javascript" src="./../js/fas-icons.js"></script>
 	<script type="text/javascript" src="./../js/lightbox.js"></script>
-	<script type="text/javascript" src="./../js/translations/language/pages-lang.js"></script>
 	<script type="text/javascript" src="./../js/js-pages/gcs/check-installed-games.js"></script>
 	<script type="text/javascript" src="./../js/js-pages/gcs/games-functions.js"></script>
 	<script type="text/javascript" src="./../js/js-pages/gcs/action-config.js"></script>
 	<script type="text/javascript" src="./../js/js-pages/gcs/check-config-status.js"></script>
 	<script type="text/javascript" src="./../js/js-pages/gcs/install-game-gcs.js"></script>
-	<script type="text/javascript" src="./../js/translations/language/lol/lol-lang.js"></script>
 </head>
 
-<body style="background: #1c1c1c url(./../images/games-backg/lol/lol-backg.jpg) no-repeat left top; background-size: 100% auto;">
-    <div id="loadscreen"></div>
-    <script>
-        setTimeout(function () {
-            document.getElementById("loadscreen").style.display= "none";
-        }, 1500);
-    </script>
+<body>
+<div id="loadscreen"></div>
+<script>
+	setTimeout(function () {
+		document.getElementById("loadscreen").style.display= "none";
+	}, 1500);
+</script>
 
 <div class="page-box">
-<div class="page-box2">
-	<div class="content-box">
-		<div class="post">
-			<div class="game-title">League of Legends</div>
-			<div class="title-box">
-				<div class="game-dev">Riot Games</div>
-				<div class="game-genre">Multiplayer online battle arena</div>
+	<div class="page-box2">
+		<div class="content-box">
+			<div class="post">
+				<div class="game-title"></div>
+				<div class="title-box">
+					<div class="game-price"></div>
+					<div class="game-genre"></div>
+				</div>
+
+				<div class="buttons-game-box">
+					<div class="button-game run-button run-lol" onclick="run_game();">
+						<i class="fas fa-play"></i><div class="text-play"></div>
+					</div>
+					<div class="button-game remove-button" onclick="uninstall_game();">
+						<i class="fas fa-times-circle"></i><div class="text-remove"></div>
+					</div>
+					<div class="button-game install-button" onclick="install_game();">
+						<i class="fas fa-download"></i><div class="text-install"></div>
+					</div>
+				</div>
+
+				<!-- Lightbox HTML -->
+				<div class="row">
+					<div class="column" style="margin-left: 0px;">
+						<img style="width:100%" onclick="openModal();currentSlide(1)" class="game-img1 hover-shadow cursor">
+					</div>
+					<div class="column">
+						<img style="width:100%" onclick="openModal();currentSlide(2)" class="game-img2 hover-shadow cursor">
+					</div>
+					<div class="column">
+						<img style="width:100%" onclick="openModal();currentSlide(3)" class="game-img3 hover-shadow cursor">
+					</div>
+					<div class="column" style="margin-right: 0px;">
+						<img style="width:100%" onclick="openModal();currentSlide(4)" class="game-img4 hover-shadow cursor">
+					</div>
+				</div>
+
+				<div id="myModal" class="modal">
+					<span class="close cursor" onclick="closeModal()">&times;</span>
+					<div class="modal-content">
+
+					<div class="mySlides">
+						<div class="numbertext">1 / 4</div>
+						<img class="game-img1" style="width:100%">
+					</div>
+
+					<div class="mySlides">
+						<div class="numbertext">2 / 4</div>
+						<img class="game-img2" style="width:100%">
+					</div>
+
+					<div class="mySlides">
+						<div class="numbertext">3 / 4</div>
+						<img class="game-img3" style="width:100%">
+					</div>
+
+					<div class="mySlides">
+						<div class="numbertext">4 / 4</div>
+						<img class="game-img4" style="width:100%">
+					</div>
+
+					<a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+					<a class="next" onclick="plusSlides(1)">&#10095;</a>
+
+					<div class="caption-container">
+						<p id="caption"></p>
+					</div>
+
+					<div class="column">
+						<img class="demo cursor game-img1" style="width:100%" onclick="currentSlide(1)" alt="">
+					</div>
+					<div class="column">
+						<img class="demo cursor game-img2" style="width:100%" onclick="currentSlide(2)" alt="">
+					</div>
+					<div class="column">
+						<img class="demo cursor game-img3" style="width:100%" onclick="currentSlide(3)" alt="">
+					</div>
+					<div class="column">
+						<img class="demo cursor game-img4" style="width:100%" onclick="currentSlide(4)" alt="">
+					</div>
+				</div>
+			</div>
+
+			<div class="post-box">
+				<div class="game-discretion">
+					<i class='fas fa-gamepad' style="font-size:24px;float: left;margin: 20px 8px 10px 0px;"></i><div class="discretion-title"></div>
+					<div class="discretion-text"></div>
+				</div>
+
+				<div class="game-details">
+					<div class="details-title"></div>
+
+					<i class="fa fa-check" style="font-size:24px;float: left;margin: 20px 8px 10px 0px;"></i><div class="system-requirements"></div>
+					<div id="hardware-minimum">
+						<div class="system-minimum"></div>
+						<div class="requirements system-processor"></div><div class="minimum-cpu"></div>
+						<div class="requirements system-memory"></div><div class="minimum-gpu"></div>
+						<div class="requirements system-gpu"></div><div class="minimum-memory"></div>
+						<div class="requirements system-storage"></div><div class="minimum-disk"></div>
+					</div>
+					<div id="hardware-recommended">
+						<div class="system-recommended"></div>
+						<div class="requirements system-processor"></div><div class="recommended-cpu"></div>
+						<div class="requirements system-memory"></div><div class="recommended-gpu"></div>
+						<div class="requirements system-gpu"></div><div class="recommended-memory"></div>
+						<div class="requirements system-storage"></div><div class="recommended-disk"></div>
+					</div>
+				</div>
+			</div>
+
+			<div id="game-logo">
+				<img id="game-logo-img"/>
+			</div>
+
+			<div id="dev-info">
+				<i class="fa fa-wrench fa-dev-info"></i><div id="dev-name" class="dev-info-title"></div><div class="dev-info-text game-developer"></div>
+				<i class="fa fa-share-alt fa-dev-info"></i><div id="publisher" class="dev-info-title"></div><div class="dev-info-text game-publisher"></div>
+				<i class="fa fa-rocket fa-dev-info"></i><div id="initial-release" class="dev-info-title"></div><div class="dev-info-text game-release"></div>
 			</div>
 
 			<div class="rating">
@@ -49,124 +158,10 @@
 				<div class="rating-text">Não recomendado para menores de 12 anos</div>
 				<div class="rating-text rating-text2"></div>
 			</div>
-
-			<div class="apps-configs">
-				<div class="checkbox-apps lol-fps fpson">
-					<label class="checkbox fpshud" onclick="showfps();"><p class="checkbox-fpstxt">Exibir contador de FPS</p>
-						<input type="checkbox" checked="checked" id="lolfps">
-						<span class="checkmark"></span>
-					</label>
-				</div>
-
-				<div class="checkbox-apps lol-nonfps fpsoff">
-					<label class="checkbox fpshud" onclick="hidefps();"><p class="checkbox-fpstxt">Exibir contador de FPS</p>
-						<input type="checkbox" id="lolnonfps">
-						<span class="checkmark"></span>
-					</label>
-				</div>
-			</div>
-
-			<div class="buttons-game-box">
-				<div class="button-game run-button run-lol" onclick="run_game();">
-					<i class="fas fa-play"></i><div class="text-play">Jogar</div>
-				</div>
-				<div class="button-game remove-button" onclick="uninstall_game();">
-					<i class="fas fa-times-circle"></i><div class="text-remove">Remover</div>
-				</div>
-				<div class="button-game install-button" onclick="install_game();">
-					<i class="fas fa-download"></i><div class="text-install">Instalar</div>
-				</div>
-			</div>
-
-			<!-- Lightbox HTML -->
-
-<div class="row">
-  <div class="column">
-    <img src="https://i.ibb.co/pdjSfgh/lol1.jpg" style="width:100%" onclick="openModal();currentSlide(1)" class="hover-shadow cursor">
-  </div>
-  <div class="column">
-    <img src="https://i.ibb.co/fQf7qMS/lol2.jpg" style="width:100%" onclick="openModal();currentSlide(2)" class="hover-shadow cursor">
-  </div>
-  <div class="column">
-    <img src="https://i.ibb.co/PTrrpVP/lol3.jpg" style="width:100%" onclick="openModal();currentSlide(3)" class="hover-shadow cursor">
-  </div>
-  <div class="column">
-    <img src="https://i.ibb.co/MghYtV3/lol4.jpg" style="width:100%" onclick="openModal();currentSlide(4)" class="hover-shadow cursor">
-  </div>
-</div>
-
-<div id="myModal" class="modal">
-  <span class="close cursor" onclick="closeModal()">&times;</span>
-  <div class="modal-content">
-
-    <div class="mySlides">
-      <div class="numbertext">1 / 4</div>
-      <img src="https://i.ibb.co/pdjSfgh/lol1.jpg" style="width:100%">
-    </div>
-
-    <div class="mySlides">
-      <div class="numbertext">2 / 4</div>
-      <img src="https://i.ibb.co/fQf7qMS/lol2.jpg" style="width:100%">
-    </div>
-
-    <div class="mySlides">
-      <div class="numbertext">3 / 4</div>
-      <img src="https://i.ibb.co/PTrrpVP/lol3.jpg" style="width:100%">
-    </div>
-    
-    <div class="mySlides">
-      <div class="numbertext">4 / 4</div>
-      <img src="https://i.ibb.co/MghYtV3/lol4.jpg" style="width:100%">
-    </div>
-    
-    <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
-    <a class="next" onclick="plusSlides(1)">&#10095;</a>
-
-    <div class="caption-container">
-      <p id="caption"></p>
-    </div>
-
-    <div class="column">
-      <img class="demo cursor" src="https://i.ibb.co/pdjSfgh/lol1.jpg" style="width:100%" onclick="currentSlide(1)" alt="">
-    </div>
-    <div class="column">
-      <img class="demo cursor" src="https://i.ibb.co/fQf7qMS/lol2.jpg" style="width:100%" onclick="currentSlide(2)" alt="">
-    </div>
-    <div class="column">
-      <img class="demo cursor" src="https://i.ibb.co/PTrrpVP/lol3.jpg" style="width:100%" onclick="currentSlide(3)" alt="">
-    </div>
-    <div class="column">
-      <img class="demo cursor" src="https://i.ibb.co/MghYtV3/lol4.jpg" style="width:100%" onclick="currentSlide(4)" alt="">
-    </div>
-  </div>
-</div>
-
-			<div class="post-box">
-				<div class="details">
-					<div class="details-title"></div>
-
-					<div class="system-requirements"></div>
-					<div class="system-minimum"></div>
-					  <div class="system-processor-min"></div>
-					  <div class="system-memory-min"></div>
-					  <div class="graphicscard-min"></div>
-					  <div class="storage-min"></div>
-					<div class="system-recommended"></div>
-					  <div class="system-processor-rec"></div>
-					  <div class="system-memory-rec"></div>
-					  <div class="graphicscard-rec"></div>
-					  <div class="storage-rec"></div>
-				</div>
-
-				<div class="discretion">
-					<div class="discretion-title"></div>
-					<div class="discretion-text"></div>
-				</div>
-			</div>
-
 		</div>
+		<script type="text/javascript" src="./../js/translations/language/game-gcs-lang.js"></script>
+		<script type="text/javascript" src="./../js/js-pages/gcs/apply-game-content.js"></script>
 	</div>
-</div>
 </div>
 </body>
 </html>

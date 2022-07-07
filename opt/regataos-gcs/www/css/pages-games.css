@@ -26,7 +26,7 @@ a, a:visited {
 }
 
 .page-box2 {
-    margin-top: 350px;
+    margin-top: 80px;
     margin-left: 245px;
     margin-bottom: 50px;
 }
@@ -59,59 +59,83 @@ a, a:visited {
 
 .post-box {
     float: left;
+	max-width: 600px;
 }
 
 .title-box {
-	width: 290px;
+	width: 500px;
 }
 
 .game-title {
     float: left;
-    font-size: 25px;
-    font-weight: 600;
 	width: 500px;
+    font-size: 30px;
+    font-weight: 600;
+	margin-bottom: 5px;
 }
 
-.game-dev {
+.game-price {
 	float: left;
 	font-size: 15px;
+	border-right: 1px solid #48505a;
+	padding-right: 10px;
 }
 
 .game-genre {
-	float: right;
+	float: left;
 	font-size: 15px;
+	margin-left: 10px;
 }
 
-.details {
-    float: left;
+.game-details {
 	line-height: 1.4em;
 	font-size: 15px;
-	width: 230px;
+	width: 100%;
+	margin-top: 30px;
 }
 
 .system-requirements {
 	font-size: 19px;
 	font-weight: 600;
-	border-top: 2px #575757 solid;
-	padding-top: 10px;
+	border-top: 2px solid #48505a;
+	padding-top: 20px;
 	margin-bottom: 15px;
 }
 
-.system-recommended {
-	margin-top: 10px;
+#hardware-minimum {
+	float: left;
+    max-width: 280px;
 }
 
-.discretion {
+#hardware-recommended {
+	float: right;
+    min-width: 275px;
+}
+
+.requirements {
+	float: left;
+    color: #8dade5;
+    font-weight: 600;
+    font-size: 16px;
+	margin-right: 4px;
+}
+
+.system-minimum, .system-recommended {
+	text-transform: uppercase;
+	font-weight: 600;
+}
+
+.game-discretion {
 	font-size: 17px;
+	max-width: 640px;
 	line-height: 1.4em;
-	margin-left: 270px;
 }
 
 .discretion-title {
 	font-size: 19px;
 	font-weight: 600;
-	border-top: 2px #575757 solid;
-	padding-top: 10px;
+	border-top: 2px solid #48505a;
+	padding-top: 20px;
 	margin-bottom: 15px;
 }
 .discretion-text {
@@ -119,13 +143,14 @@ a, a:visited {
 }
 
 .rating {
-	width: 350px;
+	display: none;
+	float: right;
+	width: 320px;
 	padding: 10px;
 	padding-top: 15px;
 	padding-left: 12px;
 	background-color: #000;
 	border-radius: 8px;
-	float: left;
 	margin-top: 10px;
 	margin-bottom: 0px;
 }
@@ -181,6 +206,37 @@ a, a:visited {
 	margin-right: 15px;
 }
 
+#game-logo {
+	float: right;
+    margin-bottom: 20px;
+}
+
+#game-logo img {
+	border-radius: 8px;
+}
+
+#dev-info {
+	width: 320px;
+    float: right;
+	margin-bottom: 10px;
+}
+
+.dev-info-title {
+	font-size: 17px;
+	float: left;
+	margin-right: 4px;
+}
+
+.dev-info-text {
+	font-size: 17px;
+}
+
+.fa-dev-info {
+	float: left;
+	font-size:15px;
+    margin: 10px;
+}
+
 .button-game {
 	float: left;
 	font-size: 17px;
@@ -189,7 +245,7 @@ a, a:visited {
 	font-weight: 400;
 	letter-spacing: 0.1em;
     font-family: Oxygen;
-    border-radius: 2px;
+    border-radius: 8px;
     background-color: #ccc;
 	cursor: pointer;
     transition: all .3s;
@@ -223,7 +279,6 @@ a, a:visited {
 }
 
 .run-button {
-	display: none;
 	background-image: linear-gradient(to right, #18dc52, #2ab388, #30dd8a, #2bb673);
 	background-size: 300% 100%;
 	transition: all .4s ease-in-out;
@@ -243,7 +298,6 @@ a, a:visited {
 }
 
 .remove-button {
-	display: none;
 	color: #dbe8ff;
     background-image: linear-gradient(to right, #cc121a, #ee4248, #df4247, #cc121a);
 	background-size: 300% 100%;

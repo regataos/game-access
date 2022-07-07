@@ -4,12 +4,11 @@
 
 .row {
     float: right;
-	margin-bottom: 35px;
+	margin-bottom: 20px;
 }
 
 .row > .column {
-  padding: 0 8px;
-  margin-top: 30px;
+  margin: 30px 5px 0px 8px;
 }
 
 .row:after {
@@ -20,7 +19,12 @@
 
 .column {
   float: left;
-  width: 25%;
+  max-width: 23.9%;
+  margin: 30px 5px 0px 8px;
+}
+
+.column img {
+  border-radius: 8px;
 }
 
 /* The Modal (background) */
@@ -66,6 +70,7 @@
 
 .mySlides {
   display: none;
+  background-color: #000;
 }
 
 .cursor {
