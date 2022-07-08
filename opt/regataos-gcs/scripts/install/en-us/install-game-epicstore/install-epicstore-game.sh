@@ -36,15 +36,6 @@ if [ -z "$GAME_INSTALL_DIR" ] ;then
 	GAME_INSTALL_DIR="$HOME/Game Access/Epic Games Store"
 fi
 
-#Complements
-app_name_dotnet40="Installing .NET Framework 4.0"
-app_name_dotnet48="Installing .NET Framework 4.8"
-app_name_directx="Installing DirectX Redistributable"
-install_dotnet_status="This may take a few minutes..."
-
-#Default settings
-app_nickname_dir="$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"
-
 # Application setup function
 function install_app() {
 	rm -f "/tmp/regataos-gcs/game-patch-epicstore.txt"

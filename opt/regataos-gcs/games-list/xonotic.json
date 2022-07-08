@@ -7,6 +7,11 @@
 		"launchernickname": "gcs",
 		"gamedev": "Team Xonotic",
 		"publisher": "Team Xonotic",
+		"gamedownload": "https://xonotic.antzucaro.com/xonotic-0.8.5.zip",
+		"file_extension": "zip",
+		"file_executable": "xonotic-linux-sdl.sh",
+		"gamefolder": "Xonotic",
+		"plataform": "linux",
 		"game_access": "true",
 		"releasedate": {
 			"pt": "8 de setembro de 2011",

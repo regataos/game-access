@@ -238,6 +238,7 @@ a, a:visited {
 }
 
 .button-game {
+	display: none;
 	float: left;
 	font-size: 17px;
 	text-align: center;
@@ -254,7 +255,6 @@ a, a:visited {
     padding-left: 15px;
     padding-right: 15px;
 	padding-bottom: 3px;
-	display: flex;
 	flex-direction: row;
 	justify-content: center;
 	align-items: center;
