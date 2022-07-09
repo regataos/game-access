@@ -24,7 +24,7 @@ function getGameId() {
             document.querySelector(".game-title").innerHTML = game[i].gamename;
 
             // Game banner
-            document.querySelector("body").style.backgroundImage = `url(${game[i].gamebanner})`;
+            document.getElementById("game-banner").style.backgroundImage = `url(${game[i].gamebanner})`;
 
             // Game logo
             document.getElementById("game-logo-img").src = `./../images/games-logo/${game[i].gamenickname}-logo.png`;
