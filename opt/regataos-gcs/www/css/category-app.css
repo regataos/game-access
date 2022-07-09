@@ -665,8 +665,14 @@ div.universal-account-title {
     transition: all .2s ease-in-out;
 }
 
-.remove-game-button {
-    margin: 12px 13px 0px 0px;
+.morefor-game-button {
+    margin: 12px 10px 0px 0px;
+    position: relative;
+    float: right;
+    padding: 5px;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: all .2s ease-in-out;
 }
 
 .fa-trash-alt {
@@ -675,6 +681,15 @@ div.universal-account-title {
 }
 
 .fa-trash-alt:active {
+    font-size: 18px;
+}
+
+.fa-plus {
+    transition: all .2s ease-in-out;
+    font-size: 20px;
+}
+
+.fa-plus:active {
     font-size: 18px;
 }
 

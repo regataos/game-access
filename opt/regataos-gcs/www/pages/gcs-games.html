@@ -27,6 +27,9 @@
 <div class="page-box">
 	<div class="page-box2">
 		<div class="content-box">
+			<div id="game-logo-top">
+				<img id="game-logo-img-top"/>
+			</div>
 			<div class="post">
 				<div class="game-title"></div>
 				<div class="title-box">
@@ -35,13 +38,13 @@
 				</div>
 
 				<div class="buttons-game-box">
-					<div class="button-game run-button run-lol" onclick="runGame();">
+					<div class="button-game run-button" onclick="window.gameId=this.id; runGameId();">
 						<i class="fas fa-play"></i><div class="text-play"></div>
 					</div>
-					<div class="button-game remove-button" onclick="removeGame();">
+					<div class="button-game remove-button" onclick="window.gameId=this.id; removeGameId();">
 						<i class="fas fa-times-circle"></i><div class="text-remove"></div>
 					</div>
-					<div class="button-game install-button" onclick="installGame();">
+					<div class="button-game install-button" onclick="window.gameId=this.id; installGameId();">
 						<i class="fas fa-download"></i><div class="text-install"></div>
 					</div>
 				</div>
@@ -143,6 +146,7 @@
 				<i class="fa fa-wrench fa-dev-info"></i><div id="dev-name" class="dev-info-title"></div><div class="dev-info-text game-developer"></div>
 				<i class="fa fa-share-alt fa-dev-info"></i><div id="publisher" class="dev-info-title"></div><div class="dev-info-text game-publisher"></div>
 				<i class="fa fa-rocket fa-dev-info"></i><div id="initial-release" class="dev-info-title"></div><div class="dev-info-text game-release"></div>
+				<i class="fa fa-refresh fa-dev-info game-release-up" aria-hidden="true"></i><div id="update-release" class="dev-info-title game-release-up"></div><div class="dev-info-text game-update game-release-up"></div>
 			</div>
 
 			<div class="rating">

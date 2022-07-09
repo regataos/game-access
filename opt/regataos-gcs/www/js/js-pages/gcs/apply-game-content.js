@@ -13,7 +13,6 @@ function checkConfigFile(data, desiredString) {
 function getGameId() {
     const fs = require("fs");
 
-    sessionStorage.setItem("game-gcs-id", "xonotic");
     const gameId = sessionStorage.getItem("game-gcs-id");
 
     if (fs.existsSync(`/opt/regataos-gcs/games-list/${gameId}.json`)) {
@@ -24,8 +23,14 @@ function getGameId() {
             // Game title.
             document.querySelector(".game-title").innerHTML = game[i].gamename;
 
+            // Game banner
+            document.querySelector("body").style.backgroundImage = `url(${game[i].gamebanner})`;
+
             // Game logo
             document.getElementById("game-logo-img").src = `./../images/games-logo/${game[i].gamenickname}-logo.png`;
+
+            // Game logo top
+            document.getElementById("game-logo-img-top").src = `./../images/games-logo/${game[i].gamenickname}-logo-top.png`;
 
             // Game developer.
             document.querySelector(".game-developer").innerHTML = game[i].gamedev;
@@ -97,100 +102,92 @@ function getGameId() {
                 "en": game[i].releasedate.en
             };
 
+            const langGameUpdate = {
+                "pt_br": game[i].gameupdate.pt,
+                "pt_pt": game[i].gameupdate.pt,
+                "en_us": game[i].gameupdate.en,
+                "en": game[i].gameupdate.en
+            };
+
+            function localeUserDetected() {
+                // Show if the game is free
+                document.querySelector(".game-price").innerHTML = langGamePrice[languageDetected];
+
+                // Show game genre
+                document.querySelector(".game-genre").innerHTML = langGameGenre[languageDetected];
+
+                // Show game description
+                document.querySelector(".discretion-text").innerHTML = langGameDesc[languageDetected];
+
+                // Show game release date
+                document.querySelector(".game-release").innerHTML = langGameRelease[languageDetected];
+
+                // Show game update date
+                if (game[i].gameupdate.status.indexOf("true") > -1) {
+                    document.querySelector(".game-update").innerHTML = langGameUpdate[languageDetected];
+
+                    const showGameUpdateStatus = document.querySelectorAll(".game-release-up");
+                    for (let i = 0; i < showGameUpdateStatus.length; i++) {
+                        showGameUpdateStatus[i].style.cssText = "display: block !important;"
+                    }
+                }
+            }
+
+            function localeUserNotDetected() {
+                // Show if the game is free
+                document.querySelector(".game-price").innerHTML = game[i].gameprice.en;
+
+                // Show game genre
+                document.querySelector(".game-genre").innerHTML = game[i].gamegenre.en;
+
+                // Show game description
+                document.querySelector(".discretion-text").innerHTML = game[i].gamedescription.en;
+
+                // Show game release date
+                document.querySelector(".game-release").innerHTML = game[i].releasedate.en;
+
+                // Show game update date
+                if (game[i].gameupdate.status.indexOf("true") > -1) {
+                    document.querySelector(".game-update").innerHTML = game[i].gameupdate.en;
+
+                    const showGameUpdateStatus = document.querySelectorAll(".game-release-up");
+                    for (let i = 0; i < showGameUpdateStatus.length; i++) {
+                        showGameUpdateStatus[i].style.cssText = "display: block !important;"
+                    }
+                }
+            }
+
             if (fs.existsSync("/tmp/regataos-configs/config/plasma-localerc")) {
                 const checkLangSystem = fs.readFileSync("/tmp/regataos-configs/config/plasma-localerc", "utf8");
 
                 if (checkLangSystem.includes("LANGUAGE")) {
                     const configOption = "LANGUAGE="
-                    const languageDetected = checkConfigFile(checkLangSystem, configOption);
+                    window.languageDetected = checkConfigFile(checkLangSystem, configOption);
 
                     if (typeof langGamePrice[languageDetected] !== "undefined") {
-                        // Show if the game is free
-                        document.querySelector(".game-price").innerHTML = langGamePrice[languageDetected];
-
-                        // Show game genre
-                        document.querySelector(".game-genre").innerHTML = langGameGenre[languageDetected];
-
-                        // Show game description
-                        document.querySelector(".discretion-text").innerHTML = langGameDesc[languageDetected];
-
-                        // Show game release date
-                        document.querySelector(".game-release").innerHTML = langGameRelease[languageDetected];
-
+                        localeUserDetected();
                     } else {
-                        // Show if the game is free
-                        document.querySelector(".game-price").innerHTML = game[i].gameprice.en;
-
-                        // Show game genre
-                        document.querySelector(".game-genre").innerHTML = game[i].gamegenre.en;
-
-                        // Show game description
-                        document.querySelector(".discretion-text").innerHTML = game[i].gamedescription.en;
-
-                        // Show game release date
-                        document.querySelector(".game-release").innerHTML = game[i].releasedate.en;
+                        localeUserNotDetected();
                     }
 
                 } else if (checkLangSystem.includes("LANG")) {
                     const configOption = "LANG="
-                    const languageDetected = checkConfigFile(checkLangSystem, configOption);
+                    window.languageDetected = checkConfigFile(checkLangSystem, configOption);
 
                     if (typeof langGamePrice[languageDetected] !== "undefined") {
-                        // Show if the game is free
-                        document.querySelector(".game-price").innerHTML = langGamePrice[languageDetected];
-
-                        // Show game genre
-                        document.querySelector(".game-genre").innerHTML = langGameGenre[languageDetected];
-
-                        // Show game description
-                        document.querySelector(".discretion-text").innerHTML = langGameDesc[languageDetected];
-
-                        // Show game release date
-                        document.querySelector(".game-release").innerHTML = langGameRelease[languageDetected];
-
+                        localeUserDetected();
                     } else {
-                        // Show if the game is free
-                        document.querySelector(".game-price").innerHTML = game[i].gameprice.en;
-
-                        // Show game genre
-                        document.querySelector(".game-genre").innerHTML = game[i].gamegenre.en;
-
-                        // Show game description
-                        document.querySelector(".discretion-text").innerHTML = game[i].gamedescription.en;
-
-                        // Show game release date
-                        document.querySelector(".game-release").innerHTML = game[i].releasedate.en;
+                        localeUserNotDetected();
                     }
                 }
 
             } else if (fs.existsSync("/tmp/regataos-configs/config/user-dirs.locale")) {
-                const checkLangSystem = fs.readFileSync("/tmp/regataos-configs/config/user-dirs.locale", "utf8");
+                window.languageDetected = fs.readFileSync("/tmp/regataos-configs/config/user-dirs.locale", "utf8");
 
-                if (typeof langGamePrice[checkLangSystem] !== "undefined") {
-                    // Show if the game is free
-                    document.querySelector(".game-price").innerHTML = langGamePrice[checkLangSystem];
-
-                    // Show game genre
-                    document.querySelector(".game-genre").innerHTML = langGameGenre[checkLangSystem];
-
-                    // Show game description
-                    document.querySelector(".discretion-text").innerHTML = langGameDesc[checkLangSystem];
-
-                    // Show game release date
-                    document.querySelector(".game-release").innerHTML = langGameRelease[checkLangSystem];
-
+                if (typeof langGamePrice[languageDetected] !== "undefined") {
+                    localeUserDetected();
                 } else {
-                    // Show if the game is free
-                    document.querySelector(".game-price").innerHTML = game[i].gameprice.en;
-
-                    // Show game genre
-                    document.querySelector(".game-genre").innerHTML = game[i].gamegenre.en;
-
-                    // Show game description
-                    document.querySelector(".discretion-text").innerHTML = game[i].gamedescription.en;
-
-                    // Show game release date
-                    document.querySelector(".game-release").innerHTML = game[i].releasedate.en;
+                    localeUserNotDetected();
                 }
             }
         }

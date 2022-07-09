@@ -1,4 +1,5 @@
-// Check if the game is installed
+// For game page
+//Check if the game is installed
 function checkGameInstalled() {
     const fs = require("fs");
 
@@ -6,51 +7,92 @@ function checkGameInstalled() {
     const gameId = sessionStorage.getItem("game-gcs-id");
 
     if (fs.existsSync(`/tmp/regataos-gcs/config/installed/${gameId}.json`)) {
-        document.querySelector(".run-button").style.display = "flex";
-        document.querySelector(".remove-button").style.display = "flex";
         document.querySelector(".install-button").style.display = "none";
+
+        const runButton = document.querySelector(".run-button")
+        runButton.style.display = "flex";
+        runButton.id = `${gameId}-run`;
+
+        const removeButton = document.querySelector(".remove-button")
+        removeButton.style.display = "flex";
+        removeButton.id = `${gameId}-remove`;
+
     } else {
         document.querySelector(".run-button").style.display = "none";
         document.querySelector(".remove-button").style.display = "none";
-        document.querySelector(".install-button").style.display = "flex";
+
+        const removeButton = document.querySelector(".install-button")
+        removeButton.style.display = "flex";
+        removeButton.id = `${gameId}`;
     }
 }
 checkGameInstalled();
 
 setInterval(function () { checkGameInstalled() }, 1000);
 
-// Install the game
-function installGame() {
+//Install the game
+function installGameId() {
     const exec = require('child_process').exec;
 
-    sessionStorage.setItem("game-gcs-id", "xonotic");
-    const gameId = sessionStorage.getItem("game-gcs-id");
+    const commandInstallGame = `export gameNickname="${gameId}"; /opt/regataos-gcs/scripts/install/scripts-install/install-game-gcs/install-gcs-game.sh`;
+    exec(commandInstallGame, function (error, call, errlog) {
+    });
 
-    const commandInstallGame = `export gameNickname="${gameId}"; /opt/regataos-gcs/scripts/install/pt-br/install-game-gcs/install-gcs-game.sh`;
+    const buttonPlay = document.getElementById(gameId);
+
+    setTimeout(function(){
+        buttonPlay.style.opacity = ".5";
+        buttonPlay.style.cursor = "default";
+        buttonPlay.style.pointerEvents = "none";
+    },1000);
+
+    setTimeout(function(){
+        buttonPlay.style.opacity = "1";
+        buttonPlay.style.cursor = "pointer";
+        buttonPlay.style.pointerEvents = "auto";
+    },20000);
+}
+
+//Remove the game
+function removeGameId() {
+    const exec = require('child_process').exec;
+
+    let newGameId = gameId.replace('-remove', '');
+
+    const commandInstallGame = `export gameNickname="${newGameId}"; /opt/regataos-gcs/scripts/remove/scripts-remove/uninstall-game-gcs/uninstall-gcs-game.sh`;
     exec(commandInstallGame, function (error, call, errlog) {
     });
 }
 
-// Remove the game
-function removeGame() {
+//Run the game
+function runGameId() {
     const exec = require('child_process').exec;
 
-    sessionStorage.setItem("game-gcs-id", "xonotic");
-    const gameId = sessionStorage.getItem("game-gcs-id");
+    let newGameId = gameId.replace('-run', '');
 
-    const commandInstallGame = `export gameNickname="${gameId}"; /opt/regataos-gcs/scripts/action-games/remove-game-gcs`;
+    const commandInstallGame = `export gameNickname="${newGameId}"; /opt/regataos-gcs/scripts/action-games/rungame-gcs`;
     exec(commandInstallGame, function (error, call, errlog) {
     });
+
+    const buttonPlay = document.getElementById(gameId);
+
+    setTimeout(function(){
+        buttonPlay.style.opacity = ".5";
+        buttonPlay.style.cursor = "default";
+        buttonPlay.style.pointerEvents = "none";
+    },1000);
+
+    setTimeout(function(){
+        buttonPlay.style.opacity = "1";
+        buttonPlay.style.cursor = "pointer";
+        buttonPlay.style.pointerEvents = "auto";
+    },10000);
 }
 
-// Run the game
-function runGame() {
-    const exec = require('child_process').exec;
-
-    sessionStorage.setItem("game-gcs-id", "xonotic");
-    const gameId = sessionStorage.getItem("game-gcs-id");
-
-    const commandInstallGame = `export gameNickname="${gameId}"; /opt/regataos-gcs/scripts/action-games/rungame-gcs`;
-    exec(commandInstallGame, function (error, call, errlog) {
-    });
+//Run the game
+function goGamePageId() {
+    setTimeout(function(){
+        sessionStorage.setItem("game-gcs-id", gameId);
+        window.location.href = './../pages/gcs-games.html';
+    }, 500);
 }

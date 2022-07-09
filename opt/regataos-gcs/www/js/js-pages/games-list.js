@@ -80,6 +80,7 @@ function games_list2() {
 	window.content_brake_epicstore = 0
 	window.content_brake_steam = 0
 	window.content_brake_gog = 0
+	window.content_brake_gcs = 0
 
 	// Read JSON files with the list of games
 	fs.readdirSync("/opt/regataos-gcs/games-list").forEach(files => {
@@ -475,6 +476,94 @@ function games_list2() {
 								all_blocks.appendChild(new_game_blocks);
 								pagesBlocksLang();
 							}
+						}
+
+					} else if ((games[i].launchernickname.indexOf("gcs") > -1) == "1") {
+						if (!fs.existsSync('/tmp/regataos-gcs/config/installed/' + games[i].gamenickname + '.json')) {
+							//Request the creation of the new element (block) for each game
+							var new_game_blocks = document.createElement("div");
+			
+							//Add classes to the new game blocks
+							new_game_blocks.classList.add("app-block", games[i].launchernickname+"-block", games[i].gamenickname + "-block", games[i].gamenickname);
+			
+							//Add the game image in the background
+							new_game_blocks.style.backgroundImage = "url('./../images/games-backg/" + games[i].launchernickname + "/" + games[i].gamenickname + ".jpg')";
+			
+							//Add game details within the newly created block
+							//Special variables for running games
+							var gameNickname = "'" + games[i].gamenickname + "'";
+			
+							new_game_blocks.innerHTML = ' \
+							<div class="block-play ' + games[i].gamenickname + '-hover"> \
+								<div title="Mais sobre o jogo" class="morefor-game-button" onclick="window.gameId=' + gameNickname + '; goGamePageId();"> \
+									<i class="fa fa-plus"></i> \
+								</div> \
+								<div id="' + games[i].gamenickname + '" class="install-box-universal" onclick="window.gameId=this.id; installGameId();"> \
+									<div class="play-button"> \
+										<i class="fas fa-download"></i><div class="install-txt">Instalar</div> \
+									</div> \
+								</div> \
+							</div> \
+							<div class="block-text ' + games[i].gamenickname +'" title="' + games[i].gamename +'"> \
+								<div class="block-title">' + games[i].gamename + '</div> \
+								<div class="block-desc">' + games[i].launcher + '</div> \
+								<div class="native-game"> \
+									<div class="native-game-img" style="background-image: url(./../images/gcs.png)"></div> \
+									<div class="native-game-desc gcs">Game Access</div> \
+								</div> \
+							</div>';
+			
+							//Finally, create the new game blocks dynamically
+							if ( content_brake_gcs >= 10) {
+								break;
+							} else {
+								window.content_brake_gcs = content_brake_gcs + 1
+								all_blocks.appendChild(new_game_blocks);
+								pagesBlocksLang();
+							}
+
+						} else {
+							//Request the creation of the new element (block) for each game
+							var new_game_blocks = document.createElement("div");
+			
+							//Add classes to the new game blocks
+							new_game_blocks.classList.add("app-block", games[i].launchernickname+"-block", games[i].gamenickname + "-block", games[i].gamenickname);
+			
+							//Add the game image in the background
+							new_game_blocks.style.backgroundImage = "url('./../images/games-backg/" + games[i].launchernickname + "/" + games[i].gamenickname + ".jpg')";
+			
+							//Add game details within the newly created block
+							//Special variables for running games
+							var gameNickname = "'" + games[i].gamenickname + "'";
+			
+							new_game_blocks.innerHTML = ' \
+							<div class="block-play ' + games[i].gamenickname + '-hover"> \
+								<div title="Mais sobre o jogo" class="morefor-game-button" onclick="window.gameId=' + gameNickname + '; goGamePageId();"> \
+									<i class="fa fa-plus"></i> \
+								</div> \
+								<div id="' + games[i].gamenickname + '" class="play-box-universal" onclick="window.gameId=this.id; runGameId();"> \
+									<div class="play-button"> \
+										<i class="fas fa-play"></i><div class="play-txt">Jogar</div> \
+									</div> \
+								</div> \
+							</div> \
+							<div class="block-text ' + games[i].gamenickname +'" title="' + games[i].gamename +'"> \
+								<div class="block-title">' + games[i].gamename + '</div> \
+								<div class="block-desc">' + games[i].launcher + '</div> \
+								<div class="native-game"> \
+									<div class="native-game-img" style="background-image: url(./../images/gcs.png)"></div> \
+									<div class="native-game-desc gcs">Game Access</div> \
+								</div> \
+							</div>';
+			
+							//Finally, create the new game blocks dynamically
+							if ( content_brake_gcs >= 10) {
+								break;
+							} else {
+								window.content_brake_gcs = content_brake_gcs + 1
+								all_blocks.appendChild(new_game_blocks);
+								pagesBlocksLang();
+							}			
 						}
 
 					} else {
@@ -899,7 +988,85 @@ function games_list3() {
 								</div> \
 							</div> \
 						</div>';
-			
+
+						//Finally, create the new game blocks dynamically
+						all_blocks.appendChild(new_game_blocks);
+						pagesBlocksLang();
+					}
+
+				} else if ((gamesdata.launchernickname.indexOf("gcs") > -1) == "1") {
+					if (!fs.existsSync('/tmp/regataos-gcs/config/installed/' + gamesdata.gamenickname + '.json')) {
+						//Request the creation of the new element (block) for each game
+						var new_game_blocks = document.createElement("div");
+		
+						//Add classes to the new game blocks
+						new_game_blocks.classList.add("app-block", gamesdata.launchernickname+"-block", gamesdata.gamenickname + "-block", gamesdata.gamenickname);
+		
+						//Add the game image in the background
+						new_game_blocks.style.backgroundImage = "url('./../images/games-backg/" + gamesdata.launchernickname + "/" + gamesdata.gamenickname + ".jpg')";
+		
+						//Add game details within the newly created block
+						//Special variables for running games
+						var gameNickname = "'" + gamesdata.gamenickname + "'";
+		
+						new_game_blocks.innerHTML = ' \
+						<div class="block-play ' + gamesdata.gamenickname + '-hover"> \
+							<div title="Mais sobre o jogo" class="morefor-game-button" onclick="window.gameId=' + gameNickname + '; goGamePageId();"> \
+								<i class="fa fa-plus"></i> \
+							</div> \
+							<div id="' + gamesdata.gamenickname + '" class="install-box-universal" onclick="window.gameId=this.id; installGameId();"> \
+								<div class="play-button"> \
+									<i class="fas fa-download"></i><div class="install-txt">Instalar</div> \
+								</div> \
+							</div> \
+						</div> \
+						<div class="block-text ' + gamesdata.gamenickname +'" title="' + gamesdata.gamename +'"> \
+							<div class="block-title">' + gamesdata.gamename + '</div> \
+							<div class="block-desc">' + gamesdata.launcher + '</div> \
+							<div class="native-game"> \
+								<div class="native-game-img" style="background-image: url(./../images/gcs.png)"></div> \
+								<div class="native-game-desc gcs">Game Access</div> \
+							</div> \
+						</div>';
+
+						//Finally, create the new game blocks dynamically
+						all_blocks.appendChild(new_game_blocks);
+						pagesBlocksLang();
+
+					} else {
+						//Request the creation of the new element (block) for each game
+						var new_game_blocks = document.createElement("div");
+		
+						//Add classes to the new game blocks
+						new_game_blocks.classList.add("app-block", gamesdata.launchernickname+"-block", gamesdata.gamenickname + "-block", gamesdata.gamenickname);
+		
+						//Add the game image in the background
+						new_game_blocks.style.backgroundImage = "url('./../images/games-backg/" + gamesdata.launchernickname + "/" + gamesdata.gamenickname + ".jpg')";
+		
+						//Add game details within the newly created block
+						//Special variables for running games
+						var gameNickname = "'" + gamesdata.gamenickname + "'";
+		
+						new_game_blocks.innerHTML = ' \
+						<div class="block-play ' + gamesdata.gamenickname + '-hover"> \
+							<div title="Mais sobre o jogo" class="morefor-game-button" onclick="window.gameId=' + gameNickname + '; goGamePageId();"> \
+								<i class="fa fa-plus"></i> \
+							</div> \
+							<div id="' + gamesdata.gamenickname + '" class="play-box-universal" onclick="window.gameId=this.id; runGameId();"> \
+								<div class="play-button"> \
+									<i class="fas fa-play"></i><div class="play-txt">Jogar</div> \
+								</div> \
+							</div> \
+						</div> \
+						<div class="block-text ' + gamesdata.gamenickname +'" title="' + gamesdata.gamename +'"> \
+							<div class="block-title">' + gamesdata.gamename + '</div> \
+							<div class="block-desc">' +gamesdata.launcher + '</div> \
+							<div class="native-game"> \
+								<div class="native-game-img" style="background-image: url(./../images/gcs.png)"></div> \
+								<div class="native-game-desc gcs">Game Access</div> \
+							</div> \
+						</div>';
+
 						//Finally, create the new game blocks dynamically
 						all_blocks.appendChild(new_game_blocks);
 						pagesBlocksLang();

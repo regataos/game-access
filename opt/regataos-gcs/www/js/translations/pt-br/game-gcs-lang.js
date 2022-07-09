@@ -37,3 +37,4 @@ for (let i = 0; i < systemStorage.length; i++) {
 document.getElementById("dev-name").innerHTML = "Desenvolvedor:";
 document.getElementById("publisher").innerHTML = "Editora:";
 document.getElementById("initial-release").innerHTML = "Data de lançamento:";
+document.getElementById("update-release").innerHTML = "Data de atualização:";

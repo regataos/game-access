@@ -9,6 +9,7 @@ body {
     -webkit-user-select: none;
     user-select: none;
 	background-color: #2a2e33;
+	background-size: 100% !important;
 }
 
 @font-face{
@@ -26,35 +27,35 @@ a, a:visited {
 }
 
 .page-box2 {
-    margin-top: 80px;
+    margin-top: 250px;
     margin-left: 245px;
     margin-bottom: 50px;
 }
 
 .content-box {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    min-width: 692px;
+    display: block;
+    max-width: 1000px;
+    width: 92%;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .post {
 	display: inline-block;
     position: relative;
-    float: left;
 	width: 1000px;
     min-width: 750px;
     height: auto;
-    /* background-color: rgba(4, 4, 4, 0.50); */
-    /* box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12); */
-    margin-bottom: 15px;
-    padding: 15px;
-	padding-bottom: 30px;
+    margin-bottom: 70px;
+    padding: 30px;
     border-radius: 3px;
     transition: all .3s;
-	/* -webkit-backdrop-filter: blur(10px); */
-	/*  backdrop-filter: blur(10px); */
+	border-radius: 15px;
+    background-color: rgba(4, 4, 4, 0.68);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    box-shadow: 0px 0px 6px 0px rgb(8 13 18 / 50%);
+    z-index: 20000;
 }
 
 .post-box {
@@ -72,6 +73,7 @@ a, a:visited {
     font-size: 30px;
     font-weight: 600;
 	margin-bottom: 5px;
+	line-height: 1.4em;
 }
 
 .game-price {
@@ -215,6 +217,14 @@ a, a:visited {
 	border-radius: 8px;
 }
 
+#game-logo-top {
+	margin-bottom: 20px;
+}
+
+#game-logo-img-top {
+	width: 400px;
+}
+
 #dev-info {
 	width: 320px;
     float: right;
@@ -235,6 +245,10 @@ a, a:visited {
 	float: left;
 	font-size:15px;
     margin: 10px;
+}
+
+.game-release-up {
+	display: none !important;
 }
 
 .button-game {

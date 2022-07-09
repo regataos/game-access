@@ -8,14 +8,21 @@
 		"gamedev": "Team Xonotic",
 		"publisher": "Team Xonotic",
 		"gamedownload": "https://xonotic.antzucaro.com/xonotic-0.8.5.zip",
+		"gamebanner": "https://i.ibb.co/sbGT1d5/xonotic-img1.jpg",
 		"file_extension": "zip",
 		"file_executable": "xonotic-linux-sdl.sh",
 		"gamefolder": "Xonotic",
 		"plataform": "linux",
+		"gamenative": "gcs",
 		"game_access": "true",
 		"releasedate": {
-			"pt": "8 de setembro de 2011",
-			"en": "september 8, 2011"
+			"pt": "08/09/2011",
+			"en": "09/08/2011"
+		},
+		"gameupdate": {
+			"status": "true",
+			"pt": "30/06/2022",
+			"en": "06/30/2022"
 		},
 		"gamegenre": {
 			"pt": "Tiro em primeira pessoa estilo arena",

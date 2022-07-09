@@ -58,16 +58,23 @@ function installation_failed() {
 
 # Search for processes
 if test -e "$progressbar_dir/installing" ; then
-	# Put the process in the installation queue
-	kmsg=$(grep -r $game_nickname $progressbar_dir/queued-process)
-	if [[ $kmsg == *"$game_nickname"* ]]; then
-		echo "Nothing to do."
-	else
-		echo "$game_nickname=epicstore process-$game_name_process" >> $progressbar_dir/queued-process
-	fi
+	if test ! -e "/tmp/regataos-gcs/installing-$game_nickname"; then
+		# Put the process in the installation queue
+		kmsg=$(grep -r $game_nickname $progressbar_dir/queued-process)
+		if [[ $kmsg == *"$game_nickname"* ]]; then
+			echo "Nothing to do."
+		else
+			echo "$game_nickname=epicstore process-$game_name_process" >> $progressbar_dir/queued-process
+		fi
 
-	#I'm in the process queue, see you later
-	exit 0
+		#I'm in the process queue, see you later
+		exit 0
+
+	else
+		#I'm in the process queue, see you later
+		echo "Installation in progress..."
+		exit 0
+	fi
 
 else
 	# Start dependences Download
@@ -261,7 +268,7 @@ EOM
 }
 
 # Verify that the installation is already in place.
-if [[ $(ps aux | egrep "install-gcs-game.sh") == *"install-gcs-game.sh start"* ]]; then
+if [[ $(ps aux | egrep "install-gcs-game.sh") == *"install-gcs-game.sh"* ]]; then
 	if test -e "$progressbar_dir/download-extra.txt" ; then
 		rm -f "$progressbar_dir/download-extra.txt"
 		start_installation

@@ -25,6 +25,7 @@ $(document).ready(function() {
 	$(".allgames-title").text("Lista com alguns dos jogos que você pode rodar com o Regata OS Game Access");
 	$(".loading-games").text("Carregando a sua biblioteca de jogos...");
 	$(".remove-game-button").attr({title:"Desinstalar jogo"});
+	$(".morefor-game-button").attr({title:"Mais sobre o jogo"});
 
 	// Steam games
 	//Page title

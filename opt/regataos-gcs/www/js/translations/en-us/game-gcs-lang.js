@@ -36,4 +36,5 @@ for (let i = 0; i < systemStorage.length; i++) {
 // Informações do desenvolvedor
 document.getElementById("dev-name").innerHTML = "Developer:";
 document.getElementById("publisher").innerHTML = "Publisher:";
-document.getElementById("initial-release").innerHTML = "Release Date:";
+document.getElementById("initial-release").innerHTML = "Release date:";
+document.getElementById("update-release").innerHTML = "Update date:";
