@@ -3,6 +3,7 @@
 		"gamename": "League of Legends",
 		"gamenickname": "lol",
 		"gameexecutable": "lol.exe",
+		"gamestatus": "(Beta)",
 		"launcher": "Game Access",
 		"launchernickname": "gcs",
 		"gamedev": "Riot Games",
@@ -20,13 +21,13 @@
 		"gamenative": "gcs",
 		"game_access": "true",
 		"releasedate": {
-			"pt": "27/10/09",
-			"en": "10/27/09"
+			"pt": "27/10/2009",
+			"en": "10/27/2009"
 		},
 		"gameupdate": {
 			"status": "true",
-			"pt": "04/11/2",
-			"en": "11/04/2"
+			"pt": "04/11/2022",
+			"en": "11/04/2022"
 		},
 		"gamegenre": {
 			"pt": "Multiplayer online battle arena",
@@ -45,13 +46,13 @@
 		"specifications": {
 			"minimum": {
 				"cpu": "Intel Core i3-530, AMD A6-3650",
-				"gpu": "GeForce 9600 GT, AMD HD 6570",
+				"gpu": "NVIDIA GeForce 9600 GT, AMD Radeon HD 6570",
 				"memory": "4 GB",
 				"disk": "16 GB"
 			},
 			"recommended": {
 				"cpu": "Intel Core i5-3300, AMD Ryzen 3 1200",
-				"gpu": "GeForce 560, AMD Radeon HD 6950",
+				"gpu": "NVIDIA GeForce GTX 660, AMD Radeon HD 7870",
 				"memory": "8 GB",
 				"disk": "16 GB"
 			}

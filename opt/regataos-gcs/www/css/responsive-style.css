@@ -274,6 +274,17 @@
 	}
 }
 
+@media screen and (max-width: 1420px) {
+	/* page games gcs */
+	.content-box {
+		max-width: 1000px;
+	}
+
+	.post-box {
+		width: 60%;
+	}
+}
+
 @media screen and (max-width: 1366px) {
 	/* page launchers */
 	.title-top {

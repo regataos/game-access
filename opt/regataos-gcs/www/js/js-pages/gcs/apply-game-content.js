@@ -23,6 +23,9 @@ function getGameId() {
             // Game title.
             document.querySelector(".game-title").innerHTML = game[i].gamename;
 
+            // Game status.
+            document.getElementById("game-status").innerHTML = game[i].gamestatus;
+
             // Game banner
             document.getElementById("game-banner").style.backgroundImage = `url(${game[i].gamebanner})`;
 
@@ -68,6 +71,7 @@ function getGameId() {
             document.querySelector(".minimum-gpu").innerHTML = game[i].specifications.minimum.gpu;
             document.querySelector(".minimum-memory").innerHTML = game[i].specifications.minimum.memory;
             document.querySelector(".minimum-disk").innerHTML = game[i].specifications.minimum.disk;
+
             document.querySelector(".recommended-cpu").innerHTML = game[i].specifications.recommended.cpu;
             document.querySelector(".recommended-gpu").innerHTML = game[i].specifications.recommended.gpu;
             document.querySelector(".recommended-memory").innerHTML = game[i].specifications.recommended.memory;
