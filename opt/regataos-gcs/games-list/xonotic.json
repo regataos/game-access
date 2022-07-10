@@ -45,13 +45,13 @@
 		"specifications": {
 			"minimum": {
 				"cpu": "Intel Core 2 Duo E6600, AMD Phenom X3 8750",
-				"gpu": "NVIDIA GeForce 8600/9600GT,<br />ATI/AMD Radeon HD2600/3600",
+				"gpu": "GeForce 9600 GT, AMD HD 6570",
 				"memory": "4 GB",
 				"disk": "5 GB"
 			},
 			"recommended": {
-				"cpu": "Intel Core i3, AMD Ryzen",
-				"gpu": "NVIDIA GeForce GTX 660 2 GB,<br />ATI/AMD Radeon RX",
+				"cpu": "Intel Core i5-3300, AMD Ryzen 3 1200",
+				"gpu": "NVIDIA GeForce GTX 660, ATI/AMD Radeon RX",
 				"memory": "8 GB",
 				"disk": "5 GB"
 			}

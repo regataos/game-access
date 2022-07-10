@@ -28,22 +28,33 @@ if [ $? = 0 ]; then
 		rm -rf "/opt/regataos-gcs/www/js/translations/language"
 	}
 
+	function linkGcsInstaller() {
+		ln -sf /opt/regataos-gcs/scripts/install/scripts-install/install-game-gcs/install-gcs-game.sh \
+			/opt/regataos-gcs/scripts/install/scripts-install/gcs-compatibility-mode.sh
+	}
+
 	function lang_pt_BR() {
 		ln -sf /opt/regataos-gcs/scripts/install/pt-br /opt/regataos-gcs/scripts/install/scripts-install
 		ln -sf /opt/regataos-gcs/scripts/remove/pt-br /opt/regataos-gcs/scripts/remove/scripts-remove
 		ln -sf /opt/regataos-gcs/www/js/translations/pt-br /opt/regataos-gcs/www/js/translations/language
+
+		linkGcsInstaller
 	}
 
 	function lang_pt_PT() {
 		ln -sf /opt/regataos-gcs/scripts/install/pt-br /opt/regataos-gcs/scripts/install/scripts-install
 		ln -sf /opt/regataos-gcs/scripts/remove/pt-br /opt/regataos-gcs/scripts/remove/scripts-remove
 		ln -sf /opt/regataos-gcs/www/js/translations/pt-br /opt/regataos-gcs/www/js/translations/language
+
+		linkGcsInstaller
 	}
 
 	function lang_en_US() {
 		ln -sf /opt/regataos-gcs/scripts/install/en-us /opt/regataos-gcs/scripts/install/scripts-install
 		ln -sf /opt/regataos-gcs/scripts/remove/en-us /opt/regataos-gcs/scripts/remove/scripts-remove
 		ln -sf /opt/regataos-gcs/www/js/translations/en-us /opt/regataos-gcs/www/js/translations/language
+
+		linkGcsInstaller
 	}
 
 	user=$(users | awk '{print $1}')
