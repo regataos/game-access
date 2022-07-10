@@ -1,4 +1,4 @@
-#!/bin/bash 
+#!/bin/bash
 #
 
 # Settings and variables
@@ -68,6 +68,39 @@ function prepareCustomCompatMode() {
 			overrideDll $(echo "$dll" | sed s/.dll//)
 		done
 
+		# Install DXVK and VKD3D-Proton dll's
+		overrideDll() {
+			wine reg add 'HKEY_CURRENT_USER\Software\Wine\DllOverrides' /v $1 /d native /f >/dev/null 2>&1
+		}
+
+		#DXVK
+		for dll in $(ls /opt/regataos-wine/dxvk/x64/ | grep "dll"); do
+			ln -sf "/opt/regataos-wine/dxvk/x64/$dll" "$WINEPREFIX/drive_c/windows/system32/$dll"
+
+			overrideDll $(echo "$dll" | sed s/.dll//)
+		done
+
+		for dll in $(ls /opt/regataos-wine/dxvk/x32/ | grep "dll"); do
+			ln -sf "/opt/regataos-wine/dxvk/x32/$dll" "$WINEPREFIX/drive_c/windows/syswow64/$dll"
+
+			overrideDll $(echo "$dll" | sed s/.dll//)
+		done
+
+		#VKD3D-Proton
+		for dll in $(ls /opt/regataos-wine/vkd3d-proton/x64/ | grep "dll"); do
+			ln -sf "/opt/regataos-wine/vkd3d-proton/x64/$dll" "$WINEPREFIX/drive_c/windows/system32/$dll"
+
+			overrideDll $(echo "$dll" | sed s/.dll//)
+		done
+
+		for dll in $(ls /opt/regataos-wine/vkd3d-proton/x86/ | grep "dll"); do
+			ln -sf "/opt/regataos-wine/vkd3d-proton/x86/$dll" "$WINEPREFIX/drive_c/windows/syswow64/$dll"
+
+			overrideDll $(echo "$dll" | sed s/.dll//)
+		done
+
+		echo -e "DXVK\nVKD3D-Proton" >> "$WINEPREFIX/vulkan.txt"
+
 		# Check the winetricks cache present on the system.
 		if test ! -e "$HOME/.cache/winetricks/vcrun2019"; then
 			if test -e "/opt/regataos-wine/winetricks-cache/winetricks.tar.xz"; then
@@ -78,9 +111,6 @@ function prepareCustomCompatMode() {
 
 		winetricks prefix=$game_nickname-compatibility-mode -q -f win10
 		sleep 5
-
-		# Enable DXVK and VKD3D-Proton
-		/bin/bash /opt/regataos-gcs/scripts/action-games/configure-compatibility-mode -configure-dxvk-vkd3d
 
 		rm -f $progressbar_dir/progress-movement
 		echo "completed" > $progressbar_dir/progress-full

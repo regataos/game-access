@@ -82,7 +82,7 @@ if test -e /tmp/regataos-prime/use-hybrid-graphics.txt; then
 
 		# Special configurations for DXVK with NVIDIA GPU
         if [[ $(echo $game_plataform) == *"windows"* ]]; then
-		    ln -sf "/opt/regataos-wine/custom-configs/$LAUNCHER/dxvk-nvidia.conf" "$PREFIX_LOCATION/dxvk.conf"
+		    ln -sf "/opt/regataos-wine/custom-configs/gcs/dxvk-nvidia.conf" "$PREFIX_LOCATION/dxvk.conf"
         fi
 
 	else
@@ -91,7 +91,7 @@ if test -e /tmp/regataos-prime/use-hybrid-graphics.txt; then
 
 		# Special configurations for DXVK with AMD/Intel GPU
         if [[ $(echo $game_plataform) == *"windows"* ]]; then
-		    ln -sf "/opt/regataos-wine/custom-configs/$LAUNCHER/dxvk.conf" "$PREFIX_LOCATION/dxvk.conf"
+		    ln -sf "/opt/regataos-wine/custom-configs/gcs/dxvk.conf" "$PREFIX_LOCATION/dxvk.conf"
         fi
 	fi
 
@@ -104,20 +104,23 @@ else
 
 		# Special configurations for DXVK with NVIDIA GPU
         if [[ $(echo $game_plataform) == *"windows"* ]]; then
-		    ln -sf "/opt/regataos-wine/custom-configs/$LAUNCHER/dxvk-nvidia.conf" "$PREFIX_LOCATION/dxvk.conf"
+		    ln -sf "/opt/regataos-wine/custom-configs/gcs/dxvk-nvidia.conf" "$PREFIX_LOCATION/dxvk.conf"
         fi
 
 	else
 		# Special configurations for DXVK with AMD/Intel GPU
         if [[ $(echo $game_plataform) == *"windows"* ]]; then
-		    ln -sf "/opt/regataos-wine/custom-configs/$LAUNCHER/dxvk.conf" "$PREFIX_LOCATION/dxvk.conf"
+		    ln -sf "/opt/regataos-wine/custom-configs/gcs/dxvk.conf" "$PREFIX_LOCATION/dxvk.conf"
         fi
 	fi
 fi
 
 # Configure compatibility mode
 if [[ $(echo $game_plataform) == *"windows"* ]]; then
-    /bin/bash /opt/regataos-gcs/scripts/action-games/configure-compatibility-mode -configure-dxvk-vkd3d
+    if [[ $(echo $custom_runtime) != *"true"* ]]; then
+        export WINEPREFIX="$PREFIX_LOCATION"
+        /bin/bash /opt/regataos-gcs/scripts/action-games/configure-compatibility-mode -configure-dxvk-vkd3d
+    fi
 fi
 
 # Special fix
