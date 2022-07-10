@@ -279,9 +279,14 @@
 	.content-box {
 		max-width: 1000px;
 	}
-
 	.post-box {
 		width: 60%;
+	}
+	#hardware-minimum {
+		width: 275px;
+	}
+	#hardware-recommended {
+		width: 275px;
 	}
 }
 

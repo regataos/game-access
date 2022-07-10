@@ -123,12 +123,12 @@ a, a:visited {
 
 #hardware-minimum {
 	float: left;
-    width: 275px;
+    width: 360px;
 }
 
 #hardware-recommended {
 	float: right;
-    width: 275px;
+    width: 360px;
 }
 
 .requirements {
