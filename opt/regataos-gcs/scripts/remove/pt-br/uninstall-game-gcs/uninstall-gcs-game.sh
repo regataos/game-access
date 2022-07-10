@@ -10,6 +10,11 @@ game_nickname="$(grep -r "gamenickname" /opt/regataos-gcs/games-list/$gameNickna
 (
 	# Uninstall game from Epic Games Store with Legendary
 	rm -rf "$HOME/Game Access/$game_folder"
+	rm -rf "$HOME/.local/share/wineprefixes/$game_nickname-compatibility-mode"
+
+	custom_runtime=$(cat "$HOME/.config/regataos-gcs/custom-runtime/$game_nickname.txt")
+	rm -rf "$(echo $custom_runtime)"
+	rm -f "$HOME/.config/regataos-gcs/custom-runtime/$game_nickname.txt"
 
 	# Remove game from installed list
 	rm -f "/tmp/regataos-gcs/config/installed/$game_nickname.json"

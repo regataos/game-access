@@ -5,17 +5,35 @@
 game_folder="$(grep -r "gamefolder" /opt/regataos-gcs/games-list/$gameNickname.json | cut -d":" -f 2- | sed 's/ //' | sed 's/"\|,//g')"
 file_executable="$(grep -r "file_executable" /opt/regataos-gcs/games-list/$gameNickname.json | cut -d":" -f 2- | sed 's/ //' | sed 's/"\|,//g')"
 game_plataform="$(grep -r "plataform" /opt/regataos-gcs/games-list/$gameNickname.json | cut -d":" -f 2- | sed 's/ //' | sed 's/"\|,//g')"
+custom_runtime="$(grep -r "custom_runtime" /opt/regataos-gcs/games-list/$gameNickname.json | cut -d":" -f 2- | sed 's/ //' | sed 's/"\|,//g')"
 
 GCS_CONFIG="$HOME/.config/regataos-gcs/regataos-gcs.conf"
 LOG_FILE="/var/log/regataos-logs/gcs-$gameNickname.log"
 
 # Variables for Wine
 if [[ $(echo $game_plataform) == *"windows"* ]]; then
-    PREFIX_LOCATION="$HOME/.local/share/wineprefixes/$gameNickname-compatibility-mode"
+    if [[ $(echo $custom_runtime) == *"true"* ]]; then
+        # Variables for custom Wine
+        export CUSTOM_WINE_DIR="$(cat $HOME/.config/regataos-gcs/custom-runtime/$gameNickname.txt)"
+
+        export WINEDLLPATH="$CUSTOM_WINE_DIR/lib:$CUSTOM_WINE_DIR/lib64"
+        export WINESERVER="$CUSTOM_WINE_DIR/bin/wineserver"
+        export WINELOADER="$CUSTOM_WINE_DIR/bin/wine"
+        export WINE="$CUSTOM_WINE_DIR/bin/wine"
+
+        alias wine="$CUSTOM_WINE_DIR/bin/wine"
+        alias wine64="$CUSTOM_WINE_DIR/bin/wine64"
+        alias wineserver="$CUSTOM_WINE_DIR/bin/wineserver"
+        alias wineboot="$CUSTOM_WINE_DIR/bin/wineboot"
+        alias winecfg="$CUSTOM_WINE_DIR/bin/winecfg"
+        alias msiexec="$CUSTOM_WINE_DIR/bin/msiexec"
+    fi
+
+    export PREFIX_LOCATION="$HOME/.local/share/wineprefixes/$gameNickname-compatibility-mode"
     export WINEPREFIX="$PREFIX_LOCATION"
-    export WINEESYNC=1
-    export WINEFSYNC=1
-    export WINEFSYNC_FUTEX2=1
+    #export WINEESYNC=1
+    #export WINEFSYNC=1
+    #export WINEFSYNC_FUTEX2=1
     export WINE_LARGE_ADDRESS_AWARE=1
     export DXVK_STATE_CACHE_PATH="$PREFIX_LOCATION"
     export DXVK_LOG_PATH="$PREFIX_LOCATION"
@@ -102,9 +120,26 @@ if [[ $(echo $game_plataform) == *"windows"* ]]; then
     /bin/bash /opt/regataos-gcs/scripts/action-games/configure-compatibility-mode -configure-dxvk-vkd3d
 fi
 
+# Special fix
+if [[ $(echo $gameNickname) == *"lol"* ]]; then
+    pkexec sh -c 'sysctl -w abi.vsyscall32=0'
+    /opt/regataos-gcs/scripts/action-games/launch-helper-lol.sh start &
+fi
+
 # Run game
 if [[ $(echo $game_plataform) == *"windows"* ]]; then
-    (env $GAMEVAR wine "$PREFIX_LOCATION/dosdevices/c:/Program Files (x86)/GOG Galaxy/GalaxyClient.exe" /command=runGame /gameId=$gameid /path="$game_install_folder") 2>&1 | tee $LOG_FILE
+    if [[ $(echo $custom_runtime) == *"true"* ]]; then
+        echo "$PREFIX_LOCATION/$file_executable"
+        ($CUSTOM_WINE_DIR/bin/wine "$PREFIX_LOCATION/$file_executable") 2>&1 | tee $LOG_FILE
+    else
+        (wine "$PREFIX_LOCATION/$file_executable") 2>&1 | tee $LOG_FILE
+    fi
+
 else
     (env $(echo $MANGOHUD_GL) "$HOME/Game Access/$game_folder/$file_executable") 2>&1 | tee $LOG_FILE
+fi
+
+# Return to system default configuration
+if [ "$(cat /proc/sys/abi/vsyscall32)" -ne 1 ]; then
+    pkexec sh -c 'sysctl -w abi.vsyscall32=1'
 fi

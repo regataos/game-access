@@ -1,59 +1,74 @@
 // folder with the file with the value
-var dir = "/tmp/progressbar-gcs/"
 
 // Remove installations on process queue
 function stop_queued1() {
-    var command_line = "sed -i 1d "+dir+"queued-process";
-    console.log(command_line);
-    exec(command_line,function(error,call,errlog){
+    let commandLine = `gameId=$(cat "/tmp/progressbar-gcs/queued-process" | awk '{print $1}' | head -1 | tail -1 | cut -d'=' -f -1); \
+    sed -i "/$gameId/d" "/tmp/regataos-gcs/gcs-for-install.txt"; \
+    sed -i '/^$/d' "/tmp/regataos-gcs/gcs-for-install.txt"; \
+    sed -i 1d "/tmp/progressbar-gcs/queued-process"`;
+    exec(commandLine,function(error,call,errlog){
     });
 }
 
 function stop_queued2() {
-    var command_line = "sed -i 2d "+dir+"queued-process";
-    console.log(command_line);
-    exec(command_line,function(error,call,errlog){
+    let commandLine = `gameId=$(cat "/tmp/progressbar-gcs/queued-process" | awk '{print $1}' | head -2 | tail -1 | cut -d'=' -f -1); \
+    sed -i "/$gameId/d" "/tmp/regataos-gcs/gcs-for-install.txt"; \
+    sed -i '/^$/d' "/tmp/regataos-gcs/gcs-for-install.txt"; \
+    sed -i 2d "/tmp/progressbar-gcs/queued-process"`;
+    exec(commandLine,function(error,call,errlog){
     });
 }
 
 function stop_queued3() {
-    var command_line = "sed -i 3d "+dir+"queued-process";
-    console.log(command_line);
-    exec(command_line,function(error,call,errlog){
+    let commandLine = `gameId=$(cat "/tmp/progressbar-gcs/queued-process" | awk '{print $1}' | head -3 | tail -1 | cut -d'=' -f -1); \
+    sed -i "/$gameId/d" "/tmp/regataos-gcs/gcs-for-install.txt"; \
+    sed -i '/^$/d' "/tmp/regataos-gcs/gcs-for-install.txt"; \
+    sed -i 3d "/tmp/progressbar-gcs/queued-process"`;
+    exec(commandLine,function(error,call,errlog){
     });
 }
 
 function stop_queued4() {
-    var command_line = "sed -i 4d "+dir+"queued-process";
-    console.log(command_line);
-    exec(command_line,function(error,call,errlog){
+    let commandLine = `gameId=$(cat "/tmp/progressbar-gcs/queued-process" | awk '{print $1}' | head -4 | tail -1 | cut -d'=' -f -1); \
+    sed -i "/$gameId/d" "/tmp/regataos-gcs/gcs-for-install.txt"; \
+    sed -i '/^$/d' "/tmp/regataos-gcs/gcs-for-install.txt"; \
+    sed -i 4d "/tmp/progressbar-gcs/queued-process"`;
+    exec(commandLine,function(error,call,errlog){
     });
 }
 
 function stop_queued5() {
-    var command_line = "sed -i 5d "+dir+"queued-process";
-    console.log(command_line);
-    exec(command_line,function(error,call,errlog){
+    let commandLine = `gameId=$(cat "/tmp/progressbar-gcs/queued-process" | awk '{print $1}' | head -5 | tail -1 | cut -d'=' -f -1); \
+    sed -i "/$gameId/d" "/tmp/regataos-gcs/gcs-for-install.txt"; \
+    sed -i '/^$/d' "/tmp/regataos-gcs/gcs-for-install.txt"; \
+    sed -i 5d "/tmp/progressbar-gcs/queued-process"`;
+    exec(commandLine,function(error,call,errlog){
     });
 }
 
 function stop_queued6() {
-    var command_line = "sed -i 6d "+dir+"queued-process";
-    console.log(command_line);
-    exec(command_line,function(error,call,errlog){
+    let commandLine = `gameId=$(cat "/tmp/progressbar-gcs/queued-process" | awk '{print $1}' | head -6 | tail -1 | cut -d'=' -f -1); \
+    sed -i "/$gameId/d" "/tmp/regataos-gcs/gcs-for-install.txt"; \
+    sed -i '/^$/d' "/tmp/regataos-gcs/gcs-for-install.txt"; \
+    sed -i 6d "/tmp/progressbar-gcs/queued-process"`;
+    exec(commandLine,function(error,call,errlog){
     });
 }
 
 function stop_queued7() {
-    var command_line = "sed -i 7d "+dir+"queued-process";
-    console.log(command_line);
-    exec(command_line,function(error,call,errlog){
+    let commandLine = `gameId=$(cat "/tmp/progressbar-gcs/queued-process" | awk '{print $1}' | head -7 | tail -1 | cut -d'=' -f -1); \
+    sed -i "/$gameId/d" "/tmp/regataos-gcs/gcs-for-install.txt"; \
+    sed -i '/^$/d' "/tmp/regataos-gcs/gcs-for-install.txt"; \
+    sed -i 7d "/tmp/progressbar-gcs/queued-process"`;
+    exec(commandLine,function(error,call,errlog){
     });
 }
 
 function stop_queued8() {
-    var command_line = "sed -i 8d "+dir+"queued-process";
-    console.log(command_line);
-    exec(command_line,function(error,call,errlog){
+    let commandLine = `gameId=$(cat "/tmp/progressbar-gcs/queued-process" | awk '{print $1}' | head -8 | tail -1 | cut -d'=' -f -1); \
+    sed -i "/$gameId/d" "/tmp/regataos-gcs/gcs-for-install.txt"; \
+    sed -i '/^$/d' "/tmp/regataos-gcs/gcs-for-install.txt"; \
+    sed -i 8d "/tmp/progressbar-gcs/queued-process"`;
+    exec(commandLine,function(error,call,errlog){
     });
 }

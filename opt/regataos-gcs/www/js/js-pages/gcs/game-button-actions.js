@@ -2,8 +2,6 @@
 //Check if the game is installed
 function checkGameInstalled() {
     const fs = require("fs");
-
-    sessionStorage.setItem("game-gcs-id", "xonotic");
     const gameId = sessionStorage.getItem("game-gcs-id");
 
     if (fs.existsSync(`/tmp/regataos-gcs/config/installed/${gameId}.json`)) {
