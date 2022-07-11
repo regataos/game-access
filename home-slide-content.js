@@ -3,7 +3,7 @@ function home_content() {
         // Content of slide 1
         //Block image
         $(".slideshow .slide .slide-img1").css("background-image", 'url("file:///tmp/regataos-gcs/config/cache/img/slide-img1.jpg")');
-        $(".slideshow .slide .slide-img1").css("background-position", '0% 100%;');
+        $(".slideshow .slide .slide-img1").css("background-position", '0% 100%');
         $(".slide-content .slide-title1").text("League of Legends");
 
         // Content of slide 2
@@ -32,7 +32,7 @@ function home_content() {
             $(document).ready(function() {
                 // Content of slide 1
                 //Title and description
-                $(".slide-content .slide-desc1 p").text("Que a melhor equipe vença!");
+                $(".slide-content .slide-desc1 p").text("Chame os amigos, escolha um Campeão e faça jogadas memoráveis");
                 $(".slide-content .slide-button1").text("Jogue agora");
 
                 // Content of slide 2
@@ -58,7 +58,7 @@ function home_content() {
                 $(".slideshow .slide .slide-img1").css("background-image", 'url("https://i.ibb.co/QK6SXCt/img1.jpg")');
 
                 //Title and description
-                $(".slide-content .slide-desc1 p").text("Que a melhor equipe vença!");
+                $(".slide-content .slide-desc1 p").text("Chame os amigos, escolha um Campeão e faça jogadas memoráveis");
                 $(".slide-content .slide-button1").text("Jogue agora");
 
                 // Content of slide 2
@@ -81,7 +81,7 @@ function home_content() {
             $(document).ready(function() {
                 // Content of slide 1
                 //Title and description
-                $(".slide-content .slide-desc1 p").text("May the best team win!");
+                $(".slide-content .slide-desc1 p").text("Call your friends, choose a champion and make memorable plays");
                 $(".slide-content .slide-button1").text("Play now");
 
                 // Content of slide 2
@@ -104,7 +104,7 @@ function home_content() {
             $(document).ready(function() {
                 // Content of slide 1
                 //Title and description
-                $(".slide-content .slide-desc1 p").text("May the best team win!");
+                $(".slide-content .slide-desc1 p").text("Call your friends, choose a champion and make memorable plays");
                 $(".slide-content .slide-button1").text("Play now");
 
                 // Content of slide 2
