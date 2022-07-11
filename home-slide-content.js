@@ -37,7 +37,7 @@ function home_content() {
 
                 // Content of slide 2
                 //Title and description
-                $(".slide-content .slide-desc2 p").text("O mundo precisa de heróis");
+                $(".slide-content .slide-desc2 p").text("Enfrente inimigos usando um repertório alucinante de poderes e armas");
                 $(".slide-content .slide-button2").text("Jogue agora com Battle.net");
 
                 // Content of slide 3
@@ -63,7 +63,7 @@ function home_content() {
 
                 // Content of slide 2
                 //Title and description
-                $(".slide-content .slide-desc2 p").text("O mundo precisa de heróis");
+                $(".slide-content .slide-desc2 p").text("Enfrente inimigos usando um repertório alucinante de poderes e armas");
                 $(".slide-content .slide-button2").text("Jogue agora com Battle.net");
 
                 // Content of slide 3
@@ -86,7 +86,7 @@ function home_content() {
 
                 // Content of slide 2
                 //Title and description
-                $(".slide-content .slide-desc2 p").text("The world needs heroes");
+                $(".slide-content .slide-desc2 p").text("Take on enemies using a mind-boggling repertoire of powers and weapons");
                 $(".slide-content .slide-button2").text("Play now with Battle.net");
 
                 // Content of slide 3
@@ -109,7 +109,7 @@ function home_content() {
 
                 // Content of slide 2
                 //Title and description
-                $(".slide-content .slide-desc2 p").text("The world needs heroes");
+                $(".slide-content .slide-desc2 p").text("Take on enemies using a mind-boggling repertoire of powers and weapons");
                 $(".slide-content .slide-button2").text("Play now with Battle.net");
 
                 // Content of slide 3
