@@ -3,7 +3,8 @@ function home_content() {
         // Content of slide 1
         //Block image
         $(".slideshow .slide .slide-img1").css("background-image", 'url("file:///tmp/regataos-gcs/config/cache/img/slide-img1.jpg")');
-        $(".slide-content .slide-title1").text("Grand Theft Auto V");
+        $(".slideshow .slide .slide-img1").css("background-position", '0% 100%;');
+        $(".slide-content .slide-title1").text("League of Legends");
 
         // Content of slide 2
         //Block image
@@ -31,8 +32,8 @@ function home_content() {
             $(document).ready(function() {
                 // Content of slide 1
                 //Title and description
-                $(".slide-content .slide-desc1 p").text("Explore o gigantesco e premiado mundo de Los Santos e Blaine County");
-                $(".slide-content .slide-button1").text("Jogue agora com Rockstar Launcher");
+                $(".slide-content .slide-desc1 p").text("Que a melhor equipe vença!");
+                $(".slide-content .slide-button1").text("Jogue agora");
 
                 // Content of slide 2
                 //Title and description
@@ -57,8 +58,8 @@ function home_content() {
                 $(".slideshow .slide .slide-img1").css("background-image", 'url("https://i.ibb.co/QK6SXCt/img1.jpg")');
 
                 //Title and description
-                $(".slide-content .slide-desc1 p").text("Explore o gigantesco e premiado mundo de Los Santos e Blaine County");
-                $(".slide-content .slide-button1").text("Jogue agora com Rockstar Launcher");
+                $(".slide-content .slide-desc1 p").text("Que a melhor equipe vença!");
+                $(".slide-content .slide-button1").text("Jogue agora");
 
                 // Content of slide 2
                 //Title and description
@@ -80,8 +81,8 @@ function home_content() {
             $(document).ready(function() {
                 // Content of slide 1
                 //Title and description
-                $(".slide-content .slide-desc1 p").text("Explore the award-winning world of Los Santos and Blaine County");
-                $(".slide-content .slide-button1").text("Play now with Rockstar Launcher");
+                $(".slide-content .slide-desc1 p").text("May the best team win!");
+                $(".slide-content .slide-button1").text("Play now");
 
                 // Content of slide 2
                 //Title and description
@@ -103,8 +104,8 @@ function home_content() {
             $(document).ready(function() {
                 // Content of slide 1
                 //Title and description
-                $(".slide-content .slide-desc1 p").text("Explore the award-winning world of Los Santos and Blaine County");
-                $(".slide-content .slide-button1").text("Play now with Rockstar Launcher");
+                $(".slide-content .slide-desc1 p").text("May the best team win!");
+                $(".slide-content .slide-button1").text("Play now");
 
                 // Content of slide 2
                 //Title and description
