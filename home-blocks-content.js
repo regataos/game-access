@@ -2,13 +2,13 @@ function home_content() {
     $(document).ready(function() {
         // Content of block 1
         //Title
-        $(".appbc1 .block-title").text("Iratus: Lord of the Dead");
+        $(".appbc1 .block-title").text("Killing Floor 2");
         //Block image
         $(".appbc1").css("background-image", 'url("file:///tmp/regataos-gcs/config/cache/img/block-img1.jpg")');
         $(".appbc1").css("background-position", "50% 50%")
         //Date
-        date_pt_br="07 de julho"
-        date_en_us="July 7"
+        date_pt_br="14 de julho"
+        date_en_us="July 14"
 
         // Content of block 2
         //Title
