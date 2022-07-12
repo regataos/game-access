@@ -10,6 +10,7 @@
 		"publisher": "Riot Games",
 		"gamedownload_link": "https://lol.secure.dyn.riotcdn.net/channels/public/x/installer/current/live.na.exe",
 		"gamedownload_file_name": "lol.exe",
+		"install_args": "",
 		"gamebanner": "https://i.ibb.co/tp9s4Zg/lol-banner.jpg",
 		"file_executable": "drive_c/Riot Games/Riot Client/RiotClientServices.exe",
 		"gamefolder": "lol",

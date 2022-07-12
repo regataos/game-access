@@ -8,12 +8,14 @@ if [ -z $gameNickname ];then
 	sed -i '/^$/d' "/tmp/regataos-gcs/gcs-for-install.txt"
 fi
 
+user=$(users | awk '{print $1}')
 game_name="$(grep -r "gamename" /opt/regataos-gcs/games-list/$gameNickname.json | cut -d":" -f 2- | sed 's/ //' | sed 's/"\|,//g')"
 game_folder="$(grep -r "gamefolder" /opt/regataos-gcs/games-list/$gameNickname.json | cut -d":" -f 2- | sed 's/ //' | sed 's/"\|,//g')"
 game_nickname="$(grep -r "gamenickname" /opt/regataos-gcs/games-list/$gameNickname.json | cut -d":" -f 2- | sed 's/ //' | sed 's/"\|,//g')"
 game_download="$(grep -r "gamedownload_link" /opt/regataos-gcs/games-list/$gameNickname.json | cut -d":" -f 2- | sed 's/ //' | sed 's/"\|,//g')"
 game_download_file_name="$(grep -r "gamedownload_file_name" /opt/regataos-gcs/games-list/$gameNickname.json | cut -d":" -f 2- | sed 's/ //' | sed 's/"\|,//g')"
-file_executable="$(grep -r "file_executable" /opt/regataos-gcs/games-list/$gameNickname.json | cut -d":" -f 2- | sed 's/ //' | sed 's/"\|,//g')"
+install_args="$(grep -r "install_args" /opt/regataos-gcs/games-list/$gameNickname.json | cut -d":" -f 2- | sed 's/ //' | sed 's/"\|,//g')"
+file_executable="$(grep -r "file_executable" /opt/regataos-gcs/games-list/$gameNickname.json | cut -d":" -f 2- | sed 's/ //' | sed 's/"\|,//g' | sed "s/username/$user/")"
 game_plataform="$(grep -r "plataform" /opt/regataos-gcs/games-list/$gameNickname.json | cut -d":" -f 2- | sed 's/ //' | sed 's/"\|,//g')"
 custom_runtime="$(grep -r "custom_runtime" /opt/regataos-gcs/games-list/$gameNickname.json | cut -d":" -f 2- | sed 's/ //' | sed 's/"\|,//g')"
 custom_runtime_download="$(grep -r "custom_runtime_download" /opt/regataos-gcs/games-list/$gameNickname.json | cut -d":" -f 2- | sed 's/ //' | sed 's/"\|,//g')"
@@ -33,7 +35,6 @@ error_notify_title="Erro na instalação do"
 error_notify_text="Ocorreu algum erro na instalação do"
 installation_error_status="Erro na instalação"
 progressbar_dir="/tmp/progressbar-gcs"
-user=$(users | awk '{print $1}')
 
 # Check the game's installation folder
 if [ -z "$GAME_INSTALL_DIR" ] ;then
@@ -74,16 +75,16 @@ function install_app() {
 			fi
 
 			if [[ $(echo $game_download_file_name) == *".exe"* ]]; then
-				$CUSTOM_WINE_DIR/bin/wine /tmp/regataos-gcs/$game_download_file_name
+				$CUSTOM_WINE_DIR/bin/wine /tmp/regataos-gcs/$game_download_file_name $install_args
 			else
-				$CUSTOM_WINE_DIR/bin/wine $CUSTOM_WINE_DIR/bin/msiexec /i /tmp/regataos-gcs/$game_download_file_name
+				$CUSTOM_WINE_DIR/bin/wine $CUSTOM_WINE_DIR/bin/msiexec /i /tmp/regataos-gcs/$game_download_file_name $install_args
 			fi
 
 		else
 			if [[ $(echo $game_download_file_name) == *".exe"* ]]; then
-				wine /tmp/regataos-gcs/$game_download_file_name
+				wine /tmp/regataos-gcs/$game_download_file_name $install_args
 			else
-				wine msiexec /i /tmp/regataos-gcs/$game_download_file_name
+				wine msiexec /i /tmp/regataos-gcs/$game_download_file_name $install_args
 			fi
 		fi
 

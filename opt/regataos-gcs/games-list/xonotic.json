@@ -10,6 +10,7 @@
 		"publisher": "Team Xonotic",
 		"gamedownload_link": "https://xonotic.antzucaro.com/xonotic-0.8.5.zip",
 		"gamedownload_file_name": "xonotic.zip",
+		"install_args": "",
 		"gamebanner": "https://i.ibb.co/sbGT1d5/xonotic-img1.jpg",
 		"file_executable": "xonotic-linux-sdl.sh",
 		"gamefolder": "Xonotic",
@@ -40,8 +41,8 @@
 		"gameimages": {
 			"img1": "https://i.ibb.co/sbGT1d5/xonotic-img1.jpg",
 			"img2": "https://i.ibb.co/gJt1Mxf/xonotic-img2.jpg",
-			"img3": "https://i.ibb.co/GMM5B4Z/xonotic-img3.png",
-			"img4": "https://i.ibb.co/6sFbnWG/xonotic-img4.png"
+			"img3": "https://i.ibb.co/GMM5B4Z/xonotic-img3.jpg",
+			"img4": "https://i.ibb.co/6sFbnWG/xonotic-img4.jpg"
 		},
 		"specifications": {
 			"minimum": {

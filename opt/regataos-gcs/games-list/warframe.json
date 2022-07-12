@@ -1,0 +1,70 @@
+[
+	{
+		"gamename": "Warframe",
+		"gamenickname": "warframe",
+		"gameexecutable": "warframe",
+		"gamestatus": "",
+		"launcher": "Game Access",
+		"launchernickname": "gcs",
+		"gamedev": "Digital Extremes",
+		"publisher": "Digital Extremes",
+		"gamedownload_link": "https://content.warframe.com/dl/Warframe.msi",
+		"gamedownload_file_name": "Warframe.msi",
+		"install_args": "/q",
+		"gamebanner": "https://i.ibb.co/GvHK8Ym/warframe-img1.jpg",
+		"file_executable": "drive_c/users/username/AppData/Local/Warframe/Downloaded/Public/Tools/Launcher.exe",
+		"gamefolder": "warframe",
+		"custom_runtime": "false",
+		"custom_runtime_name": "",
+		"custom_runtime_download": "",
+		"custom_runtime_file": "",
+		"plataform": "windows",
+		"gamenative": "gcs",
+		"game_access": "true",
+		"releasedate": {
+			"pt": "25/04/2013",
+			"en": "04/25/2013"
+		},
+		"gameupdate": {
+			"status": "false",
+			"pt": "",
+			"en": ""
+		},
+		"gamegenre": {
+			"pt": "Tiro em terceira pessoa, RPG de Ação",
+			"en": "Third-person shooter, Action RPG"
+		},
+		"gameprice": {
+			"pt": "Gratuito",
+			"en": "Free"
+		},
+		"gameimages": {
+			"img1": "https://i.ibb.co/GvHK8Ym/warframe-img1.jpg",
+			"img2": "https://i.ibb.co/StGpSBz/warframe-img2.jpg",
+			"img3": "https://i.ibb.co/KXpYhjJ/warframe-img3.jpg",
+			"img4": "https://i.ibb.co/k1M1SH2/warframe-img4.jpg"
+		},
+		"specifications": {
+			"minimum": {
+				"cpu": "Intel Core 2 Duo E6600, AMD Phenom X3 8750",
+				"gpu": "NVIDIA GeForce 9600 GT, AMD Radeon HD 6570",
+				"memory": "4 GB",
+				"disk": "50 GB"
+			},
+			"recommended": {
+				"cpu": "Intel Core i5-3300, AMD Ryzen 3 1200",
+				"gpu": "NVIDIA GeForce GTX 660, AMD Radeon HD 7870",
+				"memory": "8 GB",
+				"disk": "50 GB"
+			}
+		},
+		"gamekeywords": {
+			"pt": "Warframe, warframe, fps, acao, tiro, rpg, rpg de acao, tiro em terceira pessoa, gratuito",
+			"en": "Warframe, warframe, fps, action, shot, rpg, action rpg, third person shooter, free"
+		},
+		"gamedescription": {
+			"pt": "Enfrente facções em guerra em um vasto sistema interplanetário enquanto segue a orientação do misterioso Lotus e aumenta o nível do seu Warframe, constrói um arsenal de poder de fogo destrutivo e realiza seu verdadeiro potencial em mundos abertos massivos neste emocionante combate em terceira pessoa que define o gênero experiência.<br /><br />Suas armas iniciais são apenas o começo. Crie centenas de armamentos destrutivos, além de veículos, companheiros e muito mais. Suba de nível e experimente até encontrar a combinação certa de equipamento que se adapte ao seu estilo de jogo único. Modele seu armamento para um visual assustador para complementar seu equipamento personalizado.<br /><br />Entrar no Sistema de Origem significa juntar legiões de Tennos amigáveis, cada um com seus próprios Warframes, Armas e equipamentos personalizados. Com um número impressionante de opções de personalização disponíveis para aprimorar seu Loadout, projetar a aparência perfeita para seu Warframe é um desafio infinitamente recompensador para você e seu esquadrão.",
+			"en": "Confront warring factions throughout a sprawling interplanetary system as you follow the guidance of the mysterious Lotus and level up your Warframe, build an Arsenal of destructive firepower, and realize your true potential across massive open worlds in this thrilling, genre-defining third-person combat experience.<br /><br />Your starter Weapons are just the beginning. Craft hundreds of destructive armaments, plus vehicles, Companions and more. Level them up and experiment until you find the right combination of gear that suits your unique playstyle. Fashion your weaponry for a fearsome look to compliment your custom-designed loadout.<br /><br />Entering the Origin System means joining legions of friendly Tenno, each with their own personalized Warframes, Weapons and gear. With a staggering number of Customization options available to enhance your Loadout, designing the perfect look for your Warframe makes for an endlessly rewarding challenge for you and your Squad."
+		}
+    }
+]

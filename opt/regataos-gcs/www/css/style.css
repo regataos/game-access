@@ -133,8 +133,8 @@ label.label-run-game {
 	background-color: #2a2e33;
 	z-index: 40000;
     animation-name: initEffect;
-    animation-duration: 1.2s;
-	animation-delay: .5s;
+    animation-duration: 1s;
+	animation-delay: 1s;
 }
 
 @keyframes initEffect {
