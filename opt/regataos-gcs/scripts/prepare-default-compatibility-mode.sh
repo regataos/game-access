@@ -18,6 +18,7 @@ winetricks prefix=default-compatibility-mode -q -f nocrashdialog
 winetricks prefix=default-compatibility-mode -q -f d3dcompiler_43
 winetricks prefix=default-compatibility-mode -q -f d3dx9
 winetricks prefix=default-compatibility-mode -q -f xact
+winetricks prefix=default-compatibility-mode -q -f xact_x64
 winetricks prefix=default-compatibility-mode -q -f vcrun2013
 winetricks prefix=default-compatibility-mode -q -f vcrun2019
 winetricks prefix=default-compatibility-mode -q -f msls31
