@@ -12,7 +12,7 @@ function home_content() {
 
         // Content of block 2
         //Title
-        $(".appbc2 .block-title").text("Path of Exile");
+        $(".appbc2 .block-title").text("Xonotic");
         //Block image
         $(".appbc2").css("background-image", 'url("file:///tmp/regataos-gcs/config/cache/img/block-img2.jpg")');
         $(".appbc2").css("background-position", "50% 0%")
@@ -39,7 +39,7 @@ function home_content() {
 
                 // Content of block 2
                 //Description
-                $(".appbc2 .block-desc").text("Disponível de graça na Epic Games Store.");
+                $(".appbc2 .block-desc").text("Um divertido jogo de tiro em primeira pessoa estilo arena.");
 
                 // Content of block 3
                 //Description
@@ -54,7 +54,7 @@ function home_content() {
 
                 // Content of block 2
                 //Description
-                $(".appbc2 .block-desc").text("Disponível de graça na Epic Games Store.");
+                $(".appbc2 .block-desc").text("Um divertido jogo de tiro em primeira pessoa estilo arena.");
 
                 // Content of block 3
                 //Description
@@ -69,7 +69,7 @@ function home_content() {
 
                 // Content of block 2
                 //Description
-                $(".appbc2 .block-desc").text("Available for free on the Epic Games Store.");
+                $(".appbc2 .block-desc").text("A fun and addictive arena-style first person shooter.");
 
                 // Content of block 3
                 //Description
@@ -84,7 +84,7 @@ function home_content() {
 
                 // Content of block 2
                 //Description
-                $(".appbc2 .block-desc").text("Available for free on the Epic Games Store.");
+                $(".appbc2 .block-desc").text("A fun and addictive arena-style first person shooter.");
 
                 // Content of block 3
                 //Description
