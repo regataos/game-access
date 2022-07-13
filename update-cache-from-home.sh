@@ -110,8 +110,8 @@ function downloadBlockImages() {
 
 	#Image 2
 	function blockImage2() {
-		block2_image_name="block2-path-of-exile.jpg"
-		block2_image_code="MhM2YBp"
+		block2_image_name="block2-xonotic.jpg"
+		block2_image_code="TWJ5mh0"
 
 		if test ! -e "$HOME/.config/regataos-gcs/cache/img/$block2_image_name"; then
 			wget --no-check-certificate -O "$HOME/.config/regataos-gcs/cache/img/$block2_image_name" \
