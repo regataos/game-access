@@ -1,12 +1,5 @@
 // Stilde functions
 function block_function1() {
-	setTimeout(function(){
-        	sessionStorage.setItem("game-gcs-id", "xonotic");
-        	window.location.href = './../pages/gcs-games.html';
-	}, 500);
-}
-
-function block_function2() {
 	const exec = require('child_process').exec;
 	const fs = require('fs');
 
@@ -25,6 +18,13 @@ function block_function2() {
 			window.location.assign(url)
 		}
 	}
+}
+
+function block_function2() {
+	setTimeout(function(){
+        	sessionStorage.setItem("game-gcs-id", "xonotic");
+        	window.location.href = './../pages/gcs-games.html';
+	}, 500);
 }
 
 function block_function3_ubi() {
