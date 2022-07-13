@@ -39,7 +39,7 @@ function home_content() {
 
                 // Content of block 2
                 //Description
-                $(".appbc2 .block-desc").text("Um divertido jogo de tiro em primeira pessoa estilo arena.");
+                $(".appbc2 .block-desc").text("Divertido jogo de tiro em primeira pessoa estilo arena.");
 
                 // Content of block 3
                 //Description
@@ -54,7 +54,7 @@ function home_content() {
 
                 // Content of block 2
                 //Description
-                $(".appbc2 .block-desc").text("Um divertido jogo de tiro em primeira pessoa estilo arena.");
+                $(".appbc2 .block-desc").text("Divertido jogo de tiro em primeira pessoa estilo arena.");
 
                 // Content of block 3
                 //Description
@@ -69,7 +69,7 @@ function home_content() {
 
                 // Content of block 2
                 //Description
-                $(".appbc2 .block-desc").text("A fun and addictive arena-style first person shooter.");
+                $(".appbc2 .block-desc").text("Fun and addictive arena-style first person shooter.");
 
                 // Content of block 3
                 //Description
@@ -84,7 +84,7 @@ function home_content() {
 
                 // Content of block 2
                 //Description
-                $(".appbc2 .block-desc").text("A fun and addictive arena-style first person shooter.");
+                $(".appbc2 .block-desc").text("Fun and addictive arena-style first person shooter.");
 
                 // Content of block 3
                 //Description
