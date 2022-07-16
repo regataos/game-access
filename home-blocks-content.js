@@ -19,7 +19,7 @@ function home_content() {
 
         // Content of block 3
         //Title
-        $(".appbc3 .block-title").text("Rocket League");
+        $(".appbc3 .block-title").text("Warframe");
         //Block image
         $(".appbc3").css("background-image", 'url("file:///tmp/regataos-gcs/config/cache/img/block-img3.jpg")');
         $(".appbc3").css("background-position", "50% 0%")
@@ -43,7 +43,7 @@ function home_content() {
 
                 // Content of block 3
                 //Description
-                $(".appbc3 .block-desc").text("Disponível de graça na Epic Games Store.");
+                $(".appbc3 .block-desc").text("Desperte como um guerreiro implacável e lute ao lado de seus amigos.");
             });
         
         } else if ((user_language.indexOf("pt_PT") > -1) == "1") {
@@ -58,7 +58,7 @@ function home_content() {
 
                 // Content of block 3
                 //Description
-                $(".appbc3 .block-desc").text("Disponível de graça na Epic Games Store.");
+                $(".appbc3 .block-desc").text("Desperte como um guerreiro implacável e lute ao lado de seus amigos.");
             });
 
         } else if ((user_language.indexOf("en_US") > -1) == "1") {
@@ -73,7 +73,7 @@ function home_content() {
 
                 // Content of block 3
                 //Description
-                $(".appbc3 .block-desc").text("Available for free on the Epic Games Store.");
+                $(".appbc3 .block-desc").text("Awaken as a ruthless warrior and fight alongside your friends.");
             });
 
         } else {
@@ -88,7 +88,7 @@ function home_content() {
 
                 // Content of block 3
                 //Description
-                $(".appbc3 .block-desc").text("Available for free on the Epic Games Store.");
+                $(".appbc3 .block-desc").text("Awaken as a ruthless warrior and fight alongside your friends.");
             });
         }
     }
