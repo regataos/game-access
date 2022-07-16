@@ -128,8 +128,8 @@ function downloadBlockImages() {
 
 	#Image 3
 	function blockImage3() {
-		block3_image_name="block3-rocket-league.jpg"
-		block3_image_code="XpXFCbj"
+		block3_image_name="block3-warframe.jpg"
+		block3_image_code="bQhK8Tn"
 
 		if test ! -e "$HOME/.config/regataos-gcs/cache/img/$block3_image_name"; then
 			wget --no-check-certificate -O "$HOME/.config/regataos-gcs/cache/img/$block3_image_name" \
