@@ -43,7 +43,7 @@ function home_content() {
 
                 // Content of block 3
                 //Description
-                $(".appbc3 .block-desc").text("Desperte como um guerreiro implacável e lute ao lado de seus amigos.");
+                $(".appbc3 .block-desc").text("Desperte como um guerreiro implacável.");
             });
         
         } else if ((user_language.indexOf("pt_PT") > -1) == "1") {
@@ -58,7 +58,7 @@ function home_content() {
 
                 // Content of block 3
                 //Description
-                $(".appbc3 .block-desc").text("Desperte como um guerreiro implacável e lute ao lado de seus amigos.");
+                $(".appbc3 .block-desc").text("Desperte como um guerreiro implacável.");
             });
 
         } else if ((user_language.indexOf("en_US") > -1) == "1") {
@@ -73,7 +73,7 @@ function home_content() {
 
                 // Content of block 3
                 //Description
-                $(".appbc3 .block-desc").text("Awaken as a ruthless warrior and fight alongside your friends.");
+                $(".appbc3 .block-desc").text("Awaken as a ruthless warrior.");
             });
 
         } else {
@@ -88,7 +88,7 @@ function home_content() {
 
                 // Content of block 3
                 //Description
-                $(".appbc3 .block-desc").text("Awaken as a ruthless warrior and fight alongside your friends.");
+                $(".appbc3 .block-desc").text("Awaken as a ruthless warrior.");
             });
         }
     }
