@@ -2,13 +2,13 @@ function home_content() {
     $(document).ready(function() {
         // Content of block 1
         //Title
-        $(".appbc1 .block-title").text("Killing Floor 2");
+        $(".appbc1 .block-title").text("Tannenberg");
         //Block image
         $(".appbc1").css("background-image", 'url("file:///tmp/regataos-gcs/config/cache/img/block-img1.jpg")');
         $(".appbc1").css("background-position", "50% 50%")
         //Date
-        date_pt_br="14 de julho"
-        date_en_us="July 14"
+        date_pt_br="28 de julho"
+        date_en_us="July 28"
 
         // Content of block 2
         //Title
