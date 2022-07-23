@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # Script that helps automate the execution of games with Regata OS Game Access
 
 # Location of the application's prefix and executable
@@ -38,9 +38,6 @@ if test -e "$PREFIX_LOCATION/dxvk.conf"; then
 	export DXVK_CONFIG_FILE="$PREFIX_LOCATION/dxvk.conf"
 fi
 
-# GAMEMODE
-export LD_PRELOAD=/usr/\$LIB/libgamemodeauto.so.0
-
 # Enable AMD FSR
 if [[ $(grep -r amd-fsr $GCS_CONFIG) == *"amd-fsr=true"* ]]; then
 	export WINE_FULLSCREEN_FSR=1
@@ -55,42 +52,33 @@ if [[ $(grep -r fps $GCS_CONFIG) == *"fps=true"* ]]; then
 	#export DXVK_HUD=devinfo,fps,frametimes,gpuload,api,compiler
 fi
 
-# If necessary, run osftware with the dGPU
-if test -e /tmp/regataos-prime/use-hybrid-graphics.txt; then
-	if test -e /usr/bin/nvidia-xconfig; then
-		# For the NVIDIA proprietary driver
-		export __NV_PRIME_RENDER_OFFLOAD=1
-		export __GLX_VENDOR_LIBRARY_NAME=nvidia
-		export __VK_LAYER_NV_optimus=NVIDIA_only
-		export __GL_SHADER_DISK_CACHE=1
-		export __GL_SHADER_DISK_CACHE_PATH=$PREFIX_LOCATION
-		export __GL_SHADER_DISK_CACHE_SKIP_CLEANUP=1
+# Check device graphics 
+if test -e "/usr/bin/nvidia-xconfig"; then
+	# For the NVIDIA proprietary driver
+	export __GL_SHADER_DISK_CACHE=1
+	export __GL_SHADER_DISK_CACHE_PATH="$PREFIX_LOCATION"
+	export __GL_SHADER_DISK_CACHE_SKIP_CLEANUP=1
 
-		# Special configurations for DXVK with NVIDIA GPU
-		ln -sf "/opt/regataos-wine/custom-configs/$LAUNCHER/dxvk-nvidia.conf" "$PREFIX_LOCATION/dxvk.conf"
-
+	# If necessary, run software with the NVIDIA dGPU
+	if test -e "/tmp/regataos-prime/use-hybrid-graphics.txt"; then
+		export GAMEMODERUNEXEC="env __NV_PRIME_RENDER_OFFLOAD=1 __GLX_VENDOR_LIBRARY_NAME=nvidia __VK_LAYER_NV_optimus=NVIDIA_only $(echo $MANGOHUD_GL)"
 	else
-		# For open source drivers
-		export DRI_PRIME=1
-
-		# Special configurations for DXVK with AMD/Intel GPU
-		ln -sf "/opt/regataos-wine/custom-configs/$LAUNCHER/dxvk.conf" "$PREFIX_LOCATION/dxvk.conf"
+		export GAMEMODERUNEXEC="env $(echo $MANGOHUD_GL)"
 	fi
+
+	# Special configurations for DXVK with NVIDIA GPU
+	ln -sf "/opt/regataos-wine/custom-configs/$LAUNCHER/dxvk-nvidia.conf" "$PREFIX_LOCATION/dxvk.conf"
 
 else
-	if test -e /usr/bin/nvidia-xconfig; then
-		# For the NVIDIA proprietary driver
-		export __GL_SHADER_DISK_CACHE=1
-		export __GL_SHADER_DISK_CACHE_PATH=$PREFIX_LOCATION
-		export __GL_SHADER_DISK_CACHE_SKIP_CLEANUP=1
-
-		# Special configurations for DXVK with NVIDIA GPU
-		ln -sf "/opt/regataos-wine/custom-configs/$LAUNCHER/dxvk-nvidia.conf" "$PREFIX_LOCATION/dxvk.conf"
-
+	# If necessary, run software with the AMD/Intel dGPU
+	if test -e "/tmp/regataos-prime/use-hybrid-graphics.txt"; then
+		export GAMEMODERUNEXEC="env DRI_PRIME=1 $(echo $MANGOHUD_GL)"
 	else
-		# Special configurations for DXVK with AMD/Intel GPU
-		ln -sf "/opt/regataos-wine/custom-configs/$LAUNCHER/dxvk.conf" "$PREFIX_LOCATION/dxvk.conf"
+		export GAMEMODERUNEXEC="env $(echo $MANGOHUD_GL)"
 	fi
+
+	# Special configurations for DXVK with AMD/Intel GPU
+	ln -sf "/opt/regataos-wine/custom-configs/$LAUNCHER/dxvk.conf" "$PREFIX_LOCATION/dxvk.conf"
 fi
 
 # Configure compatibility mode

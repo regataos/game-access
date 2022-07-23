@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # Script that helps automate the execution of games with Regata OS Game Access
 
 # Game Access configuration file and log file
@@ -25,22 +25,25 @@ if [[ $(grep -r fps $GCS_CONFIG) == *"fps=true"* ]]; then
 	#export DXVK_HUD=devinfo,fps,frametimes,gpuload,api,compiler
 fi
 
-# If necessary, run osftware with the dGPU
-if test -e /tmp/regataos-prime/use-hybrid-graphics.txt ; then
-	if test -e /usr/bin/nvidia-xconfig ; then
-		# For the NVIDIA proprietary driver
-		export GAMEMODERUNEXEC="env __NV_PRIME_RENDER_OFFLOAD=1 __GLX_VENDOR_LIBRARY_NAME=nvidia __VK_LAYER_NV_optimus=NVIDIA_only __GL_SHADER_DISK_CACHE=1 __GL_SHADER_DISK_CACHE_PATH=$NVIDIA_GL_SHADER_DISK_CACHE_PATH __GL_SHADER_DISK_CACHE_SKIP_CLEANUP=1 $(echo $MANGOHUD_GL)"
+# Check device graphics 
+if test -e "/usr/bin/nvidia-xconfig"; then
+	# For the NVIDIA proprietary driver
+	export __GL_SHADER_DISK_CACHE=1
+	export __GL_SHADER_DISK_CACHE_PATH="$NVIDIA_GL_SHADER_DISK_CACHE_PATH"
+	export __GL_SHADER_DISK_CACHE_SKIP_CLEANUP=1
+
+	# If necessary, run software with the NVIDIA dGPU
+	if test -e "/tmp/regataos-prime/use-hybrid-graphics.txt"; then
+		export GAMEMODERUNEXEC="env __NV_PRIME_RENDER_OFFLOAD=1 __GLX_VENDOR_LIBRARY_NAME=nvidia __VK_LAYER_NV_optimus=NVIDIA_only $(echo $MANGOHUD_GL)"
 	else
-		# For open source drivers
-		export GAMEMODERUNEXEC="env DRI_PRIME=1 $(echo $MANGOHUD_GL)"
+		export GAMEMODERUNEXEC="env $(echo $MANGOHUD_GL)"
 	fi
 
 else
-	if test -e /usr/bin/nvidia-xconfig ; then
-		# For the NVIDIA proprietary driver
-		export GAMEMODERUNEXEC="env __GL_SHADER_DISK_CACHE=1 __GL_SHADER_DISK_CACHE_PATH=$NVIDIA_GL_SHADER_DISK_CACHE_PATH __GL_SHADER_DISK_CACHE_SKIP_CLEANUP=1 $(echo $MANGOHUD_GL)"
+	# If necessary, run software with the AMD/Intel dGPU
+	if test -e "/tmp/regataos-prime/use-hybrid-graphics.txt"; then
+		export GAMEMODERUNEXEC="env DRI_PRIME=1 $(echo $MANGOHUD_GL)"
 	else
-		# For the MangoHud
 		export GAMEMODERUNEXEC="env $(echo $MANGOHUD_GL)"
 	fi
 fi
