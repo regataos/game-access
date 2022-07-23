@@ -67,4 +67,4 @@ if test -e "$PREFIX_LOCATION/dxvk.conf"; then
 fi
 
 # Run game
-(env $GAMEVAR gamemoderun wine "$PREFIX_LOCATION/dosdevices/c:/Program Files (x86)/GOG Galaxy/GalaxyClient.exe" /command=launch /gameId=$gameid /path="") 2>&1 | tee $LOG_FILE
+(env $GAMEVAR gamemoderun wine "$PREFIX_LOCATION/dosdevices/c:/Program Files (x86)/GOG Galaxy/GalaxyClient.exe" /runWithoutUpdating /deelevated /command=launch /gameId=$gameid /path="") 2>&1 | tee $LOG_FILE

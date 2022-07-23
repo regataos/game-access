@@ -58,14 +58,21 @@ if [[ $(cat "$HOME/.config/regataos-gcs/installed-launchers.conf") == *"gog"* ]]
 			if test -e "$HOME/.config/regataos-gcs/gog-games/gamedb.json"; then
 				move_suggested_games
 			else
+				echo "gamedb.json: No such file or directory!"
 				restore_suggested_games
 			fi
+
 		else
+			echo "galaxy-2.0.db: No such file or directory!"
 			restore_suggested_games
 		fi
+
 	else
+		echo "The "userId" was not found!"
 		restore_suggested_games
 	fi
+
 else
+	echo "GOG Galaxy is not installed!"
 	restore_suggested_games
 fi

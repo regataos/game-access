@@ -4,7 +4,7 @@
 function forGameId() {
 	search_dir="$HOME/.local/share/wineprefixes/gog-compatibility-mode/drive_c/ProgramData/GOG.com/Galaxy/webcache/"
 	search_gameid=$(echo "$for_id" | sed 's/\// /g' | cut -d'?' -f -1 | awk '{print $3}')
-	game_id=$(find "$search_dir" -type f -iname "$search_gameid" | sed 's/\// /g' | awk '{print $14}')
+	game_id=$(find "$search_dir" -type f -iname "$search_gameid" | sed 's/\// /g' | awk '{print $14}' | head -1)
 }
 
 # Create JSON files in game cache on GOG Galaxy account

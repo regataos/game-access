@@ -12,7 +12,6 @@ from sys import platform
 
 from natsort import natsorted
 
-
 class Arguments():
 	""" argparse wrapper, to reduce code verbosity """
 	__parser = None
@@ -543,6 +542,9 @@ if __name__ == "__main__":
 		defaultDBlocation = "/Users/Shared/GOG.com/Galaxy/Storage/galaxy-2.0.db"
 	# Windows
 	elif platform == "win32":
+		defaultDBlocation = "C:\\ProgramData\\GOG.com\\Galaxy\\storage\\galaxy-2.0.db"
+	# Linux
+	elif platform == "linux":
 		defaultDBlocation = "C:\\ProgramData\\GOG.com\\Galaxy\\storage\\galaxy-2.0.db"
 
 	def ba(variableName, description, defaultValue=False):

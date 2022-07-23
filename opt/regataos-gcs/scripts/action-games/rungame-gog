@@ -78,4 +78,4 @@ fi
 /bin/bash /opt/regataos-gcs/scripts/action-games/configure-compatibility-mode -configure-dxvk-vkd3d
 
 # Run game
-(gamemoderun wine "$PREFIX_LOCATION/dosdevices/c:/Program Files (x86)/GOG Galaxy/GalaxyClient.exe" /command=runGame /gameId=$gameid /path="$game_install_folder") 2>&1 | tee $LOG_FILE
+(gamemoderun wine "$PREFIX_LOCATION/dosdevices/c:/Program Files (x86)/GOG Galaxy/GalaxyClient.exe" /runWithoutUpdating /deelevated /command=runGame /gameId=$gameid /path="$game_install_folder") 2>&1 | tee $LOG_FILE

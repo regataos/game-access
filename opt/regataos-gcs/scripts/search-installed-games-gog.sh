@@ -18,7 +18,7 @@ function search_for_games() {
     # Read the cached file data line by line with all game installation folders
     while IFS= read -r game_install_folder || [[ -n "$game_install_folder" ]]; do
         # Try to locate the game installation folder
-        game_json_file=$(grep -ir "$game_install_folder" "/tmp/regataos-gcs/config/gog-games/json/" | sed 's/://g' | awk '{print $1}' | head -1)
+        game_json_file=$(grep -ir "$(echo "$game_install_folder" | sed 's/:\|- //g')" "/tmp/regataos-gcs/config/gog-games/json/" | sed 's/://g' | awk '{print $1}' | head -1 | sed 's/\[\|\]//g')
 
         if test -e "$game_json_file"; then
             # Save the path to the games installation folder in the cache
