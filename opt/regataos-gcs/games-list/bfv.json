@@ -2,7 +2,7 @@
 	{
 		"gamename": "Battlefield V",
 		"gamenickname": "bfv",
-		"gameexecutable": "BFV.exe",
+		"gameexecutable": "bfv.exe",
 		"gamerun_appid": "",
 		"winevariable": "WINEESYNC=1 WINE_LARGE_ADDRESS_AWARE=1",
 		"gamekeywords": "Battlefield V, Battlefield 5, battlefield v, battlefield 5, bfv, bf5, bf, tiro em primeira pessoa, first person shooter, fps, multiplayer, origin",

@@ -1,0 +1,14 @@
+[
+	{
+		"gamename": "Star Wars Jedi: Fallen Order",
+		"gamenickname": "starwarsjfo",
+		"gameexecutable": "starwarsjedifallenorder.exe",
+		"gamerun_appid": "",
+		"winevariable": "WINEESYNC=1 WINE_LARGE_ADDRESS_AWARE=1",
+		"gamekeywords": "Star Wars Jedi: Fallen Order, star wars jedi fallen order, star wars jedi, ação, açao, acao, tiro em terceira pessoa, action, third person shooting, fps, origin",
+		"launcher": "Origin",
+		"launchernickname": "origin",
+		"gameorigin": "suggestedgame",
+		"game_access": "false"
+    }
+]
