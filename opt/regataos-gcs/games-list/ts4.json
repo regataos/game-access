@@ -3,7 +3,7 @@
 		"gamename": "The Sims 4",
 		"gamenickname": "ts4",
 		"gameexecutable": "TS4_x64.exe",
-		"gamerun_appid": "",
+		"gamerun_appid": "origin://LaunchGame/OFB-EAST109552299",
 		"winevariable": "WINEESYNC=1 WINE_LARGE_ADDRESS_AWARE=1",
 		"gamekeywords": "The Sims 4, the sims 4, ts4, simulador de vida, life simulator, origin",
 		"launcher": "Origin",

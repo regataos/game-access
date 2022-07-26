@@ -43,15 +43,20 @@ function check_external_games_folder() {
 
 	fs.access("/tmp/regataos-gcs/config/external-games-folder.txt", (err) => {
 	if (!err) {
-		var external_games_dir = fs.readFileSync("/tmp/regataos-gcs/config/external-games-folder.txt", "utf8");
-		var external_games_dir = external_games_dir.replace(/(\r\n|\n|\r)/gm, "");
+		let external_games_dir = fs.readFileSync("/tmp/regataos-gcs/config/external-games-folder.txt", "utf8");
+			external_games_dir = external_games_dir.replace(/(\r\n|\n|\r)/gm, "");
+
 		$(".external-games-folder-dir-desc").text(external_games_dir);
 		$(".external-games-folder-dir").css("display", "block")
-
 
 		return;
 	} else {
 		$(".external-games-folder-dir").css("display", "none")
+
+		const exec = require('child_process').exec;
+		const remove_external_games_folder_file = 'rm -f "$HOME/Game Access/External-Disc"';
+		exec(remove_external_games_folder_file,function(error,call,errlog){
+		});
 	}
 	});
 }

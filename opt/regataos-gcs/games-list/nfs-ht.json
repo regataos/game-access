@@ -3,7 +3,7 @@
 		"gamename": "Need for Speed: Heat",
 		"gamenickname": "nfs-ht",
 		"gameexecutable": "NeedForSpeedHeat.exe",
-		"gamerun_appid": "",
+		"gamerun_appid": "origin://LaunchGame/Origin.OFR.50.0003426",
 		"winevariable": "WINEESYNC=1 WINE_LARGE_ADDRESS_AWARE=1",
 		"gamekeywords": "Need For Speed Heat, need for speed heat, nfs, corrida, automobilismo, race, motor racing, origin",
 		"launcher": "Origin",

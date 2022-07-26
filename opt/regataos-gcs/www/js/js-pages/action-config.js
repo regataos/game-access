@@ -51,13 +51,14 @@ checkbox_fps_hud.change(function(event) {
 
 // Add external games folder
 $('input[id="add-external-games-folder"]').change(function(e){
-	var fileinput = document.querySelector('input#add-external-games-folder');
-	var path = fileinput.value;
+	const fileinput = document.querySelector('input#add-external-games-folder');
+	const path = fileinput.value;
 
 	const exec = require('child_process').exec;
-	var command_line = 'echo "' + path + '" > "/tmp/regataos-gcs/config/external-games-folder.txt"';
-	console.log(command_line);
-	exec(command_line,function(error,call,errlog){
+	const create_external_games_folder_file = `echo "${path}" > "/tmp/regataos-gcs/config/external-games-folder.txt"; \
+	rm -rf "$HOME/Game Access/External-Disc"; \
+	ln -sf "${path}" "$HOME/Game Access/External-Disc"`;
+	exec(create_external_games_folder_file,function(error,call,errlog){
 	});
 
 	setTimeout(function(){
@@ -74,7 +75,7 @@ function remove_external_games_folder() {
 
 	try {
 		fs.unlinkSync(path)
-		//file removed
+
 	} catch(err) {
   		console.error(err)
 	}
