@@ -25,16 +25,14 @@ function checkGameInstalled() {
     }
 }
 checkGameInstalled();
-
 setInterval(function () { checkGameInstalled() }, 1000);
 
-//Install the game
-function installGameId() {
+// Start installing game from Epic Games Store
+function confirmInstallGameId() {
     const exec = require('child_process').exec;
-
-    const commandInstallGame = `export gameNickname="${gameId}"; /opt/regataos-gcs/scripts/install/scripts-install/install-game-gcs/install-gcs-game.sh`;
-    exec(commandInstallGame, function (error, call, errlog) {
-    });
+	var command_line = `echo "${gameId}" > "/tmp/regataos-gcs/start-installation-gcs.txt"`;
+	exec(command_line,function(error,call,errlog){
+	});
 
     const buttonPlay = document.getElementById(gameId);
 
@@ -48,7 +46,7 @@ function installGameId() {
         buttonPlay.style.opacity = "1";
         buttonPlay.style.cursor = "pointer";
         buttonPlay.style.pointerEvents = "auto";
-    },20000);
+    },2000);
 }
 
 //Remove the game
@@ -87,7 +85,7 @@ function runGameId() {
     },10000);
 }
 
-//Run the game
+//Go game page
 function goGamePageId() {
     setTimeout(function(){
         sessionStorage.setItem("game-gcs-id", gameId);

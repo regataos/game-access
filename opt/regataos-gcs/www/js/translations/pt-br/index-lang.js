@@ -32,8 +32,8 @@ $(document).ready(function() {
 
 	// Confirm box
 	//Install game
-	$(".donwload-game-title").text("Fazer o download do jogo ou importá-lo?");
-	$(".install-default-directory-desc").text("Baixar o jogo no diretório padrão.");
+	$(".donwload-game-title").text("Fazer download do jogo ou importá-lo?");
+	$(".install-default-directory-desc").text("Instalar jogo no diretório padrão.");
 	$(".download-game-txt").text("Instalar jogo");
 	$(".import-game-txt").text("Localizar jogo");
 	$(".donwload-cancel-button").text("Cancelar");

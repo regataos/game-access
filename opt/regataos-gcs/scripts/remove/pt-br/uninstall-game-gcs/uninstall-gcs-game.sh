@@ -8,7 +8,15 @@ game_nickname="$(grep -r "gamenickname" /opt/regataos-gcs/games-list/$gameNickna
 
 # Uninstall game
 (
-	# Uninstall game from Epic Games Store with Legendary
+	# Remove game folder
+	if test -e "$HOME/Game Access/$game_folder/gcs-game.conf"; then
+		rm -rf "$(cat "$HOME/Game Access/$game_folder/gcs-game.conf" | grep installdir | cut -d"=" -f 2-)"
+	fi
+
+	if test -e "$HOME/.local/share/wineprefixes/$game_nickname-compatibility-mode/gcs-game.conf"; then
+		rm -rf "$(cat "$HOME/.local/share/wineprefixes/$game_nickname-compatibility-mode/gcs-game.conf" | grep installdir | cut -d"=" -f 2-)"
+	fi
+
 	rm -rf "$HOME/Game Access/$game_folder"
 	rm -rf "$HOME/.local/share/wineprefixes/$game_nickname-compatibility-mode"
 

@@ -33,7 +33,7 @@ $(document).ready(function() {
 	// Confirm box
 	//Install game
 	$(".donwload-game-title").text("Download the game or import it?");
-	$(".install-default-directory-desc").text("Download the game in the default directory.");
+	$(".install-default-directory-desc").text("Install game in default directory.");
 	$(".download-game-txt").text("Install game");
 	$(".import-game-txt").text("Find game");
 	$(".donwload-cancel-button").text("Cancel");

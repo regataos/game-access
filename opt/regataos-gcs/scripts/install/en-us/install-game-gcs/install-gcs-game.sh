@@ -3,9 +3,17 @@
 
 # Settings and variables
 if [ -z $gameNickname ];then
-	gameNickname="$(cat "/tmp/regataos-gcs/gcs-for-install.txt" | head -1 | tail -1)"
-	sed -i "/$gameNickname/d" "/tmp/regataos-gcs/gcs-for-install.txt"
-	sed -i '/^$/d' "/tmp/regataos-gcs/gcs-for-install.txt"
+	if test -e "/tmp/regataos-gcs/start-installation-gcs.txt"; then
+		export gameNickname="$(cat /tmp/regataos-gcs/start-installation-gcs.txt)"
+		rm -f "/tmp/regataos-gcs/start-installation-gcs.txt"
+
+	else
+		if test -e "/tmp/regataos-gcs/gcs-for-install.txt"; then
+			export gameNickname="$(cat /tmp/regataos-gcs/gcs-for-install.txt | head -1 | tail -1)"
+			sed -i "/$gameNickname/d" "/tmp/regataos-gcs/gcs-for-install.txt"
+			sed -i '/^$/d' "/tmp/regataos-gcs/gcs-for-install.txt"
+		fi
+	fi
 fi
 
 user=$(users | awk '{print $1}')
@@ -37,8 +45,27 @@ installation_error_status="Installation error"
 progressbar_dir="/tmp/progressbar-gcs"
 
 # Check the game's installation folder
-if [ -z "$GAME_INSTALL_DIR" ] ;then
-	mkdir -p "$HOME/Game Access"
+GAME_INSTALL_DIR="$GAME_PATH"
+
+if test -e "/tmp/regataos-gcs/$game_nickname-installdir.txt"; then
+	GAME_INSTALL_DIR="$(cat /tmp/regataos-gcs/$game_nickname-installdir.txt)"
+	GAME_PATH="$GAME_INSTALL_DIR"
+	rm -f "/tmp/regataos-gcs/$game_nickname-installdir.txt"
+
+	if test ! -e "$GAME_INSTALL_DIR/game-access"; then
+		mkdir -p "$GAME_INSTALL_DIR/game-access"
+	fi
+
+elif [ ! -z "$GAME_INSTALL_DIR" ] ;then
+	if test ! -e "$GAME_INSTALL_DIR/game-access"; then
+		mkdir -p "$GAME_INSTALL_DIR/game-access"
+	fi
+
+else
+	if test ! -e "$HOME/Game Access"; then
+		mkdir -p "$HOME/Game Access"
+	fi
+
 	GAME_INSTALL_DIR="$HOME/Game Access"
 fi
 
@@ -51,6 +78,16 @@ function install_app() {
 		export WINEDEBUG=-all
 		export WINEDLLOVERRIDES="mscoree,mshtml,winemenubuilder,winedbg="
 		export WINEPREFIX="$game_nickname_dir"
+
+		if [ ! -z "$GAME_PATH" ] ;then
+			mkdir -p "$GAME_INSTALL_DIR/game-access/$game_folder"
+
+			mv -fv "$game_nickname_dir/drive_c/Program Files (x86)" "$GAME_INSTALL_DIR/game-access/$game_folder/"
+			mv -fv "$game_nickname_dir/drive_c/Program Files" "$GAME_INSTALL_DIR/game-access/$game_folder/"
+
+			ln -sfv "$GAME_INSTALL_DIR/game-access/$game_folder/Program Files (x86)" "$game_nickname_dir/drive_c/"
+			ln -sfv "$GAME_INSTALL_DIR/game-access/$game_folder/Program Files" "$game_nickname_dir/drive_c/"
+		fi
 
 		if [[ $(echo $custom_runtime) == *"true"* ]]; then
 			# Variables for custom Wine
@@ -90,7 +127,11 @@ function install_app() {
 
 	else
 		if [[ $(echo $game_download_file_name) == *".zip"* ]]; then
-			unzip "/tmp/regataos-gcs/$game_download_file_name" -d "$GAME_INSTALL_DIR/"
+			if [ -z "$GAME_PATH" ] ;then
+				unzip -u "/tmp/regataos-gcs/$game_download_file_name" -d "$GAME_INSTALL_DIR/"
+			else
+				unzip -u "/tmp/regataos-gcs/$game_download_file_name" -d "$GAME_INSTALL_DIR/game-access/"
+			fi
 		fi
 	fi
 }
@@ -108,7 +149,7 @@ function installation_failed() {
 	rm -f "$HOME/.config/regataos-gcs/installed/$game_nickname.json"
 
 	# Notify
-	notify-send -i regataos-gcs -u normal -a 'Regata OS Game Access' "$error_notify_title $game_name!" "$error_notify_text $game_name."
+	notify-send -i regataos-gcs -u normal -a 'Regata OS Game Access' "$game_name $error_notify_title" "$error_notify_text $game_name."
 }
 
 # Search for processes
@@ -121,6 +162,10 @@ if test -e "$progressbar_dir/installing" ; then
 		else
 			echo "$game_nickname" >> "/tmp/regataos-gcs/gcs-for-install.txt"
 			sed -i '/^$/d' "/tmp/regataos-gcs/gcs-for-install.txt"
+
+			if [[ $(echo $GAME_INSTALL_DIR) != *"$HOME/Game Access"* ]]; then
+				echo "$GAME_INSTALL_DIR" > "/tmp/regataos-gcs/$game_nickname-installdir.txt"
+			fi
 
 			echo "$game_nickname=gcs process-$game_name_process" >> $progressbar_dir/queued-process
 		fi
@@ -350,6 +395,37 @@ EOM
 		rm -f /tmp/regataos-gcs/installing-$game_nickname
 		rm -f "/tmp/regataos-gcs/$game_download_file_name"
 
+		if [ ! -z "$GAME_PATH" ] ;then
+			echo "nickname=$game_nickname" > "$GAME_INSTALL_DIR/game-access/$game_folder/gcs-game.conf"
+			echo "installdir=$GAME_INSTALL_DIR/game-access/$game_folder" >> "$GAME_INSTALL_DIR/game-access/$game_folder/gcs-game.conf"
+			ln -sf "$GAME_INSTALL_DIR/game-access/$game_folder" "$HOME/Game Access/"
+		fi
+
+		# If there are no more processes, clear the progress bar cache
+		if test ! -e "$progressbar_dir/queued-1" ; then
+			rm -f $progressbar_dir/progressbar
+			rm -f $progressbar_dir/*
+		fi
+
+	elif test -e "$GAME_INSTALL_DIR/game-access/$game_folder/$file_executable"; then
+		rm -f $progressbar_dir/progress-movement
+		echo "completed" > $progressbar_dir/progress-full
+		echo "" > $progressbar_dir/status
+		echo $success_installation > $progressbar_dir/progress
+		echo "show installed games" > "/tmp/regataos-gcs/config/installed/show-installed-games-gcs.txt"
+		success_installation
+		sleep 2
+		rm -f $progressbar_dir/progress-full
+		rm -f $progressbar_dir/installing
+		rm -f /tmp/regataos-gcs/installing-$game_nickname
+		rm -f "/tmp/regataos-gcs/$game_download_file_name"
+
+		if [ ! -z "$GAME_PATH" ] ;then
+			echo "nickname=$game_nickname" > "$GAME_INSTALL_DIR/game-access/$game_folder/gcs-game.conf"
+			echo "installdir=$GAME_INSTALL_DIR/game-access/$game_folder" >> "$GAME_INSTALL_DIR/game-access/$game_folder/gcs-game.conf"
+			ln -sf "$GAME_INSTALL_DIR/game-access/$game_folder" "$HOME/Game Access/"
+		fi
+
 		# If there are no more processes, clear the progress bar cache
 		if test ! -e "$progressbar_dir/queued-1" ; then
 			rm -f $progressbar_dir/progressbar
@@ -368,6 +444,12 @@ EOM
 		rm -f $progressbar_dir/installing
 		rm -f /tmp/regataos-gcs/installing-$game_nickname
 		rm -f "/tmp/regataos-gcs/$game_download_file_name"
+
+		if [ ! -z "$GAME_PATH" ] ;then
+			echo "nickname=$game_nickname" > "$GAME_INSTALL_DIR/game-access/$game_folder/gcs-game.conf"
+			echo "installdir=$GAME_INSTALL_DIR/game-access/$game_folder" >> "$GAME_INSTALL_DIR/game-access/$game_folder/gcs-game.conf"
+			ln -sf "$GAME_INSTALL_DIR/game-access/$game_folder" "$HOME/Game Access/"
+		fi
 
 		# If there are no more processes, clear the progress bar cache
 		if test ! -e "$progressbar_dir/queued-1" ; then
@@ -389,6 +471,10 @@ EOM
 		rm -f "$HOME/.config/regataos-gcs/custom-runtime/$game_nickname.txt"
 		rm -f "/tmp/regataos-gcs/$game_download_file_name"
 		rm -f "/tmp/regataos-gcs/$custom_runtime_file"
+
+		if [ ! -z "$GAME_PATH" ] ;then
+			rm -rf "$GAME_INSTALL_DIR/game-access/$game_folder"
+		fi
 
 		# If there are no more processes, clear the progress bar cache
 		if test ! -e "$progressbar_dir/queued-1" ; then

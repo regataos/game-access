@@ -55,7 +55,7 @@ function installation_failed() {
 	rm -f "$HOME/.config/regataos-gcs/installed/$game_nickname-epicstore.json"
 
 	# Notify
-	notify-send -i regataos-gcs -u normal -a 'Regata OS Game Access' "$error_notify_title $app_name!" "$error_notify_text $app_name."
+	notify-send -i regataos-gcs -u normal -a 'Regata OS Game Access' "$app_name $error_notify_title" "$error_notify_text $app_name."
 }
 
 # Search for processes

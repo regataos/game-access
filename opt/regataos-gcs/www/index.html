@@ -57,12 +57,18 @@
 		<div class="donwload-game-title">Fazer o download do jogo ou importá-lo?</div>
 
 		<div class="checkbox-install-games install-default-directory">
-			<label class="checkbox game-default-directory" onclick="default_folder_enabled();"><p class="install-default-directory-desc">Baixar o jogo no diretório padrão</p>
-				<input id="default-folder-enabled" type="checkbox" checked="checked"><span class="checkmark-game"></span></label>
+			<label class="checkbox game-default-directory" onclick="default_folder_enabled();">
+				<p class="install-default-directory-desc">Baixar o jogo no diretório padrão</p>
+				<input id="default-folder-enabled" type="checkbox" checked="checked">
+				<span class="checkmark-game"></span>
+			</label>
 		</div>
 		<div class="checkbox-install-games install-other-directory">
-			<label class="checkbox game-default-directory" onclick="default_folder_disabled();"><p class="install-default-directory-desc">Baixar o jogo no diretório padrão</p>
-				<input id="default-folder-disabled" type="checkbox"><span class="checkmark-game"></span></label>
+			<label class="checkbox game-default-directory" onclick="default_folder_disabled();">
+				<p class="install-default-directory-desc">Baixar o jogo no diretório padrão</p>
+				<input id="default-folder-disabled" type="checkbox">
+				<span class="checkmark-game"></span>
+			</label>
 		</div>
 
 		<div class="donwload-game-button">
@@ -73,7 +79,7 @@
 		</div>
 
 		<div class="donwload-import-button">
-			<label class="label-run-game" id="capture-patch" for="select-file" onclick="import_game_epicstore();">
+			<label class="label-run-game" id="capture-patch" for="select-file" onclick="import_game();">
 				<div class="import-game-txt">Importar</div>
 			</label>
 			<input id="select-file" type="file" nwdirectory/>
