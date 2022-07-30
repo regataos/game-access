@@ -148,19 +148,20 @@ function import_game() {
 	$('input[id="select-file"]').change(function(e){
 		const fileinput = document.querySelector('input#select-file');
 		const path = fileinput.value;
-		const exec = require('child_process').exec;
 
-		if (fs.existsSync(`${path}/gcs-game.conf`)) {
-			const command_line = 'export GAME_PATH="' + path + '"; /opt/regataos-gcs/scripts/install/scripts-install/install-game-epicstore/import-epicstore-game.sh';
-			console.log(command_line);
-			exec(command_line,function(error,call,errlog){
-			});
+		if (path) {
+			const exec = require('child_process').exec;
 
-		} else {
-			const command_line = 'export GAME_PATH="' + path + '"; /opt/regataos-gcs/scripts/install/scripts-install/install-game-epicstore/import-epicstore-game.sh';
-			console.log(command_line);
-			exec(command_line,function(error,call,errlog){
-			});
+			if (fs.existsSync(`${path}/gcs-game.conf`)) {
+				const command_line = 'export GAME_PATH="' + path + '"; /opt/regataos-gcs/scripts/install/scripts-install/install-game-gcs/import-gcs-game.sh';
+				exec(command_line,function(error,call,errlog){
+				});
+
+			} else {
+				const command_line = 'export GAME_PATH="' + path + '"; /opt/regataos-gcs/scripts/install/scripts-install/install-game-epicstore/import-epicstore-game.sh';
+				exec(command_line,function(error,call,errlog){
+				});
+			}
 		}
 
 		$('.confirm-start-game-installation').css('display', 'none')

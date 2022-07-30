@@ -57,8 +57,12 @@ if test -e "/tmp/regataos-gcs/$game_nickname-installdir.txt"; then
 	fi
 
 elif [ ! -z "$GAME_INSTALL_DIR" ] ;then
-	if test ! -e "$GAME_INSTALL_DIR/game-access"; then
-		mkdir -p "$GAME_INSTALL_DIR/game-access"
+	if [[ $(echo $GAME_INSTALL_DIR) == *"game-access"* ]]; then
+		GAME_INSTALL_DIR="$(echo $GAME_INSTALL_DIR | sed 's/game-access//')"
+	else
+		if test ! -e "$GAME_INSTALL_DIR/game-access"; then
+			mkdir -p "$GAME_INSTALL_DIR/game-access"
+		fi
 	fi
 
 else
@@ -82,11 +86,15 @@ function install_app() {
 		if [ ! -z "$GAME_PATH" ] ;then
 			mkdir -p "$GAME_INSTALL_DIR/game-access/$game_folder"
 
-			mv -fv "$game_nickname_dir/drive_c/Program Files (x86)" "$GAME_INSTALL_DIR/game-access/$game_folder/"
-			mv -fv "$game_nickname_dir/drive_c/Program Files" "$GAME_INSTALL_DIR/game-access/$game_folder/"
+			mv -fv "$game_nickname_dir/drive_c" "$GAME_INSTALL_DIR/game-access/$game_folder/"
+			mv -fv "$game_nickname_dir/system.reg" "$GAME_INSTALL_DIR/game-access/$game_folder/"
+			mv -fv "$game_nickname_dir/user.reg" "$GAME_INSTALL_DIR/game-access/$game_folder/"
+			mv -fv "$game_nickname_dir/userdef.reg" "$GAME_INSTALL_DIR/game-access/$game_folder/"
 
-			ln -sfv "$GAME_INSTALL_DIR/game-access/$game_folder/Program Files (x86)" "$game_nickname_dir/drive_c/"
-			ln -sfv "$GAME_INSTALL_DIR/game-access/$game_folder/Program Files" "$game_nickname_dir/drive_c/"
+			ln -sfv "$GAME_INSTALL_DIR/game-access/$game_folder/drive_c" "$game_nickname_dir/"
+			ln -sfv "$GAME_INSTALL_DIR/game-access/$game_folder/system.reg" "$game_nickname_dir/"
+			ln -sfv "$GAME_INSTALL_DIR/game-access/$game_folder/user.reg" "$game_nickname_dir/"
+			ln -sfv "$GAME_INSTALL_DIR/game-access/$game_folder/userdef.reg" "$game_nickname_dir/"
 		fi
 
 		if [[ $(echo $custom_runtime) == *"true"* ]]; then
@@ -243,26 +251,28 @@ EOM
 
 	# Prepare the progress bar and downloading custom runtime
 	if [[ $(echo $custom_runtime) == *"true"* ]]; then
-		rm -f $progressbar_dir/progress-movement
-		echo "installing" > $progressbar_dir/installing
-		echo "installing" > /tmp/regataos-gcs/installing-$game_nickname
-		echo $game_name > $progressbar_dir/app-name
-		echo "0%" > $progressbar_dir/progress
-		echo "$game_runtime_down" > $progressbar_dir/status
-		sleep 1
-		echo "show progress bar" > $progressbar_dir/progressbar
+		if test ! -e "$HOME/.config/regataos-gcs/custom-runtime/$game_nickname.txt"; then
+			rm -f $progressbar_dir/progress-movement
+			echo "installing" > $progressbar_dir/installing
+			echo "installing" > /tmp/regataos-gcs/installing-$game_nickname
+			echo $game_name > $progressbar_dir/app-name
+			echo "0%" > $progressbar_dir/progress
+			echo "$game_runtime_down" > $progressbar_dir/status
+			sleep 1
+			echo "show progress bar" > $progressbar_dir/progressbar
 
-		# Download
-		echo "/tmp/regataos-gcs/$custom_runtime_file" > $progressbar_dir/file-download-size
-		echo "wget --no-check-certificate -O /tmp/regataos-gcs/$custom_runtime_file $custom_runtime_download" > $progressbar_dir/get-pid
-		wget --no-check-certificate -O "/tmp/regataos-gcs/$custom_runtime_file" "$custom_runtime_download" 2>&1 | (pv -n > $progressbar_dir/download-percentage)
-		echo 100% > $progressbar_dir/progress
-		sleep 3
-		rm -f $progressbar_dir/download-percentage
-		rm -f $progressbar_dir/download-size
-		rm -f $progressbar_dir/download-speed
-		rm -f $progressbar_dir/file-size
-		rm -f $progressbar_dir/eta
+			# Download
+			echo "/tmp/regataos-gcs/$custom_runtime_file" > $progressbar_dir/file-download-size
+			echo "wget --no-check-certificate -O /tmp/regataos-gcs/$custom_runtime_file $custom_runtime_download" > $progressbar_dir/get-pid
+			wget --no-check-certificate -O "/tmp/regataos-gcs/$custom_runtime_file" "$custom_runtime_download" 2>&1 | (pv -n > $progressbar_dir/download-percentage)
+			echo 100% > $progressbar_dir/progress
+			sleep 3
+			rm -f $progressbar_dir/download-percentage
+			rm -f $progressbar_dir/download-size
+			rm -f $progressbar_dir/download-speed
+			rm -f $progressbar_dir/file-size
+			rm -f $progressbar_dir/eta
+		fi
 	fi
 
 	# Prepare the progress bar and downloading
