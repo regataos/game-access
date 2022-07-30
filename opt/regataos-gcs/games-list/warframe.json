@@ -13,6 +13,7 @@
 		"install_args": "/q",
 		"gamebanner": "https://i.ibb.co/GvHK8Ym/warframe-img1.jpg",
 		"file_executable": "drive_c/users/username/AppData/Local/Warframe/Downloaded/Public/Tools/Launcher.exe",
+		"execute_args": "",
 		"gamefolder": "warframe",
 		"custom_runtime": "false",
 		"custom_runtime_name": "",

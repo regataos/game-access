@@ -7,6 +7,7 @@ game_folder="$(grep -r "gamefolder" /opt/regataos-gcs/games-list/$gameNickname.j
 file_executable="$(grep -r "file_executable" /opt/regataos-gcs/games-list/$gameNickname.json | cut -d":" -f 2- | sed 's/ //' | sed 's/"\|,//g' | sed "s/username/$user/")"
 game_plataform="$(grep -r "plataform" /opt/regataos-gcs/games-list/$gameNickname.json | cut -d":" -f 2- | sed 's/ //' | sed 's/"\|,//g')"
 custom_runtime="$(grep -r "custom_runtime" /opt/regataos-gcs/games-list/$gameNickname.json | cut -d":" -f 2- | sed 's/ //' | sed 's/"\|,//g')"
+execute_args="$(grep -r "execute_args" /opt/regataos-gcs/games-list/$gameNickname.json | cut -d":" -f 2- | sed 's/ //' | sed 's/"\|,//g')"
 
 GCS_CONFIG="$HOME/.config/regataos-gcs/regataos-gcs.conf"
 LOG_FILE="/var/log/regataos-logs/gcs-$gameNickname.log"
@@ -117,13 +118,13 @@ fi
 # Run game
 if [[ $(echo $game_plataform) == *"windows"* ]]; then
     if [[ $(echo $custom_runtime) == *"true"* ]]; then
-        (gamemoderun $CUSTOM_WINE_DIR/bin/wine "$PREFIX_LOCATION/$file_executable") 2>&1 | tee $LOG_FILE
+        (gamemoderun $CUSTOM_WINE_DIR/bin/wine "$PREFIX_LOCATION/$file_executable $(echo $execute_args)") 2>&1 | tee $LOG_FILE
     else
-        (gamemoderun wine "$PREFIX_LOCATION/$file_executable") 2>&1 | tee $LOG_FILE
+        (gamemoderun wine "$PREFIX_LOCATION/$file_executable $(echo $execute_args)") 2>&1 | tee $LOG_FILE
     fi
 
 else
-    (gamemoderun "$HOME/Game Access/$game_folder/$file_executable") 2>&1 | tee $LOG_FILE
+    (gamemoderun "$HOME/Game Access/$game_folder/$file_executable $(echo $execute_args)") 2>&1 | tee $LOG_FILE
 fi
 
 # Return to system default configuration
