@@ -2,13 +2,13 @@ function home_content() {
     $(document).ready(function() {
         // Content of block 1
         //Title
-        $(".appbc1 .block-title").text("Tannenberg");
+        $(".appbc1 .block-title").text("Cook, Serve, Delicious! 3?!");
         //Block image
-        $(".appbc1").css("background-image", 'url("file:///tmp/regataos-gcs/config/cache/img/block-img1.jpg")');
+        $(".appbc1").css("background-image", 'url("file:///tmp/regataos-gcs/config/cache/img/block-img1.webp")');
         $(".appbc1").css("background-position", "50% 50%")
         //Date
-        date_pt_br="28 de julho"
-        date_en_us="July 28"
+        date_pt_br="18 de agosto"
+        date_en_us="August 18"
 
         // Content of block 2
         //Title
