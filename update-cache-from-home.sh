@@ -89,22 +89,23 @@ function downloadSlideImages() {
 function downloadBlockImages() {
 	#Image 1
 	function blockImage1() {
-		block1_image_name="block1-tnn.jpg"
-		block1_image_code="DKrNBDQ"
+		block1_image_name="block1-csd3.webp"
+		block1_image_code="ByNsH8D"
 
 		if test ! -e "$HOME/.config/regataos-gcs/cache/img/$block1_image_name"; then
 			# Clear cache
 			rm -f $HOME/.config/regataos-gcs/cache/img/block1-*.jpg
+			rm -f $HOME/.config/regataos-gcs/cache/img/block1-*.webp
 
 			wget --no-check-certificate -O "$HOME/.config/regataos-gcs/cache/img/$block1_image_name" \
 				"https://i.ibb.co/$block1_image_code/$block1_image_name"
 
 			ln -sf "$HOME/.config/regataos-gcs/cache/img/$block1_image_name" \
-				"$HOME/.config/regataos-gcs/cache/img/block-img1.jpg"
+				"$HOME/.config/regataos-gcs/cache/img/block-img1.webp"
 
 		else
 			ln -sf "$HOME/.config/regataos-gcs/cache/img/$block1_image_name" \
-				"$HOME/.config/regataos-gcs/cache/img/block-img1.jpg"
+				"$HOME/.config/regataos-gcs/cache/img/block-img1.webp"
 		fi
 	}
 
