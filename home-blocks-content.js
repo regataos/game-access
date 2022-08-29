@@ -2,13 +2,13 @@ function home_content() {
     $(document).ready(function() {
         // Content of block 1
         //Title
-        $(".appbc1 .block-title").text("Cook, Serve, Delicious! 3?!");
+        $(".appbc1 .block-title").text("Ring of Pain");
         //Block image
         $(".appbc1").css("background-image", 'url("file:///tmp/regataos-gcs/config/cache/img/block-img1.webp")');
         $(".appbc1").css("background-position", "50% 50%")
         //Date
-        date_pt_br="18 de agosto"
-        date_en_us="August 18"
+        date_pt_br="01 de setembro"
+        date_en_us="September 01"
 
         // Content of block 2
         //Title
