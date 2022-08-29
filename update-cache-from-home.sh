@@ -89,8 +89,8 @@ function downloadSlideImages() {
 function downloadBlockImages() {
 	#Image 1
 	function blockImage1() {
-		block1_image_name="block1-csd3.webp"
-		block1_image_code="ByNsH8D"
+		block1_image_name="block1-rp.webp"
+		block1_image_code="K2jhvN2"
 
 		if test ! -e "$HOME/.config/regataos-gcs/cache/img/$block1_image_name"; then
 			# Clear cache
@@ -112,7 +112,7 @@ function downloadBlockImages() {
 	#Image 2
 	function blockImage2() {
 		block2_image_name="block2-xonotic.jpg"
-		block2_image_code="q98XGvt"
+		block2_image_code="HpgTX1Y"
 
 		if test ! -e "$HOME/.config/regataos-gcs/cache/img/$block2_image_name"; then
 			wget --no-check-certificate -O "$HOME/.config/regataos-gcs/cache/img/$block2_image_name" \
@@ -130,7 +130,7 @@ function downloadBlockImages() {
 	#Image 3
 	function blockImage3() {
 		block3_image_name="block3-warframe.jpg"
-		block3_image_code="bQhK8Tn"
+		block3_image_code="VqkY2wR"
 
 		if test ! -e "$HOME/.config/regataos-gcs/cache/img/$block3_image_name"; then
 			wget --no-check-certificate -O "$HOME/.config/regataos-gcs/cache/img/$block3_image_name" \
