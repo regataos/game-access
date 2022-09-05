@@ -2,13 +2,13 @@ function home_content() {
     $(document).ready(function() {
         // Content of block 1
         //Title
-        $(".appbc1 .block-title").text("Ring of Pain");
+        $(".appbc1 .block-title").text("Shadow of the Tomb Raider: DE");
         //Block image
         $(".appbc1").css("background-image", 'url("file:///tmp/regataos-gcs/config/cache/img/block-img1.webp")');
         $(".appbc1").css("background-position", "50% 50%")
         //Date
-        date_pt_br="01 de setembro"
-        date_en_us="September 01"
+        date_pt_br="08 de setembro"
+        date_en_us="September 08"
 
         // Content of block 2
         //Title
