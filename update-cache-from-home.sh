@@ -89,8 +89,8 @@ function downloadSlideImages() {
 function downloadBlockImages() {
 	#Image 1
 	function blockImage1() {
-		block1_image_name="block1-hd.webp"
-		block1_image_code="wgTBLj1"
+		block1_image_name="block1-sn.webp"
+		block1_image_code="sF3CmVs"
 
 		if test ! -e "$HOME/.config/regataos-gcs/cache/img/$block1_image_name"; then
 			# Clear cache
