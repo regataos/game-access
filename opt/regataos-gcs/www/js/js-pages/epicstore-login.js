@@ -3,7 +3,7 @@ function open_url(URL) {
 	var popup = window.open("./../pages/go-egs.html", 'popup')
 	document.getElementById("login-button").style.pointerEvents = "none";
 
-	setTimeout(function(){
+	setTimeout(function () {
 		popup.focus();
 		document.getElementById("login-button").style.pointerEvents = "auto";
 	}, 3000);
@@ -18,11 +18,13 @@ function check_status() {
 
 		if (fs.existsSync('/tmp/regataos-gcs/login-id.txt')) {
 			$("div.title-top").css("display", "none")
+			$("#epicstore-buttons").css("display", "none")
 			$("div.universal-login").css("display", "none")
 			$("div.loading").css("display", "block")
 			$("div.loading-games").css("display", "block")
 
 		} else {
+			$("#epicstore-buttons").css("display", "none")
 			$("div.universal-login").css("display", "none")
 			$("div.loading").css("display", "none")
 			$("div.loading-games").css("display", "none")
@@ -37,11 +39,11 @@ function save_login_id() {
 	const fs = require('fs');
 	fs.writeFileSync("/tmp/regataos-gcs/login-id.txt", login_id, "utf8");
 
-	setTimeout(function(){
+	setTimeout(function () {
 		check_status()
 		var command_line = '/opt/regataos-gcs/scripts/show-epicstore-games.sh & \
 		/opt/regataos-gcs/scripts/install/scripts-install/install-game-epicstore/prepare-compatibility-mode.sh';
-		exec(command_line,function(error,call,errlog){
+		exec(command_line, function (error, call, errlog) {
 		});
 	}, 1000);
 }

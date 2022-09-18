@@ -1,4 +1,4 @@
-#!/bin/bash 
+#!/bin/bash
 #
 
 # Settings and variables
@@ -12,10 +12,10 @@ app_executable="drive_c/Program Files/Ubisoft/Ubisoft Game Launcher"
 app_executable2="drive_c/Program Files (x86)/Ubisoft/Ubisoft Game Launcher"
 start_process="Iniciando a instalação"
 conf_prefix_status="Preparando o modo de compatibilidade..."
-success_installation="Concluído"
+success_installation="Concluído!"
 success_notify_title="instalado com sucesso!"
 success_notify_text="foi instalado com sucesso."
-installation_error="Erro"
+installation_error="Erro!"
 error_notify_title="Erro na instalação do"
 error_notify_text="Ocorreu algum erro na instalação do"
 installation_error_status="Erro na instalação"
@@ -58,7 +58,7 @@ function fix_app() {
 
 # Successful installation
 function success_installation() {
-    echo "$app_nickname" >> "$HOME/.config/regataos-gcs/installed-launchers.conf"
+	echo "$app_nickname" >>"$HOME/.config/regataos-gcs/installed-launchers.conf"
 	sed -i '/^$/d' "$HOME/.config/regataos-gcs/installed-launchers.conf"
 
 	# Notify
@@ -82,9 +82,9 @@ function success_installation() {
 
 # Create game install folder
 function gameinstall_folder() {
-    mkdir -p "$HOME/Game Access/$app_name"
-    rm -rf "$app_nickname_dir/drive_c/Program Files (x86)/Ubisoft/Ubisoft Game Launcher/games"
-    ln -sf "$HOME/Game Access/$app_name" "$app_nickname_dir/drive_c/Program Files (x86)/Ubisoft/Ubisoft Game Launcher/games"
+	mkdir -p "$HOME/Game Access/$app_name"
+	rm -rf "$app_nickname_dir/drive_c/Program Files (x86)/Ubisoft/Ubisoft Game Launcher/games"
+	ln -sf "$HOME/Game Access/$app_name" "$app_nickname_dir/drive_c/Program Files (x86)/Ubisoft/Ubisoft Game Launcher/games"
 }
 
 # Installation failed
@@ -97,14 +97,14 @@ function installation_failed() {
 rm -rf $HOME/.local/share/applications/applications
 
 # Search for processes
-if test -e "$progressbar_dir/installing" ; then
+if test -e "$progressbar_dir/installing"; then
 	if test ! -e "/tmp/progressbar-gcs/download-percentage-legendary"; then
 		# Put the process in the installation queue
 		kmsg=$(grep -r $app_nickname $progressbar_dir/queued-process)
 		if [[ $kmsg == *"$app_nickname"* ]]; then
 			echo "Nothing to do."
 		else
-			echo "$app_nickname=install process-$app_name_process" >> $progressbar_dir/queued-process
+			echo "$app_nickname=install process-$app_name_process" >>$progressbar_dir/queued-process
 		fi
 
 		#I'm in the process queue, see you later
@@ -113,17 +113,17 @@ if test -e "$progressbar_dir/installing" ; then
 
 else
 	# Start dependences Download
-	if test ! -e "/usr/share/regataos/compatibility-mode/default-wineprefix.tar.xz" ; then
-		if test ! -e "$HOME/.cache/winetricks/directx9/directx_Jun2010_redist.exe" ; then
+	if test ! -e "/usr/share/regataos/compatibility-mode/default-wineprefix.tar.xz"; then
+		if test ! -e "$HOME/.cache/winetricks/directx9/directx_Jun2010_redist.exe"; then
 			# Put the process in the installation queue
 			kmsg=$(grep -r $app_nickname $progressbar_dir/queued-process)
 			if [[ $kmsg == *"$app_nickname"* ]]; then
 				echo "Nothing to do."
 			else
-				echo "$app_nickname=install process-$app_name_process" >> $progressbar_dir/queued-process
+				echo "$app_nickname=install process-$app_name_process" >>$progressbar_dir/queued-process
 			fi
 
-			echo dotnet > /tmp/regataos-gcs/dotnet
+			echo dotnet >/tmp/regataos-gcs/dotnet
 			/opt/regataos-gcs/scripts/install/scripts-install/directx-compatibility-mode.sh start
 
 			#I'm in the process queue, see you later
@@ -141,9 +141,9 @@ function enable_dxvk_vkd3d() {
 # Start installation
 function start_installation() {
 
-# Create cancel script
-rm -f $progressbar_dir/script-cancel
-cat > $progressbar_dir/script-cancel << EOM
+	# Create cancel script
+	rm -f $progressbar_dir/script-cancel
+	cat >$progressbar_dir/script-cancel <<EOM
 #!/bin/bash 
 #
 
@@ -164,218 +164,61 @@ rm -f $progressbar_dir/down-paused
 rm -f $progressbar_dir/script-cancel
 EOM
 
-chmod +x $progressbar_dir/script-cancel
+	chmod +x $progressbar_dir/script-cancel
 
-# Prepare the progress bar and downloading
-rm -f $progressbar_dir/progress-movement
-echo "installing" > $progressbar_dir/installing
-echo "installing" > /tmp/regataos-gcs/installing-$app_nickname
-echo $app_name_down > $progressbar_dir/app-name
-echo "0%" > $progressbar_dir/progress
-echo $app_download_status > $progressbar_dir/status
-sleep 1
-echo "show progress bar" > $progressbar_dir/progressbar
-
-#Download
-echo "/tmp/regataos-gcs/$app_download_file_name" > $progressbar_dir/file-download-size
-echo "wget --no-check-certificate -O /tmp/regataos-gcs/$app_download_file_name $app_download_link" > $progressbar_dir/get-pid
-wget --no-check-certificate -O /tmp/regataos-gcs/$app_download_file_name $app_download_link 2>&1 | (pv -n > $progressbar_dir/download-percentage)
-echo 100% > $progressbar_dir/progress
-sleep 3
-rm -f $progressbar_dir/download-percentage
-rm -f $progressbar_dir/download-download-size
-rm -f $progressbar_dir/download-speed
-rm -f $progressbar_dir/file-size
-rm -f $progressbar_dir/eta
-
-# Prepare wineprefix to run the launcher and games
-if test -e "$HOME/.local/share/wineprefixes/default-compatibility-mode"; then
-	if test ! -e "$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"; then
-		# Configuring compatibility mode
-		echo "installing" > $progressbar_dir/progress-movement
-		echo "" > $progressbar_dir/progress
-		echo $app_name > $progressbar_dir/app-name
-		echo $conf_prefix_status > $progressbar_dir/status
-		sleep 1
-		echo "show progress bar" > $progressbar_dir/progressbar
-
-		# Enable DXVK and VKD3D-Proton
-		if test ! -e "$HOME/.local/share/wineprefixes/default-compatibility-mode/vulkan.txt"; then
-			enable_dxvk_vkd3d
-		fi
-
-		cp -rf "$HOME/.local/share/wineprefixes/default-compatibility-mode" \
-		"$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"
-	fi
-
-elif test -e "/usr/share/regataos/compatibility-mode/default-wineprefix.tar.xz"; then
-	if test ! -e "$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"; then
-		# Configuring compatibility mode
-		echo "installing" > $progressbar_dir/progress-movement
-		echo "" > $progressbar_dir/progress
-		echo $app_name > $progressbar_dir/app-name
-		echo $conf_prefix_status > $progressbar_dir/status
-		sleep 1
-		echo "show progress bar" > $progressbar_dir/progressbar
-
-		if test -e "/usr/share/regataos/compatibility-mode/default-wineprefix.tar.xz"; then
-			tar xf "/usr/share/regataos/compatibility-mode/default-wineprefix.tar.xz" -C "$HOME/.local/share/wineprefixes/"
-		fi
-
-		# Enable DXVK and VKD3D-Proton
-		if test ! -e "$HOME/.local/share/wineprefixes/default-compatibility-mode/vulkan.txt"; then
-			enable_dxvk_vkd3d
-		fi
-
-		cp -rf "$HOME/.local/share/wineprefixes/default-compatibility-mode" \
-		"$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"
-	fi
-
-else
-	# Configuring compatibility mode
-	echo "installing" > $progressbar_dir/progress-movement
-	echo "" > $progressbar_dir/progress
-	echo $app_name > $progressbar_dir/app-name
-	echo $conf_prefix_status > $progressbar_dir/status
+	# Prepare the progress bar and downloading
+	rm -f $progressbar_dir/progress-movement
+	echo "installing" >$progressbar_dir/installing
+	echo "installing" >/tmp/regataos-gcs/installing-$app_nickname
+	echo $app_name_down >$progressbar_dir/app-name
+	echo "0%" >$progressbar_dir/progress
+	echo $app_download_status >$progressbar_dir/status
 	sleep 1
-	echo "show progress bar" > $progressbar_dir/progressbar
+	echo "show progress bar" >$progressbar_dir/progressbar
 
-	/opt/regataos-gcs/scripts/prepare-default-compatibility-mode.sh start
-
-	# Enable DXVK and VKD3D-Proton
-	if test ! -e "$HOME/.local/share/wineprefixes/default-compatibility-mode/vulkan.txt"; then
-		enable_dxvk_vkd3d
-	fi
-
-	cp -rf "$HOME/.local/share/wineprefixes/default-compatibility-mode" \
-	"$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"
-fi
-
-# Set up the desktop location for Wine
-rm -rf $HOME/.local/share/applications/wine
-ln -s $HOME/.local/share/applications/ $HOME/.local/share/applications/wine
-mkdir -p $HOME/.local/share/applications/Programs
-
-# Fix the wineprefix desktop folder
-rm -rf "$app_nickname_dir/drive_c/users/$user/Área de Trabalho"
-rm -rf "$app_nickname_dir/drive_c/users/$user/Desktop"
-
-ln -sf $HOME/.local/share/applications "$app_nickname_dir/drive_c/users/$user/Área de Trabalho"
-ln -sf $HOME/.local/share/applications "$app_nickname_dir/drive_c/users/$user/Desktop"
-
-# Remove cancel script
-rm -f $progressbar_dir/script-cancel
-
-# Fix app
-fix_app
-
-# Install app
-echo $app_install_status > $progressbar_dir/status
-echo "" > $progressbar_dir/progress
-echo "installing" > $progressbar_dir/progress-movement
-install_app
-
-# Fix Wine applications folder
-rm -rf $HOME/.local/share/applications/applications
-
-# Confirm installation
-if test -e "$app_nickname_dir/$app_executable" ; then
-	rm -f $progressbar_dir/progress-movement
-	echo "completed" > $progressbar_dir/progress-full
-	echo "" > $progressbar_dir/status
-	echo $success_installation > $progressbar_dir/progress
-	sleep 5
-	success_installation
-	gameinstall_folder
-	sleep 2
-	rm -f $progressbar_dir/progress-full
-	rm -f $progressbar_dir/installing
-	rm -f /tmp/regataos-gcs/installing-$app_nickname
-	rm -f "/tmp/regataos-gcs/$app_download_file_name"
-
-	# If there are no more processes, clear the progress bar cache
-	if test ! -e "$progressbar_dir/queued-1" ; then
-		rm -f $progressbar_dir/progressbar
-		rm -f $progressbar_dir/*
-	fi
-elif test -e "$app_nickname_dir/$app_executable2" ; then
-	rm -f $progressbar_dir/progress-movement
-	echo "completed" > $progressbar_dir/progress-full
-	echo "" > $progressbar_dir/status
-	echo $success_installation > $progressbar_dir/progress
-	sleep 5
-	success_installation
-	gameinstall_folder
-	sleep 2
-	rm -f $progressbar_dir/progress-full
-	rm -f $progressbar_dir/installing
-	rm -f /tmp/regataos-gcs/installing-$app_nickname
-	rm -f "/tmp/regataos-gcs/$app_download_file_name"
-
-	# If there are no more processes, clear the progress bar cache
-	if test ! -e "$progressbar_dir/queued-1" ; then
-		rm -f $progressbar_dir/progressbar
-		rm -f $progressbar_dir/*
-	fi
-else
-	rm -f $progressbar_dir/progress-movement
-	rm -f $progressbar_dir/progress-full
-	echo $installation_error > $progressbar_dir/progress
-	echo $installation_error_status > $progressbar_dir/status
-	installation_failed
-	sleep 2
-	rm -f $progressbar_dir/installing
-	rm -f /tmp/regataos-gcs/installing-$app_nickname
-	rm -f "/tmp/regataos-gcs/$app_download_file_name"
-
-	# If there are no more processes, clear the progress bar cache
-	if test ! -e "$progressbar_dir/queued-1" ; then
-		rm -f $progressbar_dir/progressbar
-		rm -f $progressbar_dir/*
-	fi
-fi
-}
-
-# Start Hidden app install
-function start_hidden_installation() {
-	# Download
-	export appName="Baixando $app_name"
-	export total="de"
-	export estimatedTime="Tempo estimado"
-
-	cd /tmp/regataos-gcs/
-	/opt/regataos-gcs/tools/download_wget_zenity/download.sh "$app_download_link"
+	#Download
+	echo "/tmp/regataos-gcs/$app_download_file_name" >$progressbar_dir/file-download-size
+	echo "wget --no-check-certificate -O /tmp/regataos-gcs/$app_download_file_name $app_download_link" >$progressbar_dir/get-pid
+	wget --no-check-certificate -O /tmp/regataos-gcs/$app_download_file_name $app_download_link 2>&1 | (pv -n >$progressbar_dir/download-percentage)
+	echo 100% >$progressbar_dir/progress
+	sleep 3
+	rm -f $progressbar_dir/download-percentage
+	rm -f $progressbar_dir/download-download-size
+	rm -f $progressbar_dir/download-speed
+	rm -f $progressbar_dir/file-size
+	rm -f $progressbar_dir/eta
 
 	# Prepare wineprefix to run the launcher and games
-	(
-	if test -e "$HOME/.local/share/wineprefixes/default-compatibility-mode" ; then
-		# Configuring compatibility mode
-		echo "installing" > $progressbar_dir/progress-movement
-		echo "" > $progressbar_dir/progress
-		echo $app_name > $progressbar_dir/app-name
-		echo $conf_prefix_status > $progressbar_dir/status
-		sleep 1
-		echo "show progress bar" > $progressbar_dir/progressbar
+	if test -e "$HOME/.local/share/wineprefixes/default-compatibility-mode"; then
+		if test ! -e "$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"; then
+			# Configuring compatibility mode
+			echo "installing" >$progressbar_dir/progress-movement
+			echo "" >$progressbar_dir/progress
+			echo $app_name >$progressbar_dir/app-name
+			echo $conf_prefix_status >$progressbar_dir/status
+			sleep 1
+			echo "show progress bar" >$progressbar_dir/progressbar
 
-		# Enable DXVK and VKD3D-Proton
-		if test ! -e "$HOME/.local/share/wineprefixes/default-compatibility-mode/vulkan.txt"; then
-			enable_dxvk_vkd3d
+			# Enable DXVK and VKD3D-Proton
+			if test ! -e "$HOME/.local/share/wineprefixes/default-compatibility-mode/vulkan.txt"; then
+				enable_dxvk_vkd3d
+			fi
+
+			cp -rf "$HOME/.local/share/wineprefixes/default-compatibility-mode" \
+				"$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"
 		fi
 
-		cp -rf "$HOME/.local/share/wineprefixes/default-compatibility-mode" \
-		"$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"
-
-	elif test -e "/usr/share/regataos/compatibility-mode/default-wineprefix.tar.xz" ; then
-		if test ! -e "$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode" ; then
+	elif test -e "/usr/share/regataos/compatibility-mode/default-wineprefix.tar.xz"; then
+		if test ! -e "$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"; then
 			# Configuring compatibility mode
-			echo "installing" > $progressbar_dir/progress-movement
-			echo "" > $progressbar_dir/progress
-			echo $app_name > $progressbar_dir/app-name
-			echo $conf_prefix_status > $progressbar_dir/status
+			echo "installing" >$progressbar_dir/progress-movement
+			echo "" >$progressbar_dir/progress
+			echo $app_name >$progressbar_dir/app-name
+			echo $conf_prefix_status >$progressbar_dir/status
 			sleep 1
-			echo "show progress bar" > $progressbar_dir/progressbar
+			echo "show progress bar" >$progressbar_dir/progressbar
 
-			if test -e "/usr/share/regataos/compatibility-mode/default-wineprefix.tar.xz" ; then
+			if test -e "/usr/share/regataos/compatibility-mode/default-wineprefix.tar.xz"; then
 				tar xf "/usr/share/regataos/compatibility-mode/default-wineprefix.tar.xz" -C "$HOME/.local/share/wineprefixes/"
 			fi
 
@@ -385,17 +228,17 @@ function start_hidden_installation() {
 			fi
 
 			cp -rf "$HOME/.local/share/wineprefixes/default-compatibility-mode" \
-			"$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"
+				"$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"
 		fi
 
 	else
 		# Configuring compatibility mode
-		echo "installing" > $progressbar_dir/progress-movement
-		echo "" > $progressbar_dir/progress
-		echo $app_name > $progressbar_dir/app-name
-		echo $conf_prefix_status > $progressbar_dir/status
+		echo "installing" >$progressbar_dir/progress-movement
+		echo "" >$progressbar_dir/progress
+		echo $app_name >$progressbar_dir/app-name
+		echo $conf_prefix_status >$progressbar_dir/status
 		sleep 1
-		echo "show progress bar" > $progressbar_dir/progressbar
+		echo "show progress bar" >$progressbar_dir/progressbar
 
 		/opt/regataos-gcs/scripts/prepare-default-compatibility-mode.sh start
 
@@ -405,7 +248,7 @@ function start_hidden_installation() {
 		fi
 
 		cp -rf "$HOME/.local/share/wineprefixes/default-compatibility-mode" \
-		"$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"
+			"$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"
 	fi
 
 	# Set up the desktop location for Wine
@@ -420,26 +263,183 @@ function start_hidden_installation() {
 	ln -sf $HOME/.local/share/applications "$app_nickname_dir/drive_c/users/$user/Área de Trabalho"
 	ln -sf $HOME/.local/share/applications "$app_nickname_dir/drive_c/users/$user/Desktop"
 
+	# Remove cancel script
+	rm -f $progressbar_dir/script-cancel
+
 	# Fix app
 	fix_app
 
 	# Install app
+	echo $app_install_status >$progressbar_dir/status
+	echo "" >$progressbar_dir/progress
+	echo "installing" >$progressbar_dir/progress-movement
 	install_app
 
 	# Fix Wine applications folder
 	rm -rf $HOME/.local/share/applications/applications
 
-	) | env GTK_THEME=Adwaita:dark zenity --progress --pulsate --width 350 --window-icon "/usr/share/pixmaps/regataos-gcs.png" \
-	--title "Regata OS Game Access" \
-	--text "$app_name_process.\nIsso pode levar alguns minutos..." \
-	--auto-close --auto-kill --no-cancel
-
 	# Confirm installation
-	if test -e "$app_nickname_dir/$app_executable" ; then
+	if test -e "$app_nickname_dir/$app_executable"; then
+		rm -f $progressbar_dir/progress-movement
+		echo "completed" >$progressbar_dir/progress-full
+		echo "" >$progressbar_dir/status
+		echo $success_installation >$progressbar_dir/progress
 		sleep 5
 		success_installation
 		gameinstall_folder
-	elif test -e "$app_nickname_dir/$app_executable2" ; then
+		sleep 2
+		rm -f $progressbar_dir/progress-full
+		rm -f $progressbar_dir/installing
+		rm -f /tmp/regataos-gcs/installing-$app_nickname
+		rm -f "/tmp/regataos-gcs/$app_download_file_name"
+
+		# If there are no more processes, clear the progress bar cache
+		if test ! -e "$progressbar_dir/queued-1"; then
+			rm -f $progressbar_dir/progressbar
+			rm -f $progressbar_dir/*
+		fi
+	elif test -e "$app_nickname_dir/$app_executable2"; then
+		rm -f $progressbar_dir/progress-movement
+		echo "completed" >$progressbar_dir/progress-full
+		echo "" >$progressbar_dir/status
+		echo $success_installation >$progressbar_dir/progress
+		sleep 5
+		success_installation
+		gameinstall_folder
+		sleep 2
+		rm -f $progressbar_dir/progress-full
+		rm -f $progressbar_dir/installing
+		rm -f /tmp/regataos-gcs/installing-$app_nickname
+		rm -f "/tmp/regataos-gcs/$app_download_file_name"
+
+		# If there are no more processes, clear the progress bar cache
+		if test ! -e "$progressbar_dir/queued-1"; then
+			rm -f $progressbar_dir/progressbar
+			rm -f $progressbar_dir/*
+		fi
+	else
+		rm -f $progressbar_dir/progress-movement
+		rm -f $progressbar_dir/progress-full
+		echo $installation_error >$progressbar_dir/progress
+		echo $installation_error_status >$progressbar_dir/status
+		installation_failed
+		sleep 2
+		rm -f $progressbar_dir/installing
+		rm -f /tmp/regataos-gcs/installing-$app_nickname
+		rm -f "/tmp/regataos-gcs/$app_download_file_name"
+
+		# If there are no more processes, clear the progress bar cache
+		if test ! -e "$progressbar_dir/queued-1"; then
+			rm -f $progressbar_dir/progressbar
+			rm -f $progressbar_dir/*
+		fi
+	fi
+}
+
+# Start Hidden app install
+function start_hidden_installation() {
+	# Download
+	export appName="Baixando $app_name"
+	export total="de"
+	export estimatedTime="Tempo estimado"
+
+	cd /tmp/regataos-gcs/
+	/opt/regataos-gcs/tools/download_wget_zenity/download.sh "$app_download_link"
+
+	# Prepare wineprefix to run the launcher and games
+	(
+		if test -e "$HOME/.local/share/wineprefixes/default-compatibility-mode"; then
+			# Configuring compatibility mode
+			echo "installing" >$progressbar_dir/progress-movement
+			echo "" >$progressbar_dir/progress
+			echo $app_name >$progressbar_dir/app-name
+			echo $conf_prefix_status >$progressbar_dir/status
+			sleep 1
+			echo "show progress bar" >$progressbar_dir/progressbar
+
+			# Enable DXVK and VKD3D-Proton
+			if test ! -e "$HOME/.local/share/wineprefixes/default-compatibility-mode/vulkan.txt"; then
+				enable_dxvk_vkd3d
+			fi
+
+			cp -rf "$HOME/.local/share/wineprefixes/default-compatibility-mode" \
+				"$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"
+
+		elif test -e "/usr/share/regataos/compatibility-mode/default-wineprefix.tar.xz"; then
+			if test ! -e "$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"; then
+				# Configuring compatibility mode
+				echo "installing" >$progressbar_dir/progress-movement
+				echo "" >$progressbar_dir/progress
+				echo $app_name >$progressbar_dir/app-name
+				echo $conf_prefix_status >$progressbar_dir/status
+				sleep 1
+				echo "show progress bar" >$progressbar_dir/progressbar
+
+				if test -e "/usr/share/regataos/compatibility-mode/default-wineprefix.tar.xz"; then
+					tar xf "/usr/share/regataos/compatibility-mode/default-wineprefix.tar.xz" -C "$HOME/.local/share/wineprefixes/"
+				fi
+
+				# Enable DXVK and VKD3D-Proton
+				if test ! -e "$HOME/.local/share/wineprefixes/default-compatibility-mode/vulkan.txt"; then
+					enable_dxvk_vkd3d
+				fi
+
+				cp -rf "$HOME/.local/share/wineprefixes/default-compatibility-mode" \
+					"$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"
+			fi
+
+		else
+			# Configuring compatibility mode
+			echo "installing" >$progressbar_dir/progress-movement
+			echo "" >$progressbar_dir/progress
+			echo $app_name >$progressbar_dir/app-name
+			echo $conf_prefix_status >$progressbar_dir/status
+			sleep 1
+			echo "show progress bar" >$progressbar_dir/progressbar
+
+			/opt/regataos-gcs/scripts/prepare-default-compatibility-mode.sh start
+
+			# Enable DXVK and VKD3D-Proton
+			if test ! -e "$HOME/.local/share/wineprefixes/default-compatibility-mode/vulkan.txt"; then
+				enable_dxvk_vkd3d
+			fi
+
+			cp -rf "$HOME/.local/share/wineprefixes/default-compatibility-mode" \
+				"$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"
+		fi
+
+		# Set up the desktop location for Wine
+		rm -rf $HOME/.local/share/applications/wine
+		ln -s $HOME/.local/share/applications/ $HOME/.local/share/applications/wine
+		mkdir -p $HOME/.local/share/applications/Programs
+
+		# Fix the wineprefix desktop folder
+		rm -rf "$app_nickname_dir/drive_c/users/$user/Área de Trabalho"
+		rm -rf "$app_nickname_dir/drive_c/users/$user/Desktop"
+
+		ln -sf $HOME/.local/share/applications "$app_nickname_dir/drive_c/users/$user/Área de Trabalho"
+		ln -sf $HOME/.local/share/applications "$app_nickname_dir/drive_c/users/$user/Desktop"
+
+		# Fix app
+		fix_app
+
+		# Install app
+		install_app
+
+		# Fix Wine applications folder
+		rm -rf $HOME/.local/share/applications/applications
+
+	) | env GTK_THEME=Adwaita:dark zenity --progress --pulsate --width 350 --window-icon "/usr/share/pixmaps/regataos-gcs.png" \
+		--title "Regata OS Game Access" \
+		--text "$app_name_process.\nIsso pode levar alguns minutos..." \
+		--auto-close --auto-kill --no-cancel
+
+	# Confirm installation
+	if test -e "$app_nickname_dir/$app_executable"; then
+		sleep 5
+		success_installation
+		gameinstall_folder
+	elif test -e "$app_nickname_dir/$app_executable2"; then
 		sleep 5
 		success_installation
 		gameinstall_folder
@@ -451,7 +451,7 @@ function start_hidden_installation() {
 # Verify that the installation is already in place.
 if test ! -e "/tmp/progressbar-gcs/download-percentage-legendary"; then
 	if [[ $(ps aux | egrep "$app_nickname-compatibility-mode.sh") == *"$app_nickname-compatibility-mode.sh start"* ]]; then
-		if test -e "$progressbar_dir/download-extra.txt" ; then
+		if test -e "$progressbar_dir/download-extra.txt"; then
 			rm -f "$progressbar_dir/download-extra.txt"
 			start_installation
 		else

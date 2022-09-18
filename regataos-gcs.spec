@@ -1,5 +1,5 @@
 Name: regataos-gcs
-Version: 5.3
+Version: 5.4
 Release: 0
 Url: https://github.com/regataos/game-access
 Summary: Access your Windows games from Regata OS
@@ -44,15 +44,20 @@ if test -e /opt/regataos-base/%{name}-%{version}.tar.xz ; then
 	tar xf /opt/regataos-base/%{name}-%{version}.tar.xz -C /
 fi
 
-if test ! -e /opt/magma/regataosgcs ; then
-	cp -f /opt/magma/magma /opt/magma/regataosgcs
+# Fix legendary
+chmod +x /opt/regataos-gcs/tools/legendary/legendary
+
+rm -f "/opt/magma/regataosgcs"
+cp -f "/opt/magma/nw" "/opt/magma/regataosgcs"
+
+if test ! -e "/usr/bin/regataosgcs"; then
+	ln -sf "/opt/magma/regataosgcs" "/usr/bin/regataosgcs"
 fi
-if test ! -e /usr/bin/regataosgcs ; then
-	ln -sf /opt/magma/regataosgcs /usr/bin/regataosgcs
-fi
+
 if test ! -e /opt/regataos-gcs/www/cache ; then
 	ln -sf /tmp/regataos-gcs/config/cache /opt/regataos-gcs/www/cache
 fi
+
 if test ! -e /tmp/progressbar-gcs ; then
 	mkdir -p "/tmp/progressbar-gcs/"
 	chmod 777 "/tmp/progressbar-gcs"
@@ -74,33 +79,12 @@ do
 done
 
 # Start system services
-%service_add_post regataos-gcs-allsettings.service
-systemctl enable  regataos-gcs-allsettings.service || true
-systemctl start   regataos-gcs-allsettings.service || true
-systemctl restart regataos-gcs-allsettings.service || true
+systemctl daemon-reload
+systemctl enable --now regataos-gcs-select-language.service
+systemctl enable --now regataos-gcs-allsettings.service
 
 # Changes for the new version of Regata OS Game Access
 if test ! -e /usr/share/regataos/create-iso.txt ; then
-	if test -e "/etc/xdg/autostart/regataosgcs-auto-close-game-access.desktop"; then
-		# Disable obsolete systemd services
-		systemctl stop regataos-gcs-selectlanguage.service || true
-		systemctl disable regataos-gcs-selectlanguage.service || true
-
-		# Remove obsolete autostart services
-		rm -f "/etc/xdg/autostart/regataosgcs-auto-close-game-access.desktop"
-		rm -f "/etc/xdg/autostart/regataosgcs-capture-progress-download.desktop"
-		rm -f "/etc/xdg/autostart/regataosgcs-create-process-queues.desktop"
-		rm -f "/etc/xdg/autostart/regataosgcs-run-process-queues.desktop"
-		rm -f "/etc/xdg/autostart/regataosgcs-search-installeds.desktop"
-
-		# Shut down services that are unnecessarily running
-		killall auto-close-game-access.sh
-		killall capture-progress-download
-		killall create-process-queues
-		killall run-process-queues
-		killall search-installeds.sh
-	fi
-
 	# Set language according to user settings
 	/opt/regataos-gcs/scripts/select-language start
 

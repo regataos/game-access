@@ -11,10 +11,10 @@ app_install_status="Instalando a Epic Games Store..."
 app_executable="drive_c/Program Files (x86)/Epic Games/Launcher"
 start_process="Iniciando a instalação"
 conf_prefix_status="Preparando o modo de compatibilidade..."
-success_installation="Concluído"
+success_installation="Concluído!"
 success_notify_title="instalada com sucesso!"
 success_notify_text="foi instalada com sucesso."
-installation_error="Erro"
+installation_error="Erro!"
 error_notify_title="Erro na instalação da"
 error_notify_text="Ocorreu algum erro na instalação da"
 installation_error_status="Erro na instalação"
@@ -183,12 +183,12 @@ EOM
 	if test -e "$HOME/.local/share/wineprefixes/default-compatibility-mode"; then
 		if test ! -e "$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"; then
 			# Configuring compatibility mode
-			echo "installing" > $progressbar_dir/progress-movement
-			echo "" > $progressbar_dir/progress
-			echo $app_name > $progressbar_dir/app-name
-			echo $conf_prefix_status > $progressbar_dir/status
+			echo "installing" >$progressbar_dir/progress-movement
+			echo "" >$progressbar_dir/progress
+			echo $app_name >$progressbar_dir/app-name
+			echo $conf_prefix_status >$progressbar_dir/status
 			sleep 1
-			echo "show progress bar" > $progressbar_dir/progressbar
+			echo "show progress bar" >$progressbar_dir/progressbar
 
 			# Enable DXVK and VKD3D-Proton
 			if test ! -e "$HOME/.local/share/wineprefixes/default-compatibility-mode/vulkan.txt"; then
@@ -196,18 +196,18 @@ EOM
 			fi
 
 			cp -rf "$HOME/.local/share/wineprefixes/default-compatibility-mode" \
-			"$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"
+				"$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"
 		fi
 
 	elif test -e "/usr/share/regataos/compatibility-mode/default-wineprefix.tar.xz"; then
 		if test ! -e "$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"; then
 			# Configuring compatibility mode
-			echo "installing" > $progressbar_dir/progress-movement
-			echo "" > $progressbar_dir/progress
-			echo $app_name > $progressbar_dir/app-name
-			echo $conf_prefix_status > $progressbar_dir/status
+			echo "installing" >$progressbar_dir/progress-movement
+			echo "" >$progressbar_dir/progress
+			echo $app_name >$progressbar_dir/app-name
+			echo $conf_prefix_status >$progressbar_dir/status
 			sleep 1
-			echo "show progress bar" > $progressbar_dir/progressbar
+			echo "show progress bar" >$progressbar_dir/progressbar
 
 			if test -e "/usr/share/regataos/compatibility-mode/default-wineprefix.tar.xz"; then
 				tar xf "/usr/share/regataos/compatibility-mode/default-wineprefix.tar.xz" -C "$HOME/.local/share/wineprefixes/"
@@ -219,17 +219,17 @@ EOM
 			fi
 
 			cp -rf "$HOME/.local/share/wineprefixes/default-compatibility-mode" \
-			"$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"
+				"$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"
 		fi
 
 	else
 		# Configuring compatibility mode
-		echo "installing" > $progressbar_dir/progress-movement
-		echo "" > $progressbar_dir/progress
-		echo $app_name > $progressbar_dir/app-name
-		echo $conf_prefix_status > $progressbar_dir/status
+		echo "installing" >$progressbar_dir/progress-movement
+		echo "" >$progressbar_dir/progress
+		echo $app_name >$progressbar_dir/app-name
+		echo $conf_prefix_status >$progressbar_dir/status
 		sleep 1
-		echo "show progress bar" > $progressbar_dir/progressbar
+		echo "show progress bar" >$progressbar_dir/progressbar
 
 		/opt/regataos-gcs/scripts/prepare-default-compatibility-mode.sh start
 
@@ -239,7 +239,7 @@ EOM
 		fi
 
 		cp -rf "$HOME/.local/share/wineprefixes/default-compatibility-mode" \
-		"$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"
+			"$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"
 	fi
 
 	# Set up the desktop location for Wine
@@ -317,36 +317,14 @@ function start_hidden_installation() {
 
 	# Prepare wineprefix to run the launcher and games
 	(
-	if test -e "$HOME/.local/share/wineprefixes/default-compatibility-mode" ; then
-		# Configuring compatibility mode
-		echo "installing" > $progressbar_dir/progress-movement
-		echo "" > $progressbar_dir/progress
-		echo $app_name > $progressbar_dir/app-name
-		echo $conf_prefix_status > $progressbar_dir/status
-		sleep 1
-		echo "show progress bar" > $progressbar_dir/progressbar
-
-		# Enable DXVK and VKD3D-Proton
-		if test ! -e "$HOME/.local/share/wineprefixes/default-compatibility-mode/vulkan.txt"; then
-			enable_dxvk_vkd3d
-		fi
-
-		cp -rf "$HOME/.local/share/wineprefixes/default-compatibility-mode" \
-		"$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"
-
-	elif test -e "/usr/share/regataos/compatibility-mode/default-wineprefix.tar.xz" ; then
-		if test ! -e "$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode" ; then
+		if test -e "$HOME/.local/share/wineprefixes/default-compatibility-mode"; then
 			# Configuring compatibility mode
-			echo "installing" > $progressbar_dir/progress-movement
-			echo "" > $progressbar_dir/progress
-			echo $app_name > $progressbar_dir/app-name
-			echo $conf_prefix_status > $progressbar_dir/status
+			echo "installing" >$progressbar_dir/progress-movement
+			echo "" >$progressbar_dir/progress
+			echo $app_name >$progressbar_dir/app-name
+			echo $conf_prefix_status >$progressbar_dir/status
 			sleep 1
-			echo "show progress bar" > $progressbar_dir/progressbar
-
-			if test -e "/usr/share/regataos/compatibility-mode/default-wineprefix.tar.xz" ; then
-				tar xf "/usr/share/regataos/compatibility-mode/default-wineprefix.tar.xz" -C "$HOME/.local/share/wineprefixes/"
-			fi
+			echo "show progress bar" >$progressbar_dir/progressbar
 
 			# Enable DXVK and VKD3D-Proton
 			if test ! -e "$HOME/.local/share/wineprefixes/default-compatibility-mode/vulkan.txt"; then
@@ -354,28 +332,50 @@ function start_hidden_installation() {
 			fi
 
 			cp -rf "$HOME/.local/share/wineprefixes/default-compatibility-mode" \
-			"$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"
+				"$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"
+
+		elif test -e "/usr/share/regataos/compatibility-mode/default-wineprefix.tar.xz"; then
+			if test ! -e "$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"; then
+				# Configuring compatibility mode
+				echo "installing" >$progressbar_dir/progress-movement
+				echo "" >$progressbar_dir/progress
+				echo $app_name >$progressbar_dir/app-name
+				echo $conf_prefix_status >$progressbar_dir/status
+				sleep 1
+				echo "show progress bar" >$progressbar_dir/progressbar
+
+				if test -e "/usr/share/regataos/compatibility-mode/default-wineprefix.tar.xz"; then
+					tar xf "/usr/share/regataos/compatibility-mode/default-wineprefix.tar.xz" -C "$HOME/.local/share/wineprefixes/"
+				fi
+
+				# Enable DXVK and VKD3D-Proton
+				if test ! -e "$HOME/.local/share/wineprefixes/default-compatibility-mode/vulkan.txt"; then
+					enable_dxvk_vkd3d
+				fi
+
+				cp -rf "$HOME/.local/share/wineprefixes/default-compatibility-mode" \
+					"$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"
+			fi
+
+		else
+			# Configuring compatibility mode
+			echo "installing" >$progressbar_dir/progress-movement
+			echo "" >$progressbar_dir/progress
+			echo $app_name >$progressbar_dir/app-name
+			echo $conf_prefix_status >$progressbar_dir/status
+			sleep 1
+			echo "show progress bar" >$progressbar_dir/progressbar
+
+			/opt/regataos-gcs/scripts/prepare-default-compatibility-mode.sh start
+
+			# Enable DXVK and VKD3D-Proton
+			if test ! -e "$HOME/.local/share/wineprefixes/default-compatibility-mode/vulkan.txt"; then
+				enable_dxvk_vkd3d
+			fi
+
+			cp -rf "$HOME/.local/share/wineprefixes/default-compatibility-mode" \
+				"$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"
 		fi
-
-	else
-		# Configuring compatibility mode
-		echo "installing" > $progressbar_dir/progress-movement
-		echo "" > $progressbar_dir/progress
-		echo $app_name > $progressbar_dir/app-name
-		echo $conf_prefix_status > $progressbar_dir/status
-		sleep 1
-		echo "show progress bar" > $progressbar_dir/progressbar
-
-		/opt/regataos-gcs/scripts/prepare-default-compatibility-mode.sh start
-
-		# Enable DXVK and VKD3D-Proton
-		if test ! -e "$HOME/.local/share/wineprefixes/default-compatibility-mode/vulkan.txt"; then
-			enable_dxvk_vkd3d
-		fi
-
-		cp -rf "$HOME/.local/share/wineprefixes/default-compatibility-mode" \
-		"$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"
-	fi
 
 		# Set up the desktop location for Wine
 		rm -rf $HOME/.local/share/applications/wine

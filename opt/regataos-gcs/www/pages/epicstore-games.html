@@ -44,7 +44,10 @@
 	<script type="text/javascript" src="./../js/js-pages/epicstore-login.js"></script>
 </div>
 
-<div id="login-button" class="universal-login login-button-epicstore" onclick='open_url();'>Fazer login na Epic Games Store</div>
+<div id="epicstore-buttons">
+	<div id="login-button" class="universal-login login-button-epicstore" onclick='open_url();'>Fazer login na Epic Games Store</div>
+	<div id="login-button" class="universal-login epicstore-install" onclick="window.launcher_name='epicstore'; run_launcher();">Instalar Epic Games Store</div>
+</div>
 
 <div class="loading">
 	<div class="loader"></div>
