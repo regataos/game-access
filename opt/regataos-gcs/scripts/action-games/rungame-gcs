@@ -61,26 +61,26 @@ fi
 
 # Enable performance info
 if [[ $(grep -r fps $GCS_CONFIG) == *"fps=true"* ]]; then
-	export MANGOHUD_CONFIG=cpu_temp,cpu_mhz,ram,vram,gpu_core_clock,gpu_temp,gpu_name,benchmark_percentiles,gamemode,font_size=19
+    export MANGOHUD_CONFIG=cpu_temp,cpu_mhz,ram,vram,gpu_core_clock,gpu_temp,gpu_name,benchmark_percentiles,gamemode,font_size=19
     export MANGOHUD=1
-	export MANGOHUD_DLSYM=1
-	export MANGOHUD_GL="mangohud --dlsym"
-	#export DXVK_HUD=devinfo,fps,frametimes,gpuload,api,compiler
+    export MANGOHUD_DLSYM=1
+    export MANGOHUD_GL="mangohud --dlsym"
+    #export DXVK_HUD=devinfo,fps,frametimes,gpuload,api,compiler
 fi
 
 # For the NVIDIA proprietary driver
 if test -e /usr/bin/nvidia-xconfig; then
-	# For the NVIDIA proprietary driver
-	export __GL_SHADER_DISK_CACHE=1
-	export __GL_SHADER_DISK_CACHE_PATH="$PREFIX_LOCATION"
-	export __GL_SHADER_DISK_CACHE_SKIP_CLEANUP=1
+    # For the NVIDIA proprietary driver
+    export __GL_SHADER_DISK_CACHE=1
+    export __GL_SHADER_DISK_CACHE_PATH="$PREFIX_LOCATION"
+    export __GL_SHADER_DISK_CACHE_SKIP_CLEANUP=1
 
-	# If necessary, run software with the NVIDIA dGPU
-	if test -e "/tmp/regataos-prime/use-hybrid-graphics.txt"; then
-		export GAMEMODERUNEXEC="env __NV_PRIME_RENDER_OFFLOAD=1 __GLX_VENDOR_LIBRARY_NAME=nvidia __VK_LAYER_NV_optimus=NVIDIA_only $(echo $MANGOHUD_GL)"
-	else
-		export GAMEMODERUNEXEC="env $(echo $MANGOHUD_GL)"
-	fi
+    # If necessary, run software with the NVIDIA dGPU
+    if test -e "/tmp/regataos-prime/use-hybrid-graphics.txt"; then
+        export GAMEMODERUNEXEC="env __NV_PRIME_RENDER_OFFLOAD=1 __GLX_VENDOR_LIBRARY_NAME=nvidia __VK_LAYER_NV_optimus=NVIDIA_only $(echo $MANGOHUD_GL)"
+    else
+        export GAMEMODERUNEXEC="env $(echo $MANGOHUD_GL)"
+    fi
 
     # Special configurations for DXVK with NVIDIA GPU
     if [[ $(echo $game_plataform) == *"windows"* ]]; then
@@ -88,12 +88,12 @@ if test -e /usr/bin/nvidia-xconfig; then
     fi
 
 else
-	# If necessary, run software with the AMD/Intel dGPU
-	if test -e "/tmp/regataos-prime/use-hybrid-graphics.txt"; then
-		export GAMEMODERUNEXEC="env DRI_PRIME=1 $(echo $MANGOHUD_GL)"
-	else
-		export GAMEMODERUNEXEC="env $(echo $MANGOHUD_GL)"
-	fi
+    # If necessary, run software with the AMD/Intel dGPU
+    if test -e "/tmp/regataos-prime/use-hybrid-graphics.txt"; then
+        export GAMEMODERUNEXEC="env DRI_PRIME=1 $(echo $MANGOHUD_GL)"
+    else
+        export GAMEMODERUNEXEC="env $(echo $MANGOHUD_GL)"
+    fi
 
     # Special configurations for DXVK with AMD/Intel GPU
     if [[ $(echo $game_plataform) == *"windows"* ]]; then
@@ -116,15 +116,21 @@ if [[ $(echo $gameNickname) == *"lol"* ]]; then
 fi
 
 # Run game
+if [ ! -z $execute_args ]; then
+    runGame="$file_executable $(echo $execute_args)"
+else
+    runGame="$file_executable"
+fi
+
 if [[ $(echo $game_plataform) == *"windows"* ]]; then
     if [[ $(echo $custom_runtime) == *"true"* ]]; then
-        (gamemoderun $CUSTOM_WINE_DIR/bin/wine "$PREFIX_LOCATION/$file_executable $(echo $execute_args)") 2>&1 | tee $LOG_FILE
+        (gamemoderun $CUSTOM_WINE_DIR/bin/wine "$PREFIX_LOCATION/$runGame") 2>&1 | tee $LOG_FILE
     else
-        (gamemoderun wine "$PREFIX_LOCATION/$file_executable $(echo $execute_args)") 2>&1 | tee $LOG_FILE
+        (gamemoderun wine "$PREFIX_LOCATION/$runGame") 2>&1 | tee $LOG_FILE
     fi
 
 else
-    (gamemoderun "$HOME/Game Access/$game_folder/$file_executable $(echo $execute_args)") 2>&1 | tee $LOG_FILE
+    (gamemoderun "$HOME/Game Access/$game_folder/$runGame") 2>&1 | tee $LOG_FILE
 fi
 
 # Return to system default configuration

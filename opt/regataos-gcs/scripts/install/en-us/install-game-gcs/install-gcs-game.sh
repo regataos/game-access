@@ -35,7 +35,7 @@ game_name_process="Install $game_name"
 game_install_status="Installing $game_name..."
 start_process="Starting installation"
 conf_prefix_status="Preparing compatibility mode..."
-success_installation="Concluded"
+success_installation="Concluded!"
 success_notify_title="successfully installed!"
 success_notify_text="has been successfully installed."
 installation_error="Error!"
@@ -56,6 +56,9 @@ if test -e "/tmp/regataos-gcs/$game_nickname-installdir.txt"; then
 		mkdir -p "$GAME_INSTALL_DIR/game-access"
 	fi
 
+	mkdir -p "$GAME_INSTALL_DIR/game-access/tmp"
+	downloadDir="$GAME_INSTALL_DIR/game-access/tmp"
+
 elif [ ! -z "$GAME_INSTALL_DIR" ]; then
 	if [[ $(echo $GAME_INSTALL_DIR) == *"game-access"* ]]; then
 		GAME_INSTALL_DIR="$(echo $GAME_INSTALL_DIR | sed 's/game-access//')"
@@ -65,12 +68,16 @@ elif [ ! -z "$GAME_INSTALL_DIR" ]; then
 		fi
 	fi
 
+	mkdir -p "$GAME_INSTALL_DIR/game-access/tmp"
+	downloadDir="$GAME_INSTALL_DIR/game-access/tmp"
+
 else
 	if test ! -e "$HOME/Game Access"; then
 		mkdir -p "$HOME/Game Access"
 	fi
 
 	GAME_INSTALL_DIR="$HOME/Game Access"
+	downloadDir="/tmp/regataos-gcs"
 fi
 
 #Default settings
@@ -120,25 +127,25 @@ function install_app() {
 			fi
 
 			if [[ $(echo $game_download_file_name) == *".exe"* ]]; then
-				$CUSTOM_WINE_DIR/bin/wine /tmp/regataos-gcs/$game_download_file_name $install_args
+				$CUSTOM_WINE_DIR/bin/wine $downloadDir/$game_download_file_name $install_args
 			else
-				$CUSTOM_WINE_DIR/bin/wine $CUSTOM_WINE_DIR/bin/msiexec /i /tmp/regataos-gcs/$game_download_file_name $install_args
+				$CUSTOM_WINE_DIR/bin/wine $CUSTOM_WINE_DIR/bin/msiexec /i $downloadDir/$game_download_file_name $install_args
 			fi
 
 		else
 			if [[ $(echo $game_download_file_name) == *".exe"* ]]; then
-				wine /tmp/regataos-gcs/$game_download_file_name $install_args
+				wine $downloadDir/$game_download_file_name $install_args
 			else
-				wine msiexec /i /tmp/regataos-gcs/$game_download_file_name $install_args
+				wine msiexec /i $downloadDir/$game_download_file_name $install_args
 			fi
 		fi
 
 	else
 		if [[ $(echo $game_download_file_name) == *".zip"* ]]; then
 			if [ -z "$GAME_PATH" ]; then
-				unzip -u "/tmp/regataos-gcs/$game_download_file_name" -d "$GAME_INSTALL_DIR/"
+				unzip -u "$downloadDir/$game_download_file_name" -d "$GAME_INSTALL_DIR/"
 			else
-				unzip -u "/tmp/regataos-gcs/$game_download_file_name" -d "$GAME_INSTALL_DIR/game-access/"
+				unzip -u "$downloadDir/$game_download_file_name" -d "$GAME_INSTALL_DIR/game-access/"
 			fi
 		fi
 	fi
@@ -230,7 +237,7 @@ function start_installation() {
 	rm -rf "$game_nickname_dir"
 	rm -rf "$HOME/.config/regataos-gcs/custom-runtime/$custom_runtime_name"
 	rm -f "$HOME/.config/regataos-gcs/custom-runtime/$game_nickname.txt"
-	rm -f "/tmp/regataos-gcs/$game_download_file_name"
+	rm -f "$downloadDir/$game_download_file_name"
 	rm -f "/tmp/regataos-gcs/$custom_runtime_file"
 	sed -i "/$gameNickname/d" "/tmp/regataos-gcs/gcs-for-install.txt"
 	sed -i '/^$/d' "/tmp/regataos-gcs/gcs-for-install.txt"
@@ -286,9 +293,9 @@ EOM
 	echo "show progress bar" >$progressbar_dir/progressbar
 
 	# Download
-	echo "/tmp/regataos-gcs/$game_download_file_name" >$progressbar_dir/file-download-size
-	echo "wget --no-check-certificate -O /tmp/regataos-gcs/$game_download_file_name $game_download" >$progressbar_dir/get-pid
-	wget --no-check-certificate -O "/tmp/regataos-gcs/$game_download_file_name" "$game_download" 2>&1 | (pv -n >$progressbar_dir/download-percentage)
+	echo "$downloadDir/$game_download_file_name" >$progressbar_dir/file-download-size
+	echo "wget --no-check-certificate -O $downloadDir/$game_download_file_name $game_download" >$progressbar_dir/get-pid
+	wget --no-check-certificate -O "$downloadDir/$game_download_file_name" "$game_download" 2>&1 | (pv -n >$progressbar_dir/download-percentage)
 	echo 100% >$progressbar_dir/progress
 	sleep 3
 	rm -f $progressbar_dir/download-percentage
@@ -403,7 +410,7 @@ EOM
 		rm -f $progressbar_dir/progress-full
 		rm -f $progressbar_dir/installing
 		rm -f /tmp/regataos-gcs/installing-$game_nickname
-		rm -f "/tmp/regataos-gcs/$game_download_file_name"
+		rm -f "$downloadDir/$game_download_file_name"
 
 		if [ ! -z "$GAME_PATH" ]; then
 			echo "nickname=$game_nickname" >"$GAME_INSTALL_DIR/game-access/$game_folder/gcs-game.conf"
@@ -428,7 +435,7 @@ EOM
 		rm -f $progressbar_dir/progress-full
 		rm -f $progressbar_dir/installing
 		rm -f /tmp/regataos-gcs/installing-$game_nickname
-		rm -f "/tmp/regataos-gcs/$game_download_file_name"
+		rm -f "$downloadDir/$game_download_file_name"
 
 		if [ ! -z "$GAME_PATH" ]; then
 			echo "nickname=$game_nickname" >"$GAME_INSTALL_DIR/game-access/$game_folder/gcs-game.conf"
@@ -453,7 +460,7 @@ EOM
 		rm -f $progressbar_dir/progress-full
 		rm -f $progressbar_dir/installing
 		rm -f /tmp/regataos-gcs/installing-$game_nickname
-		rm -f "/tmp/regataos-gcs/$game_download_file_name"
+		rm -f "$downloadDir/$game_download_file_name"
 
 		if [ ! -z "$GAME_PATH" ]; then
 			echo "nickname=$game_nickname" >"$GAME_INSTALL_DIR/game-access/$game_folder/gcs-game.conf"
@@ -479,7 +486,7 @@ EOM
 		rm -rf "$game_nickname_dir"
 		rm -rf "$HOME/.config/regataos-gcs/custom-runtime/$custom_runtime_name"
 		rm -f "$HOME/.config/regataos-gcs/custom-runtime/$game_nickname.txt"
-		rm -f "/tmp/regataos-gcs/$game_download_file_name"
+		rm -f "$downloadDir/$game_download_file_name"
 		rm -f "/tmp/regataos-gcs/$custom_runtime_file"
 
 		if [ ! -z "$GAME_PATH" ]; then

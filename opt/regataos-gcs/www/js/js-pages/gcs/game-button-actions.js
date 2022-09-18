@@ -27,7 +27,7 @@ function checkGameInstalled() {
 checkGameInstalled();
 setInterval(function () { checkGameInstalled() }, 1000);
 
-// Start installing game from Epic Games Store
+// Start installing game
 function confirmInstallGameId() {
     const exec = require('child_process').exec;
 	var command_line = `echo "${gameId}" > "/tmp/regataos-gcs/start-installation-gcs.txt"`;

@@ -36,6 +36,7 @@ game_nickname="$(grep -r "gamenickname" /opt/regataos-gcs/games-list/$gameNickna
 		echo "show installed games" > "/tmp/regataos-gcs/config/installed/show-installed-games.txt"
 	fi
 
+	sleep 5
 ) | env GTK_THEME=Adwaita:dark zenity --progress --pulsate --width 450 --window-icon "/usr/share/pixmaps/regataos-gcs.png" \
 --title "Regata OS Game Access" \
 --text "<big>Desinstalando o jogo $game_name.\nIsso pode levar alguns minutos...</big>" \
