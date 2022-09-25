@@ -32,7 +32,7 @@ app_download_status="Downloading Rockstar Launcher installer..."
 
 mkdir -p "/tmp/apps-scripts/"
 wget --no-check-certificate -O "/tmp/apps-scripts/3370768.txt" "https://rockstar-games-launcher.en.uptodown.com/windows/download/3370768"
-get_link_download=$(cat /tmp/apps-scripts/3370768.txt | grep detail-download-button | sed 's/ /\n/g' | grep href | sed 's/href\|=\|"//g')
+get_link_download=$(cat /tmp/apps-scripts/3370768.txt | grep data-url | cut -d'=' -f 2- | sed 's/"//g')
 app_download_link="$(echo $get_link_download)"
 
 app_download_file_name="Rockstar-Games-Launcher.exe"
