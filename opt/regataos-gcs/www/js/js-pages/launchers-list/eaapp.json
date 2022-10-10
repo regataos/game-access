@@ -1,0 +1,11 @@
+[
+	{
+		"launcher_name": "EA App",
+		"launcher_nickname": "eaapp",
+		"executable_file": "EADesktop.exe",
+		"launcher_executable": "dosdevices/c:/Program Files/Electronic Arts/EA Desktop/EA Desktop/EADesktop.exe",
+		"desktop_file": "EA.desktop",
+		"special_options": "",
+		"environment_variable": "WINEESYNC=1 WINEDLLOVERRIDES='winemenubuilder.exe=d;winedbg.exe=d'"
+    }
+]

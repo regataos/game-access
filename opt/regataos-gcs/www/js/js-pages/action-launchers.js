@@ -64,6 +64,20 @@ const fs = require('fs');
 			}, 5000);
 		}
 
+		if ((launcher_name.indexOf("eaapp") > -1) == "1") {
+			var command_line = 'cd /opt/regataos-wine/desktop-files/; gtk-launch "EA.desktop"';
+			console.log(command_line);
+			exec(command_line,function(error,call,errlog){
+			});
+
+			setTimeout(function(){
+			var command_line = 'echo "Game started" > "/tmp/regataos-gcs/running-with-regataos-gcs.txt"';
+			console.log(command_line);
+			exec(command_line,function(error,call,errlog){
+			});
+			}, 5000);
+		}
+
 		if ((launcher_name.indexOf("rockstar") > -1) == "1") {
 			var command_line = 'cd /opt/regataos-wine/desktop-files/; gtk-launch "Rockstar Games Launcher.desktop"';
 			console.log(command_line);

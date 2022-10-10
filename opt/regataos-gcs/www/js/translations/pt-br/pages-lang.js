@@ -72,6 +72,12 @@ $(document).ready(function() {
 	//View more
 	$(".origin-more").text("Ver mais no Origin");
 
+	// EA App page
+	//Page title
+	$(".eaapp-title").text("Games para jogar com o EA App");
+	//View more
+	$(".eaapp-more").text("Ver mais no EA App");
+
 	// Rockstar Games Launcher page
 	//Page title
 	$(".rockstar-title").text("Games para jogar com o Rockstar Games Launcher");

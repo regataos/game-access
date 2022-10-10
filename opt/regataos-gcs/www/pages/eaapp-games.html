@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Regata OS Game Access</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
+	<link rel="stylesheet" type="text/css" href="./../css/style.css">
+	<link rel="stylesheet" type="text/css" href="./../css/category-app.css">
+	<link rel="stylesheet" type="text/css" href="./../css/responsive-style.css">
+	<link rel="stylesheet" type="text/css" href="./../css/roboto-style.css">
+	<script type="text/javascript" src="./../js/jquery.min.js"></script>
+	<script type="text/javascript" src="./../js/fas-icons.js"></script>
+	<script type="text/javascript" src="./../js/js-pages/search-installed-games.js"></script>
+	<script type="text/javascript" src="./../js/js-pages/action-launchers.js"></script>
+	<script type="text/javascript" src="./../js/js-pages/action-games.js"></script>
+	<script type="text/javascript" src="./../js/confirm-installation.js"></script>
+	<script type="text/javascript" src="./../js/translations/language/pages-lang.js"></script>
+	<script type="text/javascript" src="./../js/translations/language/pages-blocks-lang.js"></script>
+</head>
+<body>
+    <div id="loadscreen"></div>
+    <script>
+        setTimeout(function () {
+            document.getElementById("loadscreen").style.display= "none";
+        }, 1500);
+    </script>
+
+<div class="blocks">
+<div class="blocks2">
+<div class="title-top-box">
+<div class="title-top eaapp-title">Jogos acessíveis pelo EA App</div>
+</div>
+<div id="eaapp" class="view-more eaapp-more" onclick="window.launcher_name=this.id; run_launcher();">Ver mais no EA App</div>
+
+<div class="blocks3 game-access-blocks">
+</div>
+<script type="text/javascript" src="./../js/js-pages/games-list.js"></script>
+<script type="text/javascript" src="./../js/js-pages/check-installed-games.js"></script>
+
+</div>
+</div>
+</body>
+</html>
