@@ -2,13 +2,13 @@ function home_content() {
     $(document).ready(function() {
         // Content of block 1
         //Title
-        $(".appbc1 .block-title").text("ARK: Survival Evolved");
+        $(".appbc1 .block-title").text("Darkwood");
         //Block image
         $(".appbc1").css("background-image", 'url("file:///tmp/regataos-gcs/config/cache/img/block-img1.webp")');
         $(".appbc1").css("background-position", "50% 50%")
         //Date
-        date_pt_br="29 de setembro"
-        date_en_us="September 29"
+        date_pt_br="20 de outubro"
+        date_en_us="October 20"
 
         // Content of block 2
         //Title
