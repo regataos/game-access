@@ -2,13 +2,13 @@ function home_content() {
     $(document).ready(function() {
         // Content of block 1
         //Title
-        $(".appbc1 .block-title").text("Darkwood");
+        $(".appbc1 .block-title").text("Warhammer 40,000: Mechanicus");
         //Block image
         $(".appbc1").css("background-image", 'url("file:///tmp/regataos-gcs/config/cache/img/block-img1.webp")');
         $(".appbc1").css("background-position", "50% 50%")
         //Date
-        date_pt_br="20 de outubro"
-        date_en_us="October 20"
+        date_pt_br="03 de novembro"
+        date_en_us="November 03"
 
         // Content of block 2
         //Title
