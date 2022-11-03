@@ -1,5 +1,5 @@
 Name: regataos-gcs
-Version: 5.4
+Version: 5.5
 Release: 0
 Url: https://github.com/regataos/game-access
 Summary: Access your Windows games from Regata OS
