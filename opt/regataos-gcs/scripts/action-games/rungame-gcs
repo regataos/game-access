@@ -37,6 +37,7 @@ if [[ $(echo $game_plataform) == *"windows"* ]]; then
     #export WINEFSYNC=1
     #export WINEFSYNC_FUTEX2=1
     export WINE_LARGE_ADDRESS_AWARE=1
+    export DXVK_STATE_CACHE=reset
     export DXVK_STATE_CACHE_PATH="$PREFIX_LOCATION"
     export DXVK_LOG_PATH="$PREFIX_LOCATION"
 
@@ -65,6 +66,7 @@ if [[ $(grep -r fps $GCS_CONFIG) == *"fps=true"* ]]; then
     export MANGOHUD=1
     export MANGOHUD_DLSYM=1
     export MANGOHUD_GL="mangohud --dlsym"
+	export DXVK_HUD=compiler
     #export DXVK_HUD=devinfo,fps,frametimes,gpuload,api,compiler
 fi
 
