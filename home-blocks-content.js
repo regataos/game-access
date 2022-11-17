@@ -2,13 +2,13 @@ function home_content() {
     $(document).ready(function() {
         // Content of block 1
         //Title
-        $(".appbc1 .block-title").text("Alba - A Wildlife Adventure");
+        $(".appbc1 .block-title").text("Evil Dead: The Game");
         //Block image
         $(".appbc1").css("background-image", 'url("file:///tmp/regataos-gcs/config/cache/img/block-img1.webp")');
         $(".appbc1").css("background-position", "50% 50%")
         //Date
-        date_pt_br="17 de novembro"
-        date_en_us="November 17"
+        date_pt_br="24 de novembro"
+        date_en_us="November 24"
 
         // Content of block 2
         //Title
