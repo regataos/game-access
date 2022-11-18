@@ -2,7 +2,7 @@ function home_content() {
     $(document).ready(function() {
         // Content of block 1
         //Title
-        $(".appbc1 .block-title").text("Evil Dead: The Game");
+        $(".appbc1 .block-title").text("Dark Deity");
         //Block image
         $(".appbc1").css("background-image", 'url("file:///tmp/regataos-gcs/config/cache/img/block-img1.webp")');
         $(".appbc1").css("background-position", "50% 50%")
