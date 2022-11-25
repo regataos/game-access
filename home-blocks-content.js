@@ -2,13 +2,13 @@ function home_content() {
     $(document).ready(function() {
         // Content of block 1
         //Title
-        $(".appbc1 .block-title").text("Dark Deity");
+        $(".appbc1 .block-title").text("STAR WARS: Squadrons");
         //Block image
         $(".appbc1").css("background-image", 'url("file:///tmp/regataos-gcs/config/cache/img/block-img1.webp")');
         $(".appbc1").css("background-position", "50% 50%")
         //Date
-        date_pt_br="24 de novembro"
-        date_en_us="November 24"
+        date_pt_br="01 de dezembro"
+        date_en_us="December 01"
 
         // Content of block 2
         //Title
