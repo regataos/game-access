@@ -27,8 +27,8 @@ function downloadSlideImages() {
 
 	#Image from slide 2
 	function slideImage2() {
-		slide2_image_name="slide-overwatch.jpg"
-		slide2_image_code="7NDK1cL"
+		slide2_image_name="slide-ts4.jpg"
+		slide2_image_code="FxMqKWv"
 
 		if test ! -e "$HOME/.config/regataos-gcs/cache/img/$slide2_image_name"; then
 			wget --no-check-certificate -O "$HOME/.config/regataos-gcs/cache/img/$slide2_image_name" \
