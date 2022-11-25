@@ -9,7 +9,7 @@ function home_content() {
         // Content of slide 2
         //Block image
         $(".slideshow .slide .slide-img2").css("background-image", 'url("file:///tmp/regataos-gcs/config/cache/img/slide-img2.jpg")');
-        $(".slide-content .slide-title2").text("Overwatch");
+        $(".slide-content .slide-title2").text("The Sims 4");
 
         // Content of slide 3
         //Block image
@@ -37,8 +37,8 @@ function home_content() {
 
                 // Content of slide 2
                 //Title and description
-                $(".slide-content .slide-desc2 p").text("Enfrente inimigos usando um repertório alucinante de poderes e armas");
-                $(".slide-content .slide-button2").text("Jogue agora com Battle.net");
+                $(".slide-content .slide-desc2 p").text("Solte sua imaginação e dê aos seus Sims aparências e personalidades únicas");
+                $(".slide-content .slide-button2").text("Jogue agora");
 
                 // Content of slide 3
                 //Title and description
@@ -63,8 +63,8 @@ function home_content() {
 
                 // Content of slide 2
                 //Title and description
-                $(".slide-content .slide-desc2 p").text("Enfrente inimigos usando um repertório alucinante de poderes e armas");
-                $(".slide-content .slide-button2").text("Jogue agora com Battle.net");
+                $(".slide-content .slide-desc2 p").text("Solte sua imaginação e dê aos seus Sims aparências e personalidades únicas");
+                $(".slide-content .slide-button2").text("Jogue agora");
 
                 // Content of slide 3
                 //Title and description
@@ -86,8 +86,8 @@ function home_content() {
 
                 // Content of slide 2
                 //Title and description
-                $(".slide-content .slide-desc2 p").text("Take on enemies using a mind-boggling repertoire of powers and weapons");
-                $(".slide-content .slide-button2").text("Play now with Battle.net");
+                $(".slide-content .slide-desc2 p").text("Unleash your imagination and give your Sims unique looks and personalities");
+                $(".slide-content .slide-button2").text("Play now");
 
                 // Content of slide 3
                //Title and description
@@ -109,8 +109,8 @@ function home_content() {
 
                 // Content of slide 2
                 //Title and description
-                $(".slide-content .slide-desc2 p").text("Take on enemies using a mind-boggling repertoire of powers and weapons");
-                $(".slide-content .slide-button2").text("Play now with Battle.net");
+                $(".slide-content .slide-desc2 p").text("Unleash your imagination and give your Sims unique looks and personalities");
+                $(".slide-content .slide-button2").text("Play now");
 
                 // Content of slide 3
                //Title and description
