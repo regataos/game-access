@@ -14,7 +14,7 @@ function home_content() {
         // Content of slide 3
         //Block image
         $(".slideshow .slide .slide-img3").css("background-image", 'url("file:///tmp/regataos-gcs/config/cache/img/slide-img3.jpg")');
-        $(".slide-content .slide-title3").text("Battlefield V");
+        $(".slide-content .slide-title3").text("Overwatch 2");
 
         // Content of slide 4
         //Block image
@@ -42,8 +42,8 @@ function home_content() {
 
                     // Content of slide 3
                     //Title and description
-                    $(".slide-content .slide-desc3 p").text("Prove seu valor enfrentando batalhas da Segunda Guerra Mundial");
-                    $(".slide-content .slide-button3").text("Jogue agora com Origin");
+                    $(".slide-content .slide-desc3 p").text("Lute ao lado de seus amigos em batalhas espalhadas ao redor do mundo");
+                    $(".slide-content .slide-button3").text("Jogue agora com Battle.net");
 
                     // Content of slide 4
                     //Title and description
@@ -68,8 +68,8 @@ function home_content() {
 
                     // Content of slide 3
                     //Title and description
-                    $(".slide-content .slide-desc3 p").text("Prove seu valor enfrentando batalhas da Segunda Guerra Mundial");
-                    $(".slide-content .slide-button3").text("Jogue agora com Origin");
+                    $(".slide-content .slide-desc3 p").text("Lute ao lado de seus amigos em batalhas espalhadas ao redor do mundo");
+                    $(".slide-content .slide-button3").text("Jogue agora com Battle.net");
 
                     // Content of slide 4
                     //Title and description
@@ -91,8 +91,8 @@ function home_content() {
 
                     // Content of slide 3
                     //Title and description
-                    $(".slide-content .slide-desc3 p").text("Prove your worth by fighting WWII battles");
-                    $(".slide-content .slide-button3").text("Play now with Origin");
+                    $(".slide-content .slide-desc3 p").text("Fight alongside your friends in battles scattered around the world");
+                    $(".slide-content .slide-button3").text("Play now with Battle.net");
 
                     // Content of slide 4
                     //Title and description
@@ -114,8 +114,8 @@ function home_content() {
 
                     // Content of slide 3
                     //Title and description
-                    $(".slide-content .slide-desc3 p").text("Prove your worth by fighting WWII battles");
-                    $(".slide-content .slide-button3").text("Play now with Origin");
+                    $(".slide-content .slide-desc3 p").text("Fight alongside your friends in battles scattered around the world");
+                    $(".slide-content .slide-button3").text("Play now with Battle.net");
 
                     // Content of slide 4
                     //Title and description

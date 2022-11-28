@@ -43,24 +43,24 @@ function slide_function3() {
 	const listInstalledLaunchers = fs.readFileSync("/tmp/regataos-gcs/config/installed-launchers.conf", "utf8");
 	const listInstalledGames = fs.readFileSync("/tmp/regataos-gcs/config/installed-games.conf", "utf8");
 
-	if ((listInstalledLaunchers.indexOf("origin") > -1) == "1") {
-		if ((listInstalledGames.indexOf("bfv") > -1) == "1") {
+	if ((listInstalledLaunchers.indexOf("battlenet") > -1) == "1") {
+		if ((listInstalledGames.indexOf("overwatch") > -1) == "1") {
 			const runGame = `
-			export GAME="bfv";
-			export LAUNCHER="origin";
-			export RUNGAME="origin://LaunchGame/Origin.OFR.50.0004662";
+			export GAME="overwatch";
+			export LAUNCHER="battlenet";
+			export RUNGAME="battlenet://Pro";
 			/opt/regataos-gcs/scripts/action-games/rungame`;
 			exec(runGame, function (error, call, errlog) {
 			});
 
 		} else {
-			const runLauncher = 'cd /opt/regataos-wine/desktop-files/; gtk-launch "Origin.desktop"';
+			const runLauncher = 'cd /opt/regataos-wine/desktop-files/; gtk-launch "Battle.net.desktop"';
 			exec(runLauncher, function (error, call, errlog) {
 			});
 		}
 
 	} else {
-		const installLancher = 'echo "origin" > "/tmp/regataos-gcs/confirm-installation"';
+		const installLancher = 'echo "battlenet" > "/tmp/regataos-gcs/confirm-installation"';
 		exec(installLancher, function (error, call, errlog) {
 		});
 	}
