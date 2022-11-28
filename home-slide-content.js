@@ -14,6 +14,7 @@ function home_content() {
         // Content of slide 3
         //Block image
         $(".slideshow .slide .slide-img3").css("background-image", 'url("file:///tmp/regataos-gcs/config/cache/img/slide-img3.jpg")');
+        $(".slideshow .slide .slide-img3").css("background-position", '50% 100%');
         $(".slide-content .slide-title3").text("Overwatch 2");
 
         // Content of slide 4
