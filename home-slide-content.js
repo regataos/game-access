@@ -20,7 +20,8 @@ function home_content() {
         // Content of slide 4
         //Block image
         $(".slideshow .slide .slide-img4").css("background-image", 'url("file:///tmp/regataos-gcs/config/cache/img/slide-img4.jpg")');
-        $(".slide-content .slide-title4").text("Control");
+        $(".slideshow .slide .slide-img4").css("background-position", '50% 0%');
+        $(".slide-content .slide-title4").text("Rocket League");
     });
 
     // Detect User Language
@@ -48,7 +49,7 @@ function home_content() {
 
                     // Content of slide 4
                     //Title and description
-                    $(".slide-content .slide-desc4 p").text("O mundo agora é sua arma em uma luta épica contra um inimigo assustador");
+                    $(".slide-content .slide-desc4 p").text("Participe de competições radicais de futebol com verdadeiras super máquinas");
                     $(".slide-content .slide-button4").text("Jogue agora com a Epic Games Store");
                 });
 
@@ -74,7 +75,7 @@ function home_content() {
 
                     // Content of slide 4
                     //Title and description
-                    $(".slide-content .slide-desc4 p").text("O mundo agora é sua arma em uma luta épica contra um inimigo assustador");
+                    $(".slide-content .slide-desc4 p").text("Participe de competições radicais de futebol com verdadeiras super máquinas");
                     $(".slide-content .slide-button4").text("Jogue agora com a Epic Games Store");
                 });
 
@@ -97,7 +98,7 @@ function home_content() {
 
                     // Content of slide 4
                     //Title and description
-                    $(".slide-content .slide-desc4 p").text("The world is now your weapon in an epic fight against a terrifying enemy");
+                    $(".slide-content .slide-desc4 p").text("Participate in extreme football competitions with real super machines");
                     $(".slide-content .slide-button4").text("Play now with the Epic Games Store");
                 });
 
@@ -120,7 +121,7 @@ function home_content() {
 
                     // Content of slide 4
                     //Title and description
-                    $(".slide-content .slide-desc4 p").text("The world is now your weapon in an epic fight against a terrifying enemy");
+                    $(".slide-content .slide-desc4 p").text("Participate in extreme football competitions with real super machines");
                     $(".slide-content .slide-button4").text("Play now with the Epic Games Store");
                 });
             }

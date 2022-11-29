@@ -63,8 +63,8 @@ function downloadSlideImages() {
 
 	#Image from slide 4
 	function slideImage4() {
-		slide4_image_name="slide-control.jpg"
-		slide4_image_code="J3y8RPC"
+		slide4_image_name="slide-rl.jpg"
+		slide4_image_code="GvrV5Nf"
 
 		if test ! -e "$HOME/.config/regataos-gcs/cache/img/$slide4_image_name"; then
 			wget --no-check-certificate -O "$HOME/.config/regataos-gcs/cache/img/$slide4_image_name" \
