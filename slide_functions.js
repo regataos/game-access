@@ -1,4 +1,3 @@
-
 // Auto close Game Access
 function autoCloseGcs() {
     const exec = require('child_process').exec;
@@ -90,7 +89,7 @@ function slide_function3() {
 			const runGame = `
 			export GAME="overwatch";
 			export LAUNCHER="battlenet";
-			export RUNGAME="battlenet://Pro";
+			export RUNGAME="Pro";
 			/opt/regataos-gcs/scripts/action-games/rungame`;
 			exec(runGame, function (error, call, errlog) {
 			});
