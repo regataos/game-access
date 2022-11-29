@@ -1,6 +1,6 @@
 // Auto close Game Access
 function autoCloseGcs() {
-    const exec = require('child_process').exec;
+	const exec = require('child_process').exec;
 	const fs = require("fs");
 
 	const checkConfigFileData = fs.readFileSync("/tmp/regataos-gcs/config/regataos-gcs.conf", "utf8");
@@ -21,16 +21,16 @@ function autoCloseGcs() {
 
 		if ((autoClose.indexOf("true") > -1) == "1") {
 			let pagename = window.location.href
-				pagename = pagename.split("pages/")[1];
-				pagename = pagename.replace('.html', '');
+			pagename = pagename.split("pages/")[1];
+			pagename = pagename.replace('.html', '');
 
-			const goPage = 'echo "'+ pagename +'" > "/tmp/regataos-gcs/go-page-auto"';
-			exec(goPage,function(error,call,errlog){
+			const goPage = 'echo "' + pagename + '" > "/tmp/regataos-gcs/go-page-auto"';
+			exec(goPage, function (error, call, errlog) {
 			});
 
-			setTimeout(function(){
+			setTimeout(function () {
 				const gameStarted = 'echo "Game started" > "/tmp/regataos-gcs/running-with-regataos-gcs.txt"';
-				exec(gameStarted,function(error,call,errlog){
+				exec(gameStarted, function (error, call, errlog) {
 				});
 			}, 15000);
 		}
@@ -54,13 +54,20 @@ function slide_function2() {
 
 	if ((listInstalledLaunchers.indexOf("origin") > -1) == "1") {
 		if ((listInstalledGames.indexOf("ts4") > -1) == "1") {
-			const runGame = `
-			export GAME="ts4";
-			export LAUNCHER="origin";
-			export RUNGAME="origin://LaunchGame/OFB-EAST:109552299";
-			/opt/regataos-gcs/scripts/action-games/rungame`;
-			exec(runGame, function (error, call, errlog) {
-			});
+			if (fs.existsSync("/usr/share/applications/gcs-slide-function2.desktop")) {
+				const runLauncher = 'gtk-launch "gcs-slide-function2.desktop"';
+				exec(runLauncher, function (error, call, errlog) {
+				});
+
+			} else {
+				const runGame = `
+				export GAME="ts4";
+				export LAUNCHER="origin";
+				export RUNGAME="origin://LaunchGame/OFB-EAST:109552299";
+				/opt/regataos-gcs/scripts/action-games/rungame`;
+				exec(runGame, function (error, call, errlog) {
+				});
+			}
 
 			autoCloseGcs();
 
@@ -86,13 +93,20 @@ function slide_function3() {
 
 	if ((listInstalledLaunchers.indexOf("battlenet") > -1) == "1") {
 		if ((listInstalledGames.indexOf("overwatch") > -1) == "1") {
-			const runGame = `
-			export GAME="overwatch";
-			export LAUNCHER="battlenet";
-			export RUNGAME="Pro";
-			/opt/regataos-gcs/scripts/action-games/rungame`;
-			exec(runGame, function (error, call, errlog) {
-			});
+			if (fs.existsSync("/usr/share/applications/gcs-slide-function3.desktop")) {
+				const runLauncher = 'gtk-launch "gcs-slide-function3.desktop"';
+				exec(runLauncher, function (error, call, errlog) {
+				});
+
+			} else {
+				const runGame = `
+				export GAME="overwatch";
+				export LAUNCHER="battlenet";
+				export RUNGAME="Pro";
+				/opt/regataos-gcs/scripts/action-games/rungame`;
+				exec(runGame, function (error, call, errlog) {
+				});
+			}
 
 			autoCloseGcs();
 
@@ -122,15 +136,22 @@ function slide_function4() {
 
 	} else {
 		if (fs.existsSync("/tmp/regataos-gcs/config/installed/rocket-league-epicstore.json")) {
-			const runEpicGame = 'export GAMEID="Sugar"; /opt/regataos-gcs/scripts/action-games/rungame-epicstore';
-			exec(runEpicGame,function(error,call,errlog){
-			});
+			if (fs.existsSync("/usr/share/applications/gcs-slide-function4.desktop")) {
+				const runLauncher = 'gtk-launch "gcs-slide-function4.desktop"';
+				exec(runLauncher, function (error, call, errlog) {
+				});
+
+			} else {
+				const runEpicGame = 'export GAMEID="Sugar"; /opt/regataos-gcs/scripts/action-games/rungame-epicstore';
+				exec(runEpicGame, function (error, call, errlog) {
+				});
+			}
 
 			autoCloseGcs();
 
 		} else if (fs.existsSync("/tmp/regataos-gcs/config/epicstore-games/json/rocket-league-epicstore.json")) {
 			const installEpicGame = 'echo "rocket-league" > "/tmp/regataos-gcs/start-installation-epicstore.txt"';
-			exec(installEpicGame,function(error,call,errlog){
+			exec(installEpicGame, function (error, call, errlog) {
 			});
 
 		} else {
