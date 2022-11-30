@@ -21,6 +21,20 @@ app_nickname_dir="$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mo
 
 # Uninstall app
 function remove_app() {
+	if test -e "$HOME/.config/regataos-gcs/external-games-folder.txt"; then
+		external_directory_file="$(cat "$HOME/.config/regataos-gcs/external-games-folder.txt")"
+
+		if [[ $(echo $external_directory_file) != *"game-access"* ]]; then
+			external_directory="$(echo $external_directory_file)/game-access"
+		else
+			external_directory="$(echo $external_directory_file)"
+		fi
+
+		if test -e "$(echo $external_directory)/wineprefixes-gcs/$app_nickname-compatibility-mode"; then
+			rm -rf "$(echo $external_directory)/wineprefixes-gcs/$app_nickname-compatibility-mode"
+		fi
+	fi
+
 	rm -rf "$app_nickname_dir"
 	rm -f "$HOME/.local/share/applications/Epic Games Launcher.desktop"
 	rm -f $HOME/.config/regataos-gcs/$app_nickname.conf

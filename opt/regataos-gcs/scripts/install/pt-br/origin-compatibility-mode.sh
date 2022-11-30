@@ -3,12 +3,12 @@
 
 # Settings and variables
 #General information
-app_name="EA App"
-app_nickname="eaapp"
-app_name_down="Baixando o EA App"
-app_name_process="Instalar o EA App"
-app_install_status="Instalando o EA App..."
-app_executable="drive_c/Program Files/Electronic Arts/EA Desktop/EA Desktop/EADesktop.exe"
+app_name="Origin"
+app_nickname="origin"
+app_name_down="Baixando o Origin"
+app_name_process="Instalar o Origin"
+app_install_status="Instalando o Origin..."
+app_executable="drive_c/Program Files (x86)/Origin/Origin.exe"
 start_process="Iniciando a instalação"
 conf_prefix_status="Preparando o modo de compatibilidade..."
 success_installation="Concluído!"
@@ -28,26 +28,40 @@ app_name_directx="Instalando DirectX Redistributable"
 install_dotnet_status="Isso pode demorar alguns minutos..."
 
 #Download information
-app_download_status="Baixando o instalador do EA App..."
-app_download_link="https://origin-a.akamaihd.net/EA-Desktop-Client-Download/installer-releases/EAappInstaller.exe"
-app_download_file_name="EAappInstaller.exe"
+app_download_status="Baixando o instalador do Origin..."
+app_download_link="https://download.dm.origin.com/origin/live/OriginUpdate_10_5_116_52126.zip"
+app_download_file_name="OriginUpdate_10_5_116_52126.zip"
 
 #Default settings
 app_nickname_dir="$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"
 
 # Application setup function
 function install_app() {
-	export WINEDEBUG=-all
-	export WINEDLLOVERRIDES="mscoree,mshtml,winemenubuilder,winedbg="
-	export WINEPREFIX="$app_nickname_dir"
+	cd "$app_nickname_dir/drive_c/Program Files (x86)/Origin/"
+	unzip OriginSetup.exe 'update/*.zip'
+	unzip -o "/tmp/regataos-gcs/$app_download_file_name" -d "$app_nickname_dir/drive_c/Program Files (x86)/Origin/"
+}
 
-	wine /tmp/regataos-gcs/$app_download_file_name /silent
+# Fix app
+function fix_app() {
+	mkdir -p "$app_nickname_dir/drive_c/Program Files (x86)/Origin"
+	cp -f /opt/regataos-wine/dlls/origin/ucrtbase.dll "$app_nickname_dir/drive_c/Program Files (x86)/Origin/ucrtbase.dll"
+	cp -f /opt/regataos-wine/dlls/origin/Qt5Svg.dll "$app_nickname_dir/drive_c/Program Files (x86)/Origin/Qt5Svg.dll"
+
+	mkdir -p "$app_nickname_dir/drive_c/users/$user/AppData/Roaming/Origin"
+	cp -f /opt/regataos-wine/custom-configs/origin/local.xml "$app_nickname_dir/drive_c/users/$user/AppData/Roaming/Origin/local.xml"
+
+	sed -i '/^$/d' $HOME/.config/regataos-gcs/$app_nickname.conf
 }
 
 # Successful installation
 function success_installation() {
 	echo "$app_nickname" >>"$HOME/.config/regataos-gcs/installed-launchers.conf"
 	sed -i '/^$/d' "$HOME/.config/regataos-gcs/installed-launchers.conf"
+
+	# Fix Origin pos-install
+	rm -f "$app_nickname_dir/drive_c/Program Files (x86)/Origin/vcredist_x64.exe"
+	rm -f "$app_nickname_dir/drive_c/Program Files (x86)/Origin/vcredist_x86.exe"
 
 	# Notify
 	notify-send -i regataos-gcs -u normal -a 'Regata OS Game Access' "$app_name $success_notify_title" "$app_name $success_notify_text"
@@ -57,27 +71,46 @@ function success_installation() {
 	test -f "${XDG_CONFIG_HOME:-$HOME/.config}/user-dirs.dirs" && source "${XDG_CONFIG_HOME:-$HOME/.config}/user-dirs.dirs"
 	DESKTOP_DIR="${XDG_DESKTOP_DIR:-$HOME/Desktop}"
 
-	rm -rf "$HOME/.local/share/applications/Programs/EA"
-	rm -f "$HOME/.local/share/applications/App Recovery.desktop"
-	rm -f "$HOME/.local/share/applications/EA Error Reporter.desktop"
-	rm -f "$HOME/.local/share/applications/EA.desktop"
-	rm -f $HOME/.local/share/applications/*EA.desktop
-	rm -f $HOME/.local/share/applications/EA*.desktop
+	rm -f $HOME/.local/share/applications/*Origin.desktop
+	rm -f $HOME/.local/share/applications/Origin*.desktop
+	rm -f "$HOME/.local/share/applications/Origin.desktop"
 
-	cp -f "/opt/regataos-wine/desktop-files/EA.desktop" "$HOME/.local/share/applications/EA.desktop"
+	cp -f "/opt/regataos-wine/desktop-files/Origin.desktop" "$HOME/.local/share/applications/Origin.desktop"
 
 	if [ -d "$DESKTOP_DIR" ]; then
 		cd "/$DESKTOP_DIR"
-		rm -f "EA.desktop"
-		ln -s "$HOME/.local/share/applications/EA.desktop" "EA.desktop"
+		rm -f "Origin.desktop"
+		ln -s "$HOME/.local/share/applications/Origin.desktop" "Origin.desktop"
 	fi
 }
 
 # Create game install folder
 function gameinstall_folder() {
-	mkdir -p "$HOME/Game Access/$app_name"
-	rm -rf "$app_nickname_dir/drive_c/Program Files/EA Games"
-	ln -sf "$HOME/Game Access/$app_name" "$app_nickname_dir/drive_c/Program Files/EA Games"
+	if test -e "$HOME/.config/regataos-gcs/external-games-folder.txt"; then
+		external_directory_file="$(cat "$HOME/.config/regataos-gcs/external-games-folder.txt")"
+
+		if [[ $(echo $external_directory_file) != *"game-access"* ]]; then
+			mkdir -p "$(echo $external_directory_file)/game-access"
+			external_directory="$(echo $external_directory_file)/game-access"
+		else
+			external_directory="$(echo $external_directory_file)"
+		fi
+
+		if test -e "$(echo $external_directory)/wineprefixes-gcs"; then
+			mkdir -p "$(echo $external_directory)/$app_name"
+			rm -rf "$app_nickname_dir/drive_c/Program Files (x86)/Origin Games"
+			ln -sf "$(echo $external_directory)/$app_name" "$app_nickname_dir/drive_c/Program Files (x86)/Origin Games"
+		else
+			mkdir -p "$HOME/Game Access/$app_name"
+			rm -rf "$app_nickname_dir/drive_c/Program Files (x86)/Origin Games"
+			ln -sf "$HOME/Game Access/$app_name" "$app_nickname_dir/drive_c/Program Files (x86)/Origin Games"
+		fi
+
+	else
+		mkdir -p "$HOME/Game Access/$app_name"
+		rm -rf "$app_nickname_dir/drive_c/Program Files (x86)/Origin Games"
+		ln -sf "$HOME/Game Access/$app_name" "$app_nickname_dir/drive_c/Program Files (x86)/Origin Games"
+	fi
 }
 
 # Installation failed
@@ -196,9 +229,6 @@ EOM
 			if test ! -e "$HOME/.local/share/wineprefixes/default-compatibility-mode/vulkan.txt"; then
 				enable_dxvk_vkd3d
 			fi
-
-			cp -rf "$HOME/.local/share/wineprefixes/default-compatibility-mode" \
-				"$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"
 		fi
 
 	elif test -e "/usr/share/regataos/compatibility-mode/default-wineprefix.tar.xz"; then
@@ -219,9 +249,6 @@ EOM
 			if test ! -e "$HOME/.local/share/wineprefixes/default-compatibility-mode/vulkan.txt"; then
 				enable_dxvk_vkd3d
 			fi
-
-			cp -rf "$HOME/.local/share/wineprefixes/default-compatibility-mode" \
-				"$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"
 		fi
 
 	else
@@ -239,7 +266,38 @@ EOM
 		if test ! -e "$HOME/.local/share/wineprefixes/default-compatibility-mode/vulkan.txt"; then
 			enable_dxvk_vkd3d
 		fi
+	fi
 
+	# Prepare to copy launcher wineprefix
+	if test -e "$HOME/.config/regataos-gcs/external-games-folder.txt"; then
+        external_directory_file="$(cat "$HOME/.config/regataos-gcs/external-games-folder.txt")"
+
+        if [[ $(echo $external_directory_file) != *"game-access"* ]]; then
+            mkdir -p "$(echo $external_directory_file)/game-access"
+            external_directory="$(echo $external_directory_file)/game-access"
+        else
+            external_directory="$(echo $external_directory_file)"
+        fi
+
+		if test ! -e "$(echo $external_directory)/wineprefixes-gcs"; then
+			mkdir -p "$(echo $external_directory)/wineprefixes-gcs"
+		fi
+
+		if test -e "$(echo $external_directory)/wineprefixes-gcs/default-compatibility-mode"; then
+			cp -rf "$(echo $external_directory)/wineprefixes-gcs/default-compatibility-mode" \
+				"$(echo $external_directory)/wineprefixes-gcs/$app_nickname-compatibility-mode"
+
+		else
+			rm -rf "$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"
+
+			cp -rf "$HOME/.local/share/wineprefixes/default-compatibility-mode" \
+				"$(echo $external_directory)/wineprefixes-gcs/$app_nickname-compatibility-mode"
+
+			ln -sf "$(echo $external_directory)/wineprefixes-gcs/$app_nickname-compatibility-mode" \
+				"$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"
+		fi
+
+	else
 		cp -rf "$HOME/.local/share/wineprefixes/default-compatibility-mode" \
 			"$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"
 	fi
@@ -258,6 +316,9 @@ EOM
 
 	# Remove cancel script
 	rm -f $progressbar_dir/script-cancel
+
+	# Fix app
+	fix_app
 
 	# Install app
 	echo $app_install_status >$progressbar_dir/status
@@ -333,9 +394,6 @@ function start_hidden_installation() {
 				enable_dxvk_vkd3d
 			fi
 
-			cp -rf "$HOME/.local/share/wineprefixes/default-compatibility-mode" \
-				"$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"
-
 		elif test -e "/usr/share/regataos/compatibility-mode/default-wineprefix.tar.xz"; then
 			if test ! -e "$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"; then
 				# Configuring compatibility mode
@@ -354,9 +412,6 @@ function start_hidden_installation() {
 				if test ! -e "$HOME/.local/share/wineprefixes/default-compatibility-mode/vulkan.txt"; then
 					enable_dxvk_vkd3d
 				fi
-
-				cp -rf "$HOME/.local/share/wineprefixes/default-compatibility-mode" \
-					"$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"
 			fi
 
 		else
@@ -374,7 +429,38 @@ function start_hidden_installation() {
 			if test ! -e "$HOME/.local/share/wineprefixes/default-compatibility-mode/vulkan.txt"; then
 				enable_dxvk_vkd3d
 			fi
+		fi
 
+		# Prepare to copy launcher wineprefix
+		if test -e "$HOME/.config/regataos-gcs/external-games-folder.txt"; then
+			external_directory_file="$(cat "$HOME/.config/regataos-gcs/external-games-folder.txt")"
+
+			if [[ $(echo $external_directory_file) != *"game-access"* ]]; then
+				mkdir -p "$(echo $external_directory_file)/game-access"
+				external_directory="$(echo $external_directory_file)/game-access"
+			else
+				external_directory="$(echo $external_directory_file)"
+			fi
+
+			if test ! -e "$(echo $external_directory)/wineprefixes-gcs"; then
+				mkdir -p "$(echo $external_directory)/wineprefixes-gcs"
+			fi
+
+			if test -e "$(echo $external_directory)/wineprefixes-gcs/default-compatibility-mode"; then
+				cp -rf "$(echo $external_directory)/wineprefixes-gcs/default-compatibility-mode" \
+					"$(echo $external_directory)/wineprefixes-gcs/$app_nickname-compatibility-mode"
+
+			else
+				rm -rf "$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"
+
+				cp -rf "$HOME/.local/share/wineprefixes/default-compatibility-mode" \
+					"$(echo $external_directory)/wineprefixes-gcs/$app_nickname-compatibility-mode"
+
+				ln -sf "$(echo $external_directory)/wineprefixes-gcs/$app_nickname-compatibility-mode" \
+					"$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"
+			fi
+
+		else
 			cp -rf "$HOME/.local/share/wineprefixes/default-compatibility-mode" \
 				"$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"
 		fi
@@ -390,6 +476,9 @@ function start_hidden_installation() {
 
 		ln -sf $HOME/.local/share/applications "$app_nickname_dir/drive_c/users/$user/Área de Trabalho"
 		ln -sf $HOME/.local/share/applications "$app_nickname_dir/drive_c/users/$user/Desktop"
+
+		# Fix app
+		fix_app
 
 		# Install app
 		install_app

@@ -73,8 +73,6 @@ setTimeout(function() {
 			$("." + pagename + "-title").css("font-weight", "700")
 		}, 100);
 
-		console.log("teste: " + pagename);
-
 	} else if ((page_url.indexOf("gcs") > -1) == "1") {
 		var url_split1 = page_url.split("pages/")[1];
 		var pagename = url_split1.replace('-gcs.html', '');

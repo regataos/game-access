@@ -3,7 +3,7 @@
 
 # Location of the application's prefix and executable
 PREFIX_LOCATION="$HOME/.local/share/wineprefixes/$LAUNCHER-compatibility-mode"
-LOG_FILE="/var/log/regataos-logs/$LAUNCHER.log"
+LOG_FILE="/var/log/regataos-logs/$LAUNCHER-external-executable.log"
 
 # Variables
 export WINEPREFIX="$PREFIX_LOCATION"
@@ -12,3 +12,5 @@ export WINEDLLOVERRIDES="mscoree,mshtml,winemenubuilder="
 
 # Run launcher
 (wine "$RUN_EXE") 2>&1 | tee $LOG_FILE
+
+echo "Running: $RUN_EXE" >> $LOG_FILE

@@ -3,7 +3,7 @@
 		"gamename": "Diablo III",
 		"gamenickname": "diablo3",
 		"gameexecutable": "Diablo III.exe",
-		"gamerun_appid": "battlenet://D3",
+		"gamerun_appid": "D3",
 		"winevariable": "WINEESYNC=1",
 		"gamekeywords": "Diablo III, diablo III, diablo3, diablo 3, diablo, rpg, rpg de ação,  rpg de acao,  rpg de açao, action rpg, blizzard, battlenet",
 		"launcher": "Battle.net",

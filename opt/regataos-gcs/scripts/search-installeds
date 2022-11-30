@@ -5,7 +5,7 @@ function search_installeds() {
 	/bin/bash /opt/regataos-gcs/scripts/search-installed-games.sh & \
 	/bin/bash /opt/regataos-gcs/scripts/search-steam-games.sh & \
 	/bin/bash /opt/regataos-gcs/scripts/search-gog-games.sh & \
-	/bin/bash /opt/regataos-gcs/scripts/search-installed-games-gog.sh
+	/bin/bash /opt/regataos-gcs/scripts/search-installed-games-gog.sh &
 
 	# Capture the games installation folder from the Epic Games Store
 	if test -e "/tmp/progressbar-gcs/download-percentage-legendary"; then

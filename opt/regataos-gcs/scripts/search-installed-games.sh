@@ -38,19 +38,24 @@ function search_installed_games() {
 					sed -i '/^$/d' "/tmp/regataos-gcs/config/game-install-dir.conf"
 					sed -i '/.egstore/d' "/tmp/regataos-gcs/config/game-install-dir.conf"
 					cp -f "/opt/regataos-gcs/games-list/$game_nickname.json" "/tmp/regataos-gcs/config/installed/$game_nickname.json"
+
+				else
+					if test ! -e "/tmp/regataos-gcs/config/installed/$game_nickname.json"; then
+						cp -f "/opt/regataos-gcs/games-list/$game_nickname.json" "/tmp/regataos-gcs/config/installed/$game_nickname.json"
+					fi
 				fi
 			fi
-		fi
 
-	else
-		echo "$game_nickname: game not installed or not found."
-		game_dir_cache=$(grep -wr "$(echo "$game_executable" | sed 's/ //')" "/tmp/regataos-gcs/config/game-install-dir.conf")
-		echo $game_dir_cache
-		if [[ $game_dir_cache == *"$(echo "$game_executable" | sed 's/ //')"* ]]; then
-			sed -i "/\($(echo "$game_executable" | sed 's/ //')\)/d" "/tmp/regataos-gcs/config/game-install-dir.conf"
-			sed -i '/^$/d' "/tmp/regataos-gcs/config/game-install-dir.conf"
-			sed -i '/.egstore/d' "/tmp/regataos-gcs/config/game-install-dir.conf"
-			rm -f "/tmp/regataos-gcs/config/installed/$game_nickname.json"
+		else
+			echo "$game_nickname: game not installed or not found."
+			game_dir_cache=$(grep -wr "$(echo "$game_executable" | sed 's/ //')" "/tmp/regataos-gcs/config/game-install-dir.conf")
+			echo $game_dir_cache
+			if [[ $game_dir_cache == *"$(echo "$game_executable" | sed 's/ //')"* ]]; then
+				sed -i "/\($(echo "$game_executable" | sed 's/ //')\)/d" "/tmp/regataos-gcs/config/game-install-dir.conf"
+				sed -i '/^$/d' "/tmp/regataos-gcs/config/game-install-dir.conf"
+				sed -i '/.egstore/d' "/tmp/regataos-gcs/config/game-install-dir.conf"
+				rm -f "/tmp/regataos-gcs/config/installed/$game_nickname.json"
+			fi
 		fi
 	fi
 

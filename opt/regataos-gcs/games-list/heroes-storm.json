@@ -2,8 +2,8 @@
 	{
 		"gamename": "Heroes of the Storm",
 		"gamenickname": "heroes-storm",
-		"gameexecutable": "Heroes of the Storm.exe",
-		"gamerun_appid": "battlenet://Hero",
+		"gameexecutable": "HeroesSwitcher.exe",
+		"gamerun_appid": "Hero",
 		"winevariable": "WINEESYNC=1",
 		"gamekeywords": "Heroes of the Storm, heroes of the storm, multiplayer online, battle arena, blizzard, battlenet",
 		"launcher": "Battle.net",

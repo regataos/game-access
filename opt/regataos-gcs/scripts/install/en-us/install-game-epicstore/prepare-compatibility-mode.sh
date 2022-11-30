@@ -40,8 +40,39 @@ elif test -e "$HOME/.local/share/wineprefixes/default-compatibility-mode"; then
 			enable_dxvk_vkd3d
 		fi
 
-		cp -rf "$HOME/.local/share/wineprefixes/default-compatibility-mode" \
-			"$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"
+		# Prepare to copy launcher wineprefix
+		if test -e "$HOME/.config/regataos-gcs/external-games-folder.txt"; then
+			external_directory_file="$(cat "$HOME/.config/regataos-gcs/external-games-folder.txt")"
+
+			if [[ $(echo $external_directory_file) != *"game-access"* ]]; then
+				mkdir -p "$(echo $external_directory_file)/game-access"
+				external_directory="$(echo $external_directory_file)/game-access"
+			else
+				external_directory="$(echo $external_directory_file)"
+			fi
+
+			if test ! -e "$(echo $external_directory)/wineprefixes-gcs"; then
+				mkdir -p "$(echo $external_directory)/wineprefixes-gcs"
+			fi
+
+			if test -e "$(echo $external_directory)/wineprefixes-gcs/default-compatibility-mode"; then
+				cp -rf "$(echo $external_directory)/wineprefixes-gcs/default-compatibility-mode" \
+					"$(echo $external_directory)/wineprefixes-gcs/$app_nickname-compatibility-mode"
+
+			else
+				rm -rf "$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"
+
+				cp -rf "$HOME/.local/share/wineprefixes/default-compatibility-mode" \
+					"$(echo $external_directory)/wineprefixes-gcs/$app_nickname-compatibility-mode"
+
+				ln -sf "$(echo $external_directory)/wineprefixes-gcs/$app_nickname-compatibility-mode" \
+					"$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"
+			fi
+
+		else
+			cp -rf "$HOME/.local/share/wineprefixes/default-compatibility-mode" \
+				"$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"
+		fi
 
 		rm -f $progressbar_dir/progress-movement
 		echo "completed" >$progressbar_dir/progress-full
@@ -73,8 +104,39 @@ elif test -e "/usr/share/regataos/compatibility-mode/default-wineprefix.tar.xz";
 			enable_dxvk_vkd3d
 		fi
 
-		cp -rf "$HOME/.local/share/wineprefixes/default-compatibility-mode" \
-			"$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"
+		# Prepare to copy launcher wineprefix
+		if test -e "$HOME/.config/regataos-gcs/external-games-folder.txt"; then
+			external_directory_file="$(cat "$HOME/.config/regataos-gcs/external-games-folder.txt")"
+
+			if [[ $(echo $external_directory_file) != *"game-access"* ]]; then
+				mkdir -p "$(echo $external_directory_file)/game-access"
+				external_directory="$(echo $external_directory_file)/game-access"
+			else
+				external_directory="$(echo $external_directory_file)"
+			fi
+
+			if test ! -e "$(echo $external_directory)/wineprefixes-gcs"; then
+				mkdir -p "$(echo $external_directory)/wineprefixes-gcs"
+			fi
+
+			if test -e "$(echo $external_directory)/wineprefixes-gcs/default-compatibility-mode"; then
+				cp -rf "$(echo $external_directory)/wineprefixes-gcs/default-compatibility-mode" \
+					"$(echo $external_directory)/wineprefixes-gcs/$app_nickname-compatibility-mode"
+
+			else
+				rm -rf "$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"
+
+				cp -rf "$HOME/.local/share/wineprefixes/default-compatibility-mode" \
+					"$(echo $external_directory)/wineprefixes-gcs/$app_nickname-compatibility-mode"
+
+				ln -sf "$(echo $external_directory)/wineprefixes-gcs/$app_nickname-compatibility-mode" \
+					"$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"
+			fi
+
+		else
+			cp -rf "$HOME/.local/share/wineprefixes/default-compatibility-mode" \
+				"$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"
+		fi
 
 		rm -f $progressbar_dir/progress-movement
 		echo "completed" >$progressbar_dir/progress-full
@@ -103,8 +165,39 @@ else
 		enable_dxvk_vkd3d
 	fi
 
-	cp -rf "$HOME/.local/share/wineprefixes/default-compatibility-mode" \
-		"$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"
+	# Prepare to copy launcher wineprefix
+	if test -e "$HOME/.config/regataos-gcs/external-games-folder.txt"; then
+        external_directory_file="$(cat "$HOME/.config/regataos-gcs/external-games-folder.txt")"
+
+        if [[ $(echo $external_directory_file) != *"game-access"* ]]; then
+            mkdir -p "$(echo $external_directory_file)/game-access"
+            external_directory="$(echo $external_directory_file)/game-access"
+        else
+            external_directory="$(echo $external_directory_file)"
+        fi
+
+		if test ! -e "$(echo $external_directory)/wineprefixes-gcs"; then
+			mkdir -p "$(echo $external_directory)/wineprefixes-gcs"
+		fi
+
+		if test -e "$(echo $external_directory)/wineprefixes-gcs/default-compatibility-mode"; then
+			cp -rf "$(echo $external_directory)/wineprefixes-gcs/default-compatibility-mode" \
+				"$(echo $external_directory)/wineprefixes-gcs/$app_nickname-compatibility-mode"
+
+		else
+			rm -rf "$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"
+
+			cp -rf "$HOME/.local/share/wineprefixes/default-compatibility-mode" \
+				"$(echo $external_directory)/wineprefixes-gcs/$app_nickname-compatibility-mode"
+
+			ln -sf "$(echo $external_directory)/wineprefixes-gcs/$app_nickname-compatibility-mode" \
+				"$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"
+		fi
+
+	else
+		cp -rf "$HOME/.local/share/wineprefixes/default-compatibility-mode" \
+			"$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"
+	fi
 
 	rm -f $progressbar_dir/progress-movement
 	echo "completed" >$progressbar_dir/progress-full

@@ -5,9 +5,9 @@
 		"gameexecutable": "anthem.exe",
 		"gamerun_appid": "",
 		"winevariable": "WINEESYNC=1 WINE_LARGE_ADDRESS_AWARE=1",
-		"gamekeywords": "Anthem, anthem, tiro em primeira pessoa, first person shooter, fps, multiplayer, ea app",
-		"launcher": "EA App",
-		"launchernickname": "eaapp",
+		"gamekeywords": "Anthem, anthem, tiro em primeira pessoa, first person shooter, fps, multiplayer, origin",
+		"launcher": "Origin",
+		"launchernickname": "origin",
 		"gameorigin": "suggestedgame",
 		"game_access": "false"
     }

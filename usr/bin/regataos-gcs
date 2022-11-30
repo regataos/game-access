@@ -81,6 +81,7 @@ function legendary_egl_sync() {
 
 # Run app
 if [[ $(glxinfo | grep vendor) == *"Intel"* ]]; then
+	/opt/regataos-gcs/scripts/search-installeds &
 	regataosgcs --disable-gpu /opt/regataos-gcs &
 	/bin/bash /opt/regataos-gcs/scripts/check-support-amd-fsr.sh &
 	legendary_egl_sync &
@@ -88,7 +89,6 @@ if [[ $(glxinfo | grep vendor) == *"Intel"* ]]; then
 	/opt/regataos-gcs/scripts/progress-bar/capture-progress-download &
 	/opt/regataos-gcs/scripts/progress-bar/create-process-queues &
 	/opt/regataos-gcs/scripts/progress-bar/run-process-queues &
-	/opt/regataos-gcs/scripts/search-installeds &
 
 	ps -C "auto-close-game" >/dev/null
 	if [ $? = 1 ]; then
@@ -96,6 +96,7 @@ if [[ $(glxinfo | grep vendor) == *"Intel"* ]]; then
 	fi
 
 else
+	/opt/regataos-gcs/scripts/search-installeds &
 	regataosgcs /opt/regataos-gcs &
 	/bin/bash /opt/regataos-gcs/scripts/check-support-amd-fsr.sh &
 	legendary_egl_sync &
@@ -103,7 +104,6 @@ else
 	/opt/regataos-gcs/scripts/progress-bar/capture-progress-download &
 	/opt/regataos-gcs/scripts/progress-bar/create-process-queues &
 	/opt/regataos-gcs/scripts/progress-bar/run-process-queues &
-	/opt/regataos-gcs/scripts/search-installeds &
 
 	ps -C "auto-close-game" >/dev/null
 	if [ $? = 1 ]; then

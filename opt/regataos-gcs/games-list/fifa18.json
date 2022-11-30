@@ -3,11 +3,11 @@
 		"gamename": "FIFA 18",
 		"gamenickname": "fifa18",
 		"gameexecutable": "fifa18.exe",
-		"gamerun_appid": "",
+		"gamerun_appid": "origin://LaunchGame/Origin.OFR.50.0001895",
 		"winevariable": "WINEESYNC=1 WINE_LARGE_ADDRESS_AWARE=1",
-		"gamekeywords": "FIFA 18, fifa 18, fifa18, futebol, soccer, ea app",
-		"launcher": "EA App",
-		"launchernickname": "eaapp",
+		"gamekeywords": "FIFA 18, fifa 18, fifa18, futebol, soccer, origin",
+		"launcher": "Origin",
+		"launchernickname": "origin",
 		"gameorigin": "suggestedgame",
 		"game_access": "false"
     }

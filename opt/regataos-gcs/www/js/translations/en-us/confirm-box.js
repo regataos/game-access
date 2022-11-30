@@ -75,23 +75,6 @@ function confirm_origin_uninstall() {
 	});
 }
 
-// Confirmation notification for eaapp
-function confirm_eaapp_installation() {
-	$(document).ready(function() {
-		$(".confir-title").html("EA App is not yet installed.<br>Do you want to install EA App?");
-		$(".true-button").text("Yes");
-		$(".false-button").text("Cancel");
-	});
-}
-
-function confirm_eaapp_uninstall() {
-	$(document).ready(function() {
-		$(".confir-title").text("Uninstall EA App?");
-		$(".true-button").text("Yes");
-		$(".false-button").text("Cancel");
-	});
-}
-
 // Confirmation notification for rockstar
 function confirm_rockstar_installation() {
 	$(document).ready(function() {

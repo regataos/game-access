@@ -87,6 +87,15 @@ fi
 # Run game
 if [ -z $RUNGAME ]; then
 	(gamemoderun wine "$GAME_EXEC") 2>&1 | tee $LOG_FILE
+
 else
-	(gamemoderun wine start "$RUNGAME") 2>&1 | tee $LOG_FILE
+	if [[ $(echo $LAUNCHER) == *"battlenet"* ]]; then
+		APP_EXEC="dosdevices/c:/Program Files (x86)/Battle.net/Battle.net.exe"
+		(gamemoderun wine "$PREFIX_LOCATION"/"$APP_EXEC" --exec="launch $RUNGAME") 2>&1 | tee $LOG_FILE
+
+	else
+		(gamemoderun wine start "$RUNGAME") 2>&1 | tee $LOG_FILE
+	fi
+
+	echo "Running: $RUNGAME" >> $LOG_FILE
 fi

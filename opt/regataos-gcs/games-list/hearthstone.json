@@ -3,7 +3,7 @@
 		"gamename": "Hearthstone",
 		"gamenickname": "hearthstone",
 		"gameexecutable": "Hearthstone.exe",
-		"gamerun_appid": "battlenet://WTCG",
+		"gamerun_appid": "WTCG",
 		"winevariable": "WINEESYNC=1",
 		"gamekeywords": "Hearthstone, hearthstone, jogo de cartas estratégico online, jogo de cartas estrategico online, digital collectible card game, blizzard, battlenet",
 		"launcher": "Battle.net",

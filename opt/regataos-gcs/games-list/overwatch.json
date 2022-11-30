@@ -1,11 +1,11 @@
 [
 	{
-		"gamename": "Overwatch",
+		"gamename": "Overwatch 2",
 		"gamenickname": "overwatch",
 		"gameexecutable": "Overwatch.exe",
-		"gamerun_appid": "battlenet://Pro",
+		"gamerun_appid": "Pro",
 		"winevariable": "WINEESYNC=1 WINE_LARGE_ADDRESS_AWARE=1",
-		"gamekeywords": "Overwatch, overwatch, ow, tiro em primeira pessoa, multiplayer online, first-person shooter, fps, blizzard, battlenet",
+		"gamekeywords": "Overwatch, Overwatch 2, overwatch, overwatch 2, ow, tiro em primeira pessoa, multiplayer online, first-person shooter, fps, blizzard, battlenet",
 		"launcher": "Battle.net",
 		"launchernickname": "battlenet",
 		"gameorigin": "suggestedgame",

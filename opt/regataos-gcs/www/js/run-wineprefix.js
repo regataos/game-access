@@ -1,31 +1,48 @@
 // Run .exe file in wineprefix
-function run_launcher() {
-const exec = require('child_process').exec;
-const fs = require('fs');
+function runExternalExeFile() {
+	const exec = require('child_process').exec;
+	const fs = require('fs');
 
-var launchers_file = fs.readFileSync("/opt/regataos-gcs/www/js/js-pages/launchers-list/launchers-list.json", "utf8");
-var launchers = JSON.parse(launchers_file);
+	let files = [];
 
-	for (var i = 0; i < launchers.length; i++) {
-		var launcher_nickname = launchers[i].launcher_nickname
+	// Read JSON files with the list of launchers
+	fs.readdirSync("/opt/regataos-gcs/www/js/js-pages/launchers-list").forEach(files => {
+	fs.readFile("/opt/regataos-gcs/www/js/js-pages/launchers-list/" +files , "utf8", function(err, data) {
+	if(!err) {
 
-		if (launcher_nickname.indexOf(launcher_name) > -1) {
-			var environment_variable = launchers[i].environment_variable
+		const launchers = JSON.parse(data);
 
-			var command_line = 'export LAUNCHERVAR="' + environment_variable + '"; export LAUNCHER="' + launcher_name + '"; export RUN_EXE="' + launcher_executable + '"; /opt/regataos-gcs/scripts/action-games/runlauncher_exe';
-			console.log(command_line);
-			exec(command_line,function(error,call,errlog){
-			});
+		for (let i = 0; i < launchers.length; i++) {
+			const launcher_nickname = launchers[i].launcher_nickname
+
+			if (launcher_nickname.indexOf(launcher_name) > -1) {
+				const environment_variable = launchers[i].environment_variable
+
+				const runExternalExe = `
+					export LAUNCHERVAR="${environment_variable}";
+					export LAUNCHER="${launcher_name}";
+					export RUN_EXE="${externalExeFile}";
+					/opt/regataos-gcs/scripts/action-games/runlauncher_exe start
+					`;
+				console.log(runExternalExe);
+				exec(runExternalExe,function(error,call,errlog){
+				});
+			}
 		}
+	return;
 	}
+	});
+	});
 }
 
 function run_launcher_exe() {
 	$('input[id="run-'+ launcher_name +'"]').change(function(e){
-		window.launcher_executable = document.getElementById("run-"+ launcher_name).value
+		window.externalExeFile = document.getElementById("run-"+ launcher_name).value
 
-		run_launcher();
+		runExternalExeFile();
 
-		document.getElementById("run-"+ launcher_name).value='';
+		setTimeout(function(){
+			document.getElementById("run-"+ launcher_name).value='';
+		}, 1000);
 	});
 }

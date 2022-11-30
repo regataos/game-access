@@ -2,6 +2,8 @@
 function create_cache_steam_games() {
 var fs = require("fs");
 
+if (fs.existsSync('/tmp/regataos-gcs/config/steam-games/json/steam-id/show-steam-games.txt')) {
+
 var files = [];
 
 // Read JSON files with the list of games
@@ -152,10 +154,31 @@ if (!err) {
 			});
 		}
 	})
+
+	console.log(">> remove update steam cache file")
+	fs.unlinkSync('/tmp/regataos-gcs/config/steam-games/update-cache-steam.txt')
 return;
 }
 });
 });
+}
+}
+
+const updateSteamCache = setInterval(create_cache_steam, 1000);
+function create_cache_steam() {
+	var fs = require("fs");
+
+	if (fs.existsSync('/tmp/regataos-gcs/config/steam-games/update-cache-steam.txt')) {
+		console.log(">> start update steam cache")
+		create_cache_steam_games()
+
+	} else {
+		if (fs.existsSync('/tmp/regataos-gcs/config/steam-games/show-menu-steam.txt')) {
+			console.log(">> stop update steam cache")
+			fs.writeFileSync("/tmp/regataos-gcs/config/steam-games/update-cache-steam.txt", "Update steam cache", "utf8");
+			clearInterval(updateSteamCache);
+		}
+	}
 }
 
 // Create game blocks on the screen dynamically
@@ -362,11 +385,11 @@ return;
 });
 }
 
-// Show list of games in user account
-function show_steam_games() {
+// Show the list of installed games
+function show_installed_games() {
 	var fs = require("fs");
 
-	if (fs.existsSync('/tmp/regataos-gcs/config/installed/show-installed-games.txt')) {
+	if (fs.existsSync('/tmp/regataos-gcs/config/installed/show-installed-games-steam.txt')) {
 		$(".universal-installed-games").css("display", "block");
 		$(".universal-account-title").css("margin-top", "30px");
 		$(".universal-installed-title").css("display", "block");
@@ -378,8 +401,8 @@ function show_steam_games() {
 	}
 }
 
-// Show the list of installed games
-function show_installed_games() {
+// Show list of games in user account
+function show_steam_games() {
 	var fs = require("fs");
 	fs.access('/tmp/regataos-gcs/config/steam-games/json/steam-id/show-steam-games.txt', (err) => {
 	if (!err) {

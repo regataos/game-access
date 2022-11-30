@@ -3,11 +3,11 @@
 		"gamename": "GRID Legends",
 		"gamenickname": "grid-legends",
 		"gameexecutable": "GridLegends.exe",
-		"gamerun_appid": "",
+		"gamerun_appid": "origin://LaunchGame/Origin.OFR.50.0004676",
 		"winevariable": "WINEESYNC=1 WINE_LARGE_ADDRESS_AWARE=1",
-		"gamekeywords": "GRID Legends, grid legends, grid, corrida, esporte, race, sport, ea app",
-		"launcher": "EA App",
-		"launchernickname": "eaapp",
+		"gamekeywords": "GRID Legends, grid legends, grid, corrida, esporte, race, sport, origin",
+		"launcher": "Origin",
+		"launchernickname": "origin",
 		"gameorigin": "suggestedgame",
 		"game_access": "false"
     }

@@ -32,6 +32,7 @@ if (!err) {
 }
 
 // Show progress bar if process starts
+setInterval(show_progressbar, 500);
 function show_progressbar() {
 fs.access('/tmp/progressbar-gcs/progressbar', (err) => {
 if (!err) {
@@ -49,7 +50,6 @@ if (!err) {
     //console.log(command_line);
     exec(command_line,function(error,call,errlog){
     });
-
 }
 });
 
@@ -67,6 +67,7 @@ console.error('myfile already exists');
 }
 
 // If necessary, increase the size of the progress bar box
+setInterval(downspeed, 500);
 function downspeed() {
 fs.access('/tmp/progressbar-gcs/speed', (err) => {
 if (!err) {
@@ -79,6 +80,7 @@ if (!err) {
 }
 
 // Show the link to the installed games page
+setInterval(installed_page, 500);
 function installed_page() {
 	fs.access('/tmp/regataos-gcs/config/installed/show-installed-games.txt', (err) => {
 	if (!err) {
@@ -90,32 +92,23 @@ function installed_page() {
 }
 
 // Check if Steam is installed and if there are any games installed
+const checkSteamCache = setInterval(steam_games, 500);
 function steam_games() {
-	fs.access('/tmp/regataos-gcs/config/steam-games/no-steam-games.txt', (err) => {
-	if (!err) {
-		fs.access('/tmp/regataos-gcs/config/steam-games/json/steam-id/show-steam-games.txt', (err) => {
-		if (!err) {
+	if (!fs.existsSync('/tmp/regataos-gcs/config/steam-games/no-steam-games.txt')) {
+		if (fs.existsSync('/tmp/regataos-gcs/config/steam-games/show-menu-steam.txt')) {
 			$(".p-steam-li").css("display", "block");
-			return;
+			clearInterval(checkSteamCache);
+
 		} else {
-			$(".p-steam-li").css("display", "none");
+			if (fs.readdirSync("/tmp/regataos-gcs/config/steam-games/json/games").length) {
+				$(".p-steam-li").css("display", "block");
+				clearInterval(checkSteamCache);
+			} else {
+				$(".p-steam-li").css("display", "none");
+			}
 		}
-		});
 
-		return;
 	} else {
-		$(".p-steam-li").css("display", "block");
+		$(".p-steam-li").css("display", "none");
 	}
-	});
 }
-
-setInterval(function() {
-	installed_page();
-	steam_games();
-}, 500);
-
-setInterval(function() {
-	show_progressbar();
-	downspeed();
-	//home_url();
-}, 500);

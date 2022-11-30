@@ -2,31 +2,43 @@
 
 # Settings and variables
 #General information
-app_name="EA App"
-app_nickname="eaapp"
-app_name_process="Desinstalar o EA App"
-app_remove_status="Desinstalando o EA App..."
-app_executable="drive_c/Program Files/Electronic Arts/EA Desktop/EA Desktop/EADesktop.exe"
+app_name="Origin"
+app_nickname="origin"
+app_name_process="Uninstall Origin"
+app_remove_status="Uninstalling Origin..."
+app_executable="drive_c/Program Files (x86)/Origin/Origin.exe"
 
 #Default settings
-success_removal="Concluído"
-success_notify_title="desinstalado com sucesso!"
-success_notify_text="foi desinstalado com sucesso."
-removal_error="Erro"
-removal_error_status="Erro na Desinstalação"
-error_notify_title="Erro na desinstalação do"
-error_notify_text="Ocorreu algum erro na desinstalação do"
+success_removal="Concluded"
+success_notify_title="successfully uninstalled!"
+success_notify_text="was successfully uninstalled."
+removal_error="Error"
+removal_error_status="Uninstall error"
+error_notify_title="Error in uninstalling"
+error_notify_text="There was an error uninstalling"
 progressbar_dir="/tmp/progressbar-gcs"
 app_nickname_dir="$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"
 
 # Uninstall app
 function remove_app() {
+	if test -e "$HOME/.config/regataos-gcs/external-games-folder.txt"; then
+		external_directory_file="$(cat "$HOME/.config/regataos-gcs/external-games-folder.txt")"
+
+		if [[ $(echo $external_directory_file) != *"game-access"* ]]; then
+			external_directory="$(echo $external_directory_file)/game-access"
+		else
+			external_directory="$(echo $external_directory_file)"
+		fi
+
+		if test -e "$(echo $external_directory)/wineprefixes-gcs/$app_nickname-compatibility-mode"; then
+			rm -rf "$(echo $external_directory)/wineprefixes-gcs/$app_nickname-compatibility-mode"
+		fi
+	fi
+
 	rm -rf "$app_nickname_dir"
-	rm -f "$HOME/.local/share/applications/App Recovery.desktop"
-	rm -f "$HOME/.local/share/applications/EA Error Reporter.desktop"
-	rm -f "$HOME/.local/share/applications/EA.desktop"
-	rm -f $HOME/.local/share/applications/*EA.desktop
-	rm -f $HOME/.local/share/applications/EA*.desktop
+	rm -f "$HOME/.local/share/applications/$app_name.desktop"
+	rm -r "$HOME/.local/share/applications/Desinstalar o $app_name.desktop"
+	rm -r "$HOME/.local/share/applications/Relatório de erros do $app_name.desktop"
 	rm -f $HOME/.config/regataos-gcs/$app_nickname.conf
 	rm -f $HOME/.config/regataos-gcs/$app_nickname-games.conf
 }
@@ -55,7 +67,7 @@ test -f "${XDG_CONFIG_HOME:-$HOME/.config}/user-dirs.dirs" && source "${XDG_CONF
 DESKTOP_DIR="${XDG_DESKTOP_DIR:-$HOME/Desktop}"
 
 cd "/$DESKTOP_DIR"
-rm -f "EA.desktop"
+rm -f "$app_name.desktop"
 
 # Confirm uninstall
 if test -e "$app_nickname_dir/$app_executable" ; then
