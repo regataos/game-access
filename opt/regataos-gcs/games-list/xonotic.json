@@ -11,7 +11,7 @@
 		"gamedownload_link": "https://github.com/garymoon/xonotic/releases/download/xonotic-v0.8.5/xonotic-0.8.5.zip",
 		"gamedownload_file_name": "xonotic.zip",
 		"install_args": "",
-		"gamebanner": "https://i.ibb.co/sbGT1d5/xonotic-img1.jpg",
+		"gamebanner": "xonotic-img1.webp",
 		"file_executable": "xonotic-linux-sdl.sh",
 		"execute_args": "",
 		"gamefolder": "Xonotic",
@@ -40,10 +40,10 @@
 			"en": "Free"
 		},
 		"gameimages": {
-			"img1": "https://i.ibb.co/sbGT1d5/xonotic-img1.jpg",
-			"img2": "https://i.ibb.co/gJt1Mxf/xonotic-img2.jpg",
-			"img3": "https://i.ibb.co/GMM5B4Z/xonotic-img3.jpg",
-			"img4": "https://i.ibb.co/6sFbnWG/xonotic-img4.jpg"
+			"img1": "xonotic-img1.webp",
+			"img2": "xonotic-img2.webp",
+			"img3": "xonotic-img3.webp",
+			"img4": "xonotic-img4.webp"
 		},
 		"specifications": {
 			"minimum": {

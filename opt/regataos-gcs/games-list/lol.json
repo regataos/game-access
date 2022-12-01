@@ -11,7 +11,7 @@
 		"gamedownload_link": "https://lol.secure.dyn.riotcdn.net/channels/public/x/installer/current/live.na.exe",
 		"gamedownload_file_name": "lol.exe",
 		"install_args": "",
-		"gamebanner": "https://i.ibb.co/tp9s4Zg/lol-banner.jpg",
+		"gamebanner": "lol-banner.webp",
 		"file_executable": "drive_c/Riot Games/Riot Client/RiotClientServices.exe",
 		"execute_args": "",
 		"gamefolder": "lol",
@@ -40,10 +40,10 @@
 			"en": "Free"
 		},
 		"gameimages": {
-			"img1": "https://i.ibb.co/MghYtV3/lol4.jpg",
-			"img2": "https://i.ibb.co/PTrrpVP/lol3.jpg",
-			"img3": "https://i.ibb.co/fQf7qMS/lol2.jpg",
-			"img4": "https://i.ibb.co/pdjSfgh/lol1.jpg"
+			"img1": "lol4.webp",
+			"img2": "lol3.webp",
+			"img3": "lol2.webp",
+			"img4": "lol1.webp"
 		},
 		"specifications": {
 			"minimum": {

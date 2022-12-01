@@ -17,22 +17,16 @@
 	<script type="text/javascript" src="./../js/js-pages/search-installed-games.js"></script>
 	<script type="text/javascript" src="./../js/js-pages/action-launchers.js"></script>
 	<script type="text/javascript" src="./../js/js-pages/action-games.js"></script>
-	<script type="text/javascript" src="https://regataos.github.io/game-access/home-blocks-content.js"></script>
-	<script type="text/javascript" src="https://regataos.github.io/game-access/home-slide-content.js"></script>
-	<script type="text/javascript" src="https://regataos.github.io/game-access/blocks_functions.js"></script>
-	<script type="text/javascript" src="https://regataos.github.io/game-access/slide_functions.js"></script>
+	<script type="text/javascript" src="./../js/js-pages/home-slide-content.js"></script>
+	<script type="text/javascript" src="./../js/js-pages/home-blocks-content.js"></script>
+	<script type="text/javascript" src="./../js/js-pages/slide-functions.js"></script>
+	<script type="text/javascript" src="./../js/js-pages/blocks-functions.js"></script>
+	<script type="text/javascript" src="https://regataos.github.io/game-access/home-blocks-online.js"></script>
 	<script type="text/javascript" src="./../js/check-network.js"></script>
 	<script type="text/javascript" src="./../js/translations/language/pages-lang.js"></script>
 </head>
 
 <body>
-  <div id="loadscreen"></div>
-  <script>
-      setTimeout(function () {
-          document.getElementById("loadscreen").style.display= "none";
-      }, 1500);
-  </script>
-
   <!-- slide html -->
 <main class='main-content'>
   <section class='slideshow'>
@@ -52,7 +46,7 @@
             </div>
           </div>
           <div class='image-container'> 
-            <img alt='' class='image slide-img1'/>
+            <img alt='' class='image' id="slide-img1"/>
           </div>
         </div>
 
@@ -69,7 +63,7 @@
             </div>
           </div>
           <div class='image-container'>
-            <img alt='' class='image slide-img2'/>
+            <img alt='' class='image' id="slide-img2"/>
           </div>
         </div>
 
@@ -86,7 +80,7 @@
             </div>
           </div>
           <div class='image-container'>
-            <img alt='' class='image slide-img3'/>
+            <img alt='' class='image' id="slide-img3"/>
           </div>
         </div>
 
@@ -103,7 +97,7 @@
             </div>
           </div>
           <div class='image-container'> 
-            <img alt='' class='image slide-img4'/>
+            <img alt='' class='image' id="slide-img4"/>
           </div>
         </div>
       </div>
@@ -382,14 +376,14 @@ if($('.main-content .slideshow').length > 1) {
 		</div>
 	</div>
 
-	<div class="app-block appbc2" onclick="block_function2();">
+	<div class="app-block gamebc2" onclick="block_function2();">
 		<div class="block-text">
 			<div class="block-title"></div>
 			<div class="block-desc"></div>
 		</div>
 	</div>
 
-	<div class="app-block appbc3" onclick="block_function3();">
+	<div class="app-block gamebc3" onclick="block_function3();">
 		<div class="block-text">
 			<div class="block-title"></div>
 			<div class="block-desc"></div>

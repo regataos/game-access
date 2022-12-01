@@ -146,6 +146,11 @@ div.universal-account-title {
 	width: 100%;
 	float: left;
 	padding-bottom: 30px;
+	opacity: 1;
+  	-webkit-transition: all 0.3s ease;
+  	transition: all 0.3s ease;
+  	animation-name: opacityEfect;
+  	animation-duration: 1.5s;
 }
 
 .blocks2 {

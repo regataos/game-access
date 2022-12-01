@@ -10,6 +10,11 @@
 	width: 100%;
 	float: left;
 	background-color: #2a2e33;
+	opacity: 1;
+    -webkit-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+	animation-name: opacityEfect;
+	animation-duration: 1.5s;
 }
 
 .home-blocks2 {
@@ -59,7 +64,7 @@
     height: 250px;
 }
 
-.appbc2 {
+.gamebc2 {
 	margin-right: 15px;
 }
 

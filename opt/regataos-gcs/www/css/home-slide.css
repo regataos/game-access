@@ -5,6 +5,19 @@
 }
 
 /* slide css */
+.main-content {
+	opacity: 1;
+  -webkit-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+  animation-name: opacityEfect;
+  animation-duration: 1.5s;
+}
+
+@keyframes opacityEfect {
+	from {opacity: 0;}
+	to {opacity: 1;}
+}
+
 body {
   letter-spacing: 0.05em;
   font-family: 'Roboto', sans-serif;

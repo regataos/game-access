@@ -14,6 +14,7 @@ function getGameId() {
     const fs = require("fs");
 
     const gameId = sessionStorage.getItem("game-gcs-id");
+    const imagesDir = `./../images/games-backg/game-access/${gameId}`
 
     if (fs.existsSync(`/opt/regataos-gcs/games-list/${gameId}.json`)) {
         const data = fs.readFileSync(`/opt/regataos-gcs/games-list/${gameId}.json`, "utf8");
@@ -27,7 +28,7 @@ function getGameId() {
             document.getElementById("game-status").innerHTML = game[i].gamestatus;
 
             // Game banner
-            document.getElementById("game-banner").style.backgroundImage = `url(${game[i].gamebanner})`;
+            document.getElementById("game-banner").style.backgroundImage = `url("${imagesDir}/${game[i].gamebanner}")`;
 
             // Game logo
             document.getElementById("game-logo-img").src = `./../images/games-logo/${game[i].gamenickname}-logo.png`;
@@ -45,25 +46,25 @@ function getGameId() {
             const img1 = game[i].gameimages.img1
             const gameImg1 = document.querySelectorAll(".game-img1");
             for (let i = 0; i < gameImg1.length; i++) {
-                gameImg1[i].src = img1;
+                gameImg1[i].src = `${imagesDir}/${img1}`;
             }
 
             const img2 = game[i].gameimages.img2
             const gameImg2 = document.querySelectorAll(".game-img2");
             for (let i = 0; i < gameImg2.length; i++) {
-                gameImg2[i].src = img2;
+                gameImg2[i].src = `${imagesDir}/${img2}`;
             }
 
             const img3 = game[i].gameimages.img3
             const gameImg3 = document.querySelectorAll(".game-img3");
             for (let i = 0; i < gameImg3.length; i++) {
-                gameImg3[i].src = img3;
+                gameImg3[i].src = `${imagesDir}/${img3}`;
             }
 
             const img4 = game[i].gameimages.img4
             const gameImg4 = document.querySelectorAll(".game-img4");
             for (let i = 0; i < gameImg4.length; i++) {
-                gameImg4[i].src = img4;
+                gameImg4[i].src = `${imagesDir}/${img4}`;
             }
 
             // system requirements

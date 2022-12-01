@@ -64,11 +64,11 @@
 		height: 80px;
 		padding-top: 30px;
 	}
-	.appbc2 .block-text {
+	.gamebc2 .block-text {
 		height: 80px;
 		padding-top: 30px;
 	}
-	.appbc3 .block-text {
+	.gamebc3 .block-text {
 		height: 80px;
 		padding-top: 30px;
 	}
@@ -82,16 +82,16 @@
 	.appbc1 .block-desc {
 		font-size: 20px;
 	}
-	.appbc2 .block-title {
+	.gamebc2 .block-title {
 		font-size: 25px;
 	}
-	.appbc2 .block-desc {
+	.gamebc2 .block-desc {
 		font-size: 20px;
 	}
-	.appbc3 .block-title {
+	.gamebc3 .block-title {
 		font-size: 25px;
 	}
-	.appbc3 .block-desc {
+	.gamebc3 .block-desc {
 		font-size: 20px;
 	}
 }
@@ -180,11 +180,11 @@
 		height: 70px;
 		padding-top: 30px;
 	}
-	.appbc2 .block-text {
+	.gamebc2 .block-text {
 		height: 70px;
 		padding-top: 30px;
 	}
-	.appbc3 .block-text {
+	.gamebc3 .block-text {
 		height: 70px;
 		padding-top: 30px;
 	}
@@ -198,16 +198,16 @@
 	.appbc1 .block-desc {
 		font-size: 17px;
 	}
-	.appbc2 .block-title {
+	.gamebc2 .block-title {
 		font-size: 20px;
 	}
-	.appbc2 .block-desc {
+	.gamebc2 .block-desc {
 		font-size: 17px;
 	}
-	.appbc3 .block-title {
+	.gamebc3 .block-title {
 		font-size: 20px;
 	}
-	.appbc3 .block-desc {
+	.gamebc3 .block-desc {
 		font-size: 17px;
 	}
 }
@@ -264,11 +264,11 @@
 		width: 300px;
 		height: 270px;
 	}
-	.appbc2 .block-text {
+	.gamebc2 .block-text {
 		height: 70px;
 		padding-top: 15px;
 	}
-	.appbc3 .block-text {
+	.gamebc3 .block-text {
 		height: 70px;
 		padding-top: 15px;
 	}
@@ -326,11 +326,11 @@
 		width: 280px;
 		height: 250px;
 	}
-	.appbc2 .block-text {
+	.gamebc2 .block-text {
 		height: 70px;
 		padding-top: 15px;
 	}
-	.appbc3 .block-text {
+	.gamebc3 .block-text {
 		height: 70px;
 		padding-top: 15px;
 	}
@@ -359,11 +359,11 @@
 		width: 220px;
 		height: 220px;
 	}
-	.appbc2 .block-text {
+	.gamebc2 .block-text {
 		height: 85px;
 		padding-top: 15px;
 	}
-	.appbc3 .block-text {
+	.gamebc3 .block-text {
 		height: 85px;
 		padding-top: 15px;
 	}

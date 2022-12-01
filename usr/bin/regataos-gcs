@@ -48,10 +48,6 @@ sed -i 's/\(closed-manually=true\)/closed-manually=false/' "$HOME/.config/regata
 rm -f "/tmp/regataos-gcs/running-with-regataos-gcs.txt"
 rm -f "/tmp/regataos-gcs/run-regataos-gcs.txt"
 
-# Update cache images
-/opt/regataos-gcs/scripts/update-cache start
-sleep 1
-
 # Clear cache
 rm -f /tmp/regataos-gcs/config/steam-games/json/steam-id/*
 rm -f "/tmp/regataos-gcs/config/gog-games/games-folders2.txt"

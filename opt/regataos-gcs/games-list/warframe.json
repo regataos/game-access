@@ -11,7 +11,7 @@
 		"gamedownload_link": "https://content.warframe.com/dl/Warframe.msi",
 		"gamedownload_file_name": "Warframe.msi",
 		"install_args": "/q",
-		"gamebanner": "https://i.ibb.co/GvHK8Ym/warframe-img1.jpg",
+		"gamebanner": "warframe-img1.webp",
 		"file_executable": "drive_c/users/username/AppData/Local/Warframe/Downloaded/Public/Tools/Launcher.exe",
 		"execute_args": "",
 		"gamefolder": "warframe",
@@ -40,10 +40,10 @@
 			"en": "Free"
 		},
 		"gameimages": {
-			"img1": "https://i.ibb.co/GvHK8Ym/warframe-img1.jpg",
-			"img2": "https://i.ibb.co/StGpSBz/warframe-img2.jpg",
-			"img3": "https://i.ibb.co/KXpYhjJ/warframe-img3.jpg",
-			"img4": "https://i.ibb.co/k1M1SH2/warframe-img4.jpg"
+			"img1": "warframe-img1.webp",
+			"img2": "warframe-img2.webp",
+			"img3": "warframe-img3.webp",
+			"img4": "warframe-img4.webp"
 		},
 		"specifications": {
 			"minimum": {
