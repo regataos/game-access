@@ -2,13 +2,13 @@ function home_content() {
     $(document).ready(function() {
         // Content of block 1
         //Title
-        $(".appbc1 .block-title").text("STAR WARS: Squadrons");
+        $(".appbc1 .block-title").text("Fort Triumph");
         //Block image
-        $(".appbc1").css("background-image", 'url("https://i.ibb.co/z6vgnbQ/block1-sws.webp")');
+        $(".appbc1").css("background-image", 'url("https://i.ibb.co/YjnJZTV/block1-fth.webp")');
         $(".appbc1").css("background-position", "50% 50%")
         //Date
-        date_pt_br="01 de dezembro"
-        date_en_us="December 01"
+        date_pt_br="08 de dezembro"
+        date_en_us="December 08"
     });
 
     // Detect User Language
