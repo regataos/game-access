@@ -116,8 +116,11 @@ function run_game() {
 function run_steam_game() {
     const exec = require('child_process').exec;
 
-	var command_line = 'export GAMEID="' + gameid + '"; /opt/regataos-gcs/scripts/action-games/rungame-steam';
-    exec(command_line,function(error,call,errlog){
+	const runSteamGame = `
+	export GAME_NICKNAME="${gamenickname}";
+	export GAME_ID="${gameid}";
+	/opt/regataos-gcs/scripts/action-games/rungame-steam`;
+    exec(runSteamGame,function(error,call,errlog){
     });
 
 	autoCloseGameAccess();
