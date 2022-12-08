@@ -2,13 +2,13 @@ function home_content() {
     $(document).ready(function() {
         // Content of block 1
         //Title
-        $(".appbc1 .block-title").text("STAR WARS: Squadrons");
+        $(".appbc1 .block-title").text("Saints Row IV: Re-Elected");
         //Block image
         $(".appbc1").css("background-image", 'url("file:///tmp/regataos-gcs/config/cache/img/block-img1.webp")');
         $(".appbc1").css("background-position", "50% 50%")
         //Date
-        date_pt_br="01 de dezembro"
-        date_en_us="December 01"
+        date_pt_br="15 de dezembro"
+        date_en_us="December 15"
 
         // Content of block 2
         //Title
