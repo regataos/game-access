@@ -2,13 +2,13 @@ function home_content() {
     $(document).ready(function() {
         // Content of block 1
         //Title
-        $(".appbc1 .block-title").text("Fort Triumph");
+        $(".appbc1 .block-title").text("Saints Row IV: Re-Elected");
         //Block image
-        $(".appbc1").css("background-image", 'url("https://i.ibb.co/YjnJZTV/block1-fth.webp")');
+        $(".appbc1").css("background-image", 'url("https://i.ibb.co/6rFYmFw/block1-srv.webp")');
         $(".appbc1").css("background-position", "50% 50%")
         //Date
-        date_pt_br="08 de dezembro"
-        date_en_us="December 08"
+        date_pt_br="15 de dezembro"
+        date_en_us="December 15"
     });
 
     // Detect User Language
