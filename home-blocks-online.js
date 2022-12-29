@@ -5,7 +5,7 @@ function home_content() {
         $(".appbc1 .block-title").text("Dishonored - Definitive Edition");
         //Block image
         $(".appbc1").css("background-image", 'url("https://i.ibb.co/3dfDPjp/dde-block1.webp")');
-        $(".appbc1").css("background-position", "50% 50%")
+        $(".appbc1").css("background-position", "0% 100%")
         //Date
         date_pt_br="05 de janeiro"
         date_en_us="January 05"
