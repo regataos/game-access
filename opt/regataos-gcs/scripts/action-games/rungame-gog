@@ -64,7 +64,7 @@ if test -e "/usr/bin/nvidia-xconfig"; then
 	fi
 
 	# Special configurations for DXVK with NVIDIA GPU
-	ln -sf "/opt/regataos-wine/custom-configs/$LAUNCHER/dxvk-nvidia.conf" "$PREFIX_LOCATION/dxvk.conf"
+	ln -sf "/opt/regataos-wine/custom-configs/gog/dxvk-nvidia.conf" "$PREFIX_LOCATION/dxvk.conf"
 
 else
 	# If necessary, run software with the AMD/Intel dGPU
@@ -75,7 +75,7 @@ else
 	fi
 
 	# Special configurations for DXVK with AMD/Intel GPU
-	ln -sf "/opt/regataos-wine/custom-configs/$LAUNCHER/dxvk.conf" "$PREFIX_LOCATION/dxvk.conf"
+	ln -sf "/opt/regataos-wine/custom-configs/gog/dxvk.conf" "$PREFIX_LOCATION/dxvk.conf"
 fi
 
 # Configure compatibility mode
