@@ -7,8 +7,10 @@ LOG_FILE="/var/log/regataos-logs/$LAUNCHER-external-executable.log"
 
 # Variables
 export WINEPREFIX="$PREFIX_LOCATION"
-export DXVK_LOG_PATH="$PREFIX_LOCATION"
 export WINEDLLOVERRIDES="mscoree,mshtml,winemenubuilder="
+export DXVK_ASYNC=1
+export DXVK_LOG_PATH="$PREFIX_LOCATION"
+export DXVK_STATE_CACHE_PATH="$PREFIX_LOCATION"
 export PROTON_BATTLEYE_RUNTIME="/opt/regataos-wine/runtimes-anticheats/battleye_runtime"
 export PROTON_EAC_RUNTIME="/opt/regataos-wine/runtimes-anticheats/eac_runtime"
 
