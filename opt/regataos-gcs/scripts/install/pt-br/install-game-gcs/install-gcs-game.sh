@@ -90,6 +90,76 @@ function install_app() {
 		export WINEDLLOVERRIDES="mscoree,mshtml,winemenubuilder,winedbg="
 		export WINEPREFIX="$game_nickname_dir"
 
+		export WINEESYNC=1
+		export WINEFSYNC=1
+		export WINEFSYNC_FUTEX2=1
+		export WINE_LARGE_ADDRESS_AWARE=1
+		export DXVK_ASYNC=1
+		#export DXVK_STATE_CACHE=reset
+		export DXVK_STATE_CACHE_PATH="$game_nickname_dir"
+		export DXVK_LOG_PATH="$game_nickname_dir"
+
+		# DXVK-NVAPI
+		if [[ $(cat "$game_nickname_dir/vulkan.txt") == *"DXVK-NVAPI"* ]]; then
+			export WINEDLLOVERRIDES="mscoree,mshtml,winemenubuilder,winedbg="
+		else
+			export WINEDLLOVERRIDES="mscoree,mshtml,winemenubuilder,winedbg,nvapi,nvapi64="
+		fi
+
+		# DXVK configuration file
+		if test -e "$game_nickname_dir/dxvk.conf"; then
+			export DXVK_CONFIG_FILE="$game_nickname_dir/dxvk.conf"
+		fi
+
+		# Enable AMD FSR
+		if [[ $(grep -r amd-fsr $GCS_CONFIG) == *"amd-fsr=true"* ]]; then
+			export WINE_FULLSCREEN_FSR=1
+			export WINE_FULLSCREEN_FSR_STRENGTH=1
+		fi
+
+		# Enable performance info
+		if [[ $(grep -r fps $GCS_CONFIG) == *"fps=true"* ]]; then
+			export MANGOHUD_CONFIG=cpu_temp,cpu_mhz,ram,vram,gpu_core_clock,gpu_temp,gpu_name,benchmark_percentiles,gamemode,font_size=19
+			export MANGOHUD=1
+			export MANGOHUD_DLSYM=1
+			export MANGOHUD_GL="mangohud --dlsym"
+			export DXVK_HUD=compiler
+			#export DXVK_HUD=devinfo,fps,frametimes,gpuload,api,compiler
+		fi
+
+		# For the NVIDIA proprietary driver
+		if test -e /usr/bin/nvidia-xconfig; then
+			# For the NVIDIA proprietary driver
+			export __GL_SHADER_DISK_CACHE=1
+			export __GL_SHADER_DISK_CACHE_PATH="$game_nickname_dir"
+			export __GL_SHADER_DISK_CACHE_SKIP_CLEANUP=1
+
+			# If necessary, run software with the NVIDIA dGPU
+			if test -e "/tmp/regataos-prime/use-hybrid-graphics.txt"; then
+				export GAMEMODERUNEXEC="env __NV_PRIME_RENDER_OFFLOAD=1 __GLX_VENDOR_LIBRARY_NAME=nvidia __VK_LAYER_NV_optimus=NVIDIA_only $(echo $MANGOHUD_GL)"
+			else
+				export GAMEMODERUNEXEC="env $(echo $MANGOHUD_GL)"
+			fi
+
+			# Special configurations for DXVK with NVIDIA GPU
+			if [[ $(echo $game_plataform) == *"windows"* ]]; then
+				ln -sf "/opt/regataos-wine/custom-configs/gcs/dxvk-nvidia.conf" "$game_nickname_dir/dxvk.conf"
+			fi
+
+		else
+			# If necessary, run software with the AMD/Intel dGPU
+			if test -e "/tmp/regataos-prime/use-hybrid-graphics.txt"; then
+				export GAMEMODERUNEXEC="env DRI_PRIME=1 $(echo $MANGOHUD_GL)"
+			else
+				export GAMEMODERUNEXEC="env $(echo $MANGOHUD_GL)"
+			fi
+
+			# Special configurations for DXVK with AMD/Intel GPU
+			if [[ $(echo $game_plataform) == *"windows"* ]]; then
+				ln -sf "/opt/regataos-wine/custom-configs/gcs/dxvk.conf" "$game_nickname_dir/dxvk.conf"
+			fi
+		fi
+
 		if [ ! -z "$GAME_PATH" ]; then
 			mkdir -p "$GAME_INSTALL_DIR/game-access/$game_folder"
 
@@ -124,12 +194,14 @@ function install_app() {
 			if [[ $(echo $game_nickname) == *"lol"* ]]; then
 				pkexec sh -c 'sysctl -w abi.vsyscall32=0'
 				/opt/regataos-gcs/scripts/action-games/launch-helper-lol.sh start &
-			fi
-
-			if [[ $(echo $game_download_file_name) == *".exe"* ]]; then
 				$CUSTOM_WINE_DIR/bin/wine $downloadDir/$game_download_file_name $install_args
+
 			else
-				$CUSTOM_WINE_DIR/bin/wine $CUSTOM_WINE_DIR/bin/msiexec /i $downloadDir/$game_download_file_name $install_args
+				if [[ $(echo $game_download_file_name) == *".exe"* ]]; then
+					$CUSTOM_WINE_DIR/bin/wine $downloadDir/$game_download_file_name $install_args
+				else
+					$CUSTOM_WINE_DIR/bin/wine $CUSTOM_WINE_DIR/bin/msiexec /i $downloadDir/$game_download_file_name $install_args
+				fi
 			fi
 
 		else
@@ -611,6 +683,25 @@ else
 fi
 
 # Return to system default configuration
-if [ "$(cat /proc/sys/abi/vsyscall32)" -ne 1 ]; then
-	pkexec sh -c 'sysctl -w abi.vsyscall32=1'
+ps -C "RiotClientServi" > /dev/null
+if [ $? = 1 ]
+then
+	if [ "$(cat /proc/sys/abi/vsyscall32)" -ne 1 ]; then
+		pkexec sh -c 'sysctl -w abi.vsyscall32=1'
+	fi
 fi
+
+# Clear desktop
+sleep 10
+test -f "${XDG_CONFIG_HOME:-$HOME/.config}/user-dirs.dirs" && source "${XDG_CONFIG_HOME:-$HOME/.config}/user-dirs.dirs"
+DESKTOP_DIR="${XDG_DESKTOP_DIR:-$HOME/Desktop}"
+
+if [ -d "$DESKTOP_DIR" ]; then
+    cd "/$DESKTOP_DIR"
+    rm -f "League of Legends.desktop"
+    rm -f "Riot Client.desktop"
+    rm -f "Riot Client.lnk"
+fi
+
+rm -rf "$HOME/.local/share/applications/wine/Programs/Riot Games"
+rm -rf "$HOME/.local/share/applications/Programs/Riot Games"

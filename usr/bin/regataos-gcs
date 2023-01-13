@@ -52,6 +52,13 @@ rm -f "/tmp/regataos-gcs/run-regataos-gcs.txt"
 rm -f /tmp/regataos-gcs/config/steam-games/json/steam-id/*
 rm -f "/tmp/regataos-gcs/config/gog-games/games-folders2.txt"
 
+# Set up the desktop location for Wine
+if [[ $(ls -l | grep ">") != *"wine -> $HOME/.local/share/applications"* ]]; then
+	rm -rf $HOME/.local/share/applications/wine
+	ln -sf $HOME/.local/share/applications $HOME/.local/share/applications/wine
+	mkdir -p $HOME/.local/share/applications/Programs
+fi
+
 # Verify that Epic Games Store is installed to sync information
 function legendary_egl_sync() {
 	# Check if you have logged in to the Epic Games Store
