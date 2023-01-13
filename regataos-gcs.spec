@@ -1,5 +1,5 @@
 Name: regataos-gcs
-Version: 5.5
+Version: 5.4
 Release: 0
 Url: https://github.com/regataos/game-access
 Summary: Access your Windows games from Regata OS
@@ -90,6 +90,29 @@ if test ! -e /usr/share/regataos/create-iso.txt ; then
 
 	# Update icon caches
 	update-desktop-database
+fi
+
+# Fix script symlinks
+ln -sf /opt/regataos-gcs/scripts/install/pt-br/install-game-gcs/install-gcs-game.sh \
+/opt/regataos-gcs/scripts/install/pt-br/gcs-compatibility-mode.sh
+
+ln -sf /opt/regataos-gcs/scripts/install/en-us/install-game-gcs/install-gcs-game.sh \
+/opt/regataos-gcs/scripts/install/en-us/gcs-compatibility-mode.sh
+
+# Update LoL custom wine
+user=$(users | awk '{print $1}')
+customRuntimeDir="/home/$user/.config/regataos-gcs/custom-runtime"
+wineVersion="7.0-5"
+wineFile="lutris-ge-lol-$wineVersion-x86_64"
+wineLink="https://github.com/GloriousEggroll/wine-ge-custom/releases/download/7.0-GE-5-LoL/wine-$wineFile.tar.xz"
+
+if test -e "$customRuntimeDir/lol.txt"; then
+  if [[ $(cat "$customRuntimeDir/lol.txt") != *"$wineFile"* ]]; then
+    wget --no-check-certificate -O "$customRuntimeDir/wine-$wineFile.tar.xz" "$wineLink"
+
+    tar xf "$customRuntimeDir/wine-$wineFile.tar.xz" -C "$customRuntimeDir/"
+    echo "$customRuntimeDir/lutris-ge-lol-7.0-5-x86_64" > "$customRuntimeDir/lol.txt"
+  fi
 fi
 
 %clean
