@@ -12,6 +12,8 @@ execute_args="$(grep -r "execute_args" /opt/regataos-gcs/games-list/$gameNicknam
 GCS_CONFIG="$HOME/.config/regataos-gcs/regataos-gcs.conf"
 LOG_FILE="/var/log/regataos-logs/gcs-$gameNickname.log"
 
+echo "$file_executable" >"/tmp/regataos-gcs/game-executable.txt"
+
 # Variables for Wine
 if [[ $(echo $game_plataform) == *"windows"* ]]; then
     if [[ $(echo $custom_runtime) == *"true"* ]]; then
@@ -64,11 +66,15 @@ fi
 # Enable performance info
 if [[ $(grep -r fps $GCS_CONFIG) == *"fps=true"* ]]; then
     export MANGOHUD_CONFIG=cpu_temp,cpu_mhz,ram,vram,gpu_core_clock,gpu_temp,gpu_name,benchmark_percentiles,gamemode,font_size=19
-    export MANGOHUD=1
-    export MANGOHUD_DLSYM=1
-    export MANGOHUD_GL="mangohud --dlsym"
-	export DXVK_HUD=compiler
-    #export DXVK_HUD=devinfo,fps,frametimes,gpuload,api,compiler
+
+    if [[ $(echo $game_plataform) == *"windows"* ]]; then
+        export MANGOHUD=1
+        export MANGOHUD_GL="mangohud"
+        export DXVK_HUD=compiler
+    else
+        export MANGOHUD_DLSYM=1
+        export MANGOHUD_GL="mangohud --dlsym"
+    fi
 fi
 
 # For the NVIDIA proprietary driver

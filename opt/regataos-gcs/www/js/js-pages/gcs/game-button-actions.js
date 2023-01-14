@@ -70,6 +70,8 @@ function runGameId() {
     exec(commandInstallGame, function (error, call, errlog) {
     });
 
+    autoCloseGameAccess();
+
     const buttonPlay = document.getElementById(gameId);
 
     setTimeout(function(){
