@@ -2,13 +2,13 @@ function home_content() {
     $(document).ready(function() {
         // Content of block 1
         //Title
-        $(".appbc1 .block-title").text("Kerbal Space Program");
+        $(".appbc1 .block-title").text("Divine Knockout (DKO)");
         //Block image
-        $(".appbc1").css("background-image", 'url("https://i.ibb.co/rMZzSHG/ksp-block1.webp")');
+        $(".appbc1").css("background-image", 'url("https://i.ibb.co/bbMWh6S/dko-block1.webp")');
         $(".appbc1").css("background-position", "0% 100%")
         //Date
-        date_pt_br="12 de janeiro"
-        date_en_us="January 12"
+        date_pt_br="19 de janeiro"
+        date_en_us="January 19"
     });
 
     // Detect User Language
