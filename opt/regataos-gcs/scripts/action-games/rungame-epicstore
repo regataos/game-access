@@ -90,7 +90,7 @@ fi
 /bin/bash /opt/regataos-gcs/scripts/action-games/configure-compatibility-mode -configure-dxvk-vkd3d
 
 # Fix for games
-ln -sf "/opt/regataos-gcs/tools/legendary/config.ini" "$HOME/.config/legendary/config.ini"
+cp -f "/opt/regataos-gcs/tools/legendary/config.ini" "$HOME/.config/legendary/config.ini"
 
 # Run game
 (/opt/regataos-gcs/tools/legendary/legendary launch "$GAMEID" --wine-prefix "$PREFIX_LOCATION") 2>&1 | tee $LOG_FILE
