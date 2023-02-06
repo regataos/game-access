@@ -7,8 +7,8 @@ function home_content() {
         $(".appbc1").css("background-image", 'url("https://i.ibb.co/8s8kZpp/cg-block1.webp")');
         $(".appbc1").css("background-position", "0% 100%")
         //Date
-        date_pt_br="9 de janeiro"
-        date_en_us="January 9"
+        date_pt_br="9 de fevereiro"
+        date_en_us="February 9"
     });
 
     // Detect User Language
