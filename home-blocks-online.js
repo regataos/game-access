@@ -2,13 +2,13 @@ function home_content() {
     $(document).ready(function() {
         // Content of block 1
         //Title
-        $(".appbc1 .block-title").text("Hell is Others");
+        $(".appbc1 .block-title").text("City of Gangsters");
         //Block image
-        $(".appbc1").css("background-image", 'url("https://i.ibb.co/tqSybZv/ho-block1.webp")');
+        $(".appbc1").css("background-image", 'url("https://i.ibb.co/8s8kZpp/cg-block1.webp")');
         $(".appbc1").css("background-position", "0% 100%")
         //Date
-        date_pt_br="2 de janeiro"
-        date_en_us="January 2"
+        date_pt_br="9 de janeiro"
+        date_en_us="January 9"
     });
 
     // Detect User Language
