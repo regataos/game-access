@@ -72,6 +72,12 @@ $(document).ready(function() {
 	//View more
 	$(".origin-more").text("See more at Origin");
 
+	// EA Desktop page
+	//Page title
+	$(".eadesktop-title").text("Games to play with EA Desktop");
+	//View more
+	$(".eadesktop-more").text("See more at EA Desktop");
+
 	// Rockstar Games Launcher page
 	//Page title
 	$(".rockstar-title").text("Games to play with Rockstar Games Launcher");

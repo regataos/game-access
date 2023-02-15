@@ -31,6 +31,14 @@ function openfolder_origin() {
 	});
 }
 
+function openfolder_eadesktop() {
+	const exec = require('child_process').exec;
+	var command_line = 'xdg-open "$HOME/.local/share/wineprefixes/eadesktop-compatibility-mode/drive_c"';
+	console.log(command_line);
+	exec(command_line,function(error,call,errlog){
+	});
+}
+
 function openfolder_rockstar() {
 	const exec = require('child_process').exec;
 	var command_line = 'xdg-open "$HOME/.local/share/wineprefixes/rockstar-compatibility-mode/drive_c"';

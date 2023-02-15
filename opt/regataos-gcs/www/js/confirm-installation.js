@@ -6,6 +6,7 @@ function show_confirmbox_installation() {
 	if (!err) {
 		const launcher = fs.readFileSync("/tmp/regataos-gcs/confirm-installation", "utf8");
 		const launchername = launcher.replace(/(\r\n|\n|\r)/gm, "");
+		console.log("teste: " + launchername)
 
 		$('.' + launchername + '-install').css('display', 'block')
 		window[('confirm_' + launchername + '_installation')]();

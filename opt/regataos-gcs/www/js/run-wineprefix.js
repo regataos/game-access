@@ -2,14 +2,14 @@
 function runExternalExeFile() {
 	const exec = require('child_process').exec;
 	const fs = require('fs');
+	const launcherJsonFilesDir = "/opt/regataos-gcs/launchers-list"
 
-	let files = [];
+	let launcherJsonFiles = [];
 
 	// Read JSON files with the list of launchers
-	fs.readdirSync("/opt/regataos-gcs/www/js/js-pages/launchers-list").forEach(files => {
-	fs.readFile("/opt/regataos-gcs/www/js/js-pages/launchers-list/" +files , "utf8", function(err, data) {
+	fs.readdirSync(launcherJsonFilesDir).forEach(launcherJsonFiles => {
+	fs.readFile(`${launcherJsonFilesDir}/${launcherJsonFiles}` , "utf8", function(err, data) {
 	if(!err) {
-
 		const launchers = JSON.parse(data);
 
 		for (let i = 0; i < launchers.length; i++) {

@@ -29,7 +29,7 @@ install_dotnet_status="Isso pode demorar alguns minutos..."
 
 #Download information
 app_download_status="Baixando o instalador do Origin..."
-app_download_link="https://download.dm.origin.com/origin/live/OriginUpdate_10_5_116_52126.zip"
+app_download_link="https://download.dm.origin.com/origin/live/OriginUpdate_10_5_119_52718.zip"
 app_download_file_name="OriginUpdate_10_5_116_52126.zip"
 
 #Default settings

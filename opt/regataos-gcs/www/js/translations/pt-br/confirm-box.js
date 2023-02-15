@@ -75,6 +75,23 @@ function confirm_origin_uninstall() {
 	});
 }
 
+// Confirmation notification for eadesktop
+function confirm_eadesktop_installation() {
+	$(document).ready(function() {
+		$(".confir-title").html("O EA Desktop ainda não está instalado.<br>Deseja instalar o EA Desktop?");
+		$(".true-button").text("Sim");
+		$(".false-button").text("Não");
+	});
+}
+
+function confirm_eadesktop_uninstall() {
+	$(document).ready(function() {
+		$(".confir-title").text("Desinstalar o EA Desktop?");
+		$(".true-button").text("Sim");
+		$(".false-button").text("Não");
+	});
+}
+
 // Confirmation notification for rockstar
 function confirm_rockstar_installation() {
 	$(document).ready(function() {
