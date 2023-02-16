@@ -1,0 +1,14 @@
+[
+	{
+		"gamename": "Star Wars: Battlefront II",
+		"gamenickname": "starwarsbtt",
+		"gameexecutable": "starwarsbattlefrontii.exe",
+		"gamerun_appid": "origin://LaunchGame/Origin.OFR.50.0002148",
+		"winevariable": "WINEESYNC=1 WINE_LARGE_ADDRESS_AWARE=1",
+		"gamekeywords": "Star Wars Battlefront, star wars battlefront, star wars battlefront 2, ação, açao, acao, tiro em terceira pessoa, action, first person shooter, fps, origin",
+		"launcher": "Origin",
+		"launchernickname": "origin",
+		"gameorigin": "suggestedgame",
+		"game_access": "false"
+    }
+]

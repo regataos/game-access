@@ -3,7 +3,7 @@
 
 # Settings and variables
 #General information
-app_name="EA Desktop"
+app_name="EA App"
 app_nickname="eadesktop"
 app_name_down="Baixando o $app_name"
 app_name_process="Instalar o $app_name"

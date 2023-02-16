@@ -72,11 +72,11 @@ $(document).ready(function() {
 	//View more
 	$(".origin-more").text("Ver mais no Origin");
 
-	// EA Desktop page
+	// EA App page
 	//Page title
-	$(".eadesktop-title").text("Games para jogar com o EA Desktop");
+	$(".eadesktop-title").text("Games para jogar com o EA App");
 	//View more
-	$(".eadesktop-more").text("Ver mais no EA Desktop");
+	$(".eadesktop-more").text("Ver mais no EA App");
 
 	// Rockstar Games Launcher page
 	//Page title

@@ -2,7 +2,7 @@
 
 # Settings and variables
 #General information
-app_name="EA Desktop"
+app_name="EA App"
 app_nickname="eadesktop"
 app_name_process="Uninstall $app_name"
 app_remove_status="Uninstalling $app_name..."
@@ -36,7 +36,7 @@ function remove_app() {
 	fi
 
 	rm -rf "$app_nickname_dir"
-	rm -f "$HOME/.local/share/applications/$app_name.desktop"
+	rm -f "$HOME/.local/share/applications/EALauncher.desktop"
 	rm -r "$HOME/.local/share/applications/Desinstalar o $app_name.desktop"
 	rm -r "$HOME/.local/share/applications/Relatório de erros do $app_name.desktop"
 	rm -f $HOME/.config/regataos-gcs/$app_nickname.conf
@@ -67,7 +67,7 @@ test -f "${XDG_CONFIG_HOME:-$HOME/.config}/user-dirs.dirs" && source "${XDG_CONF
 DESKTOP_DIR="${XDG_DESKTOP_DIR:-$HOME/Desktop}"
 
 cd "/$DESKTOP_DIR"
-rm -f "$app_name.desktop"
+rm -f "EALauncher.desktop"
 
 # Confirm uninstall
 if test -e "$app_nickname_dir/$app_executable"; then

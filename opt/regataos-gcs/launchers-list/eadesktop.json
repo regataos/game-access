@@ -1,6 +1,6 @@
 [
 	{
-		"launcher_name": "EA Desktop",
+		"launcher_name": "EA App",
 		"launcher_nickname": "eadesktop",
 		"executable_file": "EALauncher.exe",
 		"launcher_executable": "dosdevices/c:/Program Files/Electronic Arts/EA Desktop/EA Desktop/EALauncher.exe",

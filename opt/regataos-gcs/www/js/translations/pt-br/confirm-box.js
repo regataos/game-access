@@ -78,7 +78,7 @@ function confirm_origin_uninstall() {
 // Confirmation notification for eadesktop
 function confirm_eadesktop_installation() {
 	$(document).ready(function() {
-		$(".confir-title").html("O EA Desktop ainda não está instalado.<br>Deseja instalar o EA Desktop?");
+		$(".confir-title").html("O EA App ainda não está instalado.<br>Deseja instalar o EA App?");
 		$(".true-button").text("Sim");
 		$(".false-button").text("Não");
 	});
@@ -86,7 +86,7 @@ function confirm_eadesktop_installation() {
 
 function confirm_eadesktop_uninstall() {
 	$(document).ready(function() {
-		$(".confir-title").text("Desinstalar o EA Desktop?");
+		$(".confir-title").text("Desinstalar o EA App?");
 		$(".true-button").text("Sim");
 		$(".false-button").text("Não");
 	});
