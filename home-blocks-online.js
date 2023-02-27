@@ -13,7 +13,7 @@ function home_content() {
 
     // Detect User Language
     const user_language = selectTranslation();
-    if ((user_language.indexOf("pt_BR") > -1) == "1") {
+    if ((user_language.indexOf("pt-br") > -1) == "1") {
         $(document).ready(function () {
             // Content of block 1
             //Description
@@ -21,7 +21,7 @@ function home_content() {
             // $(".appbc1 .block-desc").text("Jogo misterioso grátis na Epic Games Store.");
         });
 
-    } else if ((user_language.indexOf("pt_PT") > -1) == "1") {
+    } else if ((user_language.indexOf("pt-pt") > -1) == "1") {
         $(document).ready(function () {
             // Content of block 1
             //Description
@@ -29,7 +29,7 @@ function home_content() {
             // $(".appbc1 .block-desc").text("Jogo misterioso grátis na Epic Games Store.");
         });
 
-    } else if ((user_language.indexOf("en_US") > -1) == "1") {
+    } else if ((user_language.indexOf("en-us") > -1) == "1") {
         $(document).ready(function () {
             // Content of block 1
             //Description
