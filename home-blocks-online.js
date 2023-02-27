@@ -7,8 +7,8 @@ function home_content() {
         $(".appbc1").css("background-image", 'url("https://i.ibb.co/CmCLTJj/dks-block1.webp")');
         $(".appbc1").css("background-position", "0% 100%")
         //Date
-        date_pt_br = "16 de fevereiro"
-        date_en_us = "February 16"
+        date_pt_br = "02 de março"
+        date_en_us = "March 02"
     });
 
     // Detect User Language
