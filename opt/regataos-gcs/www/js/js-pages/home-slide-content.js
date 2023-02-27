@@ -27,7 +27,7 @@ function home_content() {
     // Detect User Language
     const userLanguage = selectTranslation();
 
-    if ((userLanguage.indexOf("pt_BR") > -1) == "1") {
+    if ((userLanguage.indexOf("pt-br") > -1) == "1") {
         $(document).ready(function () {
             // Content of slide 1
             //Title and description
@@ -50,7 +50,7 @@ function home_content() {
             $(".slide-content .slide-button4").text("Jogue agora com a Epic Games Store");
         });
 
-    } else if ((userLanguage.indexOf("pt_PT") > -1) == "1") {
+    } else if ((userLanguage.indexOf("pt-pt") > -1) == "1") {
         $(document).ready(function () {
             // Content of slide 1
             //Block image
@@ -76,7 +76,7 @@ function home_content() {
             $(".slide-content .slide-button4").text("Jogue agora com a Epic Games Store");
         });
 
-    } else if ((userLanguage.indexOf("en_US") > -1) == "1") {
+    } else if ((userLanguage.indexOf("en-us") > -1) == "1") {
         $(document).ready(function () {
             // Content of slide 1
             //Title and description
