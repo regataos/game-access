@@ -32,9 +32,18 @@ export PROTON_EAC_RUNTIME="/opt/regataos-wine/runtimes-anticheats/eac_runtime"
 
 # DXVK-NVAPI
 if [[ $(cat "$PREFIX_LOCATION/vulkan.txt") == *"DXVK-NVAPI"* ]]; then
-	export WINEDLLOVERRIDES="mscoree,mshtml,winemenubuilder,winedbg="
+	if [[ $(echo $GAMEID) == *"Heather"* ]]; then
+		export WINEDLLOVERRIDES="vulkan-1=n,b;mscoree,mshtml,winemenubuilder,winedbg=";
+	else
+		export WINEDLLOVERRIDES="mscoree,mshtml,winemenubuilder,winedbg=";
+	fi
+
 else
-	export WINEDLLOVERRIDES="mscoree,mshtml,winemenubuilder,winedbg,nvapi,nvapi64="
+	if [[ $(echo $GAMEID) == *"Heather"* ]]; then
+		export WINEDLLOVERRIDES="vulkan-1=n,b;mscoree,mshtml,winemenubuilder,winedbg,nvapi,nvapi64=";
+	else
+		export WINEDLLOVERRIDES="mscoree,mshtml,winemenubuilder,winedbg,nvapi,nvapi64=";
+	fi
 fi
 
 # DXVK configuration file
