@@ -37,7 +37,7 @@ function home_content() {
             // Content of slide 2
             //Title and description
             $(".slide-content .slide-desc2 p").text("Solte sua imaginação e dê aos seus Sims aparências e personalidades únicas");
-            $(".slide-content .slide-button2").text("Jogue agora com Origin");
+            $(".slide-content .slide-button2").text("Jogue agora com EA App");
 
             // Content of slide 3
             //Title and description

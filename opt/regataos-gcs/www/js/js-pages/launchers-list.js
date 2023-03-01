@@ -33,10 +33,10 @@ function launchers_list() {
 						<div onclick='window.launchername=" + launchernickname + "; go_to_page(); back_button_pages(); check_fps();' class='text-app " + data.launcher_nickname + "-title'>" + data.launcher_name + "</div>";
 
 					// Create the Origin option in the Game Access sidebar only if the app is installed.
-					if ((data.launcher_nickname.indexOf("eadesktop") > -1) == "1") {
+					if ((data.launcher_nickname.indexOf("origin") > -1) == "1") {
 						const checkInstalledLaunchers = fs.readFileSync("/tmp/regataos-gcs/config/installed-launchers.conf", "utf8");
 
-						if ((checkInstalledLaunchers.indexOf("eadesktop") > -1) == "1") {
+						if ((checkInstalledLaunchers.indexOf("origin") > -1) == "1") {
 
 							//Finally, create the new launcher blocks dynamically.
 							all_blocks.appendChild(new_game_blocks);
