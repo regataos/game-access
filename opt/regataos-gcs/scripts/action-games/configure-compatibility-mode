@@ -58,7 +58,6 @@ function configure_dxvk_vkd3d() {
             if [[ $vulkan_test != *"Vulkan support is incomplete"* ]]; then
                 # Function to set DLLs as native by default
                 overrideDll() {
-                    export WINEDLLOVERRIDES="mscoree,mshtml="
                     export WINEPREFIX=$(echo "$WINEPREFIX")
 
                     wine reg add 'HKEY_CURRENT_USER\Software\Wine\DllOverrides' /v $1 /d native /f >/dev/null 2>&1

@@ -87,7 +87,7 @@ game_nickname_dir="$HOME/.local/share/wineprefixes/$game_nickname-compatibility-
 function install_app() {
 	if [[ $(echo $game_plataform) == *"windows"* ]]; then
 		export WINEDEBUG=-all
-		export WINEDLLOVERRIDES="mscoree,mshtml,winemenubuilder,winedbg="
+		export WINEDLLOVERRIDES="winemenubuilder,winedbg="
 		export WINEPREFIX="$game_nickname_dir"
 
 		export WINEESYNC=1
@@ -101,9 +101,9 @@ function install_app() {
 
 		# DXVK-NVAPI
 		if [[ $(cat "$game_nickname_dir/vulkan.txt") == *"DXVK-NVAPI"* ]]; then
-			export WINEDLLOVERRIDES="mscoree,mshtml,winemenubuilder,winedbg="
+			export WINEDLLOVERRIDES="winemenubuilder,winedbg="
 		else
-			export WINEDLLOVERRIDES="mscoree,mshtml,winemenubuilder,winedbg,nvapi,nvapi64="
+			export WINEDLLOVERRIDES="winemenubuilder,winedbg,nvapi,nvapi64="
 		fi
 
 		# DXVK configuration file

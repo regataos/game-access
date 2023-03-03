@@ -29,7 +29,6 @@ function prepareCustomCompatMode() {
 		sleep 1
 		echo "show progress bar" > $progressbar_dir/progressbar
 
-		export WINEDLLOVERRIDES="mscoree,mshtml="
 		export WINEPREFIX="$HOME/.local/share/wineprefixes/$game_nickname-compatibility-mode"
 
 		# Variables for custom Wine

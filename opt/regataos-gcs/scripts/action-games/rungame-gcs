@@ -46,9 +46,9 @@ if [[ $(echo $game_plataform) == *"windows"* ]]; then
 
     # DXVK-NVAPI
     if [[ $(cat "$PREFIX_LOCATION/vulkan.txt") == *"DXVK-NVAPI"* ]]; then
-        export WINEDLLOVERRIDES="mscoree,mshtml,winemenubuilder,winedbg="
+        export WINEDLLOVERRIDES="winemenubuilder,winedbg="
     else
-        export WINEDLLOVERRIDES="mscoree,mshtml,winemenubuilder,winedbg,nvapi,nvapi64="
+        export WINEDLLOVERRIDES="winemenubuilder,winedbg,nvapi,nvapi64="
     fi
 
     # DXVK configuration file

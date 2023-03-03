@@ -32,9 +32,9 @@ export PROTON_EAC_RUNTIME="/opt/regataos-wine/runtimes-anticheats/eac_runtime"
 
 # DXVK-NVAPI
 if [[ $(cat "$PREFIX_LOCATION/vulkan.txt") == *"DXVK-NVAPI"* ]]; then
-	export WINEDLLOVERRIDES="vulkan-1=n,b;mscoree,mshtml,winemenubuilder,winedbg=";
+	export WINEDLLOVERRIDES="vulkan-1=n,b;winemenubuilder,winedbg=";
 else
-	export WINEDLLOVERRIDES="vulkan-1=n,b;mscoree,mshtml,winemenubuilder,winedbg,nvapi,nvapi64=";
+	export WINEDLLOVERRIDES="vulkan-1=n,b;winemenubuilder,winedbg,nvapi,nvapi64=";
 fi
 
 # DXVK configuration file
