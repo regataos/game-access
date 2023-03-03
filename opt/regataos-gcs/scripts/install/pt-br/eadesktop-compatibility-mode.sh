@@ -29,8 +29,8 @@ install_dotnet_status="Isso pode demorar alguns minutos..."
 
 #Download information
 app_download_status="Baixando o instalador do $app_name..."
-app_download_link="https://regataos.github.io/game-access/eadesktop.tar.xz"
-app_download_file_name="eadesktop.tar.xz"
+app_download_link="https://origin-a.akamaihd.net/EA-Desktop-Client-Download/installer-releases/EAappInstaller.exe"
+app_download_file_name="EAappInstaller.exe"
 
 # Check if the wineprefix should be created in the default installation directory
 # or if there is an external directory for new installations.
@@ -67,8 +67,21 @@ else
 	app_nickname_dir="$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"
 fi
 
+function close_app() {
+	while :; do
+		ps -C "CrBrowserMain" >/dev/null
+		if [ $? = 0 ]; then
+			killall EALaunchHelper
+			killall CrBrowserMain
+			break
+		fi
+
+		sleep 1
+	done
+}
+
 function install_app() {
-	tar xf "/tmp/regataos-gcs/$app_download_file_name" -C "$app_nickname_dir/"
+	export WINEPREFIX="$app_nickname_dir"
 
 	# Check the winetricks cache present on the system.
 	if test ! -e "$HOME/.cache/winetricks/vcrun2019"; then
@@ -78,10 +91,13 @@ function install_app() {
 		fi
 	fi
 
-	# Install d3dcompiler_47 dll
-	export WINEDLLOVERRIDES="mscoree,mshtml="
-	export WINEPREFIX="$HOME/.local/share/wineprefixes/default-compatibility-mode"
+	# Install add-ons with Winetricks
+	winetricks prefix=$app_nickname-compatibility-mode -q -f nocrashdialog
+	winetricks prefix=$app_nickname-compatibility-mode -q -f vcrun2013
+	winetricks prefix=$app_nickname-compatibility-mode -q -f vcrun2019
+	winetricks prefix=$app_nickname-compatibility-mode -q -f win10
 
+	# Install d3dcompiler_47 dll
 	overrideDll() {
 		wine reg add 'HKEY_CURRENT_USER\Software\Wine\DllOverrides' /v $1 /d native /f >/dev/null 2>&1
 	}
@@ -98,18 +114,8 @@ function install_app() {
 		overrideDll $(echo "$dll" | sed s/.dll//)
 	done
 
-	# Install add-ons with Winetricks
-	winetricks prefix=$app_nickname-compatibility-mode -q -f nocrashdialog
-	winetricks prefix=$app_nickname-compatibility-mode -q -f d3dcompiler_43
-	winetricks prefix=$app_nickname-compatibility-mode -q -f d3dx9
-	winetricks prefix=$app_nickname-compatibility-mode -q -f xact
-	winetricks prefix=$app_nickname-compatibility-mode -q -f xact_x64
-	winetricks prefix=$app_nickname-compatibility-mode -q -f vcrun2013
-	winetricks prefix=$app_nickname-compatibility-mode -q -f vcrun2019
-	winetricks prefix=$app_nickname-compatibility-mode -q -f msls31
-	winetricks prefix=$app_nickname-compatibility-mode -q -f win10
-
-	sleep 5
+	wine "/tmp/regataos-gcs/$app_download_file_name" /silent &
+	close_app
 
 	# If Vulkan is supported, enable DXVK and VKD3D-Proton
 	export WINEPREFIX="$app_nickname_dir"
@@ -155,8 +161,6 @@ function gameinstall_folder() {
 			external_directory="$(echo $external_directory_file)"
 		fi
 
-		echo -e "\n Teste: $app_nickname_dir \n"
-
 		mkdir -p "$external_directory/$app_name"
 		ln -sf "$external_directory/$app_name" "$app_nickname_dir/drive_c/Program Files/EA Games"
 
@@ -172,7 +176,7 @@ function gameinstall_folder() {
 # Installation failed
 function installation_failed() {
 	# Notify
-	notify-send -i regataos-gcs -u normal -a 'Regata OS Game Access' "$app_name $error_notify_title" "$error_notify_text $app_name."
+	notify-send -i regataos-gcs -u normal -a 'Regata OS Game Access' "$error_notify_title $app_name" "$error_notify_text $app_name."
 }
 
 # Fix Wine applications folder

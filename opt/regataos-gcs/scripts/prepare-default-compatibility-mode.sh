@@ -37,7 +37,6 @@ if test -e "$HOME/.config/regataos-gcs/external-games-folder.txt"; then
 fi
 
 # Settings and variables
-export WINEDLLOVERRIDES="mscoree,mshtml="
 export WINEPREFIX="$HOME/.local/share/wineprefixes/default-compatibility-mode"
 
 # Check the winetricks cache present on the system.

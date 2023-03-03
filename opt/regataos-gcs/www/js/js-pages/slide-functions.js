@@ -50,35 +50,16 @@ function slide_function2() {
 	const fs = require('fs');
 
 	const listInstalledLaunchers = fs.readFileSync("/tmp/regataos-gcs/config/installed-launchers.conf", "utf8");
-	const listInstalledGames = fs.readFileSync("/tmp/regataos-gcs/config/installed-games.conf", "utf8");
 
-	if ((listInstalledLaunchers.indexOf("origin") > -1) == "1") {
-		if ((listInstalledGames.indexOf("ts4") > -1) == "1") {
-			if (fs.existsSync("/usr/share/applications/gcs-slide-function2.desktop")) {
-				const runLauncher = 'gtk-launch "gcs-slide-function2.desktop"';
-				exec(runLauncher, function (error, call, errlog) {
-				});
+	if ((listInstalledLaunchers.indexOf("eadesktop") > -1) == "1") {
+		const runLauncher = 'cd /opt/regataos-wine/desktop-files/; gtk-launch "EALauncher.desktop"';
+		exec(runLauncher, function (error, call, errlog) {
+		});
 
-			} else {
-				const runGame = `
-				export GAME="ts4";
-				export LAUNCHER="origin";
-				export RUNGAME="origin://LaunchGame/OFB-EAST:109552299";
-				/opt/regataos-gcs/scripts/action-games/rungame`;
-				exec(runGame, function (error, call, errlog) {
-				});
-			}
-
-			autoCloseGcs();
-
-		} else {
-			const runLauncher = 'cd /opt/regataos-wine/desktop-files/; gtk-launch "Origin.desktop"';
-			exec(runLauncher, function (error, call, errlog) {
-			});
-		}
+		autoCloseGcs();
 
 	} else {
-		const installLancher = 'echo "origin" > "/tmp/regataos-gcs/confirm-installation"';
+		const installLancher = 'echo "eadesktop" > "/tmp/regataos-gcs/confirm-installation"';
 		exec(installLancher, function (error, call, errlog) {
 		});
 	}
