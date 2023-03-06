@@ -2,13 +2,13 @@ function home_content() {
     $(document).ready(function () {
         // Content of block 1
         //Title
-        $(".appbc1 .block-title").text("Duskers");
+        $(".appbc1 .block-title").text("Rise of Industry");
         //Block image
-        $(".appbc1").css("background-image", 'url("https://i.ibb.co/CmCLTJj/dks-block1.webp")');
+        $(".appbc1").css("background-image", 'url("https://i.ibb.co/VH514kr/rnf-block1.jpg")');
         $(".appbc1").css("background-position", "0% 100%")
         //Date
-        date_pt_br = "02 de março"
-        date_en_us = "March 02"
+        date_pt_br = "09 de março"
+        date_en_us = "March 09"
     });
 
     // Detect User Language
