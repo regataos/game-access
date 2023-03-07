@@ -10,7 +10,7 @@
 		"publisher": "Riot Games",
 		"gamedownload_link": "https://lol.secure.dyn.riotcdn.net/channels/public/x/installer/current/live.na.exe",
 		"gamedownload_file_name": "lol.exe",
-		"install_args": "",
+		"install_args": "--launch-product=league_of_legends --launch-patchline=live",
 		"gamebanner": "lol-banner.webp",
 		"file_executable": "drive_c/Riot Games/Riot Client/RiotClientServices.exe",
 		"execute_args": "",

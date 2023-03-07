@@ -27,6 +27,16 @@ if test ! -e "$HOME/.config/regataos-gcs/installed"; then
 	mkdir -p "$HOME/.config/regataos-gcs/installed"
 fi
 
+if test ! -e "$HOME/Game Access"; then
+	mkdir -p "$HOME/Game Access"
+fi
+
+if test -e "$HOME/.config/regataos-gcs/external-games-folder.txt"; then
+	if test ! -e "$HOME/Game Access/External-Disc"; then
+		ln -sf "$(cat "$HOME/.config/regataos-gcs/external-games-folder.txt")" "$HOME/Game Access/External-Disc";
+	fi
+fi
+
 # Create download cache
 if test ! -e "$HOME/.config/regataos-gcs/progressbar-gcs"; then
 	mkdir -p "$HOME/.config/regataos-gcs/progressbar-gcs/"

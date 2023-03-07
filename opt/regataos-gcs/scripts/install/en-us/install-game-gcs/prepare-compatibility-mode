@@ -16,7 +16,7 @@ function enable_dxvk_vkd3d() {
 }
 
 function prepareCustomCompatMode() {
-	if test -e "$HOME/.local/share/wineprefixes/$game_nickname-compatibility-mode"; then
+	if test -e "$HOME/.local/share/wineprefixes/$game_nickname-compatibility-mode/drive_c"; then
 		# We're finished!
 		exit 0
 
@@ -46,26 +46,26 @@ function prepareCustomCompatMode() {
 		alias winecfg="$CUSTOM_WINE_DIR/bin/winecfg"
 		alias msiexec="$CUSTOM_WINE_DIR/bin/msiexec"
 
-		winetricks prefix=$game_nickname-compatibility-mode -q -f nocrashdialog
-		winetricks prefix=$game_nickname-compatibility-mode -q -f d3dcompiler_43
-		winetricks prefix=$game_nickname-compatibility-mode -q -f d3dx9
+		#winetricks prefix=$game_nickname-compatibility-mode -q -f nocrashdialog
+		#winetricks prefix=$game_nickname-compatibility-mode -q -f d3dcompiler_43
+		#winetricks prefix=$game_nickname-compatibility-mode -q -f d3dx9
 
 		# Install d3dcompiler_47 dll
-		overrideDll() {
-			$CUSTOM_WINE_DIR/bin/wine reg add 'HKEY_CURRENT_USER\Software\Wine\DllOverrides' /v $1 /d native /f >/dev/null 2>&1
-		}
+		#overrideDll() {
+		#	$CUSTOM_WINE_DIR/bin/wine reg add 'HKEY_CURRENT_USER\Software\Wine\DllOverrides' /v $1 /d native /f >/dev/null 2>&1
+		#}
 
-		for dll in $(ls /opt/regataos-wine/dlls/default/x64/ | grep "dll"); do
-			cp -f "/opt/regataos-wine/dlls/default/x64/$dll" "$WINEPREFIX/drive_c/windows/system32/$dll"
+		#for dll in $(ls /opt/regataos-wine/dlls/default/x64/ | grep "dll"); do
+		#	cp -f "/opt/regataos-wine/dlls/default/x64/$dll" "$WINEPREFIX/drive_c/windows/system32/$dll"
 
-			overrideDll $(echo "$dll" | sed s/.dll//)
-		done
+		#	overrideDll $(echo "$dll" | sed s/.dll//)
+		#done
 
-		for dll in $(ls /opt/regataos-wine/dlls/default/x32/ | grep "dll"); do
-			cp -f "/opt/regataos-wine/dlls/default/x32/$dll" "$WINEPREFIX/drive_c/windows/syswow64/$dll"
+		#for dll in $(ls /opt/regataos-wine/dlls/default/x32/ | grep "dll"); do
+		#	cp -f "/opt/regataos-wine/dlls/default/x32/$dll" "$WINEPREFIX/drive_c/windows/syswow64/$dll"
 
-			overrideDll $(echo "$dll" | sed s/.dll//)
-		done
+		#	overrideDll $(echo "$dll" | sed s/.dll//)
+		#done
 
 		# Install DXVK and VKD3D-Proton dll's
 		#DXVK
@@ -117,7 +117,7 @@ function prepareCustomCompatMode() {
 }
 
 function prepareDefaultCompatMode() {
-	if test -e "$HOME/.local/share/wineprefixes/$game_nickname-compatibility-mode"; then
+	if test -e "$HOME/.local/share/wineprefixes/$game_nickname-compatibility-mode/drive_c"; then
 		# We're finished!
 		exit 0
 

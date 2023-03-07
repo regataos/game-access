@@ -14,6 +14,11 @@ if [ -z $gameNickname ]; then
 			sed -i '/^$/d' "/tmp/regataos-gcs/gcs-for-install.txt"
 		fi
 	fi
+
+else
+	if test -e "/tmp/regataos-gcs/start-installation-gcs.txt"; then
+		rm -f "/tmp/regataos-gcs/start-installation-gcs.txt"
+	fi
 fi
 
 user=$(users | awk '{print $1}')
@@ -45,70 +50,155 @@ installation_error_status="Installation error"
 progressbar_dir="/tmp/progressbar-gcs"
 
 # Check the game's installation folder
-GAME_INSTALL_DIR="$GAME_PATH"
-
 if test -e "/tmp/regataos-gcs/$game_nickname-installdir.txt"; then
-	GAME_INSTALL_DIR="$(cat /tmp/regataos-gcs/$game_nickname-installdir.txt)"
-	GAME_PATH="$GAME_INSTALL_DIR"
-	rm -f "/tmp/regataos-gcs/$game_nickname-installdir.txt"
+	custom_game_folder=$(cat "/tmp/regataos-gcs/$game_nickname-installdir.txt")
 
-	if test ! -e "$GAME_INSTALL_DIR/game-access"; then
-		mkdir -p "$GAME_INSTALL_DIR/game-access"
-	fi
+	if [[ $(echo $custom_game_folder) == *"game-access"* ]]; then
+		GAME_PATH="$(echo $custom_game_folder | sed 's|/game-access||')"
 
-	mkdir -p "$GAME_INSTALL_DIR/game-access/tmp"
-	downloadDir="$GAME_INSTALL_DIR/game-access/tmp"
-
-elif [ ! -z "$GAME_INSTALL_DIR" ]; then
-	if [[ $(echo $GAME_INSTALL_DIR) == *"game-access"* ]]; then
-		GAME_INSTALL_DIR="$(echo $GAME_INSTALL_DIR | sed 's/game-access//')"
 	else
-		if test ! -e "$GAME_INSTALL_DIR/game-access"; then
-			mkdir -p "$GAME_INSTALL_DIR/game-access"
+		if test ! -e "$custom_game_folder/game-access"; then
+			mkdir -p "$custom_game_folder/game-access"
 		fi
+
+		GAME_PATH="$(echo $custom_game_folder)"
 	fi
 
-	mkdir -p "$GAME_INSTALL_DIR/game-access/tmp"
-	downloadDir="$GAME_INSTALL_DIR/game-access/tmp"
+	mkdir -p "$GAME_PATH/game-access/$game_nickname"
+	mkdir -p "$GAME_PATH/game-access/tmp"
+	downloadDir="$GAME_PATH/game-access/tmp"
+
+	if [[ $(echo $game_plataform) == *"windows"* ]]; then
+		rm -rf "$HOME/.local/share/wineprefixes/$game_nickname-compatibility-mode"
+		ln -sfv "$GAME_PATH/game-access/$game_nickname" "$HOME/.local/share/wineprefixes/$game_nickname-compatibility-mode"
+
+	else
+		rm -rf "$HOME/Game Access/$game_nickname"
+		ln -sfv "$GAME_PATH/game-access/$game_nickname" "$HOME/Game Access/$game_nickname"
+	fi
+
+elif [ -z "$GAME_PATH" ]; then
+	if test -e "/tmp/regataos-gcs/config/external-games-folder.txt"; then
+		external_games_folder=$(cat "/tmp/regataos-gcs/config/external-games-folder.txt")
+
+		if [[ $(echo $external_games_folder) == *"game-access"* ]]; then
+			GAME_PATH="$(echo $external_games_folder | sed 's|/game-access||')"
+
+		else
+			if test ! -e "$external_games_folder/game-access"; then
+				mkdir -p "$external_games_folder/game-access"
+			fi
+
+			GAME_PATH="$(echo $external_games_folder)"
+		fi
+
+		mkdir -p "$GAME_PATH/game-access/$game_nickname"
+		mkdir -p "$GAME_PATH/game-access/tmp"
+		downloadDir="$GAME_PATH/game-access/tmp"
+
+		if [[ $(echo $game_plataform) == *"windows"* ]]; then
+			rm -rf "$HOME/.local/share/wineprefixes/$game_nickname-compatibility-mode"
+			ln -sfv "$GAME_PATH/game-access/$game_nickname" "$HOME/.local/share/wineprefixes/$game_nickname-compatibility-mode"
+
+		else
+			rm -rf "$HOME/Game Access/$game_nickname"
+			ln -sfv "$GAME_PATH/game-access/$game_nickname" "$HOME/Game Access/$game_nickname"
+		fi
+
+	else
+		if [[ $(echo $game_plataform) == *"windows"* ]]; then
+			rm -rf "$HOME/.local/share/wineprefixes/$game_nickname-compatibility-mode"
+			mkdir -p "$HOME/.local/share/wineprefixes/$game_nickname-compatibility-mode"
+
+		else
+			rm -rf "$HOME/Game Access/$game_nickname"
+			mkdir -p "$HOME/Game Access/$game_nickname"
+		fi
+
+		downloadDir="/tmp/regataos-gcs"
+	fi
 
 else
-	if test ! -e "$HOME/Game Access"; then
-		mkdir -p "$HOME/Game Access"
+	if [[ $(echo $GAME_PATH) == *"game-access"* ]]; then
+		GAME_PATH="$(echo $GAME_PATH | sed 's|/game-access||')"
+
+	else
+		if test ! -e "$GAME_PATH/game-access"; then
+			mkdir -p "$GAME_PATH/game-access"
+		fi
+
+		GAME_PATH="$(echo $GAME_PATH)"
 	fi
 
-	GAME_INSTALL_DIR="$HOME/Game Access"
-	downloadDir="/tmp/regataos-gcs"
+	mkdir -p "$GAME_PATH/game-access/$game_nickname"
+	mkdir -p "$GAME_PATH/game-access/tmp"
+	downloadDir="$GAME_PATH/game-access/tmp"
+
+	if [[ $(echo $game_plataform) == *"windows"* ]]; then
+		rm -rf "$HOME/.local/share/wineprefixes/$game_nickname-compatibility-mode"
+		ln -sfv "$GAME_PATH/game-access/$game_nickname" "$HOME/.local/share/wineprefixes/$game_nickname-compatibility-mode"
+
+	else
+		rm -rf "$HOME/Game Access/$game_nickname"
+		ln -sfv "$GAME_PATH/game-access/$game_nickname" "$HOME/Game Access/$game_nickname"
+	fi
 fi
 
 #Default settings
-game_nickname_dir="$HOME/.local/share/wineprefixes/$game_nickname-compatibility-mode"
+if [[ $(echo $game_plataform) == *"windows"* ]]; then
+	GAME_INSTALL_DIR="$HOME/.local/share/wineprefixes/$game_nickname-compatibility-mode"
+else
+	GAME_INSTALL_DIR="$HOME/Game Access/$game_nickname"
+fi
+
+# Clear desktop
+clearDesktopIcons() {
+	while :; do
+		test -f "${XDG_CONFIG_HOME:-$HOME/.config}/user-dirs.dirs" && source "${XDG_CONFIG_HOME:-$HOME/.config}/user-dirs.dirs"
+		DESKTOP_DIR="${XDG_DESKTOP_DIR:-$HOME/Desktop}"
+
+		if [ -d "$DESKTOP_DIR" ]; then
+			if test -e "$DESKTOP_DIR/Riot Client.desktop"; then
+				cd "/$DESKTOP_DIR"
+				rm -f "League of Legends.desktop"
+				rm -f "Riot Client.desktop"
+				rm -f "Riot Client.lnk"
+
+				rm -rf "$HOME/.local/share/applications/wine/Programs/Riot Games"
+				rm -rf "$HOME/.local/share/applications/Programs/Riot Games"
+
+				break
+			fi
+		fi
+
+		sleep 1
+	done
+}
 
 # Application setup function
 function install_app() {
 	if [[ $(echo $game_plataform) == *"windows"* ]]; then
 		export WINEDEBUG=-all
-		export WINEDLLOVERRIDES="winemenubuilder,winedbg="
-		export WINEPREFIX="$game_nickname_dir"
-
+		export WINEPREFIX="$GAME_INSTALL_DIR"
 		export WINEESYNC=1
 		export WINEFSYNC=1
 		export WINEFSYNC_FUTEX2=1
 		export WINE_LARGE_ADDRESS_AWARE=1
 		export DXVK_ASYNC=1
 		#export DXVK_STATE_CACHE=reset
-		export DXVK_STATE_CACHE_PATH="$game_nickname_dir"
-		export DXVK_LOG_PATH="$game_nickname_dir"
+		export DXVK_STATE_CACHE_PATH="$GAME_INSTALL_DIR"
+		export DXVK_LOG_PATH="$GAME_INSTALL_DIR"
 
 		# DXVK-NVAPI
-		if [[ $(cat "$game_nickname_dir/vulkan.txt") == *"DXVK-NVAPI"* ]]; then
+		if [[ $(cat "$GAME_INSTALL_DIR/vulkan.txt") == *"DXVK-NVAPI"* ]]; then
 			export WINEDLLOVERRIDES="winemenubuilder,winedbg="
 		else
 			export WINEDLLOVERRIDES="winemenubuilder,winedbg,nvapi,nvapi64="
 		fi
 
 		# DXVK configuration file
-		if test -e "$game_nickname_dir/dxvk.conf"; then
-			export DXVK_CONFIG_FILE="$game_nickname_dir/dxvk.conf"
+		if test -e "$GAME_INSTALL_DIR/dxvk.conf"; then
+			export DXVK_CONFIG_FILE="$GAME_INSTALL_DIR/dxvk.conf"
 		fi
 
 		# Enable AMD FSR
@@ -131,7 +221,7 @@ function install_app() {
 		if test -e /usr/bin/nvidia-xconfig; then
 			# For the NVIDIA proprietary driver
 			export __GL_SHADER_DISK_CACHE=1
-			export __GL_SHADER_DISK_CACHE_PATH="$game_nickname_dir"
+			export __GL_SHADER_DISK_CACHE_PATH="$GAME_INSTALL_DIR"
 			export __GL_SHADER_DISK_CACHE_SKIP_CLEANUP=1
 
 			# If necessary, run software with the NVIDIA dGPU
@@ -143,7 +233,7 @@ function install_app() {
 
 			# Special configurations for DXVK with NVIDIA GPU
 			if [[ $(echo $game_plataform) == *"windows"* ]]; then
-				ln -sf "/opt/regataos-wine/custom-configs/gcs/dxvk-nvidia.conf" "$game_nickname_dir/dxvk.conf"
+				ln -sf "/opt/regataos-wine/custom-configs/gcs/dxvk-nvidia.conf" "$GAME_INSTALL_DIR/dxvk.conf"
 			fi
 
 		else
@@ -156,22 +246,8 @@ function install_app() {
 
 			# Special configurations for DXVK with AMD/Intel GPU
 			if [[ $(echo $game_plataform) == *"windows"* ]]; then
-				ln -sf "/opt/regataos-wine/custom-configs/gcs/dxvk.conf" "$game_nickname_dir/dxvk.conf"
+				ln -sf "/opt/regataos-wine/custom-configs/gcs/dxvk.conf" "$GAME_INSTALL_DIR/dxvk.conf"
 			fi
-		fi
-
-		if [ ! -z "$GAME_PATH" ]; then
-			mkdir -p "$GAME_INSTALL_DIR/game-access/$game_folder"
-
-			mv -fv "$game_nickname_dir/drive_c" "$GAME_INSTALL_DIR/game-access/$game_folder/"
-			mv -fv "$game_nickname_dir/system.reg" "$GAME_INSTALL_DIR/game-access/$game_folder/"
-			mv -fv "$game_nickname_dir/user.reg" "$GAME_INSTALL_DIR/game-access/$game_folder/"
-			mv -fv "$game_nickname_dir/userdef.reg" "$GAME_INSTALL_DIR/game-access/$game_folder/"
-
-			ln -sfv "$GAME_INSTALL_DIR/game-access/$game_folder/drive_c" "$game_nickname_dir/"
-			ln -sfv "$GAME_INSTALL_DIR/game-access/$game_folder/system.reg" "$game_nickname_dir/"
-			ln -sfv "$GAME_INSTALL_DIR/game-access/$game_folder/user.reg" "$game_nickname_dir/"
-			ln -sfv "$GAME_INSTALL_DIR/game-access/$game_folder/userdef.reg" "$game_nickname_dir/"
 		fi
 
 		if [[ $(echo $custom_runtime) == *"true"* ]]; then
@@ -194,6 +270,7 @@ function install_app() {
 			if [[ $(echo $game_nickname) == *"lol"* ]]; then
 				pkexec sh -c 'sysctl -w abi.vsyscall32=0'
 				/opt/regataos-gcs/scripts/action-games/launch-helper-lol.sh start &
+				clearDesktopIcons &
 				$CUSTOM_WINE_DIR/bin/wine $downloadDir/$game_download_file_name $install_args
 
 			else
@@ -214,11 +291,7 @@ function install_app() {
 
 	else
 		if [[ $(echo $game_download_file_name) == *".zip"* ]]; then
-			if [ -z "$GAME_PATH" ]; then
-				unzip -u "$downloadDir/$game_download_file_name" -d "$GAME_INSTALL_DIR/"
-			else
-				unzip -u "$downloadDir/$game_download_file_name" -d "$GAME_INSTALL_DIR/game-access/"
-			fi
+			unzip -u "$downloadDir/$game_download_file_name" -d "$GAME_INSTALL_DIR/"
 		fi
 	fi
 }
@@ -226,6 +299,16 @@ function install_app() {
 # Successful installation
 function success_installation() {
 	cp -f "/opt/regataos-gcs/games-list/$game_nickname.json" "$HOME/.config/regataos-gcs/installed/$game_nickname.json"
+
+	if [ ! -z "$GAME_PATH" ]; then
+		echo -e "nickname=$game_nickname\ninstalldir=$GAME_PATH/game-access/$game_nickname\n" >>"$GAME_INSTALL_DIR/gcs-game.conf"
+
+		if [[ $(echo $game_plataform) == *"windows"* ]]; then
+			ln -sf $(echo "$GAME_PATH/game-access/$game_nickname" | sed 's/-compatibility-mode//') "$HOME/Game Access/"
+		else
+			ln -sf "$GAME_PATH/game-access/$game_nickname" "$HOME/Game Access/"
+		fi
+	fi
 
 	# Notify
 	notify-send -i regataos-gcs -u normal -a 'Regata OS Game Access' "$game_name $success_notify_title" "$game_name $success_notify_text"
@@ -236,7 +319,7 @@ function installation_failed() {
 	rm -f "$HOME/.config/regataos-gcs/installed/$game_nickname.json"
 
 	# Notify
-	notify-send -i regataos-gcs -u normal -a 'Regata OS Game Access' "$game_name $error_notify_title" "$error_notify_text $game_name."
+	notify-send -i regataos-gcs -u normal -a 'Regata OS Game Access' "$error_notify_title $game_name!" "$error_notify_text $game_name."
 }
 
 # Search for processes
@@ -246,12 +329,13 @@ if test -e "$progressbar_dir/installing"; then
 		kmsg=$(grep -r $game_nickname $progressbar_dir/queued-process)
 		if [[ $kmsg == *"$game_nickname"* ]]; then
 			echo "Nothing to do."
+
 		else
 			echo "$game_nickname" >>"/tmp/regataos-gcs/gcs-for-install.txt"
 			sed -i '/^$/d' "/tmp/regataos-gcs/gcs-for-install.txt"
 
-			if [[ $(echo $GAME_INSTALL_DIR) != *"$HOME/Game Access"* ]]; then
-				echo "$GAME_INSTALL_DIR" >"/tmp/regataos-gcs/$game_nickname-installdir.txt"
+			if [[ $(echo $GAME_PATH) != *"$HOME/Game Access"* ]]; then
+				echo "$GAME_PATH" >"/tmp/regataos-gcs/$game_nickname-installdir.txt"
 			fi
 
 			echo "$game_nickname=gcs process-$game_name_process" >>$progressbar_dir/queued-process
@@ -306,7 +390,7 @@ function start_installation() {
 
 	killall install-gcs-game.sh
 	killall winetricks
-	rm -rf "$game_nickname_dir"
+	rm -rf "$GAME_INSTALL_DIR"
 	rm -rf "$HOME/.config/regataos-gcs/custom-runtime/$custom_runtime_name"
 	rm -f "$HOME/.config/regataos-gcs/custom-runtime/$game_nickname.txt"
 	rm -f "$downloadDir/$game_download_file_name"
@@ -577,19 +661,13 @@ EOM
 		rm -f /tmp/regataos-gcs/installing-$game_nickname
 		rm -f "$downloadDir/$game_download_file_name"
 
-		if [ ! -z "$GAME_PATH" ]; then
-			echo "nickname=$game_nickname" >"$GAME_INSTALL_DIR/game-access/$game_folder/gcs-game.conf"
-			echo "installdir=$GAME_INSTALL_DIR/game-access/$game_folder" >>"$GAME_INSTALL_DIR/game-access/$game_folder/gcs-game.conf"
-			ln -sf "$GAME_INSTALL_DIR/game-access/$game_folder" "$HOME/Game Access/"
-		fi
-
 		# If there are no more processes, clear the progress bar cache
 		if test ! -e "$progressbar_dir/queued-1"; then
 			rm -f $progressbar_dir/progressbar
 			rm -f $progressbar_dir/*
 		fi
 
-	elif test -e "$GAME_INSTALL_DIR/game-access/$game_folder/$file_executable"; then
+	elif test -e "$GAME_INSTALL_DIR/$file_executable"; then
 		rm -f $progressbar_dir/progress-movement
 		echo "completed" >$progressbar_dir/progress-full
 		echo "" >$progressbar_dir/status
@@ -601,12 +679,6 @@ EOM
 		rm -f $progressbar_dir/installing
 		rm -f /tmp/regataos-gcs/installing-$game_nickname
 		rm -f "$downloadDir/$game_download_file_name"
-
-		if [ ! -z "$GAME_PATH" ]; then
-			echo "nickname=$game_nickname" >"$GAME_INSTALL_DIR/game-access/$game_folder/gcs-game.conf"
-			echo "installdir=$GAME_INSTALL_DIR/game-access/$game_folder" >>"$GAME_INSTALL_DIR/game-access/$game_folder/gcs-game.conf"
-			ln -sf "$GAME_INSTALL_DIR/game-access/$game_folder" "$HOME/Game Access/"
-		fi
 
 		# If there are no more processes, clear the progress bar cache
 		if test ! -e "$progressbar_dir/queued-1"; then
@@ -627,12 +699,6 @@ EOM
 		rm -f /tmp/regataos-gcs/installing-$game_nickname
 		rm -f "$downloadDir/$game_download_file_name"
 
-		if [ ! -z "$GAME_PATH" ]; then
-			echo "nickname=$game_nickname" >"$GAME_INSTALL_DIR/game-access/$game_folder/gcs-game.conf"
-			echo "installdir=$GAME_INSTALL_DIR/game-access/$game_folder" >>"$GAME_INSTALL_DIR/game-access/$game_folder/gcs-game.conf"
-			ln -sf "$GAME_INSTALL_DIR/game-access/$game_folder" "$HOME/Game Access/"
-		fi
-
 		# If there are no more processes, clear the progress bar cache
 		if test ! -e "$progressbar_dir/queued-1"; then
 			rm -f $progressbar_dir/progressbar
@@ -648,14 +714,21 @@ EOM
 		sleep 2
 		rm -f $progressbar_dir/installing
 		rm -f /tmp/regataos-gcs/installing-$game_nickname
-		rm -rf "$game_nickname_dir"
 		rm -rf "$HOME/.config/regataos-gcs/custom-runtime/$custom_runtime_name"
 		rm -f "$HOME/.config/regataos-gcs/custom-runtime/$game_nickname.txt"
 		rm -f "$downloadDir/$game_download_file_name"
 		rm -f "/tmp/regataos-gcs/$custom_runtime_file"
 
-		if [ ! -z "$GAME_PATH" ]; then
-			rm -rf "$GAME_INSTALL_DIR/game-access/$game_folder"
+		if [ ! -z "$game_nickname" ]; then
+			echo -e "-- GAME_PATH: $GAME_PATH\n"
+			rm -rf "$HOME/.local/share/wineprefixes/$game_nickname-compatibility-mode"
+			rm -rf "$GAME_PATH/game-access/$game_nickname"
+			rm -rf "$(echo "$HOME/Game Access/$game_nickname")"-*
+			rm -rf "$GAME_INSTALL_DIR"
+		fi
+
+		if [ ! -z "$game_folder" ]; then
+			rm -rf "$GAME_PATH/game-access/$game_folder"
 		fi
 
 		# If there are no more processes, clear the progress bar cache
@@ -663,6 +736,16 @@ EOM
 			rm -f $progressbar_dir/progressbar
 			rm -f $progressbar_dir/*
 		fi
+
+		# Stop clearDesktopIcons function
+		test -f "${XDG_CONFIG_HOME:-$HOME/.config}/user-dirs.dirs" && source "${XDG_CONFIG_HOME:-$HOME/.config}/user-dirs.dirs"
+		DESKTOP_DIR="${XDG_DESKTOP_DIR:-$HOME/Desktop}"
+
+		if [ -d "$DESKTOP_DIR" ]; then
+			echo "" >"$DESKTOP_DIR/Riot Client.desktop"
+		fi
+
+		exit 0
 	fi
 }
 
@@ -670,38 +753,22 @@ EOM
 if [[ $(ps aux | egrep "install-gcs-game.sh") == *"install-gcs-game.sh"* ]]; then
 	if test -e "$progressbar_dir/download-extra.txt"; then
 		rm -f "$progressbar_dir/download-extra.txt"
-		start_installation
+		start_installation >"/var/log/regataos-logs/install-gcs-game-$game_nickname.log"
 	else
 		if test -e "$progressbar_dir/installing"; then
 			echo "Installation in progress..."
 		else
-			start_installation
+			start_installation >"/var/log/regataos-logs/install-gcs-game-$game_nickname.log"
 		fi
 	fi
 else
-	start_installation
+	start_installation >"/var/log/regataos-logs/install-gcs-game-$game_nickname.log"
 fi
 
 # Return to system default configuration
-ps -C "RiotClientServi" > /dev/null
-if [ $? = 1 ]
-then
+ps -C "RiotClientServi" >/dev/null
+if [ $? = 1 ]; then
 	if [ "$(cat /proc/sys/abi/vsyscall32)" -ne 1 ]; then
 		pkexec sh -c 'sysctl -w abi.vsyscall32=1'
 	fi
 fi
-
-# Clear desktop
-sleep 10
-test -f "${XDG_CONFIG_HOME:-$HOME/.config}/user-dirs.dirs" && source "${XDG_CONFIG_HOME:-$HOME/.config}/user-dirs.dirs"
-DESKTOP_DIR="${XDG_DESKTOP_DIR:-$HOME/Desktop}"
-
-if [ -d "$DESKTOP_DIR" ]; then
-    cd "/$DESKTOP_DIR"
-    rm -f "League of Legends.desktop"
-    rm -f "Riot Client.desktop"
-    rm -f "Riot Client.lnk"
-fi
-
-rm -rf "$HOME/.local/share/applications/wine/Programs/Riot Games"
-rm -rf "$HOME/.local/share/applications/Programs/Riot Games"

@@ -3,22 +3,22 @@ function show_confirmbox_installation() {
 	const fs = require('fs');
 
 	fs.access("/tmp/regataos-gcs/confirm-installation", (err) => {
-	if (!err) {
-		const launcher = fs.readFileSync("/tmp/regataos-gcs/confirm-installation", "utf8");
-		const launchername = launcher.replace(/(\r\n|\n|\r)/gm, "");
-		console.log("teste: " + launchername)
+		if (!err) {
+			const launcher = fs.readFileSync("/tmp/regataos-gcs/confirm-installation", "utf8");
+			const launchername = launcher.replace(/(\r\n|\n|\r)/gm, "");
+			console.log("teste: " + launchername)
 
-		$('.' + launchername + '-install').css('display', 'block')
-		window[('confirm_' + launchername + '_installation')]();
+			$('.' + launchername + '-install').css('display', 'block')
+			window[('confirm_' + launchername + '_installation')]();
 
-	return;
-	}
+			return;
+		}
 	});
 }
 
 // Cancel installation or close confirm box
 function cancel_install() {
-const fs = require('fs');
+	const fs = require('fs');
 	const launcher = fs.readFileSync("/tmp/regataos-gcs/confirm-installation", "utf8");
 	const launchername = launcher.replace(/(\r\n|\n|\r)/gm, "");
 
@@ -36,7 +36,7 @@ function install_launcher() {
 
 	const command_line = "/opt/regataos-gcs/scripts/install/scripts-install/" + launchername + "-compatibility-mode.sh";
 	console.log(command_line);
-	exec(command_line,function(error,call,errlog){
+	exec(command_line, function (error, call, errlog) {
 	});
 
 	cancel_install();
@@ -78,17 +78,17 @@ function show_confirmbox_uninstall_game_epicstore() {
 	const fs = require('fs');
 
 	fs.access("/tmp/regataos-gcs/start-uninstallation-epicstore.txt", (err) => {
-	if (!err) {
-		$('.confirm-start-game-uninstallation').css('display', 'block')
-	return;
-	}
+		if (!err) {
+			$('.confirm-start-game-uninstallation').css('display', 'block')
+			return;
+		}
 	});
 
 	fs.access("/tmp/regataos-gcs/start-uninstallation-gog.txt", (err) => {
-	if (!err) {
-		$('.confirm-start-game-uninstallation-gog').css('display', 'block')
-	return;
-	}
+		if (!err) {
+			$('.confirm-start-game-uninstallation-gog').css('display', 'block')
+			return;
+		}
 	});
 }
 
@@ -97,14 +97,14 @@ function show_remove_user_account() {
 	const fs = require('fs');
 
 	fs.access("/tmp/regataos-gcs/remove-user-account-epicstore.txt", (err) => {
-	if (!err) {
-		$('.remove-user-account').css('display', 'block')
-	return;
-	}
+		if (!err) {
+			$('.remove-user-account').css('display', 'block')
+			return;
+		}
 	});
 }
 
-setInterval(function() {
+setInterval(function () {
 	show_confirmbox_installing_game();
 	show_confirmbox_uninstall_game_epicstore();
 	show_confirmbox_installation();
@@ -117,7 +117,7 @@ function cancel_game_installation() {
 
 	const command_line = "rm -f /tmp/regataos-gcs/start-installation-*.txt";
 	console.log(command_line);
-	exec(command_line,function(error,call,errlog){
+	exec(command_line, function (error, call, errlog) {
 	});
 
 	$('.confirm-start-game-installation').css('display', 'none')
@@ -127,7 +127,7 @@ function cancel_game_installation() {
 function default_folder_enabled() {
 	const checkBox = document.getElementById("default-folder-enabled");
 
-	if (checkBox.checked == true){
+	if (checkBox.checked == true) {
 		document.getElementById("select-installation-folder").disabled = true;
 	} else {
 		document.getElementById("select-installation-folder").disabled = false;
@@ -137,7 +137,7 @@ function default_folder_enabled() {
 function default_folder_disabled() {
 	const checkBox = document.getElementById("default-folder-disabled");
 
-	if (checkBox.checked == true){
+	if (checkBox.checked == true) {
 		document.getElementById("select-installation-folder").disabled = true;
 	} else {
 		document.getElementById("select-installation-folder").disabled = false;
@@ -146,7 +146,7 @@ function default_folder_disabled() {
 
 // Import game from Epic Games Store
 function import_game() {
-	$('input[id="select-file"]').change(function(e){
+	$('input[id="select-file"]').change(function (e) {
 		const fileinput = document.querySelector('input#select-file');
 		const path = fileinput.value;
 
@@ -155,18 +155,18 @@ function import_game() {
 
 			if (fs.existsSync(`${path}/gcs-game.conf`)) {
 				const command_line = 'export GAME_PATH="' + path + '"; /opt/regataos-gcs/scripts/install/scripts-install/install-game-gcs/import-gcs-game.sh';
-				exec(command_line,function(error,call,errlog){
+				exec(command_line, function (error, call, errlog) {
 				});
 
 			} else {
 				const command_line = 'export GAME_PATH="' + path + '"; /opt/regataos-gcs/scripts/install/scripts-install/install-game-epicstore/import-epicstore-game.sh';
-				exec(command_line,function(error,call,errlog){
+				exec(command_line, function (error, call, errlog) {
 				});
 			}
 		}
 
 		$('.confirm-start-game-installation').css('display', 'none')
-		fileinput.value='';
+		fileinput.value = '';
 	});
 }
 
@@ -176,7 +176,7 @@ function install_game_epicstore_default_folder_enabled() {
 	const exec = require('child_process').exec;
 
 	const command_line = 'export GAME_PATH=""; /opt/regataos-gcs/scripts/install/scripts-install/install-game-epicstore/install-epicstore-game.sh';
-	exec(command_line,function(error,call,errlog){
+	exec(command_line, function (error, call, errlog) {
 	});
 
 	$('.confirm-start-game-installation').css('display', 'none')
@@ -184,27 +184,33 @@ function install_game_epicstore_default_folder_enabled() {
 
 //Install game by choosing a specific directory
 function install_game_epicstore_default_folder_disabled() {
-	$('input[id="select-installation-folder"]').change(function(e){
+	$('input[id="select-installation-folder"]').change(function (e) {
 		const fileinput = document.querySelector('input#select-installation-folder');
 		const path = fileinput.value;
 
 		const exec = require('child_process').exec;
 		const command_line = 'export GAME_PATH="' + path + '"; /opt/regataos-gcs/scripts/install/scripts-install/install-game-epicstore/install-epicstore-game.sh';
-		exec(command_line,function(error,call,errlog){
+		exec(command_line, function (error, call, errlog) {
 		});
 
 		$('.confirm-start-game-installation').css('display', 'none')
-		fileinput.value='';
+		fileinput.value = '';
 	});
 }
 
 // Install game from Game Access
 //Install game using default directory
 function install_game_gcs_default_folder_enabled() {
-	const exec = require('child_process').exec;
+	const fs = require("fs");
+	let newGameId = fs.readFileSync("/tmp/regataos-gcs/start-installation-gcs.txt", "utf8");
+	newGameId = newGameId.replace(/(\r\n|\n|\r)/gm, "");
+	newGameId = newGameId.trim();
 
-	const command_line = 'export GAME_PATH=""; /opt/regataos-gcs/scripts/install/scripts-install/install-game-gcs/install-gcs-game.sh';
-	exec(command_line,function(error,call,errlog){
+	const exec = require('child_process').exec;
+	const command_line = `export gameNickname="${newGameId}"; export GAME_PATH="";
+	/opt/regataos-gcs/scripts/install/scripts-install/install-game-gcs/install-gcs-game.sh`;
+	console.log(command_line);
+	exec(command_line, function (error, call, errlog) {
 	});
 
 	$('.confirm-start-game-installation').css('display', 'none')
@@ -212,17 +218,24 @@ function install_game_gcs_default_folder_enabled() {
 
 //Install game by choosing a specific directory
 function install_game_gcs_default_folder_disabled() {
-	$('input[id="select-installation-folder"]').change(function(e){
+	$('input[id="select-installation-folder"]').change(function (e) {
 		const fileinput = document.querySelector('input#select-installation-folder');
 		const path = fileinput.value;
 
+		const fs = require("fs");
+		let newGameId = fs.readFileSync("/tmp/regataos-gcs/start-installation-gcs.txt", "utf8");
+		newGameId = newGameId.replace(/(\r\n|\n|\r)/gm, "");
+		newGameId = newGameId.trim();
+
 		const exec = require('child_process').exec;
-		const command_line = 'export GAME_PATH="' + path + '"; /opt/regataos-gcs/scripts/install/scripts-install/install-game-gcs/install-gcs-game.sh';
-		exec(command_line,function(error,call,errlog){
+		const command_line = `export gameNickname="${newGameId}"; export GAME_PATH="${path}";
+		/opt/regataos-gcs/scripts/install/scripts-install/install-game-gcs/install-gcs-game.sh`;
+		console.log(command_line);
+		exec(command_line, function (error, call, errlog) {
 		});
 
 		$('.confirm-start-game-installation').css('display', 'none')
-		fileinput.value='';
+		//fileinput.value = '';
 	});
 }
 
@@ -232,28 +245,28 @@ function default_folder() {
 	const checkBox2 = document.getElementById("default-folder-disabled");
 
 	if (fs.existsSync("/tmp/regataos-gcs/start-installation-epicstore.txt")) {
-		if (checkBox1.checked == true){
+		if (checkBox1.checked == true) {
 			document.getElementById("select-installation-folder").disabled = true;
 			install_game_epicstore_default_folder_enabled();
-	
-		} else if (checkBox2.checked == true){
+
+		} else if (checkBox2.checked == true) {
 			document.getElementById("select-installation-folder").disabled = true;
 			install_game_epicstore_default_folder_enabled();
-	
+
 		} else {
 			document.getElementById("select-installation-folder").disabled = false;
 			install_game_epicstore_default_folder_disabled();
 		}
 
 	} else if (fs.existsSync("/tmp/regataos-gcs/start-installation-gcs.txt")) {
-		if (checkBox1.checked == true){
+		if (checkBox1.checked == true) {
 			document.getElementById("select-installation-folder").disabled = true;
 			install_game_gcs_default_folder_enabled();
-	
-		} else if (checkBox2.checked == true){
+
+		} else if (checkBox2.checked == true) {
 			document.getElementById("select-installation-folder").disabled = true;
 			install_game_gcs_default_folder_enabled();
-	
+
 		} else {
 			document.getElementById("select-installation-folder").disabled = false;
 			install_game_gcs_default_folder_disabled();
@@ -265,7 +278,7 @@ function default_folder() {
 function start_uninstall_epicstore_game() {
 	const exec = require('child_process').exec;
 	const command_line = '/opt/regataos-gcs/scripts/remove/scripts-remove/uninstall-game-epicstore/uninstall-epicstore-game.sh';
-	exec(command_line,function(error,call,errlog){
+	exec(command_line, function (error, call, errlog) {
 	});
 
 	$('.confirm-start-game-uninstallation').css('display', 'none')
@@ -275,7 +288,7 @@ function cancel_uninstall_epicstore_game() {
 	const exec = require('child_process').exec;
 	const command_line = 'rm -f /tmp/regataos-gcs/start-uninstallation-epicstore.txt';
 	console.log(command_line);
-	exec(command_line,function(error,call,errlog){
+	exec(command_line, function (error, call, errlog) {
 	});
 
 	$('.confirm-start-game-uninstallation').css('display', 'none')
@@ -285,7 +298,7 @@ function cancel_uninstall_epicstore_game() {
 function start_uninstall_gog_game() {
 	const exec = require('child_process').exec;
 	const command_line = '/opt/regataos-gcs/scripts/action-games/remove-game';
-	exec(command_line,function(error,call,errlog){
+	exec(command_line, function (error, call, errlog) {
 	});
 
 	$('.confirm-start-game-uninstallation-gog').css('display', 'none')
@@ -295,7 +308,7 @@ function cancel_uninstall_gog_game() {
 	const exec = require('child_process').exec;
 	const command_line = 'rm -f /tmp/regataos-gcs/start-uninstallation-gog.txt';
 	console.log(command_line);
-	exec(command_line,function(error,call,errlog){
+	exec(command_line, function (error, call, errlog) {
 	});
 
 	$('.confirm-start-game-uninstallation-gog').css('display', 'none')
