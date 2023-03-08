@@ -14,7 +14,7 @@
 		"gamebanner": "xonotic-img1.webp",
 		"file_executable": "xonotic-linux-sdl.sh",
 		"execute_args": "",
-		"gamefolder": "Xonotic",
+		"gamefolder": "xonotic/Xonotic",
 		"custom_runtime": "false",
 		"custom_runtime_name": "",
 		"custom_runtime_download": "",

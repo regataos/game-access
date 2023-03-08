@@ -48,6 +48,7 @@ error_notify_title="installation error!"
 error_notify_text="There was an error installing"
 installation_error_status="Installation error"
 progressbar_dir="/tmp/progressbar-gcs"
+GCS_CONFIG="$HOME/.config/regataos-gcs/regataos-gcs.conf"
 
 # Check the game's installation folder
 if test -e "/tmp/regataos-gcs/$game_nickname-installdir.txt"; then
@@ -76,6 +77,8 @@ if test -e "/tmp/regataos-gcs/$game_nickname-installdir.txt"; then
 		rm -rf "$HOME/Game Access/$game_nickname"
 		ln -sfv "$GAME_PATH/game-access/$game_nickname" "$HOME/Game Access/$game_nickname"
 	fi
+
+	rm -f "/tmp/regataos-gcs/$game_nickname-installdir.txt"
 
 elif [ -z "$GAME_PATH" ]; then
 	if test -e "/tmp/regataos-gcs/config/external-games-folder.txt"; then
@@ -362,6 +365,10 @@ else
 				echo "$game_nickname" >>"/tmp/regataos-gcs/gcs-for-install.txt"
 				sed -i '/^$/d' "/tmp/regataos-gcs/gcs-for-install.txt"
 
+				if [[ $(echo $GAME_PATH) != *"$HOME/Game Access"* ]]; then
+					echo "$GAME_PATH" >"/tmp/regataos-gcs/$game_nickname-installdir.txt"
+				fi
+
 				echo "$game_nickname=gcs process-$game_name_process" >>$progressbar_dir/queued-process
 			fi
 
@@ -395,6 +402,7 @@ function start_installation() {
 	rm -f "$HOME/.config/regataos-gcs/custom-runtime/$game_nickname.txt"
 	rm -f "$downloadDir/$game_download_file_name"
 	rm -f "/tmp/regataos-gcs/$custom_runtime_file"
+	rm -f "/tmp/regataos-gcs/$game_nickname-installdir.txt"
 	sed -i "/$gameNickname/d" "/tmp/regataos-gcs/gcs-for-install.txt"
 	sed -i '/^$/d' "/tmp/regataos-gcs/gcs-for-install.txt"
 
@@ -451,7 +459,11 @@ EOM
 	# Download
 	echo "$downloadDir/$game_download_file_name" >$progressbar_dir/file-download-size
 	echo "wget --no-check-certificate -O $downloadDir/$game_download_file_name $game_download" >$progressbar_dir/get-pid
-	wget --no-check-certificate -O "$downloadDir/$game_download_file_name" "$game_download" 2>&1 | (pv -n >$progressbar_dir/download-percentage)
+
+	if test ! -e "$downloadDir/$game_download_file_name"; then
+		wget --no-check-certificate -O "$downloadDir/$game_download_file_name" "$game_download" 2>&1 | (pv -n >$progressbar_dir/download-percentage)
+	fi
+
 	echo 100% >$progressbar_dir/progress
 	sleep 3
 	rm -f $progressbar_dir/download-percentage
@@ -479,161 +491,8 @@ EOM
 			/opt/regataos-gcs/scripts/install/scripts-install/install-game-gcs/prepare-compatibility-mode -lcm $game_nickname
 
 		else
-			# For default runtime
-			if test -e "$HOME/.local/share/wineprefixes/default-compatibility-mode"; then
-				if test ! -e "$HOME/.local/share/wineprefixes/$game_nickname-compatibility-mode"; then
-					# Configuring compatibility mode
-					echo "installing" >$progressbar_dir/progress-movement
-					echo "" >$progressbar_dir/progress
-					echo $game_name >$progressbar_dir/app-name
-					echo $conf_prefix_status >$progressbar_dir/status
-					sleep 1
-					echo "show progress bar" >$progressbar_dir/progressbar
-
-					# Enable DXVK and VKD3D-Proton
-					if test ! -e "$HOME/.local/share/wineprefixes/default-compatibility-mode/vulkan.txt"; then
-						enable_dxvk_vkd3d
-					fi
-
-					# Prepare to copy launcher wineprefix
-					if test -e "$HOME/.config/regataos-gcs/external-games-folder.txt"; then
-						external_directory_file="$(cat "$HOME/.config/regataos-gcs/external-games-folder.txt")"
-
-						if [[ $(echo $external_directory_file) != *"game-access"* ]]; then
-							mkdir -p "$(echo $external_directory_file)/game-access"
-							external_directory="$(echo $external_directory_file)/game-access"
-						else
-							external_directory="$(echo $external_directory_file)"
-						fi
-
-						if test ! -e "$(echo $external_directory)/wineprefixes-gcs"; then
-							mkdir -p "$(echo $external_directory)/wineprefixes-gcs"
-						fi
-
-						if test -e "$(echo $external_directory)/wineprefixes-gcs/default-compatibility-mode"; then
-							cp -rf "$(echo $external_directory)/wineprefixes-gcs/default-compatibility-mode" \
-								"$(echo $external_directory)/wineprefixes-gcs/$app_nickname-compatibility-mode"
-
-						else
-							rm -rf "$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"
-
-							cp -rf "$HOME/.local/share/wineprefixes/default-compatibility-mode" \
-								"$(echo $external_directory)/wineprefixes-gcs/$app_nickname-compatibility-mode"
-
-							ln -sf "$(echo $external_directory)/wineprefixes-gcs/$app_nickname-compatibility-mode" \
-								"$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"
-						fi
-
-					else
-						cp -rf "$HOME/.local/share/wineprefixes/default-compatibility-mode" \
-							"$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"
-					fi
-				fi
-
-			elif test -e "/usr/share/regataos/compatibility-mode/default-wineprefix.tar.xz"; then
-				if test ! -e "$HOME/.local/share/wineprefixes/$game_nickname-compatibility-mode"; then
-					# Configuring compatibility mode
-					echo "installing" >$progressbar_dir/progress-movement
-					echo "" >$progressbar_dir/progress
-					echo $game_name >$progressbar_dir/app-name
-					echo $conf_prefix_status >$progressbar_dir/status
-					sleep 1
-					echo "show progress bar" >$progressbar_dir/progressbar
-
-					if test -e "/usr/share/regataos/compatibility-mode/default-wineprefix.tar.xz"; then
-						tar xf "/usr/share/regataos/compatibility-mode/default-wineprefix.tar.xz" -C "$HOME/.local/share/wineprefixes/"
-					fi
-
-					# Enable DXVK and VKD3D-Proton
-					if test ! -e "$HOME/.local/share/wineprefixes/default-compatibility-mode/vulkan.txt"; then
-						enable_dxvk_vkd3d
-					fi
-
-					# Prepare to copy launcher wineprefix
-					if test -e "$HOME/.config/regataos-gcs/external-games-folder.txt"; then
-						external_directory_file="$(cat "$HOME/.config/regataos-gcs/external-games-folder.txt")"
-
-						if [[ $(echo $external_directory_file) != *"game-access"* ]]; then
-							mkdir -p "$(echo $external_directory_file)/game-access"
-							external_directory="$(echo $external_directory_file)/game-access"
-						else
-							external_directory="$(echo $external_directory_file)"
-						fi
-
-						if test ! -e "$(echo $external_directory)/wineprefixes-gcs"; then
-							mkdir -p "$(echo $external_directory)/wineprefixes-gcs"
-						fi
-
-						if test -e "$(echo $external_directory)/wineprefixes-gcs/default-compatibility-mode"; then
-							cp -rf "$(echo $external_directory)/wineprefixes-gcs/default-compatibility-mode" \
-								"$(echo $external_directory)/wineprefixes-gcs/$app_nickname-compatibility-mode"
-
-						else
-							rm -rf "$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"
-
-							cp -rf "$HOME/.local/share/wineprefixes/default-compatibility-mode" \
-								"$(echo $external_directory)/wineprefixes-gcs/$app_nickname-compatibility-mode"
-
-							ln -sf "$(echo $external_directory)/wineprefixes-gcs/$app_nickname-compatibility-mode" \
-								"$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"
-						fi
-
-					else
-						cp -rf "$HOME/.local/share/wineprefixes/default-compatibility-mode" \
-							"$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"
-					fi
-				fi
-
-			else
-				# Configuring compatibility mode
-				echo "installing" >$progressbar_dir/progress-movement
-				echo "" >$progressbar_dir/progress
-				echo $game_name >$progressbar_dir/app-name
-				echo $conf_prefix_status >$progressbar_dir/status
-				sleep 1
-				echo "show progress bar" >$progressbar_dir/progressbar
-
-				/opt/regataos-gcs/scripts/install/scripts-install/install-game-gcs/prepare-compatibility-mode -dcm $game_nickname
-
-				# Enable DXVK and VKD3D-Proton
-				if test ! -e "$HOME/.local/share/wineprefixes/default-compatibility-mode/vulkan.txt"; then
-					enable_dxvk_vkd3d
-				fi
-
-				# Prepare to copy launcher wineprefix
-				if test -e "$HOME/.config/regataos-gcs/external-games-folder.txt"; then
-					external_directory_file="$(cat "$HOME/.config/regataos-gcs/external-games-folder.txt")"
-
-					if [[ $(echo $external_directory_file) != *"game-access"* ]]; then
-						mkdir -p "$(echo $external_directory_file)/game-access"
-						external_directory="$(echo $external_directory_file)/game-access"
-					else
-						external_directory="$(echo $external_directory_file)"
-					fi
-
-					if test ! -e "$(echo $external_directory)/wineprefixes-gcs"; then
-						mkdir -p "$(echo $external_directory)/wineprefixes-gcs"
-					fi
-
-					if test -e "$(echo $external_directory)/wineprefixes-gcs/default-compatibility-mode"; then
-						cp -rf "$(echo $external_directory)/wineprefixes-gcs/default-compatibility-mode" \
-							"$(echo $external_directory)/wineprefixes-gcs/$app_nickname-compatibility-mode"
-
-					else
-						rm -rf "$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"
-
-						cp -rf "$HOME/.local/share/wineprefixes/default-compatibility-mode" \
-							"$(echo $external_directory)/wineprefixes-gcs/$app_nickname-compatibility-mode"
-
-						ln -sf "$(echo $external_directory)/wineprefixes-gcs/$app_nickname-compatibility-mode" \
-							"$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"
-					fi
-
-				else
-					cp -rf "$HOME/.local/share/wineprefixes/default-compatibility-mode" \
-						"$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"
-				fi
-			fi
+			# Configuring compatibility mode
+			/opt/regataos-gcs/scripts/install/scripts-install/install-game-gcs/prepare-compatibility-mode -dcm $game_nickname
 		fi
 	fi
 
@@ -660,6 +519,9 @@ EOM
 		rm -f $progressbar_dir/installing
 		rm -f /tmp/regataos-gcs/installing-$game_nickname
 		rm -f "$downloadDir/$game_download_file_name"
+		rm -f "/tmp/regataos-gcs/$game_nickname-installdir.txt"
+		sed -i "/$gameNickname/d" "/tmp/regataos-gcs/gcs-for-install.txt"
+		sed -i '/^$/d' "/tmp/regataos-gcs/gcs-for-install.txt"
 
 		# If there are no more processes, clear the progress bar cache
 		if test ! -e "$progressbar_dir/queued-1"; then
@@ -679,6 +541,9 @@ EOM
 		rm -f $progressbar_dir/installing
 		rm -f /tmp/regataos-gcs/installing-$game_nickname
 		rm -f "$downloadDir/$game_download_file_name"
+		rm -f "/tmp/regataos-gcs/$game_nickname-installdir.txt"
+		sed -i "/$gameNickname/d" "/tmp/regataos-gcs/gcs-for-install.txt"
+		sed -i '/^$/d' "/tmp/regataos-gcs/gcs-for-install.txt"
 
 		# If there are no more processes, clear the progress bar cache
 		if test ! -e "$progressbar_dir/queued-1"; then
@@ -698,6 +563,9 @@ EOM
 		rm -f $progressbar_dir/installing
 		rm -f /tmp/regataos-gcs/installing-$game_nickname
 		rm -f "$downloadDir/$game_download_file_name"
+		rm -f "/tmp/regataos-gcs/$game_nickname-installdir.txt"
+		sed -i "/$gameNickname/d" "/tmp/regataos-gcs/gcs-for-install.txt"
+		sed -i '/^$/d' "/tmp/regataos-gcs/gcs-for-install.txt"
 
 		# If there are no more processes, clear the progress bar cache
 		if test ! -e "$progressbar_dir/queued-1"; then
@@ -718,6 +586,9 @@ EOM
 		rm -f "$HOME/.config/regataos-gcs/custom-runtime/$game_nickname.txt"
 		rm -f "$downloadDir/$game_download_file_name"
 		rm -f "/tmp/regataos-gcs/$custom_runtime_file"
+		rm -f "/tmp/regataos-gcs/$game_nickname-installdir.txt"
+		sed -i "/$gameNickname/d" "/tmp/regataos-gcs/gcs-for-install.txt"
+		sed -i '/^$/d' "/tmp/regataos-gcs/gcs-for-install.txt"
 
 		if [ ! -z "$game_nickname" ]; then
 			echo -e "-- GAME_PATH: $GAME_PATH\n"

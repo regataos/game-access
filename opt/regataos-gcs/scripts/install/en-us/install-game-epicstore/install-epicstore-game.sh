@@ -11,7 +11,7 @@ fi
 rm -f "/tmp/regataos-gcs/start-installation-epicstore.txt"
 
 app_name="$(grep -r "gamename" $HOME/.config/regataos-gcs/epicstore-games/json/$game_nickname-epicstore.json | cut -d":" -f 2- | sed 's/ //' | sed 's/"\|,//g')"
-game_id="$(grep -r "gameid" $HOME/.config/regataos-gcs/epicstore-games/json/$game_nickname-epicstore.json | awk '{print $2}' | sed 's/"\|,//g')"
+game_id="$(grep -r "gameid" $HOME/.config/regataos-gcs/epicstore-games/json/$game_nickname-epicstore.json | cut -d":" -f 2- | sed 's/ //' | sed 's/"\|,//g')"
 game_folder="$(grep -r "game_folder" $HOME/.config/regataos-gcs/epicstore-games/json/$game_nickname-epicstore.json | cut -d":" -f 2- | sed 's/ //' | sed 's/"\|,//g')"
 GAME_INSTALL_DIR="$GAME_PATH"
 app_nickname="epicstore"
@@ -218,14 +218,14 @@ EOM
 
 	# Prepare to copy launcher wineprefix
 	if test -e "$HOME/.config/regataos-gcs/external-games-folder.txt"; then
-        external_directory_file="$(cat "$HOME/.config/regataos-gcs/external-games-folder.txt")"
+		external_directory_file="$(cat "$HOME/.config/regataos-gcs/external-games-folder.txt")"
 
-        if [[ $(echo $external_directory_file) != *"game-access"* ]]; then
-            mkdir -p "$(echo $external_directory_file)/game-access"
-            external_directory="$(echo $external_directory_file)/game-access"
-        else
-            external_directory="$(echo $external_directory_file)"
-        fi
+		if [[ $(echo $external_directory_file) != *"game-access"* ]]; then
+			mkdir -p "$(echo $external_directory_file)/game-access"
+			external_directory="$(echo $external_directory_file)/game-access"
+		else
+			external_directory="$(echo $external_directory_file)"
+		fi
 
 		if test ! -e "$(echo $external_directory)/wineprefixes-gcs"; then
 			mkdir -p "$(echo $external_directory)/wineprefixes-gcs"
