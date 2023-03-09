@@ -172,6 +172,13 @@ clearDesktopIcons() {
 
 				break
 			fi
+
+			if test -e "$DESKTOP_DIR/Warframe.lnk"; then
+				cd "/$DESKTOP_DIR"
+				rm -f "Warframe.lnk"
+
+				break
+			fi
 		fi
 
 		sleep 1
@@ -283,6 +290,10 @@ function install_app() {
 					$CUSTOM_WINE_DIR/bin/wine $CUSTOM_WINE_DIR/bin/msiexec /i $downloadDir/$game_download_file_name $install_args
 				fi
 			fi
+
+		elif [[ $(echo $game_nickname) == *"warframe"* ]]; then
+			clearDesktopIcons &
+			wine msiexec /i $downloadDir/$game_download_file_name $install_args
 
 		else
 			if [[ $(echo $game_download_file_name) == *".exe"* ]]; then
@@ -609,11 +620,22 @@ EOM
 		fi
 
 		# Stop clearDesktopIcons function
-		test -f "${XDG_CONFIG_HOME:-$HOME/.config}/user-dirs.dirs" && source "${XDG_CONFIG_HOME:-$HOME/.config}/user-dirs.dirs"
-		DESKTOP_DIR="${XDG_DESKTOP_DIR:-$HOME/Desktop}"
+		if [[ $(echo $game_nickname) == *"lol"* ]]; then
+			test -f "${XDG_CONFIG_HOME:-$HOME/.config}/user-dirs.dirs" && source "${XDG_CONFIG_HOME:-$HOME/.config}/user-dirs.dirs"
+			DESKTOP_DIR="${XDG_DESKTOP_DIR:-$HOME/Desktop}"
 
-		if [ -d "$DESKTOP_DIR" ]; then
-			echo "" >"$DESKTOP_DIR/Riot Client.desktop"
+			if [ -d "$DESKTOP_DIR" ]; then
+				echo "" >"$DESKTOP_DIR/Riot Client.desktop"
+			fi
+		fi
+
+		if [[ $(echo $game_nickname) == *"warframe"* ]]; then
+			test -f "${XDG_CONFIG_HOME:-$HOME/.config}/user-dirs.dirs" && source "${XDG_CONFIG_HOME:-$HOME/.config}/user-dirs.dirs"
+			DESKTOP_DIR="${XDG_DESKTOP_DIR:-$HOME/Desktop}"
+
+			if [ -d "$DESKTOP_DIR" ]; then
+				echo "" >"$DESKTOP_DIR/Warframe.lnk"
+			fi
 		fi
 
 		exit 0

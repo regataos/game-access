@@ -156,6 +156,7 @@ if [ -d "$DESKTOP_DIR" ]; then
     rm -f "League of Legends.desktop"
     rm -f "Riot Client.desktop"
     rm -f "Riot Client.lnk"
+    rm -f "Warframe.lnk"
 fi
 
 rm -rf "$HOME/.local/share/applications/wine/Programs/Riot Games"
