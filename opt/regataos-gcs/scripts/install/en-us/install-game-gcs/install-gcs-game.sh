@@ -53,7 +53,9 @@ GCS_CONFIG="$HOME/.config/regataos-gcs/regataos-gcs.conf"
 # Check the game's installation folder
 if test -e "/tmp/regataos-gcs/$game_nickname-installdir.txt"; then
 	custom_game_folder=$(cat "/tmp/regataos-gcs/$game_nickname-installdir.txt")
+fi
 
+if [ ! -z "$custom_game_folder" ]; then
 	if [[ $(echo $custom_game_folder) == *"game-access"* ]]; then
 		GAME_PATH="$(echo $custom_game_folder | sed 's|/game-access||')"
 
@@ -313,6 +315,7 @@ function install_app() {
 # Successful installation
 function success_installation() {
 	cp -f "/opt/regataos-gcs/games-list/$game_nickname.json" "$HOME/.config/regataos-gcs/installed/$game_nickname.json"
+	rm -f "$HOME/Game Access/$game_nickname"
 
 	if [ ! -z "$GAME_PATH" ]; then
 		echo -e "nickname=$game_nickname\ninstalldir=$GAME_PATH/game-access/$game_nickname\n" >"$GAME_INSTALL_DIR/gcs-game.conf"
@@ -322,6 +325,9 @@ function success_installation() {
 		else
 			ln -sf "$GAME_PATH/game-access/$game_nickname" "$HOME/Game Access/"
 		fi
+
+	else
+		ln -sf "$GAME_INSTALL_DIR" "$HOME/Game Access/$game_nickname"
 	fi
 
 	# Notify
@@ -496,7 +502,9 @@ EOM
 					ln -sf "$GAME_INSTALL_DIR/$custom_runtime_name" "$HOME/.config/regataos-gcs/custom-runtime/"
 				fi
 
-				echo "$HOME/.config/regataos-gcs/custom-runtime/$custom_runtime_name" >"$HOME/.config/regataos-gcs/custom-runtime/$game_nickname.txt"
+				echo "$HOME/.config/regataos-gcs/custom-runtime/$custom_runtime_name" \
+					>"$HOME/.config/regataos-gcs/custom-runtime/$game_nickname.txt"
+
 				rm -f "$downloadDir/$custom_runtime_file"
 			fi
 
