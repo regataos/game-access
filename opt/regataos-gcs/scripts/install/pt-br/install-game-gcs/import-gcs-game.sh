@@ -22,16 +22,26 @@ custom_runtime_name="$(grep -r "custom_runtime_name" "/opt/regataos-gcs/games-li
 			if test ! -e "$HOME/.config/regataos-gcs/custom-runtime/$custom_runtime_name"; then
 				mkdir -p "$HOME/.config/regataos-gcs/custom-runtime"
 
-				if test ! -e "$HOME/.config/regataos-gcs/custom-runtime/$game_nickname.txt"; then
-					wget --no-check-certificate -O "/tmp/regataos-gcs/$custom_runtime_file" "$custom_runtime_download"
-				fi
+				if test -e "$GAME_PATH/$custom_runtime_name"; then
+					ln -sf "$GAME_PATH/$custom_runtime_name" "$HOME/.config/regataos-gcs/custom-runtime/"
+					echo "$HOME/.config/regataos-gcs/custom-runtime/$custom_runtime_name" \
+						>"$HOME/.config/regataos-gcs/custom-runtime/$game_nickname.txt"
 
-				if [[ $(echo $custom_runtime_file) == *".tar.xz"* ]]; then
-					tar xf "/tmp/regataos-gcs/$custom_runtime_file" -C "$HOME/.config/regataos-gcs/custom-runtime/"
-				fi
+				else
+					if test ! -e "$HOME/.config/regataos-gcs/custom-runtime/$game_nickname.txt"; then
+						wget --no-check-certificate -O "$GAME_PATH/$custom_runtime_file" "$custom_runtime_download"
+					fi
 
-				echo "$HOME/.config/regataos-gcs/custom-runtime/$custom_runtime_name" >"$HOME/.config/regataos-gcs/custom-runtime/$game_nickname.txt"
-				rm -f "/tmp/regataos-gcs/$custom_runtime_file"
+					if [[ $(echo $custom_runtime_file) == *".tar.xz"* ]]; then
+						tar xf "$GAME_PATH/$custom_runtime_file" -C "$GAME_PATH/"
+					fi
+
+					ln -sf "$GAME_PATH/$custom_runtime_name" "$HOME/.config/regataos-gcs/custom-runtime/"
+					echo "$HOME/.config/regataos-gcs/custom-runtime/$custom_runtime_name" \
+						>"$HOME/.config/regataos-gcs/custom-runtime/$game_nickname.txt"
+
+					rm -f "$GAME_PATH/$custom_runtime_file"
+				fi
 			fi
 		fi
 

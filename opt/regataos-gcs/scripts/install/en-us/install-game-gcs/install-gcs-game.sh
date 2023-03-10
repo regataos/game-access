@@ -315,7 +315,7 @@ function success_installation() {
 	cp -f "/opt/regataos-gcs/games-list/$game_nickname.json" "$HOME/.config/regataos-gcs/installed/$game_nickname.json"
 
 	if [ ! -z "$GAME_PATH" ]; then
-		echo -e "nickname=$game_nickname\ninstalldir=$GAME_PATH/game-access/$game_nickname\n" >>"$GAME_INSTALL_DIR/gcs-game.conf"
+		echo -e "nickname=$game_nickname\ninstalldir=$GAME_PATH/game-access/$game_nickname\n" >"$GAME_INSTALL_DIR/gcs-game.conf"
 
 		if [[ $(echo $game_plataform) == *"windows"* ]]; then
 			ln -sf $(echo "$GAME_PATH/game-access/$game_nickname" | sed 's/-compatibility-mode//') "$HOME/Game Access/"
@@ -444,9 +444,9 @@ EOM
 			echo "show progress bar" >$progressbar_dir/progressbar
 
 			# Download
-			echo "/tmp/regataos-gcs/$custom_runtime_file" >$progressbar_dir/file-download-size
-			echo "wget --no-check-certificate -O /tmp/regataos-gcs/$custom_runtime_file $custom_runtime_download" >$progressbar_dir/get-pid
-			wget --no-check-certificate -O "/tmp/regataos-gcs/$custom_runtime_file" "$custom_runtime_download" 2>&1 | (pv -n >$progressbar_dir/download-percentage)
+			echo "$downloadDir/$custom_runtime_file" >$progressbar_dir/file-download-size
+			echo "wget --no-check-certificate -O $downloadDir/$custom_runtime_file $custom_runtime_download" >$progressbar_dir/get-pid
+			wget --no-check-certificate -O "$downloadDir/$custom_runtime_file" "$custom_runtime_download" 2>&1 | (pv -n >$progressbar_dir/download-percentage)
 			echo 100% >$progressbar_dir/progress
 			sleep 3
 			rm -f $progressbar_dir/download-percentage
@@ -492,11 +492,12 @@ EOM
 				mkdir -p "$HOME/.config/regataos-gcs/custom-runtime"
 
 				if [[ $(echo $custom_runtime_file) == *".tar.xz"* ]]; then
-					tar xf "/tmp/regataos-gcs/$custom_runtime_file" -C "$HOME/.config/regataos-gcs/custom-runtime/"
+					tar xf "$downloadDir/$custom_runtime_file" -C "$GAME_INSTALL_DIR/"
+					ln -sf "$GAME_INSTALL_DIR/$custom_runtime_name" "$HOME/.config/regataos-gcs/custom-runtime/"
 				fi
 
 				echo "$HOME/.config/regataos-gcs/custom-runtime/$custom_runtime_name" >"$HOME/.config/regataos-gcs/custom-runtime/$game_nickname.txt"
-				rm -f "/tmp/regataos-gcs/$custom_runtime_file"
+				rm -f "$downloadDir/$custom_runtime_file"
 			fi
 
 			/opt/regataos-gcs/scripts/install/scripts-install/install-game-gcs/prepare-compatibility-mode -lcm $game_nickname
@@ -596,6 +597,7 @@ EOM
 		rm -rf "$HOME/.config/regataos-gcs/custom-runtime/$custom_runtime_name"
 		rm -f "$HOME/.config/regataos-gcs/custom-runtime/$game_nickname.txt"
 		rm -f "$downloadDir/$game_download_file_name"
+		rm -f "$GAME_INSTALL_DIR/$custom_runtime_name"
 		rm -f "/tmp/regataos-gcs/$custom_runtime_file"
 		rm -f "/tmp/regataos-gcs/$game_nickname-installdir.txt"
 		sed -i "/$gameNickname/d" "/tmp/regataos-gcs/gcs-for-install.txt"

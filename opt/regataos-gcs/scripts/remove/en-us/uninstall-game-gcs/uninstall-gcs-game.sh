@@ -13,6 +13,10 @@ game_nickname="$(grep -r "gamenickname" /opt/regataos-gcs/games-list/$gameNickna
 		rm -rf "$(cat "$HOME/Game Access/$game_folder/gcs-game.conf" | grep installdir | cut -d"=" -f 2-)"
 	fi
 
+	if test -e "$HOME/Game Access/$game_nickname/gcs-game.conf"; then
+		rm -rf "$(cat "$HOME/Game Access/$game_folder/gcs-game.conf" | grep installdir | cut -d"=" -f 2-)"
+	fi
+
 	if test -e "$HOME/.local/share/wineprefixes/$game_nickname-compatibility-mode/gcs-game.conf"; then
 		rm -rf "$(cat "$HOME/.local/share/wineprefixes/$game_nickname-compatibility-mode/gcs-game.conf" | grep installdir | cut -d"=" -f 2-)"
 	fi
