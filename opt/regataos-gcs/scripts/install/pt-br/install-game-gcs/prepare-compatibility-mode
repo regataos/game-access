@@ -46,6 +46,13 @@ function prepareCustomCompatMode() {
 		alias winecfg="$CUSTOM_WINE_DIR/bin/winecfg"
 		alias msiexec="$CUSTOM_WINE_DIR/bin/msiexec"
 
+		$CUSTOM_WINE_DIR/bin/wine $CUSTOM_WINE_DIR/bin/wineboot
+
+		# Apply DLL settings 
+		overrideDll() {
+			$CUSTOM_WINE_DIR/bin/wine reg add 'HKEY_CURRENT_USER\Software\Wine\DllOverrides' /v $1 /d native /f >/dev/null 2>&1
+		}
+
 		# Install DXVK and VKD3D-Proton dll's
 		#DXVK
 		for dll in $(ls /opt/regataos-wine/dxvk/x64/ | grep "dll"); do
@@ -146,11 +153,12 @@ function prepareDefaultCompatMode() {
 		winetricks prefix=$game_nickname-compatibility-mode -q -f d3dcompiler_43
 		winetricks prefix=$game_nickname-compatibility-mode -q -f d3dx9
 
-		# Install d3dcompiler_47 dll
+		# Apply DLL settings 
 		overrideDll() {
 			$CUSTOM_WINE_DIR/bin/wine reg add 'HKEY_CURRENT_USER\Software\Wine\DllOverrides' /v $1 /d native /f >/dev/null 2>&1
 		}
 
+		# Install d3dcompiler_47 dll
 		for dll in $(ls /opt/regataos-wine/dlls/default/x64/ | grep "dll"); do
 			cp -f "/opt/regataos-wine/dlls/default/x64/$dll" "$WINEPREFIX/drive_c/windows/system32/$dll"
 
