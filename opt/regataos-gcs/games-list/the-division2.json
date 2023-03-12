@@ -1,0 +1,14 @@
+[
+	{
+		"gamename": "Tom Clancy's The Division 2",
+		"gamenickname": "the-division2",
+		"gameexecutable": "TheDivision2.exe",
+		"gamerun_appid": "uplay://launch/4932/0",
+		"winevariable": "WINEESYNC=1 WINE_LARGE_ADDRESS_AWARE=1",
+		"gamekeywords": "Tom Clancy's The Division 2, tom clancys the division 2, RPG, rpg, open world. mundo aberto, tiro em terceira pessoa, third-person shooter, third person shooter, ubisoft connect",
+		"launcher": "Ubisoft Connect",
+		"launchernickname": "ubisoftconnect",
+		"gameorigin": "suggestedgame",
+		"game_access": "false"
+    }
+]

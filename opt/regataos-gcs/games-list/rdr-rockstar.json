@@ -1,0 +1,14 @@
+[
+	{
+		"gamename": "Red Dead Redemption",
+		"gamenickname": "rdr-rockstar",
+		"gameexecutable": "RDR.exe",
+		"gamerun_appid": "",
+		"winevariable": "WINEESYNC=1 WINE_LARGE_ADDRESS_AWARE=1",
+		"gamekeywords": "Red Dead Redemption, red dead redemption, aventura, ação, açao, acao, rdr, adventure, action, rockstar",
+		"launcher": "Rockstar Launcher",
+		"launchernickname": "rockstar",
+		"gameorigin": "suggestedgame",
+		"game_access": "false"
+    }
+]
