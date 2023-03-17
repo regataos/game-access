@@ -2,13 +2,13 @@ function home_content() {
     $(document).ready(function () {
         // Content of block 1
         //Title
-        $(".appbc1 .block-title").text("Call of the Sea");
+        $(".appbc1 .block-title").text("Warhammer 40,000: Gladius - Relics of War");
         //Block image
-        $(".appbc1").css("background-image", 'url("https://i.ibb.co/mXW6bJr/cts-block1.webp")');
+        $(".appbc1").css("background-image", 'url("https://i.ibb.co/1z6Jy4S/wgrw-block1.webp")');
         $(".appbc1").css("background-position", "0% 100%")
         //Date
-        date_pt_br = "16 de março"
-        date_en_us = "March 16"
+        date_pt_br = "23 de março"
+        date_en_us = "March 23"
     });
 
     // Detect User Language
