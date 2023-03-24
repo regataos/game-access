@@ -196,7 +196,6 @@ function install_app() {
 		export WINEFSYNC=1
 		export WINEFSYNC_FUTEX2=1
 		export WINE_LARGE_ADDRESS_AWARE=1
-		export DXVK_ASYNC=1
 		#export DXVK_STATE_CACHE=reset
 		export DXVK_STATE_CACHE_PATH="$GAME_INSTALL_DIR"
 		export DXVK_LOG_PATH="$GAME_INSTALL_DIR"
