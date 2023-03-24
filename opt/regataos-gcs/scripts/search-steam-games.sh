@@ -34,36 +34,49 @@ fi
 echo "Update steam cache" > "/tmp/regataos-gcs/config/steam-games/update-cache-steam.txt"
 
 # Check if there are any Steam games installed
-if [[ $(ls $HOME/.local/share/Steam/steamapps/ | grep acf) == *"acf"* ]]; then
-	if test -e "/tmp/regataos-gcs/config/steam-games/no-steam-games.txt" ;then
-		echo "show installeds" > "/tmp/regataos-gcs/config/installed/show-installed-games.txt"
-		echo "Steam installed games" > "/tmp/regataos-gcs/config/installed/show-installed-games-steam.txt"
-		rm -f "/tmp/regataos-gcs/config/steam-games/no-steam-games.txt"
+checkHomeFiles="$(ls $HOME/.local/share/Steam/steamapps/ | grep acf)"
 
-	else
-		echo "show installeds" > "/tmp/regataos-gcs/config/installed/show-installed-games.txt"
-		echo "Steam installed games" > "/tmp/regataos-gcs/config/installed/show-installed-games-steam.txt"
-	fi
-
-elif test -e "/tmp/regataos-gcs/config/external-games-folder.txt"; then
+if test -e "/tmp/regataos-gcs/config/external-games-folder.txt"; then
 	if test -e "$HOME/.local/share/Steam/steam.sh"; then
 		if [[ $(grep -r SteamID "$HOME/.local/share/Steam/config/config.vdf" | awk '{print $1}') == *"SteamID"* ]]; then
 			external_steam_folder=$(find "$(cat /tmp/regataos-gcs/config/external-games-folder.txt)" -type f -iname appmanifest_*.acf | head -1 | tail -2 | sed 's/appmanifest//' | cut -d'_' -f -1 | sed 's/steamapps\//steamapps/')
-
 			get_external_lib_dir="$(echo "$external_steam_folder" | sed 's|/steamapps||')"
 
 			if [[ $(grep -r "$get_external_lib_dir" "$HOME/.local/share/Steam/config/libraryfolders.vdf") == *"$get_external_lib_dir"* ]]; then
 				if test -e "$(echo "$external_steam_folder")"; then
-					if [[ $(ls "$external_steam_folder/" | grep acf) == *"acf"* ]]; then
-						if test -e "/tmp/regataos-gcs/config/steam-games/no-steam-games.txt" ;then
-							echo "show installeds" > "/tmp/regataos-gcs/config/installed/show-installed-games.txt"
-							echo "Steam installed games" > "/tmp/regataos-gcs/config/installed/show-installed-games-steam.txt"
-							rm -f "/tmp/regataos-gcs/config/steam-games/no-steam-games.txt"
+                    checkFiles="$(ls "$external_steam_folder/" | grep acf)"
 
-						else
-							echo "show installeds" > "/tmp/regataos-gcs/config/installed/show-installed-games.txt"
-							echo "Steam installed games" > "/tmp/regataos-gcs/config/installed/show-installed-games-steam.txt"
-						fi
+                    if [[ $checkFiles == *"acf"* ]]; then
+                        for f in $checkFiles; do
+                            checkContent=$(cat "$external_steam_folder/$f" | grep name | cut -d'"' -f 4- | sed 's/"//')
+
+                            if [[ $checkContent != *"Steamworks"* ]] && \
+                            [[ $checkContent != *"Proton"* ]] && \
+                            [[ $checkContent != *"Steam Linux Runtime"* ]]
+                            then
+                                checkGame="game detected"
+                                echo "File -> $f"
+                                break
+                            fi
+                        done
+
+                        if [[ $checkGame == *"game detected"* ]]; then
+                            echo "Game detected!"
+
+                            if test -e "/tmp/regataos-gcs/config/steam-games/no-steam-games.txt" ;then
+                                echo "show installeds" > "/tmp/regataos-gcs/config/installed/show-installed-games.txt"
+                                echo "Steam installed games" > "/tmp/regataos-gcs/config/installed/show-installed-games-steam.txt"
+                                rm -f "/tmp/regataos-gcs/config/steam-games/no-steam-games.txt"
+
+                            else
+                                echo "show installeds" > "/tmp/regataos-gcs/config/installed/show-installed-games.txt"
+                                echo "Steam installed games" > "/tmp/regataos-gcs/config/installed/show-installed-games-steam.txt"
+                            fi
+
+                        else
+                            rm -f /tmp/regataos-gcs/config/installed/*-steam.json
+                            rm -f "/tmp/regataos-gcs/config/installed/show-installed-games-steam.txt"
+                        fi
 					fi
 				fi
 
@@ -92,6 +105,36 @@ elif test -e "/tmp/regataos-gcs/config/external-games-folder.txt"; then
 			rm -f "/tmp/regataos-gcs/config/installed/show-installed-games.txt"
 		fi
 	fi
+
+elif [[ $checkHomeFiles == *"acf"* ]]; then
+    for f in $checkHomeFiles; do
+        checkContent=$(cat $HOME/.local/share/Steam/steamapps/$f | grep name | cut -d'"' -f 4- | sed 's/"//')
+
+        if [[ $checkContent != *"Steamworks"* ]] && \
+        [[ $checkContent != *"Proton"* ]] && \
+        [[ $checkContent != *"Steam Linux Runtime"* ]]
+        then
+            checkGame="game detected"
+            echo "File -> $f"
+            break
+        fi
+    done
+
+    if [[ $checkGame == *"game detected"* ]]; then
+        if test -e "/tmp/regataos-gcs/config/steam-games/no-steam-games.txt" ;then
+            echo "show installeds" > "/tmp/regataos-gcs/config/installed/show-installed-games.txt"
+            echo "Steam installed games" > "/tmp/regataos-gcs/config/installed/show-installed-games-steam.txt"
+            rm -f "/tmp/regataos-gcs/config/steam-games/no-steam-games.txt"
+
+        else
+            echo "show installeds" > "/tmp/regataos-gcs/config/installed/show-installed-games.txt"
+            echo "Steam installed games" > "/tmp/regataos-gcs/config/installed/show-installed-games-steam.txt"
+        fi
+
+    else
+		rm -f /tmp/regataos-gcs/config/installed/*-steam.json
+		rm -f "/tmp/regataos-gcs/config/installed/show-installed-games-steam.txt"
+    fi
 
 else
 	# Download the json file with game information
@@ -245,7 +288,7 @@ if [[ $(grep -r SteamID $HOME/.local/share/Steam/config/config.vdf | awk '{print
 	rm -f /tmp/regataos-gcs/config/steam-games/img/*
 	rm -f /tmp/regataos-gcs/config/steam-games/json/games/*
 
-	if test ! -e /tmp/regataos-gcs/config/installed/*.json; then
+    if [[ $(ls "/tmp/regataos-gcs/config/installed/") != *"json"* ]]; then
 		rm -f "/tmp/regataos-gcs/config/installed/show-installed-games.txt"
 	fi
 fi

@@ -3,12 +3,31 @@
 
 # Settings and variables
 #General information
-if [ -z "$game_nickname" ]; then
-	game_nickname="$(cat /tmp/regataos-gcs/start-installation-epicstore.txt)"
+if [ -z $game_nickname ]; then
+	if test -e "/tmp/regataos-gcs/start-installation-epicstore.txt"; then
+		export game_nickname="$(cat /tmp/regataos-gcs/start-installation-epicstore.txt)"
+		rm -f "/tmp/regataos-gcs/start-installation-epicstore.txt"
+
+	else
+		if test -e "/tmp/regataos-gcs/gcs-for-install.txt"; then
+			export game_nickname="$(cat /tmp/regataos-gcs/gcs-for-install.txt | head -1 | tail -1)"
+			sed -i "/$game_nickname/d" "/tmp/regataos-gcs/gcs-for-install.txt"
+			sed -i '/^$/d' "/tmp/regataos-gcs/gcs-for-install.txt"
+		fi
+	fi
+
+else
+	if test -e "/tmp/regataos-gcs/start-installation-epicstore.txt"; then
+		rm -f "/tmp/regataos-gcs/start-installation-epicstore.txt"
+	fi
 fi
 
-#Clear cache
-rm -f "/tmp/regataos-gcs/start-installation-epicstore.txt"
+if test -e "/tmp/regataos-gcs/gcs-for-install.txt"; then
+	if test -e "/tmp/regataos-gcs/installing-$game_nickname"; then
+		sed -i "/$game_nickname/d" "/tmp/regataos-gcs/gcs-for-install.txt"
+		sed -i '/^$/d' "/tmp/regataos-gcs/gcs-for-install.txt"
+	fi
+fi
 
 app_name="$(grep -r "gamename" $HOME/.config/regataos-gcs/epicstore-games/json/$game_nickname-epicstore.json | cut -d":" -f 2- | sed 's/ //' | sed 's/"\|,//g')"
 game_id="$(grep -r "gameid" $HOME/.config/regataos-gcs/epicstore-games/json/$game_nickname-epicstore.json | cut -d":" -f 2- | sed 's/ //' | sed 's/"\|,//g')"
@@ -31,14 +50,92 @@ progressbar_dir="/tmp/progressbar-gcs"
 user=$(users | awk '{print $1}')
 
 # Check the game's installation folder
-if [ -z "$GAME_INSTALL_DIR" ]; then
-	mkdir -p "$HOME/Game Access/Epic Games Store"
-	GAME_INSTALL_DIR="$HOME/Game Access/Epic Games Store"
+if test -e "/tmp/regataos-gcs/$game_nickname-installdir.txt"; then
+	custom_game_folder=$(cat "/tmp/regataos-gcs/$game_nickname-installdir.txt")
+fi
+
+if [ ! -z "$custom_game_folder" ]; then
+	if [[ $(echo $custom_game_folder) == *"game-access/Epic Games Store"* ]]; then
+		GAME_PATH="$(echo $custom_game_folder | sed 's|/game-access/Epic Games Store||')"
+
+	elif [[ $(echo $custom_game_folder) == *"game-access"* ]]; then
+		GAME_PATH="$(echo $custom_game_folder | sed 's|/game-access||')"
+
+	else
+		if test ! -e "$custom_game_folder/game-access"; then
+			mkdir -p "$custom_game_folder/game-access"
+		fi
+
+		GAME_PATH="$(echo $custom_game_folder)"
+	fi
+
+	mkdir -p "$GAME_PATH/game-access/Epic Games Store"
+
+	if test ! -e "$HOME/Game Access/Epic Games Store"; then
+		ln -sf "$GAME_PATH/game-access/Epic Games Store" "$HOME/Game Access/"
+	fi
+
+	GAME_INSTALL_DIR=$(echo "$GAME_PATH/game-access/Epic Games Store")
+
+	rm -f "/tmp/regataos-gcs/$game_nickname-installdir.txt"
+
+elif [ -z "$GAME_INSTALL_DIR" ]; then
+	if test -e "/tmp/regataos-gcs/config/external-games-folder.txt"; then
+		external_games_folder=$(cat "/tmp/regataos-gcs/config/external-games-folder.txt")
+
+		if [[ $(echo $external_games_folder) == *"game-access"* ]]; then
+			GAME_PATH="$(echo $external_games_folder | sed 's|/game-access||')"
+
+		else
+			if test ! -e "$external_games_folder/game-access"; then
+				mkdir -p "$external_games_folder/game-access"
+			fi
+
+			GAME_PATH="$(echo $external_games_folder)"
+		fi
+
+		mkdir -p "$GAME_PATH/game-access/Epic Games Store"
+
+		if test ! -e "$HOME/Game Access/Epic Games Store"; then
+			ln -sf "$GAME_PATH/game-access/Epic Games Store" "$HOME/Game Access/"
+		fi
+
+		GAME_INSTALL_DIR=$(echo "$GAME_PATH/game-access/Epic Games Store")
+
+		rm -f "/tmp/regataos-gcs/$game_nickname-installdir.txt"
+
+	else
+		mkdir -p "$HOME/Game Access/Epic Games Store"
+		GAME_INSTALL_DIR="$HOME/Game Access/Epic Games Store"
+	fi
+
+else
+	if [[ $(echo $GAME_INSTALL_DIR) == *"game-access"* ]]; then
+		GAME_PATH="$(echo $GAME_INSTALL_DIR | sed 's|/game-access||')"
+
+	else
+		if test ! -e "$GAME_INSTALL_DIR/game-access"; then
+			mkdir -p "$GAME_INSTALL_DIR/game-access"
+		fi
+
+		GAME_PATH="$(echo $GAME_INSTALL_DIR)"
+	fi
+
+	mkdir -p "$GAME_PATH/game-access/Epic Games Store"
+
+	if test ! -e "$HOME/Game Access/Epic Games Store"; then
+		ln -sf "$GAME_PATH/game-access/Epic Games Store" "$HOME/Game Access/"
+	fi
+
+	GAME_INSTALL_DIR=$(echo "$GAME_PATH/game-access/Epic Games Store")
+
+	rm -f "/tmp/regataos-gcs/$game_nickname-installdir.txt"
 fi
 
 # Application setup function
 function install_app() {
 	rm -f "/tmp/regataos-gcs/game-patch-epicstore.txt"
+	sed -i "/$game_nickname/d" "/tmp/regataos-gcs/gcs-for-install.txt"
 	/opt/regataos-gcs/tools/legendary/legendary import "$app_name" "$GAME_INSTALL_DIR/$game_folder" "$(cat /tmp/regataos-gcs/game-patch-epicstore.txt)" 2>&1 | (pv -n >/tmp/regataos-gcs/instalation-legendary)
 }
 
@@ -60,16 +157,31 @@ function installation_failed() {
 
 # Search for processes
 if test -e "$progressbar_dir/installing"; then
-	# Put the process in the installation queue
-	kmsg=$(grep -r $game_nickname $progressbar_dir/queued-process)
-	if [[ $kmsg == *"$game_nickname"* ]]; then
-		echo "Nothing to do."
-	else
-		echo "$game_nickname=epicstore process-$app_name_process" >>$progressbar_dir/queued-process
-	fi
+	if test ! -e "/tmp/regataos-gcs/installing-$game_nickname"; then
+		# Put the process in the installation queue
+		kmsg=$(grep -r $game_nickname $progressbar_dir/queued-process)
+		if [[ $kmsg == *"$game_nickname"* ]]; then
+			echo "Nothing to do."
 
-	#I'm in the process queue, see you later
-	exit 0
+		else
+			echo "$game_nickname" >>"/tmp/regataos-gcs/gcs-for-install.txt"
+			sed -i '/^$/d' "/tmp/regataos-gcs/gcs-for-install.txt"
+
+			if [[ $(echo $GAME_INSTALL_DIR) != *"$HOME/Game Access/Epic Games Store"* ]]; then
+				echo "$GAME_INSTALL_DIR" >"/tmp/regataos-gcs/$game_nickname-installdir.txt"
+			fi
+
+			echo "$game_nickname=epicstore process-$app_name_process" >>$progressbar_dir/queued-process
+		fi
+
+		#I'm in the process queue, see you later
+		exit 0
+
+	else
+		#I'm in the process queue, see you later
+		echo "Installation in progress..."
+		exit 0
+	fi
 
 else
 	# Start dependences Download
@@ -80,6 +192,13 @@ else
 			if [[ $kmsg == *"$game_nickname"* ]]; then
 				echo "Nothing to do."
 			else
+				echo "$game_nickname" >>"/tmp/regataos-gcs/gcs-for-install.txt"
+				sed -i '/^$/d' "/tmp/regataos-gcs/gcs-for-install.txt"
+
+				if [[ $(echo $GAME_INSTALL_DIR) != *"$HOME/Game Access/Epic Games Store"* ]]; then
+					echo "$GAME_INSTALL_DIR" >"/tmp/regataos-gcs/$game_nickname-installdir.txt"
+				fi
+
 				echo "$game_nickname=epicstore process-$app_name_process" >>$progressbar_dir/queued-process
 			fi
 
@@ -111,24 +230,26 @@ killall install-epicstore-game.sh
 pkill --signal CONT legendary
 killall legendary
 
-if [ ! -z "$GAME_INSTALL_DIR" ] ;then
-	rm -f "/tmp/regataos-gcs/$app_download_file_name"
-fi
-
 if test ! -e $progressbar_dir/queued-1 ; then
 	rm -f $progressbar_dir/*
 fi
 
 echo "0%" > $progressbar_dir/progress
+rm -f "/tmp/regataos-gcs/$game_nickname-installdir.txt"
+sed -i "/$game_nickname/d" "/tmp/regataos-gcs/gcs-for-install.txt"
+sed -i '/^$/d' "/tmp/regataos-gcs/gcs-for-install.txt"
+
 rm -f $progressbar_dir/app-name
 rm -f $progressbar_dir/download-percentage-legendary
 rm -f $progressbar_dir/get-pid
 rm -f $progressbar_dir/installing
 rm -f "/tmp/regataos-gcs/installing-$app_nickname"
+rm -f "/tmp/regataos-gcs/installing-$game_nickname"
 rm -f $progressbar_dir/down-paused
 rm -f $progressbar_dir/script-cancel
 rm -f "/tmp/regataos-gcs/instalation-legendary"
 rm -f "/tmp/regataos-gcs/game-patch-epicstore.txt"
+rm -rf "$GAME_INSTALL_DIR/$game_folder"
 EOM
 
 	chmod +x $progressbar_dir/script-cancel
@@ -137,6 +258,7 @@ EOM
 	rm -f $progressbar_dir/progress-movement
 	echo "installing" >$progressbar_dir/installing
 	echo "installing" >/tmp/regataos-gcs/installing-$app_nickname
+	echo "installing" >/tmp/regataos-gcs/installing-$game_nickname
 	echo $app_name_down >$progressbar_dir/app-name
 	echo "0%" >$progressbar_dir/progress
 	echo $app_download_status >$progressbar_dir/status
@@ -271,9 +393,13 @@ EOM
 		rm -f $progressbar_dir/progress-full
 		rm -f $progressbar_dir/installing
 		rm -f /tmp/regataos-gcs/installing-$app_nickname
+		rm -f "/tmp/regataos-gcs/installing-$game_nickname"
 		rm -f "/tmp/regataos-gcs/$app_download_file_name"
 		rm -f "/tmp/regataos-gcs/instalation-legendary"
 		#rm -f "/tmp/regataos-gcs/game-patch-epicstore.txt"
+		rm -f "/tmp/regataos-gcs/$game_nickname-installdir.txt"
+		sed -i "/$game_nickname/d" "/tmp/regataos-gcs/gcs-for-install.txt"
+		sed -i '/^$/d' "/tmp/regataos-gcs/gcs-for-install.txt"
 
 		# If there are no more processes, clear the progress bar cache
 		if test ! -e "$progressbar_dir/queued-1"; then
@@ -289,9 +415,13 @@ EOM
 		sleep 2
 		rm -f $progressbar_dir/installing
 		rm -f /tmp/regataos-gcs/installing-$app_nickname
+		rm -f "/tmp/regataos-gcs/installing-$game_nickname"
 		rm -f "/tmp/regataos-gcs/$app_download_file_name"
 		rm -f "/tmp/regataos-gcs/instalation-legendary"
 		#rm -f "/tmp/regataos-gcs/game-patch-epicstore.txt"
+		rm -f "/tmp/regataos-gcs/$game_nickname-installdir.txt"
+		sed -i "/$game_nickname/d" "/tmp/regataos-gcs/gcs-for-install.txt"
+		sed -i '/^$/d' "/tmp/regataos-gcs/gcs-for-install.txt"
 
 		# If there are no more processes, clear the progress bar cache
 		if test ! -e "$progressbar_dir/queued-1"; then

@@ -1,41 +1,6 @@
 #!/bin/bash
 #
 
-# If an external directory for installations is configured,
-# create a symlink to the default folder for the new wine prefixes
-if test -e "$HOME/.config/regataos-gcs/external-games-folder.txt"; then
-    if test ! -e "$HOME/.local/share/wineprefixes/default-compatibility-mode"; then
-        external_directory_file="$(cat "$HOME/.config/regataos-gcs/external-games-folder.txt")"
-
-        if [[ $(echo $external_directory_file) != *"game-access"* ]]; then
-            mkdir -p "$(echo $external_directory_file)/game-access"
-            external_directory="$(echo $external_directory_file)/game-access"
-        else
-            external_directory="$(echo $external_directory_file)"
-        fi
-
-        if test -e "$HOME/.local/share/wineprefixes"; then
-            if [ `find "$HOME/.local/share/wineprefixes" -type f | wc -l` -eq 0 ] ; then
-                rm -rf "$HOME/.local/share/wineprefixes"
-
-                mkdir -p "$(echo $external_directory)/wineprefixes-gcs"
-
-                ln -sf "$(echo $external_directory)/wineprefixes-gcs" \
-                    "$HOME/.local/share/wineprefixes"
-
-            else
-                mkdir -p "$(echo $external_directory)/wineprefixes-gcs"
-            fi
-
-        else
-            mkdir -p "$(echo $external_directory)/wineprefixes-gcs"
-
-            ln -sf "$(echo $external_directory)/wineprefixes-gcs" \
-                "$HOME/.local/share/wineprefixes"
-        fi
-    fi
-fi
-
 # Settings and variables
 export WINEPREFIX="$HOME/.local/share/wineprefixes/default-compatibility-mode"
 

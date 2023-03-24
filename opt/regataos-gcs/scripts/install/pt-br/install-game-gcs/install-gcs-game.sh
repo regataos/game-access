@@ -423,16 +423,16 @@ function start_installation() {
 	sed -i "/$gameNickname/d" "/tmp/regataos-gcs/gcs-for-install.txt"
 	sed -i '/^$/d' "/tmp/regataos-gcs/gcs-for-install.txt"
 
-	if test ! -e $progressbar_dir/queued-1 ; then
-		rm -f $progressbar_dir/*
-	fi
-
 	echo "0%" > $progressbar_dir/progress
 	rm -f $progressbar_dir/get-pid
 	rm -f $progressbar_dir/installing
 	rm -f "/tmp/regataos-gcs/installing-$game_nickname"
 	rm -f $progressbar_dir/down-paused
 	rm -f $progressbar_dir/script-cancel
+
+	if test ! -e $progressbar_dir/queued-1 ; then
+		rm -f $progressbar_dir/*
+	fi
 EOM
 
 	chmod +x $progressbar_dir/script-cancel

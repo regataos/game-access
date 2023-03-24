@@ -159,5 +159,7 @@ if [ -d "$DESKTOP_DIR" ]; then
     rm -f "Warframe.lnk"
 fi
 
+# Clear cache
 rm -rf "$HOME/.local/share/applications/wine/Programs/Riot Games"
 rm -rf "$HOME/.local/share/applications/Programs/Riot Games"
+rm -f "/tmp/regataos-gcs/running-$gameNickname"

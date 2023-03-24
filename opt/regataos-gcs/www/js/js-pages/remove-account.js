@@ -34,6 +34,13 @@ function remove_account_epicstore() {
 			const commandLine2 = 'rm -f "/tmp/regataos-gcs/remove-user-account-epicstore.txt"; \
 			rm -f "/tmp/regataos-gcs/config/epicstore-games/show-egs.txt"; \
 			rm -rf "$HOME/.local/share/wineprefixes/epicstore-compatibility-mode"; \
+			if test -e "$HOME/.config/regataos-gcs/external-games-folder.txt"; \
+			then external_directory_file="$(cat "$HOME/.config/regataos-gcs/external-games-folder.txt")"; \
+			if [[ $(echo $external_directory_file) != *"game-access"* ]]; \
+			then external_directory="$(echo $external_directory_file)/game-access"; \
+			else external_directory="$(echo $external_directory_file)"; fi; \
+			if test -e "$(echo $external_directory)/wineprefixes-gcs/epicstore-compatibility-mode"; \
+			then rm -rf "$(echo $external_directory)/wineprefixes-gcs/epicstore-compatibility-mode"; fi; fi; \
 			/opt/regataos-gcs/tools/legendary/legendary auth --delete';
 			exec(commandLine2, function (error, call, errlog) {
 			});

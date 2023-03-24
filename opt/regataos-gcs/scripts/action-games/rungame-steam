@@ -51,8 +51,7 @@ fi
 
 # Run game
 # Choose suitable option for gamescope and gamemode
-if [[ $(cat $LOCAL_CONFIG) == *"gamescope"* ]] || [[ $(cat $LOCAL_CONFIG) == *"gamemoderun"* ]]; then
-	(steam steam://rungameid/$GAME_ID) 2>&1 | tee $LOG_FILE
-else
-	(gamemoderun steam steam://rungameid/$GAME_ID) 2>&1 | tee $LOG_FILE
-fi
+(steam steam://rungameid/$GAME_ID) 2>&1 | tee $LOG_FILE
+
+# Clear cache
+rm -f "/tmp/regataos-gcs/running-$GAME_NICKNAME"

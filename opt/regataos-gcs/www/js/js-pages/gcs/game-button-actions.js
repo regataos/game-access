@@ -29,24 +29,40 @@ setInterval(function () { checkGameInstalled() }, 1000);
 
 // Start installing game
 function confirmInstallGameId() {
-    const exec = require('child_process').exec;
-	var command_line = `echo "${gameId}" > "/tmp/regataos-gcs/start-installation-gcs.txt"`;
-	exec(command_line,function(error,call,errlog){
-	});
+    const fs = require("fs");
 
-    const buttonPlay = document.getElementById(gameId);
+    function runInstallation() {
+        const exec = require('child_process').exec;
+        var command_line = `echo "${gameId}" > "/tmp/regataos-gcs/start-installation-gcs.txt"`;
+        exec(command_line,function(error,call,errlog){
+        });
 
-    setTimeout(function(){
-        buttonPlay.style.opacity = ".5";
-        buttonPlay.style.cursor = "default";
-        buttonPlay.style.pointerEvents = "none";
-    },1000);
+        const buttonPlay = document.getElementById(gameId);
 
-    setTimeout(function(){
-        buttonPlay.style.opacity = "1";
-        buttonPlay.style.cursor = "pointer";
-        buttonPlay.style.pointerEvents = "auto";
-    },2000);
+        setTimeout(function(){
+            buttonPlay.style.opacity = ".5";
+            buttonPlay.style.cursor = "default";
+            buttonPlay.style.pointerEvents = "none";
+        },1000);
+
+        setTimeout(function(){
+            buttonPlay.style.opacity = "1";
+            buttonPlay.style.cursor = "pointer";
+            buttonPlay.style.pointerEvents = "auto";
+        },2000);
+    }
+
+	if (!fs.existsSync(`/tmp/regataos-gcs/installing-${gameId}`)) {
+		if (fs.existsSync(`/tmp/progressbar-gcs/queued-process`)) {
+			let checkInstallQueue = fs.readFileSync("/tmp/progressbar-gcs/queued-process", "utf8");
+
+			if ((checkInstallQueue.indexOf(gameId) > -1) == "0") {
+				runInstallation();
+			}
+		} else {
+			runInstallation();
+		}
+	}
 }
 
 //Remove the game
@@ -63,28 +79,31 @@ function removeGameId() {
 //Run the game
 function runGameId() {
     const exec = require('child_process').exec;
-
+    const fs = require("fs");
     let newGameId = gameId.replace('-run', '');
 
-    const commandInstallGame = `export gameNickname="${newGameId}"; /opt/regataos-gcs/scripts/action-games/rungame-gcs`;
-    exec(commandInstallGame, function (error, call, errlog) {
-    });
+	if (!fs.existsSync(`/tmp/regataos-gcs/running-${newGameId}`)) {
+        const commandInstallGame = `echo "${newGameId}" > /tmp/regataos-gcs/running-${newGameId}; \
+        export gameNickname="${newGameId}"; /opt/regataos-gcs/scripts/action-games/rungame-gcs`;
+        exec(commandInstallGame, function (error, call, errlog) {
+        });
 
-    autoCloseGameAccess();
+        autoCloseGameAccess();
 
-    const buttonPlay = document.getElementById(gameId);
+        const buttonPlay = document.getElementById(gameId);
 
-    setTimeout(function(){
-        buttonPlay.style.opacity = ".5";
-        buttonPlay.style.cursor = "default";
-        buttonPlay.style.pointerEvents = "none";
-    },1000);
+        setTimeout(function(){
+            buttonPlay.style.opacity = ".5";
+            buttonPlay.style.cursor = "default";
+            buttonPlay.style.pointerEvents = "none";
+        },1000);
 
-    setTimeout(function(){
-        buttonPlay.style.opacity = "1";
-        buttonPlay.style.cursor = "pointer";
-        buttonPlay.style.pointerEvents = "auto";
-    },10000);
+        setTimeout(function(){
+            buttonPlay.style.opacity = "1";
+            buttonPlay.style.cursor = "pointer";
+            buttonPlay.style.pointerEvents = "auto";
+        },10000);
+    }
 }
 
 //Go game page

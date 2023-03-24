@@ -94,3 +94,6 @@ cp -f "/opt/regataos-gcs/tools/legendary/config.ini" "$HOME/.config/legendary/co
 
 # Run game
 (/opt/regataos-gcs/tools/legendary/legendary launch "$GAMEID" --wine-prefix "$PREFIX_LOCATION") 2>&1 | tee $LOG_FILE
+
+# Clear cache
+rm -f "/tmp/regataos-gcs/running-$GAMENICK"

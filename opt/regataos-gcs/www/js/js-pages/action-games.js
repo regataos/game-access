@@ -115,27 +115,31 @@ function run_game() {
 // Run Steam game
 function run_steam_game() {
     const exec = require('child_process').exec;
+    const fs = require("fs");
 
-	const runSteamGame = `
-	export GAME_NICKNAME="${gamenickname}";
-	export GAME_ID="${gameid}";
-	/opt/regataos-gcs/scripts/action-games/rungame-steam`;
-    exec(runSteamGame,function(error,call,errlog){
-    });
+	if (!fs.existsSync(`/tmp/regataos-gcs/running-${gamenickname}`)) {
+		const runSteamGame = `
+		export GAME_NICKNAME="${gamenickname}";
+		export GAME_ID="${gameid}";
+		echo "${gamenickname}" > /tmp/regataos-gcs/running-${gamenickname};
+		/opt/regataos-gcs/scripts/action-games/rungame-steam`;
+		exec(runSteamGame,function(error,call,errlog){
+		});
 
-	autoCloseGameAccess();
+		autoCloseGameAccess();
 
-	setTimeout(function(){
-		$("." + gamenickname + "-block .play-box-universal").css("opacity", ".5")
-		$("." + gamenickname + "-block .play-box-universal").css("cursor", "default")
-		$("." + gamenickname + "-block .play-box-universal").css("pointer-events", "none");
-	},1000);
+		setTimeout(function(){
+			$("." + gamenickname + "-block .play-box-universal").css("opacity", ".5")
+			$("." + gamenickname + "-block .play-box-universal").css("cursor", "default")
+			$("." + gamenickname + "-block .play-box-universal").css("pointer-events", "none");
+		},1000);
 
-	setTimeout(function(){
-		$("." + gamenickname + "-block .play-box-universal").css("opacity", "1")
-		$("." + gamenickname + "-block .play-box-universal").css("cursor", "pointer")
-		$("." + gamenickname + "-block .play-box-universal").css("pointer-events", "auto");
-	},10000);
+		setTimeout(function(){
+			$("." + gamenickname + "-block .play-box-universal").css("opacity", "1")
+			$("." + gamenickname + "-block .play-box-universal").css("cursor", "pointer")
+			$("." + gamenickname + "-block .play-box-universal").css("pointer-events", "auto");
+		},10000);
+	}
 }
 
 // Install Steam game
@@ -160,22 +164,39 @@ function install_steam_game() {
 
 // Start installing game from Epic Games Store
 function install_epicstore_game() {
-    const exec = require('child_process').exec;
-	var command_line = 'echo "' + gamenickname + '" > "/tmp/regataos-gcs/start-installation-epicstore.txt"';
-	exec(command_line,function(error,call,errlog){
-	});
+    const fs = require("fs");
 
-	setTimeout(function(){
-		$("." + gamenickname + "-block .install-box-universal").css("opacity", ".5")
-		$("." + gamenickname + "-block .install-box-universal").css("cursor", "default")
-		$("." + gamenickname + "-block .install-box-universal").css("pointer-events", "none");
-	},1000);
+	function runInstallation() {
+		const exec = require('child_process').exec;
 
-	setTimeout(function(){
-		$("." + gamenickname + "-block .install-box-universal").css("opacity", "1")
-		$("." + gamenickname + "-block .install-box-universal").css("cursor", "pointer")
-		$("." + gamenickname + "-block .install-box-universal").css("pointer-events", "auto");
-	},5000);
+		var command_line = 'echo "' + gamenickname + '" > "/tmp/regataos-gcs/start-installation-epicstore.txt"';
+		exec(command_line,function(error,call,errlog){
+		});
+
+		setTimeout(function(){
+			$("." + gamenickname + "-block .install-box-universal").css("opacity", ".5")
+			$("." + gamenickname + "-block .install-box-universal").css("cursor", "default")
+			$("." + gamenickname + "-block .install-box-universal").css("pointer-events", "none");
+		},1000);
+
+		setTimeout(function(){
+			$("." + gamenickname + "-block .install-box-universal").css("opacity", "1")
+			$("." + gamenickname + "-block .install-box-universal").css("cursor", "pointer")
+			$("." + gamenickname + "-block .install-box-universal").css("pointer-events", "auto");
+		},5000);
+	}
+
+	if (!fs.existsSync(`/tmp/regataos-gcs/installing-${gamenickname}`)) {
+		if (fs.existsSync(`/tmp/progressbar-gcs/queued-process`)) {
+			let checkInstallQueue = fs.readFileSync("/tmp/progressbar-gcs/queued-process", "utf8");
+
+			if ((checkInstallQueue.indexOf(gamenickname) > -1) == "0") {
+				runInstallation();
+			}
+		} else {
+			runInstallation();
+		}
+	}
 }
 
 // Uninstall game from Epic Games Store
@@ -189,23 +210,29 @@ function uninstall_epicstore_game() {
 // Run game from Epic Games Store
 function run_epicstore_game() {
     const exec = require('child_process').exec;
-    const command_line = `export GAMEID="${gameid}"; /opt/regataos-gcs/scripts/action-games/rungame-epicstore`;
-    exec(command_line,function(error,call,errlog){
-    });
+    const fs = require("fs");
 
-	autoCloseGameAccess();
+	if (!fs.existsSync(`/tmp/regataos-gcs/running-${gamenickname}`)) {
+		const command_line = `echo "${gamenickname}" > "/tmp/regataos-gcs/running-${gamenickname}"; \
+		export GAMENICK="${gamenickname}"; export GAMEID="${gameid}"; \
+		/opt/regataos-gcs/scripts/action-games/rungame-epicstore`;
+		exec(command_line,function(error,call,errlog){
+		});
 
-	setTimeout(function(){
-		$("." + gamenickname + "-block .play-box-universal").css("opacity", ".5")
-		$("." + gamenickname + "-block .play-box-universal").css("cursor", "default")
-		$("." + gamenickname + "-block .play-box-universal").css("pointer-events", "none");
-	},1000);
+		autoCloseGameAccess();
 
-	setTimeout(function(){
-		$("." + gamenickname + "-block .play-box-universal").css("opacity", "1")
-		$("." + gamenickname + "-block .play-box-universal").css("cursor", "pointer")
-		$("." + gamenickname + "-block .play-box-universal").css("pointer-events", "auto");
-	},10000);
+		setTimeout(function(){
+			$("." + gamenickname + "-block .play-box-universal").css("opacity", ".5")
+			$("." + gamenickname + "-block .play-box-universal").css("cursor", "default")
+			$("." + gamenickname + "-block .play-box-universal").css("pointer-events", "none");
+		},1000);
+
+		setTimeout(function(){
+			$("." + gamenickname + "-block .play-box-universal").css("opacity", "1")
+			$("." + gamenickname + "-block .play-box-universal").css("cursor", "pointer")
+			$("." + gamenickname + "-block .play-box-universal").css("pointer-events", "auto");
+		},10000);
+	}
 }
 
 // Start installing game from GOG Galaxy
