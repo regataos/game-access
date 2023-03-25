@@ -2,13 +2,13 @@ function home_content() {
     $(document).ready(function () {
         // Content of block 1
         //Title
-        $(".appbc1 .block-title").text("Warhammer 40,000: Gladius - Relics of War");
+        $(".appbc1 .block-title").text("Chess Ultra");
         //Block image
-        $(".appbc1").css("background-image", 'url("https://i.ibb.co/1z6Jy4S/wgrw-block1.webp")');
+        $(".appbc1").css("background-image", 'url("https://i.ibb.co/VBhYnFg/chess-block1.webp")');
         $(".appbc1").css("background-position", "0% 100%")
         //Date
-        date_pt_br = "23 de março"
-        date_en_us = "March 23"
+        date_pt_br = "30 de março"
+        date_en_us = "March 30"
     });
 
     // Detect User Language
