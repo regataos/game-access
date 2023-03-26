@@ -62,6 +62,9 @@ else
 
 		# Create installation directory for Epic Games Store games
 		mkdir -p "$(echo $external_directory)/Epic Games Store"
+
+    else
+        mkdir -p "$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode/"
     fi
 
     # Prepare wineprefix
