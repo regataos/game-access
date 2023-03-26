@@ -137,6 +137,18 @@ function install_app() {
 	rm -f "/tmp/regataos-gcs/game-patch-epicstore.txt"
 	sed -i "/$game_nickname/d" "/tmp/regataos-gcs/gcs-for-install.txt"
 	/opt/regataos-gcs/tools/legendary/legendary import "$app_name" "$GAME_INSTALL_DIR/$game_folder" "$(cat /tmp/regataos-gcs/game-patch-epicstore.txt)" 2>&1 | (pv -n >/tmp/regataos-gcs/instalation-legendary)
+
+	# Fix for games
+	cp -f "/opt/regataos-gcs/tools/legendary/config.ini" "$HOME/.config/legendary/config.ini"
+
+	# Automatically sync all games with the Epic Games Launcher
+	if [[ $(cat /tmp/regataos-gcs/config/installed-launchers.conf) == *"epicstore"* ]]; then
+		PREFIX_LOCATION="$HOME/.local/share/wineprefixes/epicstore-compatibility-mode"
+
+		/opt/regataos-gcs/tools/legendary/legendary -y egl-sync \
+		--egl-manifest-path "$PREFIX_LOCATION/drive_c/ProgramData/Epic/EpicGamesLauncher/Data/Manifests" \
+		--egl-wine-prefix "$PREFIX_LOCATION"
+	fi
 }
 
 # Successful installation

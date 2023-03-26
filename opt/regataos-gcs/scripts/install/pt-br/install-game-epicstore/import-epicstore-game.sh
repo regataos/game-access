@@ -20,6 +20,18 @@ installation_path="$GAME_PATH"
 	cp -f "$HOME/.config/regataos-gcs/epicstore-games/json/$game_nickname-epicstore.json" \
 		"$HOME/.config/regataos-gcs/installed/$game_nickname-epicstore.json"
 
+	# Fix for games
+	cp -f "/opt/regataos-gcs/tools/legendary/config.ini" "$HOME/.config/legendary/config.ini"
+
+	# Automatically sync all games with the Epic Games Launcher
+	if [[ $(cat /tmp/regataos-gcs/config/installed-launchers.conf) == *"epicstore"* ]]; then
+		PREFIX_LOCATION="$HOME/.local/share/wineprefixes/epicstore-compatibility-mode"
+
+		/opt/regataos-gcs/tools/legendary/legendary -y egl-sync \
+		--egl-manifest-path "$PREFIX_LOCATION/drive_c/ProgramData/Epic/EpicGamesLauncher/Data/Manifests" \
+		--egl-wine-prefix "$PREFIX_LOCATION"
+	fi
+
 	echo "show installed games" >"/tmp/regataos-gcs/config/installed/show-installed-games-epic.txt"
 
 ) | env GTK_THEME=Adwaita:dark zenity --progress --pulsate --width 450 --window-icon "/usr/share/pixmaps/regataos-gcs.png" \
