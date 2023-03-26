@@ -37,6 +37,7 @@ if [[ $(grep -r "auto-close=" $HOME/.config/regataos-gcs/regataos-gcs.conf | cut
 			ps -C "regataosgcs /opt/regataos-gcs" > /dev/null
 			if [ $? = 0 ]; then
 				echo "Close the Game Access application"
+				sleep 20
 				kill -SIGTERM $(ps -C regataosgcs | head -2 | tail -1 | awk '{print $1}')
 				sleep 5
 				sed -i 's/\(closed-manually=true\)/closed-manually=false/' "$HOME/.config/regataos-gcs/regataos-gcs.conf"
@@ -74,6 +75,7 @@ if [[ $(grep -r "auto-close=" $HOME/.config/regataos-gcs/regataos-gcs.conf | cut
 			ps -C "regataosgcs /opt/regataos-gcs" > /dev/null
 			if [ $? = 0 ]; then
 				echo "Close the Game Access application"
+				sleep 20
 				kill -SIGTERM $(ps -C regataosgcs | head -2 | tail -1 | awk '{print $1}')
 				sleep 5
 				sed -i 's/\(closed-manually=true\)/closed-manually=false/' "$HOME/.config/regataos-gcs/regataos-gcs.conf"
