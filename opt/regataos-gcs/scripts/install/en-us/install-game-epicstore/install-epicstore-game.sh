@@ -144,10 +144,31 @@ function install_app() {
 	# Automatically sync all games with the Epic Games Launcher
 	if [[ $(cat /tmp/regataos-gcs/config/installed-launchers.conf) == *"epicstore"* ]]; then
 		PREFIX_LOCATION="$HOME/.local/share/wineprefixes/epicstore-compatibility-mode"
+		MANIFESTS_DIR="$PREFIX_LOCATION/drive_c/ProgramData/Epic/EpicGamesLauncher/Data/Manifests"
 
 		/opt/regataos-gcs/tools/legendary/legendary -y egl-sync \
-		--egl-manifest-path "$PREFIX_LOCATION/drive_c/ProgramData/Epic/EpicGamesLauncher/Data/Manifests" \
+		--egl-manifest-path "$MANIFESTS_DIR" \
 		--egl-wine-prefix "$PREFIX_LOCATION"
+
+		# Fix the game install location in the Manifest file for the Epic Games Store.
+		checkFiles="$(ls $MANIFESTS_DIR | grep .item)"
+		if [[ $checkFiles == *".item"* ]]; then
+			for manifest in $checkFiles; do
+				checkInstallLocation=$(cat "$MANIFESTS_DIR/$manifest" | grep InstallLocation | cut -d':' -f 2- | sed 's/ "//' | sed 's/",//')
+
+				if [[ $checkInstallLocation != *"Z:\\"* ]]; then
+					echo -e 'Fix Manifest the "'"$manifest"'" file to show the game in Epic Games Store launcher.\n'
+					echo -e "Old install path: $checkInstallLocation\n"
+
+					oldInstallPath=$(cat "$MANIFESTS_DIR/$manifest" | grep InstallLocation | cut -d':' -f 2- | sed "s/ //" | sed 's/",//')
+					newInstallPathShow=$(echo "$oldInstallPath" | sed 's|"\/|Z:\\\\|g' | sed 's|\/|\\\\|g')
+					echo "New install path: $newInstallPathShow"
+
+					newInstallPath=$(echo "$oldInstallPath" | sed 's|"\/|Z:\\\\\\\\|g' | sed 's|\/|\\\\\\\\|g')
+					sed -i "s|$oldInstallPath|$newInstallPath|g" "$MANIFESTS_DIR/$manifest"
+				fi
+			done
+		fi
 	fi
 }
 
