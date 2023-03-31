@@ -2,13 +2,13 @@ function home_content() {
     $(document).ready(function () {
         // Content of block 1
         //Title
-        $(".appbc1 .block-title").text("Chess Ultra");
+        $(".appbc1 .block-title").text("Tunche");
         //Block image
-        $(".appbc1").css("background-image", 'url("https://i.ibb.co/VBhYnFg/chess-block1.webp")');
+        $(".appbc1").css("background-image", 'url("https://i.ibb.co/RNYhjhk/tch-block1.webp")');
         $(".appbc1").css("background-position", "0% 100%")
         //Date
-        date_pt_br = "30 de março"
-        date_en_us = "March 30"
+        date_pt_br = "06 de abril"
+        date_en_us = "April 06"
     });
 
     // Detect User Language
