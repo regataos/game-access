@@ -554,8 +554,13 @@ if __name__ == "__main__":
 	# macOS
 	if platform == "darwin":
 		defaultDBlocation = "/Users/Shared/GOG.com/Galaxy/Storage/galaxy-2.0.db"
+
 	# Windows
 	elif platform == "win32":
+		defaultDBlocation = "C:\\ProgramData\\GOG.com\\Galaxy\\storage\\galaxy-2.0.db"
+
+	# Linux (Wine)
+	elif platform == "linux":
 		defaultDBlocation = "C:\\ProgramData\\GOG.com\\Galaxy\\storage\\galaxy-2.0.db"
 
 	def ba(variableName, description, defaultValue=False):
