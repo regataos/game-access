@@ -12,6 +12,7 @@ from sys import platform
 
 from natsort import natsorted
 
+
 class Arguments():
 	""" argparse wrapper, to reduce code verbosity """
 	__parser = None
@@ -242,6 +243,16 @@ def extractData(args):
 				{'platformList': True},
 			)
 
+		if args.myRating:
+			prepare(
+				'myRating',
+				{'myRating': True},
+				dbField='MYRATING.value AS myRating',
+				dbRef='MasterList AS MYRATING',
+				dbCondition='(MYRATING.releaseKey=MasterList.releaseKey) AND (MYRATING.gamePieceTypeId={})'.format(id('myRating')),
+				dbResultField='MasterDB.myRating'
+			)
+
 		# add filednames of metadata and orginalMetadata
 		# this allows to order them in a way that metadata values are followed by their related originalMetadata value in the export
 		for name,condition in {
@@ -458,6 +469,9 @@ def extractData(args):
 							else:
 								row['platformList'] = []
 
+						# User rating
+						includeField(result, 'myRating', fieldType=Type.STRING_JSON)
+
 						# Various metadata
 						if args.criticsScore or args.developers or args.genres or args.publishers or args.releaseDate or args.themes:
 							metadata = jld('metadata')
@@ -543,9 +557,6 @@ if __name__ == "__main__":
 	# Windows
 	elif platform == "win32":
 		defaultDBlocation = "C:\\ProgramData\\GOG.com\\Galaxy\\storage\\galaxy-2.0.db"
-	# Linux
-	elif platform == "linux":
-		defaultDBlocation = "C:\\ProgramData\\GOG.com\\Galaxy\\storage\\galaxy-2.0.db"
 
 	def ba(variableName, description, defaultValue=False):
 		""" Boolean argument: creates a default boolean argument with the name of the storage variable and
@@ -599,6 +610,7 @@ if __name__ == "__main__":
 			[['-a', '--all'], ba('all', '(default) extracts all the fields')],
 			[['--sorting-title'], ba('sortingTitle', '(user customised) sorting title')],
 			[['--title-original'], ba('originalTitle', 'original title independent of any user changes')],
+			[['--my-rating'], ba('myRating', 'user rating score')],
 			[['--critics-score'], ba('criticsScore', 'critics rating score')],
 			[['--developers'], ba('developers', 'list of developers')],
 			[['--dlcs'], ba('dlcs', 'list of dlc titles for the specified game')],
