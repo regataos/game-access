@@ -30,7 +30,7 @@ install_dotnet_status="This may take a few minutes..."
 
 #Download information
 app_download_status="Downloading GOG Galaxy installer..."
-app_download_link="https://content-system.gog.com/open_link/download?path=/open/galaxy/client/2.0.43.71/setup_galaxy_2.0.43.71.exe"
+app_download_link="https://content-system.gog.com/open_link/download?path=/open/galaxy/client/2.0.58.4/setup_galaxy_2.0.58.4.exe"
 app_download_file_name="setup_galaxy.exe"
 
 #Default settings
