@@ -2,13 +2,13 @@ function home_content() {
     $(document).ready(function () {
         // Content of block 1
         //Title
-        $(".appbc1 .block-title").text("Never Alone (Kisima Ingitchuna)");
+        $(".appbc1 .block-title").text("The Sims 4 Daring Lifestyle Bundle");
         //Block image
-        $(".appbc1").css("background-image", 'url("https://i.ibb.co/VVLzsqd/nvl-block1.webp")');
+        $(".appbc1").css("background-image", 'url("https://i.ibb.co/9Hbh7SS/ts4-block1.webp")');
         $(".appbc1").css("background-position", "0% 100%")
         //Date
-        date_pt_br = "27 de abril"
-        date_en_us = "April 27"
+        date_pt_br = "18 de maio"
+        date_en_us = "May 18"
     });
 
     // Detect User Language
