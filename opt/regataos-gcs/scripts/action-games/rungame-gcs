@@ -42,6 +42,7 @@ if [[ $(echo $game_plataform) == *"windows"* ]]; then
     #export DXVK_STATE_CACHE=reset
     export DXVK_STATE_CACHE_PATH="$PREFIX_LOCATION"
     export DXVK_LOG_PATH="$PREFIX_LOCATION"
+    export RADV_PERFTEST=gpl
 
     # DXVK-NVAPI
     if [[ $(cat "$PREFIX_LOCATION/vulkan.txt") == *"DXVK-NVAPI"* ]]; then

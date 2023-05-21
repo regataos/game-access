@@ -199,6 +199,7 @@ function install_app() {
 		#export DXVK_STATE_CACHE=reset
 		export DXVK_STATE_CACHE_PATH="$GAME_INSTALL_DIR"
 		export DXVK_LOG_PATH="$GAME_INSTALL_DIR"
+		export RADV_PERFTEST=gpl
 
 		# DXVK-NVAPI
 		if [[ $(cat "$GAME_INSTALL_DIR/vulkan.txt") == *"DXVK-NVAPI"* ]]; then
