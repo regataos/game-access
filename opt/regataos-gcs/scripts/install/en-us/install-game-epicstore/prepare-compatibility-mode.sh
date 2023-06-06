@@ -22,7 +22,7 @@ function enable_dxvk_vkd3d() {
 }
 
 # Check if wineprefix exists before creating a new one
-if test -e "$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"; then
+if test -e "$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode/system.reg"; then
 	# We're finished!
 	exit 0
 
@@ -39,7 +39,7 @@ else
             external_directory="$(echo $external_directory_file)"
         fi
 
-        if test -e "$(echo $external_directory)/wineprefixes-gcs/$app_nickname-compatibility-mode"; then
+        if test -e "$(echo $external_directory)/wineprefixes-gcs/$app_nickname-compatibility-mode/system.reg"; then
             mkdir "$HOME/.local/share/wineprefixes"
 
             ln -sf "$(echo $external_directory)/wineprefixes-gcs/$app_nickname-compatibility-mode" \
@@ -68,7 +68,7 @@ else
     fi
 
     # Prepare wineprefix
-	if test -e "$HOME/.local/share/wineprefixes/default-compatibility-mode"; then
+	if test -e "$HOME/.local/share/wineprefixes/default-compatibility-mode/system.reg"; then
 		# Configuring compatibility mode
 		echo "installing" >$progressbar_dir/progress-movement
         echo "installing" >$progressbar_dir/installing

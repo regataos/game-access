@@ -318,8 +318,8 @@ EOM
 	rm -f $progressbar_dir/eta
 
 	# Prepare wineprefix to run the launcher and games
-	if test -e "$HOME/.local/share/wineprefixes/default-compatibility-mode"; then
-		if test ! -e "$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"; then
+	if test -e "$HOME/.local/share/wineprefixes/default-compatibility-mode/system.reg"; then
+		if test ! -e "$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode/system.reg"; then
 			# Configuring compatibility mode
 			echo "installing" >$progressbar_dir/progress-movement
 			echo "" >$progressbar_dir/progress
@@ -335,7 +335,7 @@ EOM
 		fi
 
 	elif test -e "/usr/share/regataos/compatibility-mode/default-wineprefix.tar.xz"; then
-		if test ! -e "$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"; then
+		if test ! -e "$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode/system.reg"; then
 			# Configuring compatibility mode
 			echo "installing" >$progressbar_dir/progress-movement
 			echo "" >$progressbar_dir/progress
@@ -386,7 +386,7 @@ EOM
 			mkdir -p "$(echo $external_directory)/wineprefixes-gcs"
 		fi
 
-		if test -e "$(echo $external_directory)/wineprefixes-gcs/default-compatibility-mode"; then
+		if test -e "$(echo $external_directory)/wineprefixes-gcs/default-compatibility-mode/system.reg"; then
 			cp -rf "$(echo $external_directory)/wineprefixes-gcs/default-compatibility-mode" \
 				"$(echo $external_directory)/wineprefixes-gcs/$app_nickname-compatibility-mode"
 

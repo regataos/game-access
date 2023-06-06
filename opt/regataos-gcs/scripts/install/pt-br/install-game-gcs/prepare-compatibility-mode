@@ -106,7 +106,7 @@ function prepareDefaultCompatMode() {
 		# We're finished!
 		exit 0
 
-	elif test -e "$HOME/.local/share/wineprefixes/default-compatibility-mode"; then
+	elif test -e "$HOME/.local/share/wineprefixes/default-compatibility-mode/system.reg"; then
 		# Configuring compatibility mode
 		echo "installing" >$progressbar_dir/progress-movement
 		echo "" >$progressbar_dir/progress

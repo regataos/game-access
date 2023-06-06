@@ -37,30 +37,38 @@ app_download_file_name="EAappInstaller.exe"
 if test -e "$HOME/.config/regataos-gcs/external-games-folder.txt"; then
 	external_directory_file="$(cat "$HOME/.config/regataos-gcs/external-games-folder.txt")"
 
-	# Add the "game-access" folder to the external directory path for new installations.
-	if [[ $(echo $external_directory_file) != *"game-access"* ]]; then
-		mkdir -p "$(echo $external_directory_file)/game-access"
-		external_directory="$(echo $external_directory_file)/game-access"
+	# Check the file system of the external directory where games and wineprefix will be installed.
+	# If the file system is different from ext4 or btrfs, create the wineprefix in the user's home.
+	check_file_system=$(findmnt -n -o FSTYPE -T $external_directory_file)
+
+	if [[ $(echo $check_file_system) == *"ext4"* ]] || [[ $(echo $check_file_system) == *"btrfs"* ]]; then
+		# Add the "game-access" folder to the external directory path for new installations.
+		if [[ $(echo $external_directory_file) != *"game-access"* ]]; then
+			mkdir -p "$(echo $external_directory_file)/game-access"
+			external_directory="$(echo $external_directory_file)/game-access"
+		else
+			external_directory="$(echo $external_directory_file)"
+		fi
+
+		# Create the "wineprefixes-gcs" folder in the external installations directory.
+		if test ! -e "$(echo $external_directory)/wineprefixes-gcs"; then
+			mkdir -p "$(echo $external_directory)/wineprefixes-gcs"
+		fi
+
+		# Set new wineprefix directory
+		app_nickname_dir="$external_directory/wineprefixes-gcs/$app_nickname-compatibility-mode"
+
+		if test ! -e "$app_nickname_dir/system.reg"; then
+			mkdir -p "$app_nickname_dir"
+		fi
+
+		rm -rf "$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"
+		ln -sf "$app_nickname_dir" "$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"
+
 	else
-		external_directory="$(echo $external_directory_file)"
+		# Set new wineprefix directory
+		app_nickname_dir="$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"
 	fi
-
-	# Create the "wineprefixes-gcs" folder in the external installations directory.
-	if test ! -e "$(echo $external_directory)/wineprefixes-gcs"; then
-		mkdir -p "$(echo $external_directory)/wineprefixes-gcs"
-	fi
-
-	# Remove old wineprefix
-	if test -e "$external_directory/wineprefixes-gcs/$app_nickname-compatibility-mode"; then
-		rm -rf "$external_directory/wineprefixes-gcs/$app_nickname-compatibility-mode"
-	fi
-
-	# Set new wineprefix directory
-	app_nickname_dir="$external_directory/wineprefixes-gcs/$app_nickname-compatibility-mode"
-	mkdir -p "$app_nickname_dir"
-
-	rm -rf "$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"
-	ln -sf "$app_nickname_dir" "$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"
 
 else
 	# Set new wineprefix directory
@@ -177,6 +185,9 @@ function gameinstall_folder() {
 function installation_failed() {
 	# Notify
 	notify-send -i regataos-gcs -u normal -a 'Regata OS Game Access' "$app_name $error_notify_title" "$error_notify_text $app_name."
+
+	rm -rf "$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"
+	rm -rf "$app_nickname_dir"
 }
 
 # Fix Wine applications folder

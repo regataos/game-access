@@ -52,8 +52,6 @@ function fix_app() {
 
 	mkdir -p "$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode/drive_c/users/$user/AppData/Local/Ubisoft Game Launcher/"
 	cp -f /opt/regataos-wine/custom-configs/$app_nickname/settings.yml "$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode/drive_c/users/$user/AppData/Local/Ubisoft Game Launcher/settings.yaml"
-
-	sed -i '/^$/d' $HOME/.config/regataos-gcs/$app_nickname.conf
 }
 
 # Successful installation
@@ -113,6 +111,9 @@ function gameinstall_folder() {
 function installation_failed() {
 	# Notify
 	notify-send -i regataos-gcs -u normal -a 'Regata OS Game Access' "$app_name $error_notify_title" "$error_notify_text $app_name."
+
+	rm -rf "$(echo $external_directory)/wineprefixes-gcs/$app_nickname-compatibility-mode"
+	rm -rf "$app_nickname_dir"
 }
 
 # Fix Wine applications folder
@@ -158,6 +159,42 @@ fi
 function enable_dxvk_vkd3d() {
 	export WINEPREFIX="$HOME/.local/share/wineprefixes/default-compatibility-mode"
 	/bin/bash /opt/regataos-gcs/scripts/action-games/configure-compatibility-mode -configure-dxvk-vkd3d
+}
+
+# Create wineprefix in external directory
+function wineprefix_external() {
+	if [[ $(echo $external_directory_file) != *"game-access"* ]]; then
+		mkdir -p "$(echo $external_directory_file)/game-access"
+		external_directory="$(echo $external_directory_file)/game-access"
+
+	else
+		external_directory="$(echo $external_directory_file)"
+	fi
+
+	if test ! -e "$(echo $external_directory)/wineprefixes-gcs"; then
+		mkdir -p "$(echo $external_directory)/wineprefixes-gcs"
+	fi
+
+	if test ! -e "$(echo $external_directory)/wineprefixes-gcs/$app_nickname-compatibility-mode/system.reg"; then
+		mkdir -p "$(echo $external_directory)/wineprefixes-gcs/$app_nickname-compatibility-mode"
+
+		cp -rf $HOME/.local/share/wineprefixes/default-compatibility-mode/* \
+			"$(echo $external_directory)/wineprefixes-gcs/$app_nickname-compatibility-mode/"
+	fi
+
+	rm -rf "$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"
+	ln -sf "$(echo $external_directory)/wineprefixes-gcs/$app_nickname-compatibility-mode" \
+		"$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"
+}
+
+# Create wineprefix in user home
+function wineprefix_home() {
+	if test ! -e "$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode/system.reg"; then
+		mkdir -p "$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"
+
+		cp -rf $HOME/.local/share/wineprefixes/default-compatibility-mode/* \
+			"$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode/"
+	fi
 }
 
 # Start installation
@@ -211,8 +248,8 @@ EOM
 	rm -f $progressbar_dir/eta
 
 	# Prepare wineprefix to run the launcher and games
-	if test -e "$HOME/.local/share/wineprefixes/default-compatibility-mode"; then
-		if test ! -e "$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"; then
+	if test -e "$HOME/.local/share/wineprefixes/default-compatibility-mode/system.reg"; then
+		if test ! -e "$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode/system.reg"; then
 			# Configuring compatibility mode
 			echo "installing" >$progressbar_dir/progress-movement
 			echo "" >$progressbar_dir/progress
@@ -228,7 +265,7 @@ EOM
 		fi
 
 	elif test -e "/usr/share/regataos/compatibility-mode/default-wineprefix.tar.xz"; then
-		if test ! -e "$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"; then
+		if test ! -e "$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode/system.reg"; then
 			# Configuring compatibility mode
 			echo "installing" >$progressbar_dir/progress-movement
 			echo "" >$progressbar_dir/progress
@@ -268,34 +305,18 @@ EOM
 	if test -e "$HOME/.config/regataos-gcs/external-games-folder.txt"; then
         external_directory_file="$(cat "$HOME/.config/regataos-gcs/external-games-folder.txt")"
 
-        if [[ $(echo $external_directory_file) != *"game-access"* ]]; then
-            mkdir -p "$(echo $external_directory_file)/game-access"
-            external_directory="$(echo $external_directory_file)/game-access"
-        else
-            external_directory="$(echo $external_directory_file)"
-        fi
+		# Check the file system of the external directory where games and wineprefix will be installed.
+		# If the file system is different from ext4 or btrfs, create the wineprefix in the user's home.
+		check_file_system=$(findmnt -n -o FSTYPE -T $external_directory_file)
 
-		if test ! -e "$(echo $external_directory)/wineprefixes-gcs"; then
-			mkdir -p "$(echo $external_directory)/wineprefixes-gcs"
-		fi
-
-		if test -e "$(echo $external_directory)/wineprefixes-gcs/default-compatibility-mode"; then
-			cp -rf "$(echo $external_directory)/wineprefixes-gcs/default-compatibility-mode" \
-				"$(echo $external_directory)/wineprefixes-gcs/$app_nickname-compatibility-mode"
-
+		if [[ $(echo $check_file_system) == *"ext4"* ]] || [[ $(echo $check_file_system) == *"btrfs"* ]]; then
+			wineprefix_external
 		else
-			rm -rf "$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"
-
-			cp -rf "$HOME/.local/share/wineprefixes/default-compatibility-mode" \
-				"$(echo $external_directory)/wineprefixes-gcs/$app_nickname-compatibility-mode"
-
-			ln -sf "$(echo $external_directory)/wineprefixes-gcs/$app_nickname-compatibility-mode" \
-				"$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"
+			wineprefix_home
 		fi
 
 	else
-		cp -rf "$HOME/.local/share/wineprefixes/default-compatibility-mode" \
-			"$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"
+		wineprefix_home
 	fi
 
 	# Set up the desktop location for Wine
@@ -395,30 +416,17 @@ function start_hidden_installation() {
 
 	# Prepare wineprefix to run the launcher and games
 	(
-		if test -e "$HOME/.local/share/wineprefixes/default-compatibility-mode"; then
-			# Configuring compatibility mode
-			echo "installing" >$progressbar_dir/progress-movement
-			echo "" >$progressbar_dir/progress
-			echo $app_name >$progressbar_dir/app-name
-			echo $conf_prefix_status >$progressbar_dir/status
-			sleep 1
-			echo "show progress bar" >$progressbar_dir/progressbar
-
-			# Enable DXVK and VKD3D-Proton
-			if test ! -e "$HOME/.local/share/wineprefixes/default-compatibility-mode/vulkan.txt"; then
-				enable_dxvk_vkd3d
+		if test -e "$HOME/.local/share/wineprefixes/default-compatibility-mode/system.reg"; then
+			if test ! -e "$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode/system.reg"; then
+				# Enable DXVK and VKD3D-Proton
+				if test ! -e "$HOME/.local/share/wineprefixes/default-compatibility-mode/vulkan.txt"; then
+					enable_dxvk_vkd3d
+				fi
 			fi
 
 		elif test -e "/usr/share/regataos/compatibility-mode/default-wineprefix.tar.xz"; then
-			if test ! -e "$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"; then
+			if test ! -e "$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode/system.reg"; then
 				# Configuring compatibility mode
-				echo "installing" >$progressbar_dir/progress-movement
-				echo "" >$progressbar_dir/progress
-				echo $app_name >$progressbar_dir/app-name
-				echo $conf_prefix_status >$progressbar_dir/status
-				sleep 1
-				echo "show progress bar" >$progressbar_dir/progressbar
-
 				if test -e "/usr/share/regataos/compatibility-mode/default-wineprefix.tar.xz"; then
 					tar xf "/usr/share/regataos/compatibility-mode/default-wineprefix.tar.xz" -C "$HOME/.local/share/wineprefixes/"
 				fi
@@ -430,14 +438,6 @@ function start_hidden_installation() {
 			fi
 
 		else
-			# Configuring compatibility mode
-			echo "installing" >$progressbar_dir/progress-movement
-			echo "" >$progressbar_dir/progress
-			echo $app_name >$progressbar_dir/app-name
-			echo $conf_prefix_status >$progressbar_dir/status
-			sleep 1
-			echo "show progress bar" >$progressbar_dir/progressbar
-
 			/opt/regataos-gcs/scripts/prepare-default-compatibility-mode.sh start
 
 			# Enable DXVK and VKD3D-Proton
@@ -450,34 +450,18 @@ function start_hidden_installation() {
 		if test -e "$HOME/.config/regataos-gcs/external-games-folder.txt"; then
 			external_directory_file="$(cat "$HOME/.config/regataos-gcs/external-games-folder.txt")"
 
-			if [[ $(echo $external_directory_file) != *"game-access"* ]]; then
-				mkdir -p "$(echo $external_directory_file)/game-access"
-				external_directory="$(echo $external_directory_file)/game-access"
+			# Check the file system of the external directory where games and wineprefix will be installed.
+			# If the file system is different from ext4 or btrfs, create the wineprefix in the user's home.
+			check_file_system=$(findmnt -n -o FSTYPE -T $external_directory_file)
+
+			if [[ $(echo $check_file_system) == *"ext4"* ]] || [[ $(echo $check_file_system) == *"btrfs"* ]]; then
+				wineprefix_external
 			else
-				external_directory="$(echo $external_directory_file)"
-			fi
-
-			if test ! -e "$(echo $external_directory)/wineprefixes-gcs"; then
-				mkdir -p "$(echo $external_directory)/wineprefixes-gcs"
-			fi
-
-			if test -e "$(echo $external_directory)/wineprefixes-gcs/default-compatibility-mode"; then
-				cp -rf "$(echo $external_directory)/wineprefixes-gcs/default-compatibility-mode" \
-					"$(echo $external_directory)/wineprefixes-gcs/$app_nickname-compatibility-mode"
-
-			else
-				rm -rf "$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"
-
-				cp -rf "$HOME/.local/share/wineprefixes/default-compatibility-mode" \
-					"$(echo $external_directory)/wineprefixes-gcs/$app_nickname-compatibility-mode"
-
-				ln -sf "$(echo $external_directory)/wineprefixes-gcs/$app_nickname-compatibility-mode" \
-					"$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"
+				wineprefix_home
 			fi
 
 		else
-			cp -rf "$HOME/.local/share/wineprefixes/default-compatibility-mode" \
-				"$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"
+			wineprefix_home
 		fi
 
 		# Set up the desktop location for Wine
