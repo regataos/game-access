@@ -32,7 +32,6 @@ fi
 app_name="$(grep -r "gamename" $HOME/.config/regataos-gcs/epicstore-games/json/$game_nickname-epicstore.json | cut -d":" -f 2- | sed 's/ //' | sed 's/"\|,//g')"
 game_id="$(grep -r "gameid" $HOME/.config/regataos-gcs/epicstore-games/json/$game_nickname-epicstore.json | cut -d":" -f 2- | sed 's/ //' | sed 's/"\|,//g')"
 game_folder="$(grep -r "game_folder" $HOME/.config/regataos-gcs/epicstore-games/json/$game_nickname-epicstore.json | cut -d":" -f 2- | sed 's/ //' | sed 's/"\|,//g')"
-GAME_INSTALL_DIR="$GAME_PATH"
 app_nickname="epicstore"
 app_name_down="Baixando $app_name"
 app_name_process="Instalar $app_name"
@@ -50,87 +49,58 @@ progressbar_dir="/tmp/progressbar-gcs"
 user=$(users | awk '{print $1}')
 
 # Check the game's installation folder
-if test -e "/tmp/regataos-gcs/$game_nickname-installdir.txt"; then
-	custom_game_folder=$(cat "/tmp/regataos-gcs/$game_nickname-installdir.txt")
-fi
+function create_installation_directory() {
+	if test -e "/tmp/regataos-gcs/$game_nickname-installdir.txt"; then
+		custom_game_folder=$(cat "/tmp/regataos-gcs/$game_nickname-installdir.txt")
+	else
+		custom_game_folder=""
+	fi
 
-if [ ! -z "$custom_game_folder" ]; then
-	if [[ $(echo $custom_game_folder) == *"game-access/Epic Games Store"* ]]; then
-		GAME_PATH="$(echo $custom_game_folder | sed 's|/game-access/Epic Games Store||')"
-
-	elif [[ $(echo $custom_game_folder) == *"game-access"* ]]; then
-		GAME_PATH="$(echo $custom_game_folder | sed 's|/game-access||')"
+	if [ ! -z "$custom_game_folder" ]; then
+		installation_folder=$(cat "/tmp/regataos-gcs/$game_nickname-installdir.txt")
 
 	else
-		if test ! -e "$custom_game_folder/game-access"; then
-			mkdir -p "$custom_game_folder/game-access"
-		fi
-
-		GAME_PATH="$(echo $custom_game_folder)"
-	fi
-
-	mkdir -p "$GAME_PATH/game-access/Epic Games Store"
-
-	if test ! -e "$HOME/Game Access/Epic Games Store"; then
-		ln -sf "$GAME_PATH/game-access/Epic Games Store" "$HOME/Game Access/"
-	fi
-
-	GAME_INSTALL_DIR=$(echo "$GAME_PATH/game-access/Epic Games Store")
-
-	rm -f "/tmp/regataos-gcs/$game_nickname-installdir.txt"
-
-elif [ -z "$GAME_INSTALL_DIR" ]; then
-	if test -e "/tmp/regataos-gcs/config/external-games-folder.txt"; then
-		external_games_folder=$(cat "/tmp/regataos-gcs/config/external-games-folder.txt")
-
-		if [[ $(echo $external_games_folder) == *"game-access"* ]]; then
-			GAME_PATH="$(echo $external_games_folder | sed 's|/game-access||')"
+		if [ ! -z "$GAME_PATH" ]; then
+			installation_folder=$(echo "$GAME_PATH")
 
 		else
-			if test ! -e "$external_games_folder/game-access"; then
-				mkdir -p "$external_games_folder/game-access"
+			if test -e "/tmp/regataos-gcs/config/external-games-folder.txt"; then
+				installation_folder="$(cat /tmp/regataos-gcs/config/external-games-folder.txt)"
+
+			else
+				installation_folder=""
 			fi
-
-			GAME_PATH="$(echo $external_games_folder)"
 		fi
+	fi
 
-		mkdir -p "$GAME_PATH/game-access/Epic Games Store"
-
-		if test ! -e "$HOME/Game Access/Epic Games Store"; then
-			ln -sf "$GAME_PATH/game-access/Epic Games Store" "$HOME/Game Access/"
-		fi
-
-		GAME_INSTALL_DIR=$(echo "$GAME_PATH/game-access/Epic Games Store")
-
-		rm -f "/tmp/regataos-gcs/$game_nickname-installdir.txt"
-
-	else
+	if [ -z "$installation_folder" ]; then
 		mkdir -p "$HOME/Game Access/Epic Games Store"
 		GAME_INSTALL_DIR="$HOME/Game Access/Epic Games Store"
-	fi
-
-else
-	if [[ $(echo $GAME_INSTALL_DIR) == *"game-access"* ]]; then
-		GAME_PATH="$(echo $GAME_INSTALL_DIR | sed 's|/game-access||')"
 
 	else
-		if test ! -e "$GAME_INSTALL_DIR/game-access"; then
-			mkdir -p "$GAME_INSTALL_DIR/game-access"
+		if [[ $(echo $installation_folder) == *"game-access/Epic Games Store"* ]]; then
+			install_folder="$(echo $installation_folder | sed 's|/game-access/Epic Games Store||')"
+
+		elif [[ $(echo $installation_folder) == *"game-access"* ]]; then
+			install_folder="$(echo $installation_folder | sed 's|/game-access||')"
+
+		else
+			install_folder="$(echo $installation_folder)"
 		fi
 
-		GAME_PATH="$(echo $GAME_INSTALL_DIR)"
+		if test ! -e "$install_folder/game-access/Epic Games Store"; then
+			mkdir -p "$install_folder/game-access/Epic Games Store"
+		fi
+
+		GAME_INSTALL_DIR=$(echo "$install_folder/game-access/Epic Games Store")
+
+		if test ! -e "$HOME/Game Access/Epic Games Store"; then
+			ln -sf "$GAME_INSTALL_DIR" "$HOME/Game Access/"
+		fi
+
+		rm -f "/tmp/regataos-gcs/$game_nickname-installdir.txt"
 	fi
-
-	mkdir -p "$GAME_PATH/game-access/Epic Games Store"
-
-	if test ! -e "$HOME/Game Access/Epic Games Store"; then
-		ln -sf "$GAME_PATH/game-access/Epic Games Store" "$HOME/Game Access/"
-	fi
-
-	GAME_INSTALL_DIR=$(echo "$GAME_PATH/game-access/Epic Games Store")
-
-	rm -f "/tmp/regataos-gcs/$game_nickname-installdir.txt"
-fi
+}
 
 # Application setup function
 function install_app() {
@@ -250,6 +220,42 @@ function enable_dxvk_vkd3d() {
 	/bin/bash /opt/regataos-gcs/scripts/action-games/configure-compatibility-mode -configure-dxvk-vkd3d
 }
 
+# Create wineprefix in external directory
+function wineprefix_external() {
+	if [[ $(echo $external_directory_file) != *"game-access"* ]]; then
+		mkdir -p "$(echo $external_directory_file)/game-access"
+		external_directory="$(echo $external_directory_file)/game-access"
+
+	else
+		external_directory="$(echo $external_directory_file)"
+	fi
+
+	if test ! -e "$(echo $external_directory)/wineprefixes-gcs"; then
+		mkdir -p "$(echo $external_directory)/wineprefixes-gcs"
+	fi
+
+	if test ! -e "$(echo $external_directory)/wineprefixes-gcs/$app_nickname-compatibility-mode/system.reg"; then
+		mkdir -p "$(echo $external_directory)/wineprefixes-gcs/$app_nickname-compatibility-mode"
+
+		cp -rf $HOME/.local/share/wineprefixes/default-compatibility-mode/* \
+			"$(echo $external_directory)/wineprefixes-gcs/$app_nickname-compatibility-mode/"
+	fi
+
+	rm -rf "$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"
+	ln -sf "$(echo $external_directory)/wineprefixes-gcs/$app_nickname-compatibility-mode" \
+		"$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"
+}
+
+# Create wineprefix in user home
+function wineprefix_home() {
+	if test ! -e "$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode/system.reg"; then
+		mkdir -p "$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"
+
+		cp -rf $HOME/.local/share/wineprefixes/default-compatibility-mode/* \
+			"$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode/"
+	fi
+}
+
 # Start installation
 function start_installation() {
 
@@ -298,6 +304,9 @@ EOM
 	sleep 1
 	echo "show progress bar" >$progressbar_dir/progressbar
 	echo "legendary" >$progressbar_dir/legendary-pid
+
+	# Prepare installation directory 
+	create_installation_directory
 
 	if test -e "$GAME_INSTALL_DIR/$game_folder/.egstore"; then
 		/opt/regataos-gcs/tools/legendary/legendary -y install --repair "$game_id" --base-path "$GAME_INSTALL_DIR/" 2>&1 | (pv -n >$progressbar_dir/download-percentage-legendary)
@@ -373,36 +382,20 @@ EOM
 
 	# Prepare to copy launcher wineprefix
 	if test -e "$HOME/.config/regataos-gcs/external-games-folder.txt"; then
-		external_directory_file="$(cat "$HOME/.config/regataos-gcs/external-games-folder.txt")"
+        external_directory_file="$(cat "$HOME/.config/regataos-gcs/external-games-folder.txt")"
 
-		if [[ $(echo $external_directory_file) != *"game-access"* ]]; then
-			mkdir -p "$(echo $external_directory_file)/game-access"
-			external_directory="$(echo $external_directory_file)/game-access"
+		# Check the file system of the external directory where games and wineprefix will be installed.
+		# If the file system is different from ext4 or btrfs, create the wineprefix in the user's home.
+		check_file_system=$(findmnt -n -o FSTYPE -T $external_directory_file)
+
+		if [[ $(echo $check_file_system) == *"ext4"* ]] || [[ $(echo $check_file_system) == *"btrfs"* ]]; then
+			wineprefix_external
 		else
-			external_directory="$(echo $external_directory_file)"
-		fi
-
-		if test ! -e "$(echo $external_directory)/wineprefixes-gcs"; then
-			mkdir -p "$(echo $external_directory)/wineprefixes-gcs"
-		fi
-
-		if test -e "$(echo $external_directory)/wineprefixes-gcs/default-compatibility-mode/system.reg"; then
-			cp -rf "$(echo $external_directory)/wineprefixes-gcs/default-compatibility-mode" \
-				"$(echo $external_directory)/wineprefixes-gcs/$app_nickname-compatibility-mode"
-
-		else
-			rm -rf "$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"
-
-			cp -rf "$HOME/.local/share/wineprefixes/default-compatibility-mode" \
-				"$(echo $external_directory)/wineprefixes-gcs/$app_nickname-compatibility-mode"
-
-			ln -sf "$(echo $external_directory)/wineprefixes-gcs/$app_nickname-compatibility-mode" \
-				"$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"
+			wineprefix_home
 		fi
 
 	else
-		cp -rf "$HOME/.local/share/wineprefixes/default-compatibility-mode" \
-			"$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"
+		wineprefix_home
 	fi
 
 	# Remove cancel script

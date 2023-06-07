@@ -46,11 +46,25 @@ custom_runtime_name="$(grep -r "custom_runtime_name" "/opt/regataos-gcs/games-li
 		fi
 
 		# Prepare symlink for compatibility mode.
-		ln -sf "$(echo $GAME_PATH)" "$HOME/.local/share/wineprefixes/$game_nickname-compatibility-mode"
+		mkdir -p "$HOME/.local/share/wineprefixes/$game_nickname-compatibility-mode"
+
+		for f in "$(echo "$GAME_PATH")"/*; do
+			file_name=$(echo $f | sed 's|/| |g' | awk '{print $NF}')
+
+			if [[ $(echo $file_name) != *"dosdevices"* ]]; then
+				ln -sf "$f" "$HOME/.local/share/wineprefixes/$game_nickname-compatibility-mode/"
+			fi
+		done
+
+		rm -rf "$GAME_PATH/dosdevices"
+		ln -sf "$HOME/.local/share/wineprefixes/$game_nickname-compatibility-mode/dosdevices" "$GAME_PATH/dosdevices"
 
 		if [[ "$(echo $GAME_PATH)" != *"$HOME/Game Access"* ]]; then
 			ln -sf "$(echo $GAME_PATH)" "$HOME/Game Access/"
 		fi
+
+		export WINEPREFIX="$HOME/.local/share/wineprefixes/$game_nickname-compatibility-mode"
+		wineboot -u
 
 	else
 		if [[ "$(echo $GAME_PATH)" != *"$HOME/Game Access"* ]]; then

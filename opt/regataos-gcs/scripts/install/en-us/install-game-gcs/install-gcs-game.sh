@@ -51,110 +51,64 @@ progressbar_dir="/tmp/progressbar-gcs"
 GCS_CONFIG="$HOME/.config/regataos-gcs/regataos-gcs.conf"
 
 # Check the game's installation folder
-if test -e "/tmp/regataos-gcs/$game_nickname-installdir.txt"; then
-	custom_game_folder=$(cat "/tmp/regataos-gcs/$game_nickname-installdir.txt")
-fi
+function create_installation_directory() {
+	installation_folder=""
 
-if [ ! -z "$custom_game_folder" ]; then
-	if [[ $(echo $custom_game_folder) == *"game-access"* ]]; then
-		GAME_PATH="$(echo $custom_game_folder | sed 's|/game-access||')"
-
-	else
-		if test ! -e "$custom_game_folder/game-access"; then
-			mkdir -p "$custom_game_folder/game-access"
-		fi
-
-		GAME_PATH="$(echo $custom_game_folder)"
+	if test -e "/tmp/regataos-gcs/$game_nickname-installdir.txt"; then
+		installation_folder=$(cat "/tmp/regataos-gcs/$game_nickname-installdir.txt")
 	fi
 
-	mkdir -p "$GAME_PATH/game-access/$game_nickname"
-	mkdir -p "$GAME_PATH/game-access/tmp"
-	downloadDir="$GAME_PATH/game-access/tmp"
-
-	if [[ $(echo $game_plataform) == *"windows"* ]]; then
-		rm -rf "$HOME/.local/share/wineprefixes/$game_nickname-compatibility-mode"
-		ln -sfv "$GAME_PATH/game-access/$game_nickname" "$HOME/.local/share/wineprefixes/$game_nickname-compatibility-mode"
-
+	if [ ! -z "$installation_folder" ]; then
+		installation_folder=$(echo "$installation_folder")
 	else
-		rm -rf "$HOME/Game Access/$game_nickname"
-		ln -sfv "$GAME_PATH/game-access/$game_nickname" "$HOME/Game Access/$game_nickname"
-	fi
-
-	rm -f "/tmp/regataos-gcs/$game_nickname-installdir.txt"
-
-elif [ -z "$GAME_PATH" ]; then
-	if test -e "/tmp/regataos-gcs/config/external-games-folder.txt"; then
-		external_games_folder=$(cat "/tmp/regataos-gcs/config/external-games-folder.txt")
-
-		if [[ $(echo $external_games_folder) == *"game-access"* ]]; then
-			GAME_PATH="$(echo $external_games_folder | sed 's|/game-access||')"
-
+		if [ ! -z "$GAME_PATH" ]; then
+			installation_folder=$(echo "$GAME_PATH")
 		else
-			if test ! -e "$external_games_folder/game-access"; then
-				mkdir -p "$external_games_folder/game-access"
+			if test -e "/tmp/regataos-gcs/config/external-games-folder.txt"; then
+				installation_folder="$(cat /tmp/regataos-gcs/config/external-games-folder.txt)"
 			fi
-
-			GAME_PATH="$(echo $external_games_folder)"
 		fi
+	fi
 
-		mkdir -p "$GAME_PATH/game-access/$game_nickname"
-		mkdir -p "$GAME_PATH/game-access/tmp"
-		downloadDir="$GAME_PATH/game-access/tmp"
-
-		if [[ $(echo $game_plataform) == *"windows"* ]]; then
-			rm -rf "$HOME/.local/share/wineprefixes/$game_nickname-compatibility-mode"
-			ln -sfv "$GAME_PATH/game-access/$game_nickname" "$HOME/.local/share/wineprefixes/$game_nickname-compatibility-mode"
-
-		else
-			rm -rf "$HOME/Game Access/$game_nickname"
-			ln -sfv "$GAME_PATH/game-access/$game_nickname" "$HOME/Game Access/$game_nickname"
-		fi
-
-	else
-		if [[ $(echo $game_plataform) == *"windows"* ]]; then
-			rm -rf "$HOME/.local/share/wineprefixes/$game_nickname-compatibility-mode"
-			mkdir -p "$HOME/.local/share/wineprefixes/$game_nickname-compatibility-mode"
-
-		else
+	if [ -z "$installation_folder" ]; then
+		if [[ $(echo $game_plataform) == *"linux"* ]]; then
 			rm -rf "$HOME/Game Access/$game_nickname"
 			mkdir -p "$HOME/Game Access/$game_nickname"
 		fi
 
-		downloadDir="/tmp/regataos-gcs"
-	fi
-
-else
-	if [[ $(echo $GAME_PATH) == *"game-access"* ]]; then
-		GAME_PATH="$(echo $GAME_PATH | sed 's|/game-access||')"
+		downloadDir="/tmp/regataos-gcs/config/tmp"
+		mkdir -p "$downloadDir"
 
 	else
-		if test ! -e "$GAME_PATH/game-access"; then
-			mkdir -p "$GAME_PATH/game-access"
+		if [[ $(echo $installation_folder) == *"game-access/$game_nickname"* ]]; then
+			install_folder="$(echo $installation_folder | sed "s|/game-access/$game_nickname||")"
+
+		elif [[ $(echo $installation_folder) == *"game-access"* ]]; then
+			install_folder="$(echo $installation_folder | sed 's|/game-access||')"
+
+		else
+			install_folder="$(echo $installation_folder)"
 		fi
 
-		GAME_PATH="$(echo $GAME_PATH)"
-	fi
+		rm -rf "$install_folder/game-access/$game_nickname"
+		mkdir -p "$install_folder/game-access/$game_nickname"
+		mkdir -p "$install_folder/game-access/tmp"
 
-	mkdir -p "$GAME_PATH/game-access/$game_nickname"
-	mkdir -p "$GAME_PATH/game-access/tmp"
-	downloadDir="$GAME_PATH/game-access/tmp"
+		rm -rf "$HOME/Game Access/$game_nickname"
+		ln -sf "$HOME/.local/share/wineprefixes/$game_nickname-compatibility-mode" \
+			"$HOME/Game Access/$game_nickname"
+
+		downloadDir="$install_folder/game-access/tmp"
+
+		rm -f "/tmp/regataos-gcs/$game_nickname-installdir.txt"
+	fi
 
 	if [[ $(echo $game_plataform) == *"windows"* ]]; then
-		rm -rf "$HOME/.local/share/wineprefixes/$game_nickname-compatibility-mode"
-		ln -sfv "$GAME_PATH/game-access/$game_nickname" "$HOME/.local/share/wineprefixes/$game_nickname-compatibility-mode"
-
+		GAME_INSTALL_DIR="$HOME/.local/share/wineprefixes/$game_nickname-compatibility-mode"
 	else
-		rm -rf "$HOME/Game Access/$game_nickname"
-		ln -sfv "$GAME_PATH/game-access/$game_nickname" "$HOME/Game Access/$game_nickname"
+		GAME_INSTALL_DIR="$HOME/Game Access/$game_nickname"
 	fi
-fi
-
-#Default settings
-if [[ $(echo $game_plataform) == *"windows"* ]]; then
-	GAME_INSTALL_DIR="$HOME/.local/share/wineprefixes/$game_nickname-compatibility-mode"
-else
-	GAME_INSTALL_DIR="$HOME/Game Access/$game_nickname"
-fi
+}
 
 # Clear desktop
 clearDesktopIcons() {
@@ -190,6 +144,23 @@ clearDesktopIcons() {
 # Application setup function
 function install_app() {
 	if [[ $(echo $game_plataform) == *"windows"* ]]; then
+		# Prepare wineprefix for NTFS partitions
+		if [ ! -z "$installation_folder" ]; then
+			cp -rf "$GAME_INSTALL_DIR"/* "$install_folder/game-access/$game_nickname/"
+
+			for f in "$install_folder/game-access/$game_nickname"/*; do
+				file_name=$(echo $f | sed 's|/| |g' | awk '{print $NF}')
+
+				if [[ $(echo $file_name) != *"dosdevices"* ]]; then
+					rm -rf "$GAME_INSTALL_DIR/$file_name"
+					ln -sf "$f" "$GAME_INSTALL_DIR/"
+				else
+					rm -rf "$install_folder/game-access/$game_nickname/dosdevices"
+					ln -sf "$GAME_INSTALL_DIR/dosdevices" "$install_folder/game-access/$game_nickname/dosdevices"
+				fi
+			done
+		fi
+
 		export WINEDEBUG=-all
 		export WINEPREFIX="$GAME_INSTALL_DIR"
 		export WINEESYNC=1
@@ -317,13 +288,14 @@ function success_installation() {
 	cp -f "/opt/regataos-gcs/games-list/$game_nickname.json" "$HOME/.config/regataos-gcs/installed/$game_nickname.json"
 	rm -f "$HOME/Game Access/$game_nickname"
 
-	if [ ! -z "$GAME_PATH" ]; then
-		echo -e "nickname=$game_nickname\ninstalldir=$GAME_PATH/game-access/$game_nickname\n" >"$GAME_INSTALL_DIR/gcs-game.conf"
+	if [ ! -z "$installation_folder" ]; then
+		echo -e "nickname=$game_nickname\ninstalldir=$install_folder/game-access/$game_nickname\n" > \
+			"$install_folder/game-access/$game_nickname/gcs-game.conf"
 
 		if [[ $(echo $game_plataform) == *"windows"* ]]; then
-			ln -sf $(echo "$GAME_PATH/game-access/$game_nickname" | sed 's/-compatibility-mode//') "$HOME/Game Access/"
+			ln -sf $(echo "$install_folder/game-access/$game_nickname" | sed 's/-compatibility-mode//') "$HOME/Game Access/"
 		else
-			ln -sf "$GAME_PATH/game-access/$game_nickname" "$HOME/Game Access/"
+			ln -sf "$install_folder/game-access/$game_nickname" "$HOME/Game Access/"
 		fi
 
 	else
@@ -406,6 +378,9 @@ function enable_dxvk_vkd3d() {
 
 # Start installation
 function start_installation() {
+	#Prepare game installation folder
+	create_installation_directory
+
 	# Create cancel script
 	rm -f $progressbar_dir/script-cancel
 	cat >$progressbar_dir/script-cancel <<EOM
@@ -498,6 +473,7 @@ EOM
 				mkdir -p "$HOME/.config/regataos-gcs/custom-runtime"
 
 				if [[ $(echo $custom_runtime_file) == *".tar.xz"* ]]; then
+					mkdir -p "$GAME_INSTALL_DIR"
 					tar xf "$downloadDir/$custom_runtime_file" -C "$GAME_INSTALL_DIR/"
 					ln -sf "$GAME_INSTALL_DIR/$custom_runtime_name" "$HOME/.config/regataos-gcs/custom-runtime/"
 				fi
@@ -511,7 +487,6 @@ EOM
 			/opt/regataos-gcs/scripts/install/scripts-install/install-game-gcs/prepare-compatibility-mode -lcm $game_nickname
 
 		else
-			# Configuring compatibility mode
 			/opt/regataos-gcs/scripts/install/scripts-install/install-game-gcs/prepare-compatibility-mode -dcm $game_nickname
 		fi
 	fi
@@ -614,13 +589,13 @@ EOM
 		if [ ! -z "$game_nickname" ]; then
 			echo -e "-- GAME_PATH: $GAME_PATH\n"
 			rm -rf "$HOME/.local/share/wineprefixes/$game_nickname-compatibility-mode"
-			rm -rf "$GAME_PATH/game-access/$game_nickname"
+			rm -rf "$install_folder/game-access/$game_nickname"
 			rm -rf "$(echo "$HOME/Game Access/$game_nickname")"-*
 			rm -rf "$GAME_INSTALL_DIR"
 		fi
 
 		if [ ! -z "$game_folder" ]; then
-			rm -rf "$GAME_PATH/game-access/$game_folder"
+			rm -rf "$install_folder/game-access/$game_folder"
 		fi
 
 		# If there are no more processes, clear the progress bar cache

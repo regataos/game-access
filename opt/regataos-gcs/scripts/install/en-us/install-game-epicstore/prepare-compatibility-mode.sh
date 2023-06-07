@@ -21,51 +21,72 @@ function enable_dxvk_vkd3d() {
 	/bin/bash /opt/regataos-gcs/scripts/action-games/configure-compatibility-mode -configure-dxvk-vkd3d
 }
 
+# Create wineprefix in external directory
+function wineprefix_external() {
+	if [[ $(echo $external_directory_file) != *"game-access"* ]]; then
+		mkdir -p "$(echo $external_directory_file)/game-access"
+		external_directory="$(echo $external_directory_file)/game-access"
+
+	else
+		external_directory="$(echo $external_directory_file)"
+	fi
+
+	if test ! -e "$(echo $external_directory)/wineprefixes-gcs"; then
+		mkdir -p "$(echo $external_directory)/wineprefixes-gcs"
+	fi
+
+	if test ! -e "$(echo $external_directory)/wineprefixes-gcs/$app_nickname-compatibility-mode/system.reg"; then
+		mkdir -p "$(echo $external_directory)/wineprefixes-gcs/$app_nickname-compatibility-mode"
+
+		cp -rf $HOME/.local/share/wineprefixes/default-compatibility-mode/* \
+			"$(echo $external_directory)/wineprefixes-gcs/$app_nickname-compatibility-mode/"
+	fi
+
+	rm -rf "$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"
+	ln -sf "$(echo $external_directory)/wineprefixes-gcs/$app_nickname-compatibility-mode" \
+		"$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"
+}
+
+# Create wineprefix in user home
+function wineprefix_home() {
+	if test ! -e "$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode/system.reg"; then
+		mkdir -p "$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"
+
+		cp -rf $HOME/.local/share/wineprefixes/default-compatibility-mode/* \
+			"$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode/"
+	fi
+}
+
 # Check if wineprefix exists before creating a new one
 if test -e "$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode/system.reg"; then
 	# We're finished!
 	exit 0
 
 else
-    # Check and choose the wineprefix creation directory
-    if test -e "$HOME/.config/regataos-gcs/external-games-folder.txt"; then
+	# Prepare to copy launcher wineprefix
+	if test -e "$HOME/.config/regataos-gcs/external-games-folder.txt"; then
         external_directory_file="$(cat "$HOME/.config/regataos-gcs/external-games-folder.txt")"
 
-        if [[ $(echo $external_directory_file) != *"game-access"* ]]; then
-            mkdir -p "$(echo $external_directory_file)/game-access"
-            external_directory="$(echo $external_directory_file)/game-access"
+		# Check the file system of the external directory where games and wineprefix will be installed.
+		# If the file system is different from ext4 or btrfs, create the wineprefix in the user's home.
+		check_file_system=$(findmnt -n -o FSTYPE -T $external_directory_file)
 
-        else
-            external_directory="$(echo $external_directory_file)"
-        fi
+		if [[ $(echo $check_file_system) == *"ext4"* ]] || [[ $(echo $check_file_system) == *"btrfs"* ]]; then
+			wineprefix_external
+		else
+			wineprefix_home
+		fi
 
-        if test -e "$(echo $external_directory)/wineprefixes-gcs/$app_nickname-compatibility-mode/system.reg"; then
-            mkdir "$HOME/.local/share/wineprefixes"
+	else
+		wineprefix_home
+	fi
 
-            ln -sf "$(echo $external_directory)/wineprefixes-gcs/$app_nickname-compatibility-mode" \
-                "$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"
+	# Create installation directory for Epic Games Store games
+    if [[ $(echo $external_directory_file) == *"game-access"* ]]; then
+		install_folder="$(echo $external_directory_file | sed 's|/game-access||')"
+	fi
 
-            # We're finished!
-            exit 0
-
-        else
-            if test ! -e "$(echo $external_directory)/wineprefixes-gcs"; then
-                mkdir -p "$(echo $external_directory)/wineprefixes-gcs"
-            fi
-
-            mkdir -p "$(echo $external_directory)/wineprefixes-gcs/$app_nickname-compatibility-mode"
-            mkdir "$HOME/.local/share/wineprefixes"
-
-            ln -sf "$(echo $external_directory)/wineprefixes-gcs/$app_nickname-compatibility-mode" \
-                "$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"
-        fi
-
-		# Create installation directory for Epic Games Store games
-		mkdir -p "$(echo $external_directory)/Epic Games Store"
-
-    else
-        mkdir -p "$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode/"
-    fi
+	mkdir -p "$(echo $install_folder)/Epic Games Store"
 
     # Prepare wineprefix
 	if test -e "$HOME/.local/share/wineprefixes/default-compatibility-mode/system.reg"; then

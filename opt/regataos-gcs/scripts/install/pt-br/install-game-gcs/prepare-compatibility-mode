@@ -16,7 +16,7 @@ function enable_dxvk_vkd3d() {
 }
 
 function prepareCustomCompatMode() {
-	if test -e "$HOME/.local/share/wineprefixes/$game_nickname-compatibility-mode/drive_c"; then
+	if test -e "$HOME/.local/share/wineprefixes/$game_nickname-compatibility-mode/system.reg"; then
 		# We're finished!
 		exit 0
 
@@ -102,7 +102,7 @@ function prepareCustomCompatMode() {
 }
 
 function prepareDefaultCompatMode() {
-	if test -e "$HOME/.local/share/wineprefixes/$game_nickname-compatibility-mode/drive_c"; then
+	if test -e "$HOME/.local/share/wineprefixes/$game_nickname-compatibility-mode/system.reg"; then
 		# We're finished!
 		exit 0
 
@@ -120,6 +120,7 @@ function prepareDefaultCompatMode() {
 			enable_dxvk_vkd3d
 		fi
 
+		mkdir -p "$HOME/.local/share/wineprefixes/$game_nickname-compatibility-mode"
 		cp -rf $HOME/.local/share/wineprefixes/default-compatibility-mode/* \
 			"$HOME/.local/share/wineprefixes/$game_nickname-compatibility-mode/"
 		sleep 5
@@ -147,6 +148,7 @@ function prepareDefaultCompatMode() {
 			fi
 		fi
 
+		mkdir -p "$HOME/.local/share/wineprefixes/$game_nickname-compatibility-mode"
 		export WINEPREFIX="$HOME/.local/share/wineprefixes/$game_nickname-compatibility-mode"
 
 		winetricks prefix=$game_nickname-compatibility-mode -q -f nocrashdialog
