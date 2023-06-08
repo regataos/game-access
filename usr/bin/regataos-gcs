@@ -37,6 +37,15 @@ if test -e "$HOME/.config/regataos-gcs/external-games-folder.txt"; then
 	fi
 fi
 
+# Copy the Mangohud configuration file
+if test ! -e "$HOME/.config/MangoHud"; then
+	mkdir -p "$HOME/.config/MangoHud"
+fi
+
+if test ! -e "$HOME/.config/MangoHud/MangoHud.conf"; then
+	cp -f "/opt/regataos-wine/custom-configs/mangohud/MangoHud.conf" "$HOME/.config/MangoHud/MangoHud.conf"
+fi
+
 # Create download cache
 if test ! -e "$HOME/.config/regataos-gcs/progressbar-gcs"; then
 	mkdir -p "$HOME/.config/regataos-gcs/progressbar-gcs/"
