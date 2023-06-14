@@ -1,0 +1,87 @@
+#!/bin/bash
+
+# Detect system language
+user=$(users | awk '{print $1}')
+
+if test -e "/home/$user/.config/plasma-localerc" ; then
+	language=$(grep -r LANGUAGE= "/home/$user/.config/plasma-localerc" | cut -d"=" -f 2- | cut -d":" -f -1 | tr [A-Z] [a-z] | sed 's/_/-/')
+
+	if [ -z $language ]; then
+    	language=$(grep -r LANG= "/home/$user/.config/plasma-localerc" | cut -d"=" -f 2- | cut -d"." -f -1 | tr [A-Z] [a-z] | sed 's/_/-/')
+	fi
+
+elif test -e "/home/$user/.config/user-dirs.locale" ; then
+    language=$(cat "/home/$user/.config/user-dirs.locale" | tr [A-Z] [a-z] | sed 's/_/-/')
+
+else
+    language=$(echo $LANG | tr [A-Z] [a-z] | sed 's/_/-/' | cut -d"." -f -1)
+fi
+
+# Choose the translation of the icon in the system
+# tray according to the user's language
+function icon_title() {
+    if [[ $language == *"pt-br"* ]]; then
+        echo "Game Access"
+
+    elif [[ $language == *"pt-pt"* ]]; then
+        echo "Game Access"
+
+    elif [[ $language == *"pt"* ]]; then
+        echo "Game Access"
+
+    elif [[ $language == *"en-us"* ]]; then
+        echo "Game Access"
+
+    else
+        echo "Game Access"
+    fi
+}
+
+function open_gcs() {
+    if [[ $language == *"pt-br"* ]]; then
+        echo "Abrir o Game Access"
+
+    elif [[ $language == *"pt-pt"* ]]; then
+        echo "Abrir o Game Access"
+
+    elif [[ $language == *"pt"* ]]; then
+        echo "Abrir o Game Access"
+
+    elif [[ $language == *"en-us"* ]]; then
+        echo "Open Game Access"
+
+    else
+        echo "Open Game Access"
+    fi
+}
+
+function close_gcs() {
+    if [[ $language == *"pt-br"* ]]; then
+        echo "Fechar o Game Access"
+
+    elif [[ $language == *"pt-pt"* ]]; then
+        echo "Fechar o Game Access"
+
+    elif [[ $language == *"pt"* ]]; then
+        echo "Fechar o Game Access"
+
+    elif [[ $language == *"en-us"* ]]; then
+        echo "Close Game Access"
+
+    else
+        echo "Close Game Access"
+    fi
+}
+
+# Run options
+case $1 in
+    "-icon-title") icon_title
+      ;;
+    "-open-gcs") open_gcs
+      ;;
+    "-close-gcs") close_gcs
+      ;;
+   *) echo "Invalid option!"
+      exit 1
+      ;;
+esac

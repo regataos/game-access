@@ -78,6 +78,13 @@ if [[ $(ls -l | grep ">") != *"wine -> $HOME/.local/share/applications"* ]]; the
 	mkdir -p $HOME/.local/share/applications/Programs
 fi
 
+# Start icon on the system tray
+ps -C "gcs-icontray.py" >/dev/null
+if [ $? = 1 ]; then
+	cd /opt/regataos-gcs/tray-icon/
+	./gcs-icontray.py &
+fi
+
 # Verify that Epic Games Store is installed to sync information
 function legendary_egl_sync() {
 	# Check if you have logged in to the Epic Games Store
@@ -159,7 +166,26 @@ fi
 sed -i 's/\(closed-manually=false\)/closed-manually=true/' "$HOME/.config/regataos-gcs/regataos-gcs.conf"
 
 # If necessary, clear the cache
-ps -C ps -e | egrep 'battlenet-comp|epicstore-comp|gog-comp|lol-comp|origin-comp|rockstar-comp|ubisoftconnect|install-epics' >/dev/null
+ps -C ps -e | egrep 'battlenet-comp|epicstore-comp|gog-comp|lol-comp|origin-comp|rockstar-comp|ubisoftconnect|install-epics|install-gcs' >/dev/null
 if [ $? = 1 ]; then
 	rm -f /tmp/progressbar-gcs/*
+fi
+
+# Before removing the system tray icon, make sure you have any launchers or games running.
+
+#Get the running game executable
+if test -e "/tmp/regataos-gcs/game-executable.txt"; then
+	gameExecutable=$(cat "/tmp/regataos-gcs/game-executable.txt")
+fi
+
+#Processes to be verified
+if [ -z $gameExecutable ];then
+	check_processes="rungame | rungame-epicstore | rungame-gcs | rungame-gog | rungame-steam | runlauncher" 
+else
+	check_processes="rungame | rungame-epicstore | rungame-gcs | rungame-gog | rungame-steam | runlauncher | $gameExecutable" 
+fi
+
+ps -C "$check_processes" > /dev/null
+if [ $? = 1 ]; then
+	killall gcs-icontray.py
 fi

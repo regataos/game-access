@@ -10,16 +10,16 @@ do
 
 # Make sure the Game Access app auto-close option is enabled
 if [[ $(grep -r "auto-close=" $HOME/.config/regataos-gcs/regataos-gcs.conf | cut -d"=" -f 2-) == *"true"* ]]; then
-	# Get the running Epic Games Store game executable
+	# Get the running game executable
 	if test -e "/tmp/regataos-gcs/game-executable.txt"; then
 		gameExecutable=$(cat "/tmp/regataos-gcs/game-executable.txt")
 	fi
 
 	# Processes to be verified
 	if [ -z $gameExecutable ];then
-		check_processes="wine | wineserver | rungame | rungame-epicstore | rungame-gog | rungame-steam | runlauncher" 
+		check_processes="wine | wineserver | rungame | rungame-epicstore | rungame-gcs | rungame-gog | rungame-steam | runlauncher" 
 	else
-		check_processes="wine | wineserver | rungame | rungame-epicstore | rungame-gog | rungame-steam | runlauncher | $gameExecutable" 
+		check_processes="wine | wineserver | rungame | rungame-epicstore | rungame-gcs | rungame-gog | rungame-steam | runlauncher | $gameExecutable" 
 	fi
 
 	# Check if the Regata OS Game Access is running

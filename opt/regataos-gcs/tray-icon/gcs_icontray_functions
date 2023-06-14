@@ -1,0 +1,120 @@
+#!/bin/bash
+
+# Detect system language
+user=$(users | awk '{print $1}')
+
+if test -e "/home/$user/.config/plasma-localerc" ; then
+	language=$(grep -r LANGUAGE= "/home/$user/.config/plasma-localerc" | cut -d"=" -f 2- | cut -d":" -f -1 | tr [A-Z] [a-z] | sed 's/_/-/')
+
+	if [ -z $language ]; then
+    	language=$(grep -r LANG= "/home/$user/.config/plasma-localerc" | cut -d"=" -f 2- | cut -d"." -f -1 | tr [A-Z] [a-z] | sed 's/_/-/')
+	fi
+
+elif test -e "/home/$user/.config/user-dirs.locale" ; then
+    language=$(cat "/home/$user/.config/user-dirs.locale" | tr [A-Z] [a-z] | sed 's/_/-/')
+
+else
+    language=$(echo $LANG | tr [A-Z] [a-z] | sed 's/_/-/' | cut -d"." -f -1)
+fi
+
+# Close the Regata OS Game Access application
+function close_app() {
+    killall regataos-gcs;
+    killall regataosgcs;
+    killall gcs-icontray.py
+}
+
+# Choose the translation of the icon in the system
+# tray according to the user's language
+function default_translation_buttons() {
+    if [[ $language == *"pt-br"* ]]; then
+        yesButton="Sim"
+        cancelButton="Cancelar"
+
+    elif [[ $language == *"pt-pt"* ]]; then
+        yesButton="Sim"
+        cancelButton="Cancelar"
+
+    elif [[ $language == *"pt"* ]]; then
+        yesButton="Sim"
+        cancelButton="Cancelar"
+
+    elif [[ $language == *"en-us"* ]]; then
+        yesButton="Yes"
+        cancelButton="Cancel"
+
+    else
+        yesButton="Yes"
+        cancelButton="Cancel"
+    fi
+}
+
+function close_app_lang() {
+    if [[ $language == *"pt-br"* ]]; then
+        title="Fechar o Game Access"
+        description="Realmente fechar o Game Access?"
+        yesButton="Sim, fechar!"
+        cancelButton="Cancelar"
+
+    elif [[ $language == *"pt-pt"* ]]; then
+        title="Fechar o Game Access"
+        description="Realmente fechar o Game Access?"
+        yesButton="Sim, fechar!"
+        cancelButton="Cancelar"
+
+    elif [[ $language == *"pt"* ]]; then
+        title="Fechar o Game Access"
+        description="Realmente fechar o Game Access?"
+        yesButton="Sim, fechar!"
+        cancelButton="Cancelar"
+
+    elif [[ $language == *"en-us"* ]]; then
+        title="Close Game Access"
+        description="Really close Game Access?"
+        yesButton="Yes, close!"
+        cancelButton="Cancel"
+
+    else
+        title="Close Game Access"
+        description="Really close Game Access?"
+        yesButton="Yes, close!"
+        cancelButton="Cancel"
+    fi
+}
+
+function close_gcs_app() {
+    ps -C ps -e | egrep 'battlenet-comp|epicstore-comp|gog-comp|lol-comp|origin-comp|rockstar-comp|ubisoftconnect|install-epics|install-gcs' >/dev/null
+    if [ $? = 0 ]; then
+        $TRANSLATIONS
+
+        if [ -z $yesButton ] || [ -z $cancelButton ];then
+            default_translation_buttons
+            $TRANSLATIONS
+        fi
+
+        env GTK_THEME=Adwaita:dark zenity --question --title "$title" --text "$description" --icon-name=regataos-gcs \
+        --ok-label "$yesButton" --cancel-label "$cancelButton" --width 300 \
+        --window-icon "/usr/share/pixmaps/regataos-gcs.png"
+
+        if [ $? -eq "0" ]; then
+            $FUNCTION
+            sleep 1
+            exit 0
+
+        else
+            echo "Process canceled"
+        fi
+
+    else
+        $FUNCTION
+    fi
+}
+
+# Run options
+case $1 in
+    "-close-gcs-app") export TRANSLATIONS="close_app_lang"; export FUNCTION="close_app"; close_gcs_app
+      ;;
+   *) echo "Invalid option!"
+      exit 1
+      ;;
+esac
