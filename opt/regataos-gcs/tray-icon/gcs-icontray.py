@@ -12,7 +12,7 @@ class SystemTrayIcon(QSystemTrayIcon):
         self.menu = QMenu(parent)
 
         def open_gcs():
-            os.system('cd /usr/share/applications/; gtk-launch "regataos-gcs.desktop"')
+            os.system('/bin/bash gcs_icontray_functions -show-hide-gcs')
 
         def close_gcs():
             os.system('/bin/bash gcs_icontray_functions -close-gcs-app')
@@ -33,7 +33,7 @@ class SystemTrayIcon(QSystemTrayIcon):
     def onTrayIconActivated(self, reason):
         if reason == QSystemTrayIcon.Trigger:
             print("Click with the left mouse button.")
-            os.system('cd /usr/share/applications/; gtk-launch "regataos-gcs.desktop"')
+            os.system('/bin/bash gcs_icontray_functions -show-hide-gcs')
 
         elif reason == QSystemTrayIcon.Context:
             print("Click with the right mouse button.")

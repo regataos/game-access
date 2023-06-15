@@ -150,25 +150,30 @@ if [ $? = 1 ]; then
 fi
 
 # Before removing the system tray icon, make sure you have any launchers or games running.
-#Get the running game executable
-if test -e "/tmp/regataos-gcs/game-executable.txt"; then
-	game_executable=$(cat "/tmp/regataos-gcs/game-executable.txt")
-fi
-
-#Processes to be verified
-if [ ! -z $game_executable ];then
-	game_process="rungame | rungame-epicstore | rungame-gcs | rungame-gog | rungame-steam | runlauncher | $game_executable"
-else
-	game_process="rungame | rungame-epicstore | rungame-gcs | rungame-gog | rungame-steam | runlauncher"
-fi
-
-#If possible remove icon from system tray
-ps -C "$game_process" > /dev/null
-if [ $? = 1 ]; then
-	launchers_process="battlenet | epicstore | gog | origin | eadesktop | rockstar | ubisoftconnect"
-
-	ps -C "$launchers_process" > /dev/null
-	if [ $? = 1 ]; then
-		killall gcs-icontray.py
+if test ! -e "/tmp/regataos-gcs/icontray.txt"; then
+	#Get the running game executable
+	if test -e "/tmp/regataos-gcs/game-executable.txt"; then
+		game_executable=$(cat "/tmp/regataos-gcs/game-executable.txt")
 	fi
+
+	#Processes to be verified
+	if [ ! -z $game_executable ];then
+		game_process="rungame | rungame-epicstore | rungame-gcs | rungame-gog | rungame-steam | runlauncher | $game_executable"
+	else
+		game_process="rungame | rungame-epicstore | rungame-gcs | rungame-gog | rungame-steam | runlauncher"
+	fi
+
+	#If possible remove icon from system tray
+	ps -C "$game_process" > /dev/null
+	if [ $? = 1 ]; then
+		launchers_process="battlenet | epicstore | gog | origin | eadesktop | rockstar | ubisoftconnect"
+
+		ps -C "$launchers_process" > /dev/null
+		if [ $? = 1 ]; then
+			killall gcs-icontray.py
+		fi
+	fi
+
+else
+	rm -f "/tmp/regataos-gcs/icontray.txt"
 fi
