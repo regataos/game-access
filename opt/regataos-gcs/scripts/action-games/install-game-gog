@@ -67,5 +67,8 @@ if test -e "$PREFIX_LOCATION/dxvk.conf"; then
 	export DXVK_CONFIG_FILE="$PREFIX_LOCATION/dxvk.conf"
 fi
 
+# Automatically close the Game Access app
+/opt/regataos-gcs/scripts/action-games/auto-close-game-access &
+
 # Run game
 (env $GAMEVAR gamemoderun wine "$PREFIX_LOCATION/dosdevices/c:/Program Files (x86)/GOG Galaxy/GalaxyClient.exe" /runWithoutUpdating /deelevated /command=launch /gameId=$gameid /path="") 2>&1 | tee $LOG_FILE

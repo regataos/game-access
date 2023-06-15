@@ -34,7 +34,7 @@ function list_launchers_options() {
 			<div id="block-remove"> \
 				<div class="div-buttons"> \
 					<div class="div-label"> \
-						<label class="label-run" id="' + launchersdata.launcher_nickname + '" onclick="window.launcher_name=this.id; run_launcher_exe();" title="Rode um arquivo .exe neste drive virtual." for="run-' + launchersdata.launcher_nickname + '"> \
+						<label class="label-run" id="' + launchersdata.launcher_nickname + '" onclick="window.launcher_name=this.id; run_launcher_exe(' + launcher_nickname + ');" title="Rode um arquivo .exe neste drive virtual." for="run-' + launchersdata.launcher_nickname + '"> \
 							<div class="label-run-div"><i class="fas fa-cogs"></i></div> \
 						</label> \
 						<input type="file" id="run-' + launchersdata.launcher_nickname + '" name="files[]" /> \
@@ -42,7 +42,7 @@ function list_launchers_options() {
 					<div class="open-folder" onclick="openfolder_' + launchersdata.launcher_nickname + '();" title="Abrir pasta de instalação do driver virtual."> \
 						<i class="fas fa-folder"></i> \
 					</div> \
-					<div class="run-launcher" onclick="window.launcher_name=' + launcher_nickname + '; run_launcher();" title="Executar"> \
+					<div class="run-launcher" onclick="run_launcher(' + launcher_nickname + ');" title="Executar"> \
 						<i class="fas fa-play"></i> \
 					</div> \
 				</div> \

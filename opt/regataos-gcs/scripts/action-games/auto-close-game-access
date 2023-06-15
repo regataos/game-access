@@ -1,120 +1,52 @@
 #!/bin/bash
 
 # This script ends the application of the Regata OS Game Access application
-# when a game or launcher was executed from it
+# when a game or launcher was executed from it.
 
-cd /
-
-while :
-do
+sleep 10
 
 # Make sure the Game Access app auto-close option is enabled
-if [[ $(grep -r "auto-close=" $HOME/.config/regataos-gcs/regataos-gcs.conf | cut -d"=" -f 2-) == *"true"* ]]; then
+check_auto_close_config="$(grep -r "auto-close=" "$HOME/.config/regataos-gcs/regataos-gcs.conf" | cut -d"=" -f 2-)"
+
+if [[ $(echo $check_auto_close_config) == *"true"* ]]; then
 	# Get the running game executable
 	if test -e "/tmp/regataos-gcs/game-executable.txt"; then
-		gameExecutable=$(cat "/tmp/regataos-gcs/game-executable.txt")
+		game_executable=$(cat "/tmp/regataos-gcs/game-executable.txt")
 	fi
 
 	# Processes to be verified
-	if [ -z $gameExecutable ];then
-		check_processes="wine | wineserver | rungame | rungame-epicstore | rungame-gcs | rungame-gog | rungame-steam | runlauncher" 
+	if [ ! -z $game_executable ];then
+		game_process="rungame | rungame-epicstore | rungame-gcs | rungame-gog | rungame-steam | runlauncher | $game_executable" 
 	else
-		check_processes="wine | wineserver | rungame | rungame-epicstore | rungame-gcs | rungame-gog | rungame-steam | runlauncher | $gameExecutable" 
+		game_process="rungame | rungame-epicstore | rungame-gcs | rungame-gog | rungame-steam | runlauncher" 
 	fi
 
-	# Check if the Regata OS Game Access is running
-	ps -C "regataosgcs /opt/regataos-gcs" > /dev/null
-	if [ $? = 0 ]
-	then
-		# Check if any game or launcher has been run from the game access
-		if test -e "/tmp/regataos-gcs/running-with-regataos-gcs.txt" ; then
-			# When this file is removed, the scan restarts
-			if test -e "/tmp/regataos-gcs/run-regataos-gcs.txt"; then
-				rm -f "/tmp/regataos-gcs/run-regataos-gcs.txt"
-			fi
+	launchers_process="battlenet | epicstore | gog | origin | eadesktop | rockstar | ubisoftconnect"
+	gcs_process="regataosgcs /opt/regataos-gcs"
 
-			# If Game Access is running, close the application
-			ps -C "regataosgcs /opt/regataos-gcs" > /dev/null
-			if [ $? = 0 ]; then
-				echo "Close the Game Access application"
-				sleep 20
-				kill -SIGTERM $(ps -C regataosgcs | head -2 | tail -1 | awk '{print $1}')
-				sleep 5
-				sed -i 's/\(closed-manually=true\)/closed-manually=false/' "$HOME/.config/regataos-gcs/regataos-gcs.conf"
+	# Verify that process is running
+	ps -C "$game_process" > /dev/null
+	if [ $? = 0 ]; then
+		# Check if the Regata OS Game Access is running
+		ps -C "$gcs_process" > /dev/null
+		if [ $? = 0 ]; then
+			echo "Close the Game Access application"
 
-			else
-				# Verify that process is running
-				ps -C "$check_processes" > /dev/null
-				
-				if [ $? = 0 ]; then
-					echo "" > "/tmp/regataos-gcs/run-regataos-gcs.txt"
-				fi
-
-				# If the launcher or game is closed, start Game Access
-				if test ! -e "/tmp/regataos-gcs/run-regataos-gcs.txt"; then
-					if [[ $(grep -r "closed-manually=" $HOME/.config/regataos-gcs/regataos-gcs.conf | cut -d"=" -f 2-) != *"true"* ]]; then
-						sed -i 's/\(closed-manually=true\)/closed-manually=false/' "$HOME/.config/regataos-gcs/regataos-gcs.conf"
-
-						rm -f "/tmp/regataos-gcs/running-with-regataos-gcs.txt"
-						cd "/usr/share/applications/"
-						gtk-launch "regataos-gcs.desktop"
-					fi
-				fi
-			fi
+			kill -SIGTERM $(ps -C regataosgcs | head -2 | tail -1 | awk '{print $1}')
+			exit 0
 		fi
 
 	else
-		# Check if any game or launcher has been run from the game access
-		if test -e "/tmp/regataos-gcs/running-with-regataos-gcs.txt" ; then
-			# When this file is removed, the scan restarts
-			if test -e "/tmp/regataos-gcs/run-regataos-gcs.txt"; then
-				rm -f "/tmp/regataos-gcs/run-regataos-gcs.txt"
-			fi
-
-			# If Game Access is running, close the application
-			ps -C "regataosgcs /opt/regataos-gcs" > /dev/null
+		ps -C "$launchers_process" > /dev/null
+		if [ $? = 0 ]; then
+			# Check if the Regata OS Game Access is running
+			ps -C "$gcs_process" > /dev/null
 			if [ $? = 0 ]; then
 				echo "Close the Game Access application"
-				sleep 20
+
 				kill -SIGTERM $(ps -C regataosgcs | head -2 | tail -1 | awk '{print $1}')
-				sleep 5
-				sed -i 's/\(closed-manually=true\)/closed-manually=false/' "$HOME/.config/regataos-gcs/regataos-gcs.conf"
-
-			else
-				# Verify that process is running
-				ps -C "$check_processes" > /dev/null
-				if [ $? = 0 ]; then
-					echo "" > "/tmp/regataos-gcs/run-regataos-gcs.txt"
-				fi
-
-				# If the launcher or game is closed, start Game Access
-				if test ! -e "/tmp/regataos-gcs/run-regataos-gcs.txt"; then
-					if [[ $(grep -r "closed-manually=" $HOME/.config/regataos-gcs/regataos-gcs.conf | cut -d"=" -f 2-) != *"true"* ]]; then
-						sed -i 's/\(closed-manually=true\)/closed-manually=false/' "$HOME/.config/regataos-gcs/regataos-gcs.conf"
-
-						rm -f "/tmp/regataos-gcs/running-with-regataos-gcs.txt"
-						cd "/usr/share/applications/"
-						gtk-launch "regataos-gcs.desktop"
-					fi
-				fi
+				exit 0
 			fi
-
-		else
-			echo "Nothing to do..."
-			break
 		fi
-	fi
-
-else
-	ps -C "regataosgcs /opt/regataos-gcs" > /dev/null
-	if [ $? = 1 ]
-	then
-		echo "Nothing to do..."
-		break
-	else
-		echo "Nothing to do..."
 	fi
 fi
-
-   sleep 5
-done

@@ -82,5 +82,8 @@ fi
 # Configure compatibility mode
 /bin/bash /opt/regataos-gcs/scripts/action-games/configure-compatibility-mode -configure-dxvk-vkd3d
 
+# Automatically close the Game Access app
+/opt/regataos-gcs/scripts/action-games/auto-close-game-access &
+
 # Run game
 (gamemoderun wine "$PREFIX_LOCATION/dosdevices/c:/Program Files (x86)/GOG Galaxy/GalaxyClient.exe" /runWithoutUpdating /deelevated /command=runGame /gameId=$gameid /path="$game_install_folder") 2>&1 | tee $LOG_FILE

@@ -35,7 +35,7 @@ function runExternalExeFile() {
 	});
 }
 
-function run_launcher_exe() {
+function run_launcher_exe(launcher_name) {
 	$('input[id="run-'+ launcher_name +'"]').change(function(e){
 		window.externalExeFile = document.getElementById("run-"+ launcher_name).value
 

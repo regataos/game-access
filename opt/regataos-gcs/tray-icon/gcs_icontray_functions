@@ -19,8 +19,7 @@ fi
 
 # Close the Regata OS Game Access application
 function close_app() {
-    killall regataos-gcs;
-    killall regataosgcs;
+    kill -SIGTERM $(ps -C regataosgcs | head -2 | tail -1 | awk '{print $1}')
     killall gcs-icontray.py
 }
 

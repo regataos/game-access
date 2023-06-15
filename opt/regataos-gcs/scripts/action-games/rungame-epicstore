@@ -122,6 +122,9 @@ if [[ $(cat /tmp/regataos-gcs/config/installed-launchers.conf) == *"epicstore"* 
 	fi
 fi
 
+# Automatically close the Game Access app
+/opt/regataos-gcs/scripts/action-games/auto-close-game-access &
+
 # Run game
 (/opt/regataos-gcs/tools/legendary/legendary launch "$GAMEID" --wine-prefix "$PREFIX_LOCATION") 2>&1 | tee $LOG_FILE
 

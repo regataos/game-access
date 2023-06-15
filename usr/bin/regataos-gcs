@@ -61,10 +61,6 @@ if test ! -e "/tmp/regataos-configs/config/plasma-localerc"; then
 	ln -sf "$HOME/.config/plasma-localerc" "/tmp/regataos-configs/config/"
 fi
 
-# Update cache
-sed -i 's/\(closed-manually=true\)/closed-manually=false/' "$HOME/.config/regataos-gcs/regataos-gcs.conf"
-
-rm -f "/tmp/regataos-gcs/running-with-regataos-gcs.txt"
 rm -f "/tmp/regataos-gcs/run-regataos-gcs.txt"
 
 # Clear cache
@@ -130,40 +126,22 @@ function legendary_egl_sync() {
 	/opt/regataos-gcs/scripts/search-epicstore-games-img.sh start >/dev/null
 }
 
-# Run app
+# Disable GPU acceleration for Intel Graphics
 if [[ $(glxinfo | grep vendor) == *"Intel"* ]]; then
-	/opt/regataos-gcs/scripts/search-installeds &
-	regataosgcs --disable-gpu /opt/regataos-gcs &
-	/bin/bash /opt/regataos-gcs/scripts/check-support-amd-fsr.sh &
-	legendary_egl_sync &
-	sleep 2
-	/opt/regataos-gcs/scripts/progress-bar/capture-progress-download &
-	/opt/regataos-gcs/scripts/progress-bar/create-process-queues &
-	/opt/regataos-gcs/scripts/progress-bar/run-process-queues &
-
-	ps -C "auto-close-game" >/dev/null
-	if [ $? = 1 ]; then
-		/opt/regataos-gcs/scripts/action-games/auto-close-game-access
-	fi
-
+	run_gcs="/usr/bin/regataosgcs --disable-gpu /opt/regataos-gcs"
 else
-	/opt/regataos-gcs/scripts/search-installeds &
-	regataosgcs /opt/regataos-gcs &
-	/bin/bash /opt/regataos-gcs/scripts/check-support-amd-fsr.sh &
-	legendary_egl_sync &
-	sleep 2
-	/opt/regataos-gcs/scripts/progress-bar/capture-progress-download &
-	/opt/regataos-gcs/scripts/progress-bar/create-process-queues &
-	/opt/regataos-gcs/scripts/progress-bar/run-process-queues &
-
-	ps -C "auto-close-game" >/dev/null
-	if [ $? = 1 ]; then
-		/opt/regataos-gcs/scripts/action-games/auto-close-game-access
-	fi
+	run_gcs="/usr/bin/regataosgcs /opt/regataos-gcs"
 fi
 
-# Closed manually
-sed -i 's/\(closed-manually=false\)/closed-manually=true/' "$HOME/.config/regataos-gcs/regataos-gcs.conf"
+# Run Game Access app
+/opt/regataos-gcs/scripts/search-installeds &
+$run_gcs &
+/bin/bash /opt/regataos-gcs/scripts/check-support-amd-fsr.sh &
+legendary_egl_sync &
+sleep 2
+/opt/regataos-gcs/scripts/progress-bar/capture-progress-download &
+/opt/regataos-gcs/scripts/progress-bar/create-process-queues &
+/opt/regataos-gcs/scripts/progress-bar/run-process-queues
 
 # If necessary, clear the cache
 ps -C ps -e | egrep 'battlenet-comp|epicstore-comp|gog-comp|lol-comp|origin-comp|rockstar-comp|ubisoftconnect|install-epics|install-gcs' >/dev/null
@@ -172,20 +150,25 @@ if [ $? = 1 ]; then
 fi
 
 # Before removing the system tray icon, make sure you have any launchers or games running.
-
 #Get the running game executable
 if test -e "/tmp/regataos-gcs/game-executable.txt"; then
-	gameExecutable=$(cat "/tmp/regataos-gcs/game-executable.txt")
+	game_executable=$(cat "/tmp/regataos-gcs/game-executable.txt")
 fi
 
 #Processes to be verified
-if [ -z $gameExecutable ];then
-	check_processes="rungame | rungame-epicstore | rungame-gcs | rungame-gog | rungame-steam | runlauncher" 
+if [ ! -z $game_executable ];then
+	game_process="rungame | rungame-epicstore | rungame-gcs | rungame-gog | rungame-steam | runlauncher | $game_executable"
 else
-	check_processes="rungame | rungame-epicstore | rungame-gcs | rungame-gog | rungame-steam | runlauncher | $gameExecutable" 
+	game_process="rungame | rungame-epicstore | rungame-gcs | rungame-gog | rungame-steam | runlauncher"
 fi
 
-ps -C "$check_processes" > /dev/null
+#If possible remove icon from system tray
+ps -C "$game_process" > /dev/null
 if [ $? = 1 ]; then
-	killall gcs-icontray.py
+	launchers_process="battlenet | epicstore | gog | origin | eadesktop | rockstar | ubisoftconnect"
+
+	ps -C "$launchers_process" > /dev/null
+	if [ $? = 1 ]; then
+		killall gcs-icontray.py
+	fi
 fi

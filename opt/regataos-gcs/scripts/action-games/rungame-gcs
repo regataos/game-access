@@ -124,6 +124,9 @@ if [[ $(echo $gameNickname) == *"lol"* ]]; then
     /opt/regataos-gcs/scripts/action-games/launch-helper-lol.sh start &
 fi
 
+# Automatically close the Game Access app
+/opt/regataos-gcs/scripts/action-games/auto-close-game-access &
+
 # Run game
 if [ ! -z $execute_args ]; then
     runGame="$file_executable $(echo $execute_args)"

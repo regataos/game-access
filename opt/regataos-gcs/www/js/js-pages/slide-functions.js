@@ -27,12 +27,6 @@ function autoCloseGcs() {
 			const goPage = 'echo "' + pagename + '" > "/tmp/regataos-gcs/go-page-auto"';
 			exec(goPage, function (error, call, errlog) {
 			});
-
-			setTimeout(function () {
-				const gameStarted = 'echo "Game started" > "/tmp/regataos-gcs/running-with-regataos-gcs.txt"';
-				exec(gameStarted, function (error, call, errlog) {
-				});
-			}, 15000);
 		}
 	}
 }

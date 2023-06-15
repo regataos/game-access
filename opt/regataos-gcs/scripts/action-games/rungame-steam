@@ -50,6 +50,9 @@ else
 	fi
 fi
 
+# Automatically close the Game Access app
+/opt/regataos-gcs/scripts/action-games/auto-close-game-access &
+
 # Run game
 # Choose suitable option for gamescope and gamemode
 (steam steam://rungameid/$GAME_ID) 2>&1 | tee $LOG_FILE
