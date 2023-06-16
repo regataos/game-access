@@ -44,8 +44,33 @@ fi
 
 # Enable AMD FSR
 if [[ $(grep -r amd-fsr $GCS_CONFIG) == *"amd-fsr=true"* ]]; then
-	export WINE_FULLSCREEN_FSR=1
-	export WINE_FULLSCREEN_FSR_STRENGTH=1
+	# Enable AMD FSR with gamescope
+	fsr_with_gamescope="true"
+
+	if [[ $(echo $fsr_with_gamescope) == *"true"* ]]; then
+		# Check user resolution
+		dimensions_w="$(xdpyinfo | grep 'dimensions:' | awk '{print $2}' | cut -d'x' -f -1)"
+		dimensions_h="$(xdpyinfo | grep 'dimensions:' | awk '{print $2}' | cut -d'x' -f 2-)"
+
+		quad_hd=3440
+		full_hd=1920
+
+		if [ $dimensions_w –ge $quad_hd ]; then
+			GAMESCOPE_FSR="-w 1920 -h 1080 -W $dimensions_w -H $dimensions_h -U -f"
+
+		elif [ $dimensions_w –ge $full_hd ]; then
+			GAMESCOPE_FSR="-w 1280 -h 720 -W $dimensions_w -H $dimensions_h -U -f"
+
+		else
+			GAMESCOPE_FSR="-w 1280 -h 720 -W $dimensions_w -H $dimensions_h -U -f"
+		fi
+
+		export SDL_VIDEODRIVER=x11;
+
+	else
+		export WINE_FULLSCREEN_FSR=1
+		export WINE_FULLSCREEN_FSR_STRENGTH=1
+	fi
 fi
 
 # Enable performance info
@@ -126,7 +151,14 @@ fi
 /opt/regataos-gcs/scripts/action-games/auto-close-game-access &
 
 # Run game
-(/opt/regataos-gcs/tools/legendary/legendary launch "$GAMEID" --wine-prefix "$PREFIX_LOCATION") 2>&1 | tee $LOG_FILE
+if [[ $(echo $fsr_with_gamescope) == *"true"* ]]; then
+	(/opt/regataos-gcs/tools/legendary/legendary launch "$GAMEID" --wine-prefix "$PREFIX_LOCATION" \
+	--wrapper "gamemoderun gamescope $(echo $GAMESCOPE_FSR) --") 2>&1 | tee $LOG_FILE
+
+else
+	(/opt/regataos-gcs/tools/legendary/legendary launch "$GAMEID" --wine-prefix "$PREFIX_LOCATION" \
+	--wrapper "gamemoderun") 2>&1 | tee $LOG_FILE
+fi
 
 # Clear cache
 rm -f "/tmp/regataos-gcs/running-$GAMENICK"
