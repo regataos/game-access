@@ -226,7 +226,7 @@ function start_list_games() {
 	fs.access('/tmp/regataos-gcs/config/gog-games/gamedb.json', (err) => {
 	if (!err) {
 		$("div.gog-title").css("display", "none")
-		$("div.account-title-gog").css("display", "block")
+		$("div.account-title-gog").css("display", "grid")
 		$("div.universal-all-games").css("display", "block")
 		$("div.game-access-blocks").css("display", "none")
 
@@ -237,7 +237,7 @@ function start_list_games() {
 		$("div.gog-title").css("display", "block")
 		$("div.account-title-gog").css("display", "none")
 		$("div.universal-all-games").css("display", "none")
-		$("div.game-access-blocks").css("display", "block")
+		$("div.game-access-blocks").css("display", "grid")
 	}
 	});
 }

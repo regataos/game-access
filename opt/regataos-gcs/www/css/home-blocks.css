@@ -1,8 +1,10 @@
 .title-top {
+	width: 95%;
     font-family: Roboto;
     font-size: 20px;
 	font-weight: 400;
-	margin-left: 57px;
+	margin-left: auto;
+	margin-right: auto;
     margin-bottom: 30px;
 }
 
@@ -18,31 +20,35 @@
 }
 
 .home-blocks2 {
+	width: calc(100% - 245px);
     margin-top: 30px;
 	margin-left: 245px;
 	margin-bottom: 50px;
 }
 
 .home-blocks3 {
+	width: 95%;
+	position: relative;
 	display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-	padding-right: 20px;
-    padding-left: 20px;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	grid-template-columns: auto auto auto;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .app-block {
 	display: inline-block;
 	position: relative;
 	opacity: 1;
-    width: 270px;
+    width: 310px;
     height: 250px;
 	background-color: #262626;
 	border-radius: 5px;
 	box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
 	margin-bottom: 15px;
-	padding: 10px;
+	padding: 0px;
 	cursor: pointer;
 	background-position: 50% 50%;
 	background-size: auto 100%;
@@ -60,7 +66,7 @@
 .appbc1 {
 	margin-right: 15px;
 	float: left;
-    width: 400px;
+    width: 420px;
     height: 250px;
 }
 
@@ -70,6 +76,7 @@
 
 .block-text {
 	position: absolute;
+	box-sizing: border-box;
 	bottom: 0;
     left: 0;
 	background-color: rgba(4, 4, 4, 0.68);
@@ -78,8 +85,8 @@
     background-size: 100% auto;
     background-repeat: no-repeat;
 	width: 100%;
-	padding-top: 15px;
-	padding-bottom: 15px;
+	height: auto;
+	padding: 15px;
 	border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
 }
@@ -92,16 +99,16 @@
 	white-space: nowrap;
 	overflow: hidden;
 	margin-bottom: 10px;
-	padding: 0px 15px 0px 15px;
+	padding: 0px;
 }
 
 .block-desc {
 	font-size: 17px;
 	font-weight: 400;
-	padding: 0px 15px 0px 15px;
+	padding: 0px;
 }
 
-/* Responsive CSS */
+/* Animation CSS */
 @-webkit-keyframes animatebottom {
     from { bottom:-30px; opacity:0 } 
     to { bottom:0px; opacity:1 }

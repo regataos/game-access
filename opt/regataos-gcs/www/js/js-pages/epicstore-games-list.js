@@ -242,7 +242,7 @@ function show_installed_games() {
 		if (stdout) {
 			var data = stdout
 			if ((data.indexOf("app_name") > -1) == "1") {
-				$(".universal-installed-games").css("display", "block");
+				$(".universal-installed-games").css("display", "grid");
 				$(".universal-account-title").css("margin-top", "30px");
 				$(".universal-installed-title").css("display", "block");
 				list_installed_epicstore_games();
@@ -256,7 +256,7 @@ function show_installed_games() {
 		} else {
 			fs.access('/tmp/regataos-gcs/config/installed/show-installed-games-epic.txt', (err) => {
 				if (!err) {
-					$(".universal-installed-games").css("display", "block");
+					$(".universal-installed-games").css("display", "grid");
 					$(".universal-account-title").css("margin-top", "30px");
 					$(".universal-installed-title").css("display", "block");
 					list_installed_epicstore_games();
@@ -281,7 +281,7 @@ function start_list_games() {
 			$('body').css('background-image', 'url()');
 			$("div.remove-account").css("display", "block")
 			$("div.universal-account-title").css("display", "block")
-			$("div.universal-all-games").css("display", "block")
+			$("div.universal-all-games").css("display", "grid")
 			$("div.loading").css("display", "none")
 			$("div.loading-games").css("display", "none")
 
