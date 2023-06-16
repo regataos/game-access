@@ -70,14 +70,6 @@ if test -e "/opt/regataos-gcs/games-list" ; then
 	chmod 777 "/opt/regataos-gcs/games-list"
 fi
 
-# Update game access configuration file
-users=`who | cut -d' ' -f1 | uniq`
-for user in $users
-do
-	su - $user -c "sed -i 's/\(closed-manually=1\)/closed-manually=true/' /tmp/regataos-gcs/config/regataos-gcs.conf"
-	su - $user -c "sed -i 's/\(closed-manually=0\)/closed-manually=false/' /tmp/regataos-gcs/config/regataos-gcs.conf"
-done
-
 # Start system services
 systemctl daemon-reload
 systemctl enable --now regataos-gcs-select-language.service
@@ -102,16 +94,37 @@ ln -sf /opt/regataos-gcs/scripts/install/en-us/install-game-gcs/install-gcs-game
 # Update LoL custom wine
 user=$(users | awk '{print $1}')
 customRuntimeDir="/home/$user/.config/regataos-gcs/custom-runtime"
-wineVersion="7.0-5"
-wineFile="lutris-ge-lol-$wineVersion-x86_64"
-wineLink="https://github.com/GloriousEggroll/wine-ge-custom/releases/download/7.0-GE-5-LoL/wine-$wineFile.tar.xz"
+wineVersion="8.7"
+wineFile="lutris-ge-lol-$wineVersion-1-x86_64"
+wineLink="https://github.com/GloriousEggroll/wine-ge-custom/releases/download/$wineVersion-GE-1-LoL/wine-$wineFile.tar.xz"
 
 if test -e "$customRuntimeDir/lol.txt"; then
   if [[ $(cat "$customRuntimeDir/lol.txt") != *"$wineFile"* ]]; then
     wget --no-check-certificate -O "$customRuntimeDir/wine-$wineFile.tar.xz" "$wineLink"
 
     tar xf "$customRuntimeDir/wine-$wineFile.tar.xz" -C "$customRuntimeDir/"
-    echo "$customRuntimeDir/lutris-ge-lol-7.0-5-x86_64" > "$customRuntimeDir/lol.txt"
+    echo "$customRuntimeDir/$wineFile" > "$customRuntimeDir/lol.txt"
+
+    sudo chown --recursive $user:users "$customRuntimeDir/$wineFile"
+    sudo chown $user:users "$customRuntimeDir/lol.txt"
+    rm -f "$customRuntimeDir/wine-$wineFile.tar.xz"
+  fi
+fi
+
+# Fix for legendary
+if [[ $(ls -la /home/$user/.config/legendary/ | grep "\->") == *"config.ini"* ]]; then
+  rm -rf "/home/$user/.config/legendary/config.ini"
+fi
+
+# Revome Origin game
+if [[ $(ls -la /opt/regataos-gcs/games-list/ | grep "origin.json") == *"origin.json"* ]]; then
+  rm -f /opt/regataos-gcs/games-list/*-origin.json
+fi
+
+# Remove old wineprefix
+if test ! -e "/tmp/progressbar-gcs/installing"; then
+  if test -e "/home/$user/.local/share/wineprefixes/default-compatibility-mode"; then
+    rm -rf "/home/$user/.local/share/wineprefixes/default-compatibility-mode"
   fi
 fi
 
