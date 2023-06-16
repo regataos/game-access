@@ -2,13 +2,13 @@ function home_content() {
     $(document).ready(function () {
         // Content of block 1
         //Title
-        $(".appbc1 .block-title").text("DEATH STRANDING");
+        $(".appbc1 .block-title").text("Guacamelee! 2");
         //Block image
-        $(".appbc1").css("background-image", 'url("https://i.ibb.co/RScG6w9/ds-block1.webp")');
+        $(".appbc1").css("background-image", 'url("https://i.ibb.co/hMLZvrY/gcm-block1.webp")');
         $(".appbc1").css("background-position", "0% 100%")
         //Date
-        date_pt_br = "25 de maio"
-        date_en_us = "May 25"
+        date_pt_br = "22 de junho"
+        date_en_us = "June 22"
     });
 
     // Detect User Language
