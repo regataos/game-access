@@ -42,11 +42,19 @@ function default_translation_buttons() {
     fi
 }
 
+# Show the Game Access window
+function show_gcs_window() {
+    # Keep icon in system tray
+    echo "keep icontray" > "/tmp/regataos-gcs/icontray.txt"
+
+    cd /usr/share/applications/; gtk-launch "regataos-gcs.desktop"
+}
+
 # Show/hide the Game Access window, keeping the icon in the system tray.
 function show_hide_gcs_window() {
     ps -C "regataosgcs" > /dev/null
     if [ $? = 1 ]; then
-        cd /usr/share/applications/; gtk-launch "regataos-gcs.desktop"
+        show_gcs_window
 
     else
         # Keep icon in system tray
@@ -94,6 +102,9 @@ function close_app_lang() {
 
 #Close the Regata OS Game Access application.
 function close_app() {
+    # Keep icon in system tray
+    echo "keep icontray" > "/tmp/regataos-gcs/icontray.txt"
+
     kill -SIGTERM $(ps -C regataosgcs | head -2 | tail -1 | awk '{print $1}')
     killall gcs-icontray.py
 }
@@ -157,6 +168,8 @@ function close_gcs_app() {
 # Run options.
 case $1 in
     "-show-hide-gcs") show_hide_gcs_window
+      ;;
+    "-show-gcs-app") show_gcs_window
       ;;
     "-close-gcs-app") export FUNCTION="close_app"; export TRANSLATIONS="$(echo $FUNCTION)_lang"; close_gcs_app
       ;;

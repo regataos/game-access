@@ -12,7 +12,7 @@ class SystemTrayIcon(QSystemTrayIcon):
         self.menu = QMenu(parent)
 
         def open_gcs():
-            os.system('/bin/bash gcs_icontray_functions -show-hide-gcs')
+            os.system('/bin/bash gcs_icontray_functions -show-gcs-app')
 
         def close_gcs():
             os.system('/bin/bash gcs_icontray_functions -close-gcs-app')
