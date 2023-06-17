@@ -1,49 +1,16 @@
-@media screen and (max-width: 2560px) {
-	/* bar */
-	#block-home .block-title {
-		font-size: 19px;
-	}
-	#block-home .text-app {
-		font-size: 19px;
-	}
-	.text-app-top {
-		font-size: 20px;
-	}
-	.description-top {
-		font-size: 19px;
-	}
-	/* slide */
-	.slideshow {
-		height: 790px;
-	}
-	.slideshow .slides {
-		height: 765px;
-	}
-	.slideshow .slide .image-container {
-		height: 1150px;
-	}
-	.slideshow .slide .text {
-		font-size: 30px;
-	}
-	.btn {
-		font: 18px/1.2 "Oxygen", sans-serif;
+@media screen and (max-width: 2360px) {
+	.blocks3, .blocks4, .inner-blocks {
+		grid-template-columns: auto auto auto auto auto;
 	}
 }
 
-@media screen and (max-width: 1921px) {
-	/* bar */
-	#block-home .block-title {
-		font-size: 14px;
+@media screen and (max-width: 2220px) {
+	.blocks3, .blocks4, .inner-blocks {
+		grid-template-columns: auto auto auto auto;
 	}
-	#block-home .text-app {
-		font-size: 16px;
-	}
-	.text-app-top {
-		font-size: 18px;
-	}
-	.description-top {
-		font-size: 16px;
-	}
+}
+
+@media screen and (max-width: 2048px) {
 	/* slide */
 	.slideshow {
 		height: 595px;
@@ -60,6 +27,24 @@
 	.btn {
 		font: 13px/1.2 "Oxygen", sans-serif;
 	}
+
+	/* home game blocks */
+	.home-blocks .app-block,
+	.home-blocks .appbc1 {
+		height: 350px;
+	}
+}
+
+@media screen and (max-width: 1860px) {
+	/* blocks home */
+	.home-blocks .app-block,
+	.home-blocks .appbc1 {
+		height: 300px;
+	}
+
+	.blocks3, .blocks4, .inner-blocks {
+		width: 97%;
+	}
 }
 
 @media screen and (max-width: 1441px) {
@@ -72,6 +57,17 @@
 	}
 	.slideshow .slide .image-container {
 		height: 650px;
+	}
+
+	/* blocks home */
+	.home-blocks .app-block,
+	.home-blocks .appbc1 {
+		height: 250px;
+	}
+
+	.home-blocks .block-text {
+		min-height: 104px;
+		padding: 15px;
 	}
 }
 
@@ -88,5 +84,70 @@
 	}
 	#hardware-recommended {
 		width: 275px;
+	}
+
+	.blocks3, .blocks4, .inner-blocks {
+		grid-template-columns: auto auto auto;
+	}
+}
+
+@media screen and (max-width: 1220px) {
+	.slideshow .slide .caption {
+		margin-top: 140px;
+	}
+
+	.slideshow .slide .text {
+		max-width: 500px;
+	}
+
+	.blocks3, .blocks4, .inner-blocks {
+		grid-template-columns: auto auto;
+	}
+
+	.appbc1 {
+		width: 100%;
+	}
+}
+
+@media screen and (max-width: 1175px) {
+	#search input#field {
+		width: 0px;
+	}
+
+	#search input#field:active {
+		width: 200px;
+		background-color: #fff;
+		color: #000;
+	}
+
+	#search input#field:hover {
+		width: 200px;
+		background-color: #fff;
+		color: #000;
+	}
+}
+
+@media screen and (max-width: 1080px) {
+	.home-blocks3 {
+		display: block;
+	}
+
+	.home-blocks .app-block {
+		float: left;
+		width: 49%;
+		margin-top: 25px;
+    	margin-right: 0px;
+		margin-bottom: 50px;
+	}
+
+	.home-blocks .app-block:last-child {
+		float: right;
+	}
+
+	.home-blocks .appbc1 {
+		width: 100%;
+		height: 350px;
+		margin-top: 0px;
+		margin-bottom: 0px;
 	}
 }

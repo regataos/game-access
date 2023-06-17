@@ -10,7 +10,6 @@ function list_epicstore_account() {
 	fs.readdirSync("/tmp/regataos-gcs/config/epicstore-games/json").forEach(files => {
 		fs.readFile("/tmp/regataos-gcs/config/epicstore-games/json/" + files, "utf8", function (err, data) {
 			if (!err) {
-
 				// Request the dynamic creation of game blocks on the HTML page
 				//Capture the main element where the game blocks will be created
 				var epicstore_all_games = document.querySelector("div.universal-all-games");
@@ -50,23 +49,23 @@ function list_epicstore_account() {
 
 						//Add game details within the newly created block
 						epicstore_game_blocks.innerHTML = ' \
-			<div class="universal-game-img epicstore-game-img" style="background-image: url(' + gamebackg + ')"></div> \
-				<div class="block-play-universal"> \
-					<div id="' + games[i].gamenickname + '" class="install-box-universal" onclick="window.gamenickname=this.id; install_epicstore_game();"> \
-					<div class="play-button"> \
-						<i class="fas fa-download"></i><div class="install-txt">Instalar</div> \
-					</div> \
-				</div> \
-				</div> \
-				<div class="block-text-universal" title="' + games[i].gamename + '"> \
-					<div class="block-title">' + games[i].gamename + '</div> \
-					<div class="block-desc">Epic Games Store</div> \
-					<div class="native-game"> \
-						<div class="native-game-img" style="background-image: url(./../images/gcs.png)"></div> \
-						<div class="native-game-desc gcs">Game Access</div> \
-					</div> \
-				</div> \
-			</div>';
+						<div class="universal-game-img epicstore-game-img" style="background-image: url(' + gamebackg + ')"></div> \
+							<div class="block-play-universal"> \
+								<div id="' + games[i].gamenickname + '" class="install-box-universal" onclick="window.gamenickname=this.id; install_epicstore_game();"> \
+								<div class="play-button"> \
+									<i class="fas fa-download"></i><div class="install-txt">Instalar</div> \
+								</div> \
+							</div> \
+							</div> \
+							<div class="block-text-universal" title="' + games[i].gamename + '"> \
+								<div class="block-title">' + games[i].gamename + '</div> \
+								<div class="block-desc">Epic Games Store</div> \
+								<div class="native-game"> \
+									<div class="native-game-img" style="background-image: url(./../images/gcs.png)"></div> \
+									<div class="native-game-desc gcs">Game Access</div> \
+								</div> \
+							</div> \
+						</div>';
 
 						//Finally, create the new game blocks dynamically
 						if (content_brake_epicstore >= 16) {
@@ -117,10 +116,9 @@ function list_installed_epicstore_games() {
 	var child = [];
 
 	// Read JSON files with the list of games
-	fs.readdirSync("/tmp/regataos-gcs/config/epicstore-games/json").forEach(files => {
-		fs.readFile("/tmp/regataos-gcs/config/epicstore-games/json/" + files, "utf8", function (err, data) {
+	fs.readdirSync("/tmp/regataos-gcs/config/installed").forEach(files => {
+		fs.readFile("/tmp/regataos-gcs/config/installed/" + files, "utf8", function (err, data) {
 			if (!err) {
-
 				// Request the dynamic creation of game blocks on the HTML page
 				//Capture the main element where the game blocks will be created
 				var epicstore_installed_games = document.querySelector("div.universal-installed-games");
@@ -164,26 +162,26 @@ function list_installed_epicstore_games() {
 
 						//Add game details within the newly created block
 						epicstore_game_blocks.innerHTML = ' \
-			<div class="universal-game-img epicstore-game-img" style="background-image: url(' + gamebackg + ')"></div> \
-				<div class="block-play-universal"> \
-					<div title="Desinstalar jogo" class="remove-game-button" onclick="window.game_for_remove=' + gamenickname + '; uninstall_epicstore_game();"> \
-						<i class="fas fa-trash-alt"></i> \
-					</div> \
-					<div id="' + gamesdata.gameid + '" class="play-box-universal" onclick="window.gameid=this.id; window.gamenickname=' + gamenickname + '; run_epicstore_game();"> \
-					<div class="play-button"> \
-						<i class="fas fa-play"></i><div class="play-txt">Jogar</div> \
-					</div> \
-				</div> \
-				</div> \
-				<div class="block-text-universal" title="' + gamesdata.gamename + '"> \
-					<div class="block-title">' + gamesdata.gamename + '</div> \
-					<div class="block-desc">Epic Games Store</div> \
-					<div class="native-game"> \
-						<div class="native-game-img" style="background-image: url(./../images/gcs.png)"></div> \
-						<div class="native-game-desc gcs">Game Access</div> \
-					</div> \
-				</div> \
-			</div>';
+						<div class="universal-game-img epicstore-game-img" style="background-image: url(' + gamebackg + ')"></div> \
+							<div class="block-play-universal"> \
+								<div title="Desinstalar jogo" class="remove-game-button" onclick="window.game_for_remove=' + gamenickname + '; uninstall_epicstore_game();"> \
+									<i class="fas fa-trash-alt"></i> \
+								</div> \
+								<div id="' + gamesdata.gameid + '" class="play-box-universal" onclick="window.gameid=this.id; window.gamenickname=' + gamenickname + '; run_epicstore_game();"> \
+								<div class="play-button"> \
+									<i class="fas fa-play"></i><div class="play-txt">Jogar</div> \
+								</div> \
+							</div> \
+							</div> \
+							<div class="block-text-universal" title="' + gamesdata.gamename + '"> \
+								<div class="block-title">' + gamesdata.gamename + '</div> \
+								<div class="block-desc">Epic Games Store</div> \
+								<div class="native-game"> \
+									<div class="native-game-img" style="background-image: url(./../images/gcs.png)"></div> \
+									<div class="native-game-desc gcs">Game Access</div> \
+								</div> \
+							</div> \
+						</div>';
 
 						//Finally, create the new game blocks dynamically
 						epicstore_installed_games.appendChild(epicstore_game_blocks);
@@ -244,7 +242,7 @@ function show_installed_games() {
 			if ((data.indexOf("app_name") > -1) == "1") {
 				$(".universal-installed-games").css("display", "grid");
 				$(".universal-account-title").css("margin-top", "30px");
-				$(".universal-installed-title").css("display", "block");
+				setTimeout(function () { $(".universal-installed-title").css("display", "block"); }, 1000);
 				list_installed_epicstore_games();
 
 			} else {
@@ -294,7 +292,7 @@ function start_list_games() {
 				$("div.epicstore-more").css("display", "none")
 			}
 
-			show_installed_games();
+			setTimeout(function () { show_installed_games(); }, 1000);
 			list_epicstore_account_load();
 			return;
 
@@ -326,6 +324,21 @@ function start_list_games() {
 			$("div.universal-all-games").css("display", "none")
 		}
 	});
+
+	// Show installed games
+	const exec = require('child_process').exec;
+	const installedDir = "/tmp/regataos-gcs/config/installed"
+
+	const commandLine = `verifyGameInstallJson=$(ls ${installedDir}/)
+	if [[ $(echo $verifyGameInstallJson) != *"json"* ]]; then
+		rm -f "${installedDir}/show-installed-games-epic.txt"
+		rm -f "${installedDir}/show-installed-games.txt"
+	else
+		echo "show EGS installed" > "${installedDir}/show-installed-games-epic.txt"
+		echo "show EGS installed" > "${installedDir}/show-installed-games.txt"
+	fi`;
+	exec(commandLine, function (error, call, errlog) {
+	});
 }
 start_list_games()
 
@@ -356,5 +369,5 @@ function check_page_reload() {
 setTimeout(function () {
 	setInterval(function () {
 		start_list_games()
-	}, 500);
-}, 500);
+	}, 100);
+}, 100);
