@@ -78,6 +78,11 @@ div.universal-account-title {
 	background-image: linear-gradient(to right, #313d4a, #313d4a, #313d4a, #313d4a);
 }
 
+.steam-more {
+	position: absolute;
+    right: 0;
+}
+
 .universal-login {
 	display: none;
 	position: relative;
@@ -497,13 +502,13 @@ div.universal-account-title {
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
     transition: all .4s;
-    background-size: auto 180px;
+    background-size: cover;
     background-position: 50% 0%;
     background-repeat: no-repeat;
 }
 
 .epicstore-game-img {
-    background-size: 100% auto;
+    background-size: cover;
 }
 
 #epicstore-buttons {

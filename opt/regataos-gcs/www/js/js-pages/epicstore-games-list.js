@@ -231,43 +231,26 @@ function list_epicstore_account_load() {
 }
 
 // Check for installed games
+setInterval(show_installed_games, 1000);
 function show_installed_games() {
-	var fs = require("fs");
-	const exec = require('child_process').exec;
+	const fs = require("fs");
 
-	var command_line = "cat $HOME/.config/legendary/installed.json | grep app_name";
-	exec(command_line, (error, stdout, stderr) => {
-		if (stdout) {
-			var data = stdout
-			if ((data.indexOf("app_name") > -1) == "1") {
-				$(".universal-installed-games").css("display", "grid");
-				$(".universal-account-title").css("margin-top", "30px");
-				setTimeout(function () { $(".universal-installed-title").css("display", "block"); }, 1000);
-				list_installed_epicstore_games();
-
-			} else {
-				$(".universal-installed-games").css("display", "none");
-				$(".universal-account-title").css("margin-top", "100px");
-				$(".universal-installed-title").css("display", "none");
-			}
+	fs.access('/tmp/regataos-gcs/config/installed/show-installed-games-epic.txt', (err) => {
+		if (!err) {
+			$(".universal-installed-games").css("min-height", "280px");
+			$(".universal-account-title").css("margin-top", "25px");
+			$(".universal-installed-games").css("display", "grid");
+			$(".installed-title-epicstore").css("display", "block");
+			list_installed_epicstore_games();
 
 		} else {
-			fs.access('/tmp/regataos-gcs/config/installed/show-installed-games-epic.txt', (err) => {
-				if (!err) {
-					$(".universal-installed-games").css("display", "grid");
-					$(".universal-account-title").css("margin-top", "30px");
-					$(".universal-installed-title").css("display", "block");
-					list_installed_epicstore_games();
-
-				} else {
-					$(".universal-installed-games").css("display", "none");
-					$(".universal-account-title").css("margin-top", "100px");
-					$(".universal-installed-title").css("display", "none");
-				}
-			});
+			$(".universal-installed-games").css("display", "none");
+			$(".universal-account-title").css("margin-top", "100px");
+			$(".installed-title-epicstore").css("display", "none");
 		}
 	});
 }
+show_installed_games()
 
 // Check Epic Games Store login
 function start_list_games() {
@@ -292,7 +275,6 @@ function start_list_games() {
 				$("div.epicstore-more").css("display", "none")
 			}
 
-			setTimeout(function () { show_installed_games(); }, 1000);
 			list_epicstore_account_load();
 			return;
 
@@ -319,26 +301,26 @@ function start_list_games() {
 			$("div.remove-account").css("display", "none")
 			$("div.universal-more").css("display", "none")
 			$("div.universal-account-title").css("display", "none")
-			$("div.universal-installed-title").css("display", "none")
+			$("div.installed-title-epicstore").css("display", "none")
 			$("div.universal-installed-games").css("display", "none")
 			$("div.universal-all-games").css("display", "none")
 		}
 	});
 
 	// Show installed games
-	const exec = require('child_process').exec;
-	const installedDir = "/tmp/regataos-gcs/config/installed"
-
-	const commandLine = `verifyGameInstallJson=$(ls ${installedDir}/)
-	if [[ $(echo $verifyGameInstallJson) != *"json"* ]]; then
-		rm -f "${installedDir}/show-installed-games-epic.txt"
-		rm -f "${installedDir}/show-installed-games.txt"
+	const commandLine = `verifyGameInstallJson=$(ls /tmp/regataos-gcs/config/installed/)
+	if [[ $(echo $verifyGameInstallJson) == *"epicstore.json"* ]]; then
+		echo "show EGS installed" > "/tmp/regataos-gcs/config/installed/show-installed-games-epic.txt"
+		echo "show installed" > "/tmp/regataos-gcs/config/installed/show-installed-games-epic.txt"
 	else
-		echo "show EGS installed" > "${installedDir}/show-installed-games-epic.txt"
-		echo "show EGS installed" > "${installedDir}/show-installed-games.txt"
+		rm -f "/tmp/regataos-gcs/config/installed/show-installed-games-epic.txt"
+		if [[ $(echo $verifyGameInstallJson) != *"json"* ]]; then
+			rm -f "/tmp/regataos-gcs/config/installed/show-installed-games.txt"
+		fi
 	fi`;
-	exec(commandLine, function (error, call, errlog) {
-	});
+
+	const exec = require('child_process').exec;
+	exec(commandLine, function (error, call, errlog) { });
 }
 start_list_games()
 
