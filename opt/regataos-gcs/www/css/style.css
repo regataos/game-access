@@ -258,64 +258,62 @@ a.p-home {
 }
 
 #search input#field {
-font-family: 'Roboto', sans-serif;
-font-weight: 400;
-background-position:top right; 
-background-repeat:no-repeat; 
-width: 200px; 
-padding:7px;
-outline: none; 
-font-size: 15px;
-border-radius: 2em;
-border: 2px;
-border-color: rgba(49, 49, 49, 0.3);
-z-index: 1; 
-height:16px; 
-float:left; 
-padding-right:30px;
+	font-family: 'Roboto', sans-serif;
+	font-weight: 400;
+	width: 200px; 
+	padding:7px;
+	outline: none; 
+	font-size: 15px;
+	border-radius: 2em;
+	border: 2px;
+	border-color: rgba(49, 49, 49, 0.3);
+	z-index: 1; 
+	height:16px; 
+	float:right; 
+	padding-right:30px;
+	transition: all .5s ease-in-out;
 }
-#search input#field:focus {
-background-position:top right; 
-background-repeat:no-repeat;
-}
-#search input.submit {
-width:auto; 
-height:31px;
-font-weight:normal;
-text-transform: uppercase; 
-float:left; 
-border:none; 
-font-family: 'Roboto', sans-serif;
-font-size: 18px;
-font-weight: 600;
-cursor:pointer; margin:0 0 0 1px;
-}
+
 #search input#field {
-background-image:url(https://3.bp.blogspot.com/-1AxrECLYixw/Xggi1BABTtI/AAAAAAAAYB4/jnORAw0WsioSvGbQiroMLunR8k0o3D-tACLcBGAsYHQ/s1600/lupa.png); 
-background-color: rgba(128, 128, 128, 0.3); /*cor de fundo de onde digitamos a busca*/
-color: #c9c9c9;/*cor de fonte*/
-border: 1px solid rgba(49, 49, 49, 0.3);
-transition: border-color .3s,background-color .3s,color .3s,box-shadow .3s;
-padding-left: 10px;
+	background-image: url('./../images/search.png');
+	background-color: rgba(128, 128, 128, 0.3);
+	background-size: 23px;
+    background-position: 96% center;
+	background-repeat:no-repeat;
+	color: #c9c9c9;
+	border: 1px solid rgba(49, 49, 49, 0.3);
+	transition: border-color .3s,background-color .3s,color .3s,box-shadow .3s;
+	padding-left: 10px;
 }
+
 #search input#field:focus {
-background-image:url(https://3.bp.blogspot.com/-1AxrECLYixw/Xggi1BABTtI/AAAAAAAAYB4/jnORAw0WsioSvGbQiroMLunR8k0o3D-tACLcBGAsYHQ/s1600/lupa.png); 
-background-color: rgba(228, 228, 228, 0.3); /*cor de fundo do botão Buscar em estado hover*/
-color: #fff;/*cor de fonte*/
-
+	width: 200px;
+	background-image:url('./../images/search-hover.png');
+	background-color: #fff;
+	color: #000;
 }
+
 #search input.submit {
-display: none;
-background-color:#1a1a1a; /*cor de fundo do botão Buscar*/
-color:#ccc;/*cor da fonte do botão Buscar*/
-border: 0px solid #1a1a1a;
-transition: background-color .3s;
+	position: absolute;
+    right: 0px;
+    width: 35px;
+	height:31px;
+    background-color: #fff0;
+	font-weight:normal;
+	text-transform: uppercase; 
+	float:left; 
+	border:none; 
+	font-family: 'Roboto', sans-serif;
+	font-size: 18px;
+	font-weight: 600;
+	cursor:pointer; margin:0 0 0 1px;
 }
 
-#search input.submit:hover {
-background-color: #417A9B;
-border: 0px solid #0d547a;
-color: #fff;
+#search input.submit:hover + input#field {
+	width: 200px;
+	background-image:url('./../images/search-hover.png');
+	background-color: #fff;
+	color: #000;
 }
 
 .confirmation-cancel-installation {

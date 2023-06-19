@@ -276,6 +276,14 @@ function default_folder() {
 
 // Uninstall game from Epic Games Store
 function start_uninstall_epicstore_game() {
+	// If necessary, reload the page
+	const iframeurl = document.getElementById("iframegcs").contentWindow.location.href;
+	if (((iframeurl.indexOf("search.html") > -1) == "1") ||
+		((iframeurl.indexOf("allgames.html") > -1) == "1")) {
+		fs.writeFileSync("/tmp/regataos-gcs/reload-page.txt", "reload");
+	}
+
+	// Remove game
 	const exec = require('child_process').exec;
 	const command_line = '/opt/regataos-gcs/scripts/remove/scripts-remove/uninstall-game-epicstore/uninstall-epicstore-game.sh';
 	exec(command_line, function (error, call, errlog) {
@@ -296,6 +304,14 @@ function cancel_uninstall_epicstore_game() {
 
 // Uninstall game from GOG Galaxy
 function start_uninstall_gog_game() {
+	// If necessary, reload the page
+	const iframeurl = document.getElementById("iframegcs").contentWindow.location.href;
+	if (((iframeurl.indexOf("search.html") > -1) == "1") ||
+		((iframeurl.indexOf("allgames.html") > -1) == "1")) {
+		fs.writeFileSync("/tmp/regataos-gcs/reload-page.txt", "reload");
+	}
+
+	// Remove game
 	const exec = require('child_process').exec;
 	const command_line = '/opt/regataos-gcs/scripts/action-games/remove-game';
 	exec(command_line, function (error, call, errlog) {

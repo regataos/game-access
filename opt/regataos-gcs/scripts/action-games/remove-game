@@ -7,10 +7,10 @@ function remove_game() {
         rm -f "/tmp/regataos-gcs/start-uninstallation-gog.txt"
 
         (
+            rm -f "$HOME/.config/regataos-gcs/installed/$gamenickname-gog.json"
             rm -rf "$game_install_folder"
             sed -i "/$gamenickname/d" "$HOME/.config/regataos-gcs/gog-games/games-folders2.txt"
             sed -i '/^$/d' "$HOME/.config/regataos-gcs/gog-games/games-folders2.txt"
-            rm -f "$HOME/.config/regataos-gcs/installed/$gamenickname-gog.json"
             echo "$gamenickname" > "/tmp/regataos-gcs/game-to-hide.txt"
         ) | env GTK_THEME=Adwaita:dark zenity --progress --pulsate --width 450 --window-icon "/usr/share/pixmaps/regataos-gcs.png" \
         --title "Regata OS Game Access" --text "$zenity_text" --auto-close --auto-kill --no-cancel

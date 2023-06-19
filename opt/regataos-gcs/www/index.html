@@ -161,8 +161,10 @@
 
 <div id='search'>
 <form id="form">
-	<div><input id='field' name='q' onblur='if (this.value == "") {this.value = "Pesquisar jogos";}' onfocus='if (this.value == "Pesquisar jogos") {this.value = "";}' type='text' value='Pesquisar jogos'/>
-	<input class='submit' name='submit' type='submit' value='Pesquisar jogos'/></div>
+	<div>
+		<input id='field' name='q' onblur='if (this.value == "") {this.value = "Pesquisar jogos";}' onfocus='if (this.value == "Pesquisar jogos") {this.value = "";}' type='text' value='Pesquisar jogos'/>
+		<input class='submit' name='submit' type='submit' value='' title='Pesquisar jogos'/>
+	</div>
 </form>
 </div>
 <script type="text/javascript" src="js/search.js"></script>

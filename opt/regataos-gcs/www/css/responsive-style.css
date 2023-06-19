@@ -114,16 +114,8 @@
 		width: 0px;
 	}
 
-	#search input#field:active {
-		width: 200px;
-		background-color: #fff;
-		color: #000;
-	}
-
-	#search input#field:hover {
-		width: 200px;
-		background-color: #fff;
-		color: #000;
+	#search input.submit {
+		display: none;
 	}
 }
 
