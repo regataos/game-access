@@ -117,7 +117,7 @@ function list_searched_games(gameNickname, launcherNickname) {
 			</div>`;
 
 		} else {
-			if ((fs.existsSync(`/tmp/regataos-gcs/config/installed/${gamesdata.gamenickname}-${launcherNickname}.json`)) ||
+			if ((fs.existsSync(`/tmp/regataos-gcs/config/installed/${gamesdata.gamenickname}-${gamesdata.launchernickname}.json`)) ||
 				(fs.existsSync(`/tmp/regataos-gcs/config/installed/${gamesdata.gamenickname}.json`))) {
 				if (((gamesdata.launchernickname.indexOf("epicstore") > -1) == "1") ||
 					((gamesdata.launchernickname.indexOf("gog") > -1) == "1")) {
@@ -133,7 +133,7 @@ function list_searched_games(gameNickname, launcherNickname) {
 		}
 
 		// Check if the game is installed and create the game tile according to the game installation status.
-		if ((fs.existsSync(`/tmp/regataos-gcs/config/installed/${gamesdata.gamenickname}-${launcherNickname}.json`)) ||
+		if ((fs.existsSync(`/tmp/regataos-gcs/config/installed/${gamesdata.gamenickname}-${gamesdata.launchernickname}.json`)) ||
 			(fs.existsSync(`/tmp/regataos-gcs/config/installed/${gamesdata.gamenickname}.json`))) {
 			play_install_button = `
 			<div id="${gamesdata.gamenickname}" class="play-box-universal" onclick="window.gameId=this.id; ${run_game};">
@@ -157,7 +157,7 @@ function list_searched_games(gameNickname, launcherNickname) {
 		const new_game_blocks = document.createElement("div");
 
 		// Add classes to the new game blocks
-		new_game_blocks.classList.add("app-block", gamesdata.launchernickname + "-block", gamesdata.gamenickname + "-block", gamesdata.gamenickname);
+		new_game_blocks.classList.add("app-block", `${gamesdata.launchernickname}-block"`, `${gamesdata.gamenickname}-block`, gamesdata.gamenickname);
 
 		// Add the game image in the background
 		new_game_blocks.style.backgroundImage = "url('./../images/games-backg/steam/steam.jpg')";
