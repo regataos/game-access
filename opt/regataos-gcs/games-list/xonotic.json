@@ -6,6 +6,7 @@
 		"gamestatus": "",
 		"launcher": "Game Access",
 		"launchernickname": "gcs",
+		"gameorigin": "suggestedgame",
 		"gamedev": "Team Xonotic",
 		"publisher": "Team Xonotic",
 		"gamedownload_link": "https://github.com/garymoon/xonotic/releases/download/xonotic-v0.8.5/xonotic-0.8.5.zip",

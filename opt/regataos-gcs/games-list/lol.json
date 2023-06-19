@@ -6,6 +6,7 @@
 		"gamestatus": "(Beta)",
 		"launcher": "Game Access",
 		"launchernickname": "gcs",
+		"gameorigin": "suggestedgame",
 		"gamedev": "Riot Games",
 		"publisher": "Riot Games",
 		"gamedownload_link": "https://lol.secure.dyn.riotcdn.net/channels/public/x/installer/current/live.na.exe",

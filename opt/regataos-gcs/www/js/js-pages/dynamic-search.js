@@ -20,73 +20,30 @@ function games_list3(gameNickname, launcherNickname) {
 	//for (var i = 0; i < games.length; i++) {
 	games.forEach(gamesdata => {
 		//Configure according to game launcher
-		if (typeof gamesdata.gameorigin !== 'undefined') {
-			//Request the creation of the new element (block) for each game
-			var new_game_blocks = document.createElement("div");
+		if ((gamesdata.launchernickname.indexOf("steam") > -1) == "1") {
+			if (!fs.existsSync('/tmp/regataos-gcs/config/installed/' + gamesdata.gamenickname + '-steam.json')) {
+				//Request the creation of the new element (block) for each game
+				var new_game_blocks = document.createElement("div");
+				new_game_blocks.id = gamesdata.gamenickname + "-block";
 
-			//Add classes to the new game blocks
-			new_game_blocks.classList.add("app-block", gamesdata.launchernickname + "-block", gamesdata.gamenickname + "-block", gamesdata.gamenickname);
+				//Add classes to the new game blocks
+				new_game_blocks.classList.add("app-block-universal", gamesdata.gamenickname + "-block", gamesdata.gamenickname);
 
-			//Add the game image in the background
-			new_game_blocks.style.backgroundImage = "url('./../images/games-backg/" + gamesdata.launchernickname + "/" + gamesdata.gamenickname + ".jpg')";
+				//Add the game image in the background
+				new_game_blocks.style.backgroundImage = "url('./../images/games-backg/steam/steam.jpg')";
 
-			//Add game details within the newly created block
-			//Special variables for running games
-			var winevariable = "'" + gamesdata.winevariable + "'";
-			var launchername = "'" + gamesdata.launchernickname + "'";
-			var rungame = "'" + gamesdata.gamerun_appid + "'";
+				//Variable required for uninstall game button
+				var gamenickname = "'" + gamesdata.gamenickname + "'"
 
-			new_game_blocks.innerHTML = ' \
-				<div class="block-play ' + gamesdata.gamenickname + '-hover"> \
-					<div id="' + gamesdata.gamenickname + '" class="play-box" onclick="window.gamename=this.id; window.winevariable=' + winevariable + '; window.launchername=' + launchername + '; window.rungame=' + rungame + '; run_game();"> \
-						<div class="play-button"> \
-							<i class="fas fa-play"></i><div class="play-txt">Jogar</div> \
-						</div> \
-					</div> \
-					<div id="' + gamesdata.gamenickname + '" class="install-box" onclick="window.gamename=this.id; window.winevariable=' + winevariable + '; window.launchername=' + launchername + '; window.rungame=' + rungame + '; run_game();"> \
-						<div class="play-button"> \
-							<i class="fas fa-download"></i><div class="install-txt">Instalar</div> \
-						</div> \
-					</div> \
-				</div> \
-				<div class="block-text ' + gamesdata.gamenickname + '" title="' + gamesdata.gamename + '"> \
-					<div class="block-title">' + gamesdata.gamename + '</div> \
-					<div class="block-desc">' + gamesdata.launcher + '</div> \
-					<div class="native-game"> \
-						<div class="native-game-img" style="background-image: url(./../images/gcs.png)"></div> \
-						<div class="native-game-desc gcs">Game Access</div> \
-					</div> \
-				</div>';
+				//Check game plataform
+				if ((gamesdata.gamenative.indexOf("true") > -1) == "1") {
+					var game_plataform = "nativegame"
+				} else {
+					var game_plataform = "steamplay"
+				}
 
-			//Finally, create the new game blocks dynamically
-			all_blocks.appendChild(new_game_blocks);
-			pagesBlocksLang();
-
-		} else {
-			if ((gamesdata.launchernickname.indexOf("steam") > -1) == "1") {
-				if (!fs.existsSync('/tmp/regataos-gcs/config/installed/' + gamesdata.gamenickname + '-steam.json')) {
-					//Request the creation of the new element (block) for each game
-					var new_game_blocks = document.createElement("div");
-					new_game_blocks.id = gamesdata.gamenickname + "-block";
-
-					//Add classes to the new game blocks
-					new_game_blocks.classList.add("app-block-universal", gamesdata.gamenickname + "-block", gamesdata.gamenickname);
-
-					//Add the game image in the background
-					new_game_blocks.style.backgroundImage = "url('./../images/games-backg/steam/steam.jpg')";
-
-					//Variable required for uninstall game button
-					var gamenickname = "'" + gamesdata.gamenickname + "'"
-
-					//Check game plataform
-					if ((gamesdata.gamenative.indexOf("true") > -1) == "1") {
-						var game_plataform = "nativegame"
-					} else {
-						var game_plataform = "steamplay"
-					}
-
-					//Add game details within the newly created block
-					new_game_blocks.innerHTML = ' \
+				//Add game details within the newly created block
+				new_game_blocks.innerHTML = ' \
 						<div class="universal-game-img" style="background-image: url(file:///tmp/regataos-gcs/config/steam-games/img/' + gamesdata.gamenickname + '.jpg)"></div> \
 							<div class="block-play-universal"> \
 								<div id="' + gamesdata.gameid + '" class="install-box-universal" onclick="window.gameid=this.id; window.gamenickname=' + gamenickname + '; run_steam_game();"> \
@@ -105,33 +62,33 @@ function games_list3(gameNickname, launcherNickname) {
 							</div> \
 						</div>';
 
-					//Finally, create the new game blocks dynamically
-					all_blocks.appendChild(new_game_blocks);
-					pagesBlocksLang();
+				//Finally, create the new game blocks dynamically
+				all_blocks.appendChild(new_game_blocks);
+				pagesBlocksLang();
 
+			} else {
+				//Request the creation of the new element (block) for each game
+				var new_game_blocks = document.createElement("div");
+				new_game_blocks.id = gamesdata.gamenickname + "-block";
+
+				//Add classes to the new game blocks
+				new_game_blocks.classList.add("app-block-universal", gamesdata.gamenickname + "-block", gamesdata.gamenickname);
+
+				//Add the game image in the background
+				new_game_blocks.style.backgroundImage = "url('./../images/games-backg/steam/steam.jpg')";
+
+				//Variable required for uninstall game button
+				var gamenickname = "'" + gamesdata.gamenickname + "'"
+
+				//Check game plataform
+				if ((gamesdata.gamenative.indexOf("true") > -1) == "1") {
+					var game_plataform = "nativegame"
 				} else {
-					//Request the creation of the new element (block) for each game
-					var new_game_blocks = document.createElement("div");
-					new_game_blocks.id = gamesdata.gamenickname + "-block";
+					var game_plataform = "steamplay"
+				}
 
-					//Add classes to the new game blocks
-					new_game_blocks.classList.add("app-block-universal", gamesdata.gamenickname + "-block", gamesdata.gamenickname);
-
-					//Add the game image in the background
-					new_game_blocks.style.backgroundImage = "url('./../images/games-backg/steam/steam.jpg')";
-
-					//Variable required for uninstall game button
-					var gamenickname = "'" + gamesdata.gamenickname + "'"
-
-					//Check game plataform
-					if ((gamesdata.gamenative.indexOf("true") > -1) == "1") {
-						var game_plataform = "nativegame"
-					} else {
-						var game_plataform = "steamplay"
-					}
-
-					//Add game details within the newly created block
-					new_game_blocks.innerHTML = ' \
+				//Add game details within the newly created block
+				new_game_blocks.innerHTML = ' \
 						<div class="universal-game-img" style="background-image: url(file:///tmp/regataos-gcs/config/steam-games/img/' + gamesdata.gamenickname + '.jpg)"></div> \
 							<div class="block-play-universal"> \
 							<div id="' + gamesdata.gameid + '" class="play-box-universal" onclick="window.gameid=this.id; window.gamenickname=' + gamenickname + '; run_steam_game();"> \
@@ -150,47 +107,47 @@ function games_list3(gameNickname, launcherNickname) {
 							</div> \
 						</div>';
 
-					//Finally, create the new game blocks dynamically
-					all_blocks.appendChild(new_game_blocks);
-					pagesBlocksLang();
+				//Finally, create the new game blocks dynamically
+				all_blocks.appendChild(new_game_blocks);
+				pagesBlocksLang();
+			}
+			// Show Steam Games
+			$("div.app-block-steam").css("display", "block")
+
+		} else if ((gamesdata.launchernickname.indexOf("epicstore") > -1) == "1") {
+			if (!fs.existsSync('/tmp/regataos-gcs/config/installed/' + gamesdata.gamenickname + '-epicstore.json')) {
+				//Request the creation of the new element (block) for each game
+				var new_game_blocks = document.createElement("div");
+				new_game_blocks.id = gamesdata.gameid + "-block";
+
+				//Add classes to the new game blocks
+				new_game_blocks.classList.add("app-block-universal", gamesdata.gamenickname + "-block", gamesdata.gamenickname);
+
+				//Add the game image in the background
+				new_game_blocks.style.backgroundImage = "url('./../images/games-backg/steam/steam.jpg')";
+
+				//Variable required for uninstall game button
+				var gamenickname = "'" + gamesdata.gamenickname + "'"
+
+				//Set game image
+				if (fs.existsSync('/tmp/regataos-gcs/config/epicstore-games/img/' + gamesdata.gamenickname + '.jpg')) {
+					var background = "/tmp/regataos-gcs/config/epicstore-games/img/" + gamesdata.gamenickname + ".jpg"
+					var gamebackg = "file://" + background
+
+				} else if (fs.existsSync('/tmp/regataos-gcs/config/epicstore-games/img/' + gamesdata.gamenickname + '.png')) {
+					var background = "/tmp/regataos-gcs/config/epicstore-games/img/" + gamesdata.gamenickname + ".png"
+					var gamebackg = "file://" + background
+
+				} else if (fs.existsSync('/tmp/regataos-gcs/config/epicstore-games/img/' + gamesdata.gamenickname)) {
+					var background = "/tmp/regataos-gcs/config/epicstore-games/img/" + gamesdata.gamenickname
+					var gamebackg = "file://" + background
+
+				} else {
+					var gamebackg = "'" + gamesdata.game_img1 + "'"
 				}
-				// Show Steam Games
-				$("div.app-block-steam").css("display", "block")
 
-			} else if ((gamesdata.launchernickname.indexOf("epicstore") > -1) == "1") {
-				if (!fs.existsSync('/tmp/regataos-gcs/config/installed/' + gamesdata.gamenickname + '-epicstore.json')) {
-					//Request the creation of the new element (block) for each game
-					var new_game_blocks = document.createElement("div");
-					new_game_blocks.id = gamesdata.gameid + "-block";
-
-					//Add classes to the new game blocks
-					new_game_blocks.classList.add("app-block-universal", gamesdata.gamenickname + "-block", gamesdata.gamenickname);
-
-					//Add the game image in the background
-					new_game_blocks.style.backgroundImage = "url('./../images/games-backg/steam/steam.jpg')";
-
-					//Variable required for uninstall game button
-					var gamenickname = "'" + gamesdata.gamenickname + "'"
-
-					//Set game image
-					if (fs.existsSync('/tmp/regataos-gcs/config/epicstore-games/img/' + gamesdata.gamenickname + '.jpg')) {
-						var background = "/tmp/regataos-gcs/config/epicstore-games/img/" + gamesdata.gamenickname + ".jpg"
-						var gamebackg = "file://" + background
-
-					} else if (fs.existsSync('/tmp/regataos-gcs/config/epicstore-games/img/' + gamesdata.gamenickname + '.png')) {
-						var background = "/tmp/regataos-gcs/config/epicstore-games/img/" + gamesdata.gamenickname + ".png"
-						var gamebackg = "file://" + background
-
-					} else if (fs.existsSync('/tmp/regataos-gcs/config/epicstore-games/img/' + gamesdata.gamenickname)) {
-						var background = "/tmp/regataos-gcs/config/epicstore-games/img/" + gamesdata.gamenickname
-						var gamebackg = "file://" + background
-
-					} else {
-						var gamebackg = "'" + gamesdata.game_img1 + "'"
-					}
-
-					//Add game details within the newly created block
-					new_game_blocks.innerHTML = ' \
+				//Add game details within the newly created block
+				new_game_blocks.innerHTML = ' \
 						<div class="universal-game-img epicstore-game-img" style="background-image: url(' + gamebackg + ')"></div> \
 							<div class="block-play-universal"> \
 								<div id="' + gamesdata.gamenickname + '" class="install-box-universal" onclick="window.gamenickname=this.id; window.gamenickname=' + gamenickname + '; install_epicstore_game();"> \
@@ -209,43 +166,43 @@ function games_list3(gameNickname, launcherNickname) {
 							</div> \
 						</div>';
 
-					//Finally, create the new game blocks dynamically
-					all_blocks.appendChild(new_game_blocks);
-					pagesBlocksLang();
+				//Finally, create the new game blocks dynamically
+				all_blocks.appendChild(new_game_blocks);
+				pagesBlocksLang();
+
+			} else {
+				//Request the creation of the new element (block) for each game
+				var new_game_blocks = document.createElement("div");
+				new_game_blocks.id = gamesdata.gameid + "-block";
+
+				//Add classes to the new game blocks
+				new_game_blocks.classList.add("app-block-universal", gamesdata.gamenickname + "-block", gamesdata.gamenickname);
+
+				//Add the game image in the background
+				new_game_blocks.style.backgroundImage = "url('./../images/games-backg/steam/steam.jpg')";
+
+				//Variable required for uninstall game button
+				var gamenickname = "'" + gamesdata.gamenickname + "'"
+
+				//Set game image
+				if (fs.existsSync('/tmp/regataos-gcs/config/epicstore-games/img/' + gamesdata.gamenickname + '.jpg')) {
+					var background = "/tmp/regataos-gcs/config/epicstore-games/img/" + gamesdata.gamenickname + ".jpg"
+					var gamebackg = "file://" + background
+
+				} else if (fs.existsSync('/tmp/regataos-gcs/config/epicstore-games/img/' + gamesdata.gamenickname + '.png')) {
+					var background = "/tmp/regataos-gcs/config/epicstore-games/img/" + gamesdata.gamenickname + ".png"
+					var gamebackg = "file://" + background
+
+				} else if (fs.existsSync('/tmp/regataos-gcs/config/epicstore-games/img/' + gamesdata.gamenickname)) {
+					var background = "/tmp/regataos-gcs/config/epicstore-games/img/" + gamesdata.gamenickname
+					var gamebackg = "file://" + background
 
 				} else {
-					//Request the creation of the new element (block) for each game
-					var new_game_blocks = document.createElement("div");
-					new_game_blocks.id = gamesdata.gameid + "-block";
+					var gamebackg = "'" + gamesdata.game_img1 + "'"
+				}
 
-					//Add classes to the new game blocks
-					new_game_blocks.classList.add("app-block-universal", gamesdata.gamenickname + "-block", gamesdata.gamenickname);
-
-					//Add the game image in the background
-					new_game_blocks.style.backgroundImage = "url('./../images/games-backg/steam/steam.jpg')";
-
-					//Variable required for uninstall game button
-					var gamenickname = "'" + gamesdata.gamenickname + "'"
-
-					//Set game image
-					if (fs.existsSync('/tmp/regataos-gcs/config/epicstore-games/img/' + gamesdata.gamenickname + '.jpg')) {
-						var background = "/tmp/regataos-gcs/config/epicstore-games/img/" + gamesdata.gamenickname + ".jpg"
-						var gamebackg = "file://" + background
-
-					} else if (fs.existsSync('/tmp/regataos-gcs/config/epicstore-games/img/' + gamesdata.gamenickname + '.png')) {
-						var background = "/tmp/regataos-gcs/config/epicstore-games/img/" + gamesdata.gamenickname + ".png"
-						var gamebackg = "file://" + background
-
-					} else if (fs.existsSync('/tmp/regataos-gcs/config/epicstore-games/img/' + gamesdata.gamenickname)) {
-						var background = "/tmp/regataos-gcs/config/epicstore-games/img/" + gamesdata.gamenickname
-						var gamebackg = "file://" + background
-
-					} else {
-						var gamebackg = "'" + gamesdata.game_img1 + "'"
-					}
-
-					//Add game details within the newly created block
-					new_game_blocks.innerHTML = ' \
+				//Add game details within the newly created block
+				new_game_blocks.innerHTML = ' \
 						<div class="universal-game-img epicstore-game-img" style="background-image: url(' + gamesdata.game_img1 + ')"></div> \
 							<div class="block-play-universal"> \
 								<div title="Desinstalar jogo" class="remove-game-button" onclick="window.game_for_remove=' + gamenickname + '; uninstall_epicstore_game();"> \
@@ -267,34 +224,36 @@ function games_list3(gameNickname, launcherNickname) {
 							</div> \
 						</div>';
 
-					//Finally, create the new game blocks dynamically
-					all_blocks.appendChild(new_game_blocks);
-					pagesBlocksLang();
+				//Finally, create the new game blocks dynamically
+				all_blocks.appendChild(new_game_blocks);
+				pagesBlocksLang();
+			}
+
+		} else if ((gamesdata.launchernickname.indexOf("gog") > -1) == "1") {
+			if (!fs.existsSync('/tmp/regataos-gcs/config/installed/' + gamesdata.gamenickname + '-gog.json')) {
+				//Request the creation of the new element (block) for each game
+				var new_game_blocks = document.createElement("div");
+				new_game_blocks.id = gamesdata.gameid + "-block";
+
+				//Add classes to the new game blocks
+				new_game_blocks.classList.add("app-block-universal", gamesdata.gamenickname + "-block", gamesdata.gamenickname);
+
+				//Add the game image in the background
+				new_game_blocks.style.backgroundImage = "url('./../images/games-backg/steam/steam.jpg')";
+
+				//Variable required for uninstall game button
+				var gamenickname = "'" + gamesdata.gamenickname + "'"
+
+				//Set game image
+				if (fs.existsSync('/tmp/regataos-gcs/config/gog-games/img/' + gamesdata.gamenickname + '.webp')) {
+					var gamebackg = `file:///tmp/regataos-gcs/config/gog-games/img/${gamesdata.gamenickname}.webp`;
+
+				} else if (fs.existsSync(`/opt/regataos-gcs/www/images/games-backg/${gamesdata.launchernickname}/${gamesdata.gamenickname}.jpg`)) {
+					var gamebackg = `file:///opt/regataos-gcs/www/images/games-backg/${gamesdata.launchernickname}/${gamesdata.gamenickname}.jpg`;
 				}
 
-			} else if ((gamesdata.launchernickname.indexOf("gog") > -1) == "1") {
-				if (!fs.existsSync('/tmp/regataos-gcs/config/installed/' + gamesdata.gamenickname + '-gog.json')) {
-					//Request the creation of the new element (block) for each game
-					var new_game_blocks = document.createElement("div");
-					new_game_blocks.id = gamesdata.gameid + "-block";
-
-					//Add classes to the new game blocks
-					new_game_blocks.classList.add("app-block-universal", gamesdata.gamenickname + "-block", gamesdata.gamenickname);
-
-					//Add the game image in the background
-					new_game_blocks.style.backgroundImage = "url('./../images/games-backg/steam/steam.jpg')";
-
-					//Variable required for uninstall game button
-					var gamenickname = "'" + gamesdata.gamenickname + "'"
-
-					//Set game image
-					if (fs.existsSync('/tmp/regataos-gcs/config/gog-games/img/' + gamesdata.gamenickname + '.webp')) {
-						var background = "/tmp/regataos-gcs/config/gog-games/img/" + gamesdata.gamenickname + ".webp"
-						var gamebackg = "file://" + background
-					}
-
-					//Add game details within the newly created block
-					new_game_blocks.innerHTML = ' \
+				//Add game details within the newly created block
+				new_game_blocks.innerHTML = ' \
 						<div class="universal-game-img gog-game-img" style="background-image: url(' + gamebackg + ')"></div> \
 							<div class="block-play-universal"> \
 								<div id="' + gamesdata.gamenickname + '" class="install-box-universal" onclick="window.gamenickname=this.id; window.gamenickname=' + gamenickname + '; install_gog_game();"> \
@@ -313,32 +272,32 @@ function games_list3(gameNickname, launcherNickname) {
 							</div> \
 						</div>';
 
-					//Finally, create the new game blocks dynamically
-					all_blocks.appendChild(new_game_blocks);
-					pagesBlocksLang();
+				//Finally, create the new game blocks dynamically
+				all_blocks.appendChild(new_game_blocks);
+				pagesBlocksLang();
 
-				} else {
-					//Request the creation of the new element (block) for each game
-					var new_game_blocks = document.createElement("div");
-					new_game_blocks.id = gamesdata.gameid + "-block";
+			} else {
+				//Request the creation of the new element (block) for each game
+				var new_game_blocks = document.createElement("div");
+				new_game_blocks.id = gamesdata.gameid + "-block";
 
-					//Add classes to the new game blocks
-					new_game_blocks.classList.add("app-block-universal", gamesdata.gamenickname + "-block", gamesdata.gamenickname);
+				//Add classes to the new game blocks
+				new_game_blocks.classList.add("app-block-universal", gamesdata.gamenickname + "-block", gamesdata.gamenickname);
 
-					//Add the game image in the background
-					new_game_blocks.style.backgroundImage = "url('./../images/games-backg/steam/steam.jpg')";
+				//Add the game image in the background
+				new_game_blocks.style.backgroundImage = "url('./../images/games-backg/steam/steam.jpg')";
 
-					//Variable required for uninstall game button
-					var gamenickname = "'" + gamesdata.gamenickname + "'"
+				//Variable required for uninstall game button
+				var gamenickname = "'" + gamesdata.gamenickname + "'"
 
-					//Set game image
-					if (fs.existsSync('/tmp/regataos-gcs/config/gog-games/img/' + gamesdata.gamenickname + '.webp')) {
-						var background = "/tmp/regataos-gcs/config/gog-games/img/" + gamesdata.gamenickname + ".webp"
-						var gamebackg = "file://" + background
-					}
+				//Set game image
+				if (fs.existsSync('/tmp/regataos-gcs/config/gog-games/img/' + gamesdata.gamenickname + '.webp')) {
+					var background = "/tmp/regataos-gcs/config/gog-games/img/" + gamesdata.gamenickname + ".webp"
+					var gamebackg = "file://" + background
+				}
 
-					//Add game details within the newly created block
-					new_game_blocks.innerHTML = ' \
+				//Add game details within the newly created block
+				new_game_blocks.innerHTML = ' \
 						<div class="universal-game-img gog-game-img" style="background-image: url(' + gamebackg + ')"></div> \
 							<div class="block-play-universal"> \
 								<div title="Desinstalar jogo" class="remove-game-button" onclick="window.game_for_remove=' + gamenickname + '; uninstall_gog_game();"> \
@@ -360,106 +319,82 @@ function games_list3(gameNickname, launcherNickname) {
 							</div> \
 						</div>';
 
-					//Finally, create the new game blocks dynamically
-					all_blocks.appendChild(new_game_blocks);
-					pagesBlocksLang();
-				}
+				//Finally, create the new game blocks dynamically
+				all_blocks.appendChild(new_game_blocks);
+				pagesBlocksLang();
+			}
 
-			} else if ((gamesdata.launchernickname.indexOf("gcs") > -1) == "1") {
-				if (!fs.existsSync('/tmp/regataos-gcs/config/installed/' + gamesdata.gamenickname + '.json')) {
-					//Request the creation of the new element (block) for each game
-					var new_game_blocks = document.createElement("div");
+		} else if ((gamesdata.launchernickname.indexOf("gcs") > -1) == "1") {
+			//Request the creation of the new element (block) for each game
+			const new_game_blocks = document.createElement("div");
 
-					//Add classes to the new game blocks
-					new_game_blocks.classList.add("app-block", gamesdata.launchernickname + "-block", gamesdata.gamenickname + "-block", gamesdata.gamenickname);
+			//Add classes to the new game blocks
+			new_game_blocks.classList.add("app-block", gamesdata.launchernickname + "-block", gamesdata.gamenickname + "-block", gamesdata.gamenickname);
 
-					//Add the game image in the background
-					new_game_blocks.style.backgroundImage = "url('./../images/games-backg/" + gamesdata.launchernickname + "/" + gamesdata.gamenickname + ".jpg')";
+			//Add the game image in the background
+			new_game_blocks.style.backgroundImage = "url('./../images/games-backg/" + gamesdata.launchernickname + "/" + gamesdata.gamenickname + ".jpg')";
 
-					//Add game details within the newly created block
-					//Special variables for running games
-					var gameNickname = "'" + gamesdata.gamenickname + "'";
+			//Add game details within the newly created block
+			//Special variables for running games
+			const gameNickname = "'" + gamesdata.gamenickname + "'";
 
-					new_game_blocks.innerHTML = ' \
-						<div class="block-play ' + gamesdata.gamenickname + '-hover"> \
-							<div title="Mais sobre o jogo" class="morefor-game-button" onclick="window.gameId=' + gameNickname + '; goGamePageId();"> \
-								<i class="fa fa-plus"></i> \
-							</div> \
-							<div id="' + gamesdata.gamenickname + '" class="install-box-universal" onclick="window.gameId=this.id; installGameId();"> \
-								<div class="play-button"> \
-									<i class="fas fa-download"></i><div class="install-txt">Instalar</div> \
-								</div> \
-							</div> \
-						</div> \
-						<div class="block-text ' + gamesdata.gamenickname + '" title="' + gamesdata.gamename + '"> \
-							<div class="block-title">' + gamesdata.gamename + '</div> \
-							<div class="block-desc">' + gamesdata.launcher + '</div> \
-							<div class="native-game"> \
-								<div class="native-game-img" style="background-image: url(./../images/gcs.png)"></div> \
-								<div class="native-game-desc gcs">Game Access</div> \
-							</div> \
-						</div>';
-
-					//Finally, create the new game blocks dynamically
-					all_blocks.appendChild(new_game_blocks);
-					pagesBlocksLang();
-
-				} else {
-					//Request the creation of the new element (block) for each game
-					var new_game_blocks = document.createElement("div");
-
-					//Add classes to the new game blocks
-					new_game_blocks.classList.add("app-block", gamesdata.launchernickname + "-block", gamesdata.gamenickname + "-block", gamesdata.gamenickname);
-
-					//Add the game image in the background
-					new_game_blocks.style.backgroundImage = "url('./../images/games-backg/" + gamesdata.launchernickname + "/" + gamesdata.gamenickname + ".jpg')";
-
-					//Add game details within the newly created block
-					//Special variables for running games
-					var gameNickname = "'" + gamesdata.gamenickname + "'";
-
-					new_game_blocks.innerHTML = ' \
-						<div class="block-play ' + gamesdata.gamenickname + '-hover"> \
-							<div title="Mais sobre o jogo" class="morefor-game-button" onclick="window.gameId=' + gameNickname + '; goGamePageId();"> \
-								<i class="fa fa-plus"></i> \
-							</div> \
-							<div id="' + gamesdata.gamenickname + '" class="play-box-universal" onclick="window.gameId=this.id; runGameId();"> \
-								<div class="play-button"> \
-									<i class="fas fa-play"></i><div class="play-txt">Jogar</div> \
-								</div> \
-							</div> \
-						</div> \
-						<div class="block-text ' + gamesdata.gamenickname + '" title="' + gamesdata.gamename + '"> \
-							<div class="block-title">' + gamesdata.gamename + '</div> \
-							<div class="block-desc">' + gamesdata.launcher + '</div> \
-							<div class="native-game"> \
-								<div class="native-game-img" style="background-image: url(./../images/gcs.png)"></div> \
-								<div class="native-game-desc gcs">Game Access</div> \
-							</div> \
-						</div>';
-
-					//Finally, create the new game blocks dynamically
-					all_blocks.appendChild(new_game_blocks);
-					pagesBlocksLang();
-				}
+			// Check if the game is installed and create the game tile according to the game installation status.
+			if (!fs.existsSync('/tmp/regataos-gcs/config/installed/' + gamesdata.gamenickname + '.json')) {
+				const game_button = `
+					<div id="${gamesdata.gamenickname}" class="install-box-universal" onclick="window.gameId=this.id; installGameId();">
+						<div class="play-button">
+							<i class="fas fa-download"></i>
+							<div class="install-txt">Instalar</div>
+						</div>
+					</div>`
 
 			} else {
-				//Request the creation of the new element (block) for each game
-				var new_game_blocks = document.createElement("div");
+				const game_button = `
+					<div id="${gamesdata.gamenickname}" class="play-box-universal" onclick="window.gameId=this.id; runGameId();">
+						<div class="play-button">
+							<i class="fas fa-play"></i>
+							<div class="play-txt">Jogar</div>
+						</div>
+					</div>`
+			}
 
-				//Add classes to the new game blocks
-				new_game_blocks.classList.add("app-block", gamesdata.launchernickname + "-block", gamesdata.gamenickname + "-block", gamesdata.gamenickname);
+			new_game_blocks.innerHTML = `
+				<div class="block-play ${gamesdata.gamenickname}-hover"> 
+					<div title="Mais sobre o jogo" class="morefor-game-button" onclick="window.gameId='${gamesdata.gamenickname}'; goGamePageId();"> \
+						<i class="fa fa-plus"></i>
+					</div>
+					${game_button}
+				</div>
+				<div class="block-text ${gamesdata.gamenickname}" title="${gamesdata.gamename}'">
+					<div class="block-title">${gamesdata.gamename}</div>
+					<div class="block-desc">${gamesdata.launcher}</div>
+					<div class="native-game">
+						<div class="native-game-img" style="background-image: url(./../images/gcs.png)"></div>
+						<div class="native-game-desc gcs">Game Access</div>
+					</div>
+				</div>`;
 
-				//Add the game image in the background
-				new_game_blocks.style.backgroundImage = "url('./../images/games-backg/" + gamesdata.launchernickname + "/" + gamesdata.gamenickname + ".jpg')";
+			//Finally, create the new game blocks dynamically
+			all_blocks.appendChild(new_game_blocks);
+			pagesBlocksLang();
 
-				//Add game details within the newly created block
-				//Special variables for running games
-				var winevariable = "'" + gamesdata.winevariable + "'";
-				var launchername = "'" + gamesdata.launchernickname + "'";
-				var rungame = "'" + gamesdata.gamerun_appid + "'";
+		} else {
+			//Request the creation of the new element (block) for each game
+			var new_game_blocks = document.createElement("div");
 
-				new_game_blocks.innerHTML = ' \
+			//Add classes to the new game blocks
+			new_game_blocks.classList.add("app-block", gamesdata.launchernickname + "-block", gamesdata.gamenickname + "-block", gamesdata.gamenickname);
+
+			//Add the game image in the background
+			new_game_blocks.style.backgroundImage = "url('./../images/games-backg/" + gamesdata.launchernickname + "/" + gamesdata.gamenickname + ".jpg')";
+
+			//Add game details within the newly created block
+			//Special variables for running games
+			var winevariable = "'" + gamesdata.winevariable + "'";
+			var launchername = "'" + gamesdata.launchernickname + "'";
+			var rungame = "'" + gamesdata.gamerun_appid + "'";
+
+			new_game_blocks.innerHTML = ' \
 					<div class="block-play ' + gamesdata.gamenickname + '-hover"> \
 						<div id="' + gamesdata.gamenickname + '" class="play-box" onclick="window.gamename=this.id; window.winevariable=' + winevariable + '; window.launchername=' + launchername + '; window.rungame=' + rungame + '; run_game();"> \
 							<div class="play-button"> \
@@ -481,12 +416,10 @@ function games_list3(gameNickname, launcherNickname) {
 						</div> \
 					</div>';
 
-				//Finally, create the new game blocks dynamically
-				all_blocks.appendChild(new_game_blocks);
-				pagesBlocksLang();
-			}
+			//Finally, create the new game blocks dynamically
+			all_blocks.appendChild(new_game_blocks);
+			pagesBlocksLang();
 		}
-
 	})
 	return;
 }
