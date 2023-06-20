@@ -1,16 +1,17 @@
 // Reload page
-function reload() {
+function reloadPage() {
 	setTimeout(function () {
 		const fs = require("fs");
-		if (fs.existsSync("/tmp/regataos-gcs/reload-page.txt")) {
+		const reloadFilePath = "/tmp/regataos-gcs/reload-page.txt";
+		if (fs.existsSync(reloadFilePath)) {
 			location.reload();
-			fs.unlinkSync("/tmp/regataos-gcs/reload-page.txt");
+			fs.unlinkSync(reloadFilePath);
 		}
 	}, 10000);
 }
 
 // For search page
-function list_searched_games(gameNickname, launcherNickname) {
+function listSearchedGames(gameNickname, launcherNickname, jsonFilesDirectory) {
 	const fs = require("fs");
 	let data = "";
 
@@ -122,7 +123,7 @@ function list_searched_games(gameNickname, launcherNickname) {
 				if (((gamesdata.launchernickname.indexOf("epicstore") > -1) == "1") ||
 					((gamesdata.launchernickname.indexOf("gog") > -1) == "1")) {
 					special_button = `
-					<div title="Desinstalar jogo" class="remove-game-button" onclick="window.game_for_remove='${gamesdata.gamenickname}'; ${special_game_button}; reload();"> \
+					<div title="Desinstalar jogo" class="remove-game-button" onclick="window.game_for_remove='${gamesdata.gamenickname}'; ${special_game_button}; reloadPage();"> \
 						<i class="fas fa-trash-alt"></i> \
 					</div>`;
 				}
@@ -199,63 +200,39 @@ function check_results() {
 }
 
 // Read the JSON file with the list of games
+function showGame(gameNickname, launcherNickname, jsonFilesDirectory) {
+	listSearchedGames(gameNickname, launcherNickname, jsonFilesDirectory);
+
+	const elements = ["title-top", "title-top2"];
+	elements.forEach((element) => {
+		const showElement = document.querySelector(`.${element}`);
+		showElement.classList.add("show-element");
+	});
+}
+
 function search() {
 	const fs = require('fs');
-	let jsonFiles = fs.readdirSync("/opt/regataos-gcs/games-list");
+	const keywordFile = "/tmp/regataos-gcs/search.txt"
+	const readKeyword = fs.readFileSync(keywordFile, "utf8");
 
-	for (let i = 0; i < jsonFiles.length; i++) {
-		gameInfo = fs.readFileSync("/opt/regataos-gcs/games-list/" + jsonFiles[i], "utf8");
-		const listGames = JSON.parse(gameInfo);
+	if (readKeyword.length >= 2) {
+		const jsonFilesDirectory = "/opt/regataos-gcs/games-list"
+		const jsonFiles = fs.readdirSync(jsonFilesDirectory);
 
-		for (let i = 0; i < listGames.length; i++) {
-			if (typeof listGames[i].gamekeywords.en !== "undefined") {
-				let gamenickname = listGames[i].gamenickname
-				let launchernickname = listGames[i].launchernickname
-				let search = fs.readFileSync("/tmp/regataos-gcs/search.txt", "utf8");
-				let gamekeywords_gcs_en = listGames[i].gamekeywords.en
-				let gamekeywords_gcs_pt = listGames[i].gamekeywords.pt
+		for (let i = 0; i < jsonFiles.length; i++) {
+			const gameInfo = fs.readFileSync(`${jsonFilesDirectory}/${jsonFiles[i]}`, "utf8");
+			const listGames = JSON.parse(gameInfo);
 
-				if (search.length >= 2) {
-					if ((gamekeywords_gcs_en.indexOf(search) > -1) == "1") {
-						$(".title-top").css("display", "block")
-						$(".title-top2").css("display", "block")
+			listGames.forEach((game) => {
+				const gameKeywords = game.gamekeywords.en || game.gamekeywords;
 
-						list_searched_games(gamenickname, launchernickname);
-						$("." + gamenickname).css("display", "block")
-
-					} else if ((gamekeywords_gcs_pt.indexOf(search) > -1) == "1") {
-						$(".title-top").css("display", "block")
-						$(".title-top2").css("display", "block")
-
-						list_searched_games(gamenickname, launchernickname);
-						$("." + gamenickname).css("display", "block")
-					}
-
-				} else {
-					$(".app-block-universal").css("display", "none")
+				if (gameKeywords && (gameKeywords.includes(readKeyword) ||
+					readKeyword.includes(game.gamekeywords.pt))) {
+					showGame(game.gamenickname, game.launchernickname, jsonFilesDirectory);
 				}
-
-			} else {
-				let gamenickname = listGames[i].gamenickname
-				let launchernickname = listGames[i].launchernickname
-				let search = fs.readFileSync("/tmp/regataos-gcs/search.txt", "utf8");
-				let gamekeywords = listGames[i].gamekeywords
-
-				if (search.length >= 2) {
-					if ((gamekeywords.indexOf(search) > -1) == "1") {
-						$(".title-top").css("display", "block")
-						$(".title-top2").css("display", "block")
-
-						list_searched_games(gamenickname, launchernickname);
-						$("." + gamenickname).css("display", "block")
-					}
-
-				} else {
-					$(".app-block-universal").css("display", "none")
-				}
-			}
+			});
 		}
+		check_results();
 	}
-	check_results();
 }
 search();

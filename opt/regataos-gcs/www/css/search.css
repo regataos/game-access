@@ -44,3 +44,7 @@
     letter-spacing: .01rem;
     text-align: center;
 }
+
+.show-element {
+    display: block;
+}

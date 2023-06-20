@@ -1,10 +1,11 @@
 // Reload page
-function reload() {
+function reloadPage() {
 	setTimeout(function () {
 		const fs = require("fs");
-		if (fs.existsSync("/tmp/regataos-gcs/reload-page.txt")) {
+		const reloadFilePath = "/tmp/regataos-gcs/reload-page.txt";
+		if (fs.existsSync(reloadFilePath)) {
 			location.reload();
-			fs.unlinkSync("/tmp/regataos-gcs/reload-page.txt");
+			fs.unlinkSync(reloadFilePath);
 		}
 	}, 10000);
 }
@@ -194,7 +195,7 @@ function list_all_games() {
 								if (((gamesdata.launchernickname.indexOf("epicstore") > -1) == "1") ||
 									((gamesdata.launchernickname.indexOf("gog") > -1) == "1")) {
 									special_button = `
-									<div title="Desinstalar jogo" class="remove-game-button" onclick="window.game_for_remove='${gamesdata.gamenickname}'; ${special_game_button}; reload();"> \
+									<div title="Desinstalar jogo" class="remove-game-button" onclick="window.game_for_remove='${gamesdata.gamenickname}'; ${special_game_button}; reloadPage();"> \
 										<i class="fas fa-trash-alt"></i> \
 									</div>`;
 								}
