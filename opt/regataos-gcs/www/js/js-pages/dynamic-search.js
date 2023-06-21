@@ -35,7 +35,6 @@ function listSearchedGames(gameNickname, launcherNickname, jsonDefaultDir) {
 	let specialButtonHtml = "";
 	let gamePlataform = "";
 	let gameAccess = "";
-	let playInstallButton = "";
 
 	// Dynamically create search results
 	const allBlocks = document.querySelector("div.blocks4");
@@ -85,7 +84,6 @@ function listSearchedGames(gameNickname, launcherNickname, jsonDefaultDir) {
 
 			const imgDir = `/tmp/regataos-gcs/config/${gamesdata.launchernickname}-games/img`
 			gameBanner = getGameBannerUrl(imgDir, gamesdata.gamenickname);
-			console.log("teste: " + gameBanner)
 
 			if (!gameBanner) {
 				if (gamesdata.launchernickname.includes("epicstore")) {

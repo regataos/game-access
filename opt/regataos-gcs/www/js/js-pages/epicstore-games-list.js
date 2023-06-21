@@ -200,6 +200,23 @@ function list_installed_epicstore_games() {
 			}
 		});
 	});
+
+	setInterval(gameToHide, 1000);
+	function gameToHide() {
+		const filePath = "/tmp/regataos-gcs/game-to-hide.txt";
+
+		if (fs.existsSync(filePath)) {
+			const gamenickname = fs.readFileSync(filePath, "utf8").trim();
+			const element = document.querySelector(`div.${gamenickname}-block`);
+			if (element) {
+				element.remove();
+			}
+
+			setTimeout(function () {
+				fs.unlinkSync(filePath);
+			}, 1000);
+		}
+	}
 }
 
 //Read the list of games that should appear in each block

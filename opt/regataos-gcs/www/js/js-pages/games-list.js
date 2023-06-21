@@ -11,68 +11,74 @@ function reloadPage() {
 }
 
 // This script helps to dynamically create game blocks
-function games_list1() {
-	var fs = require("fs");
+function listSpecificGames() {
+	const fs = require("fs");
 
-	var files = [];
+	let jsonFiles = [];
 
-	// Read JSON files with the list of games
-	fs.readdirSync("/opt/regataos-gcs/games-list").forEach(files => {
-		fs.readFile("/opt/regataos-gcs/games-list/" + files, "utf8", function (err, data) {
+	// Directory with JSON files of installed games
+	const installedGamesJsonFiles = "/tmp/regataos-gcs/config/installed"
+
+	// Read JSON jsonFiles with the list of games
+	fs.readdirSync("/opt/regataos-gcs/games-list").forEach(jsonFiles => {
+		fs.readFile(`/opt/regataos-gcs/games-list/${jsonFiles}`, "utf8", function (err, data) {
 			if (!err) {
-				var games = JSON.parse(data);
+				const games = JSON.parse(data);
 
-				// Request the dynamic creation of game blocks on the HTML page
-				//Capture the main element where the game blocks will be created
-				var all_blocks = document.querySelector("div.blocks3");
+				// Dynamically create search results
+				const allBlocks = document.querySelector("div.blocks3");
 
-				//Read the list of games that should appear in each block
 				games.forEach(gamesdata => {
-					//Only display games for the specific launcher
-					var url = window.location.href;
-					var url_split1 = url.split("pages/")[1];
-					var pagename = url_split1.replace('-games.html', '');
+					// Display game blocks according to the launcher
+					const pagename = window.location.href.split("pages/")[1].replace('-games.html', '');
 
-					if ((gamesdata.launchernickname.indexOf(pagename) > -1) == "1") {
-						//Request the creation of the new element (block) for each game
-						var new_game_blocks = document.createElement("div");
+					if (gamesdata.launchernickname.includes(pagename)) {
+						// Set game image
+						const gameBanner = `url('./../images/games-backg/${gamesdata.launchernickname}/${gamesdata.gamenickname}.jpg')`;
+						const gamePlataform = "gcs";
+						const gameAccess = "GAME ACCESS";
 
-						//Add classes to the new game blocks
-						new_game_blocks.classList.add("app-block", gamesdata.launchernickname + "-block", gamesdata.gamenickname);
+						// Check if the game is installed and create the game tile according to the game installation status.
+						const isInstalled = fs.existsSync(`${installedGamesJsonFiles}/${gamesdata.gamenickname}.json`) ||
+							fs.existsSync(`${installedGamesJsonFiles}/${gamesdata.gamenickname}-${gamesdata.launchernickname}.json`);
 
-						//Add the game image in the background
-						new_game_blocks.style.backgroundImage = "url('./../images/games-backg/" + gamesdata.launchernickname + "/" + gamesdata.gamenickname + ".jpg')";
+						const buttonId = gamesdata.gamenickname;
+						const buttonClass = isInstalled ? "play-box-universal" : "install-box-universal";
+						const buttonIconClass = isInstalled ? "fas fa-play" : "fas fa-download";
+						const buttonText = isInstalled ? "Jogar" : "Instalar";
 
-						//Add game details within the newly created block
-						//Special variables for running games
-						var winevariable = "'" + gamesdata.winevariable + "'";
-						var launchername = "'" + gamesdata.launchernickname + "'";
-						var rungame = "'" + gamesdata.gamerun_appid + "'";
+						const runGame = `window.launchername='${gamesdata.launchernickname}'; window.rungame='${gamesdata.gamerun_appid}'; run_game();`;
+						const installGame = runGame;
 
-						new_game_blocks.innerHTML = ' \
-			<div class="block-play ' + gamesdata.gamenickname + '-hover"> \
-				<div id="' + gamesdata.gamenickname + '" class="play-box" onclick="window.gamename=this.id; window.winevariable=' + winevariable + '; window.launchername=' + launchername + '; window.rungame=' + rungame + '; run_game();"> \
-					<div class="play-button"> \
-						<i class="fas fa-play"></i><div class="play-txt">Jogar</div> \
-					</div> \
-				</div> \
-				<div id="' + gamesdata.gamenickname + '" class="install-box" onclick="window.gamename=this.id; window.winevariable=' + winevariable + '; window.launchername=' + launchername + '; window.rungame=' + rungame + '; run_game();"> \
-					<div class="play-button"> \
-						<i class="fas fa-download"></i><div class="install-txt">Instalar</div> \
-					</div> \
-				</div> \
-			</div> \
-			<div class="block-text ' + gamesdata.gamenickname + '" title="' + gamesdata.gamename + '"> \
-				<div class="block-title">' + gamesdata.gamename + '</div> \
-				<div class="block-desc">' + gamesdata.launcher + '</div> \
-				<div class="native-game"> \
-					<div class="native-game-img" style="background-image: url(./../images/gcs.png)"></div> \
-					<div class="native-game-desc gcs">Game Access</div> \
-				</div> \
-			</div>';
+						const playInstallButton = `
+						<div id="${buttonId}" class="${buttonClass}" onclick="window.gameId=this.id; ${isInstalled ? runGame : installGame};">
+							<div class="play-button">
+								<i class="${buttonIconClass}"></i>
+								<div class="install-txt">${buttonText}</div>
+							</div>
+						</div>`;
+
+						// Create game blocks
+						const newGameBlocks = document.createElement("div");
+						newGameBlocks.classList.add("app-block", `${gamesdata.launchernickname}-block"`, `${gamesdata.gamenickname}-block`, gamesdata.gamenickname);
+						newGameBlocks.style.backgroundImage = `url('./../images/games-backg/steam/steam.jpg')`;
+
+						newGameBlocks.innerHTML = `
+						<div class="game-img" style="background-image: ${gameBanner}"></div>
+						<div class="block-play ${gamesdata.gamenickname}-hover">
+							${playInstallButton}
+						</div>
+						<div class="block-text ${gamesdata.gamenickname}" title="${gamesdata.gamename}'">
+							<div class="block-title">${gamesdata.gamename}</div>
+							<div class="block-desc">${gamesdata.launcher}</div>
+							<div class="native-game">
+							<div class="native-game-img" style="background-image: url(./../images/${gamePlataform}.png)"></div>
+							<div class="native-game-desc ${gamePlataform}">${gameAccess}</div>
+							</div>
+						</div>`;
 
 						//Finally, create the new game blocks dynamically
-						all_blocks.appendChild(new_game_blocks);
+						allBlocks.appendChild(newGameBlocks);
 						pagesBlocksLang();
 					}
 				});
@@ -82,181 +88,166 @@ function games_list1() {
 	});
 }
 
-function list_all_games() {
+function listAllGames() {
 	const fs = require("fs");
+	const path = require('path');
 
-	let files = [];
-	window.content_brake = 0
+	let jsonFiles = [];
+	window.contentBrake = 0
 
-	// Read JSON files with the list of games
-	fs.readdirSync("/opt/regataos-gcs/games-list").forEach(files => {
-		fs.readFile("/opt/regataos-gcs/games-list/" + files, "utf8", function (err, data) {
+	// Directory with JSON files of installed games
+	const installedGamesJsonFiles = "/tmp/regataos-gcs/config/installed"
+
+	// Read JSON jsonFiles with the list of games
+	fs.readdirSync("/opt/regataos-gcs/games-list").forEach(jsonFiles => {
+		fs.readFile("/opt/regataos-gcs/games-list/" + jsonFiles, "utf8", function (err, data) {
 			if (!err) {
 				const games = JSON.parse(data);
 
-				// Request the dynamic creation of game blocks on the HTML page
-				//Capture the main element where the game blocks will be created
-				const all_blocks = document.querySelector("div.blocks4");
-
 				// Define some variables in advance
-				let game_banner = "";
-				let install_game = "";
-				let run_game = "";
-				let special_game_button = "";
-				let game_plataform = "";
-				let game_access = "";
-				let special_button = "";
-				let play_install_button = "";
+				let gameBanner = "";
+				let installGame = "";
+				let runGame = "";
+				let specialButtonFunction = "";
+				let specialButtonHtml = "";
+				let gamePlataform = "";
+				let gameAccess = "";
 
-				//Read the list of games that should appear in each block
-				//for (var i = 0; i < games.length; i++) {
+				// Dynamically create search results
+				const allBlocks = document.querySelector("div.blocks4");
+
 				games.forEach(gamesdata => {
-					let child = all_blocks.querySelector(`.${gamesdata.gamenickname}-block`);
+					// Before creating the game block, check if it already exists
+					let child = allBlocks.querySelector(`.${gamesdata.gamenickname}-block`);
 					if (child == null) {
+						// Set default image directory
+						defaultImageDirectory = `./../images/games-backg/${gamesdata.launchernickname}`;
+
+						// Set game image
+						function getGameBannerUrl(filedirectory, filename) {
+							const extensions = ["jpg", "png", "webp", "jfif"];
+							for (const extension of extensions) {
+								const imagePath = `${filedirectory}/${filename}`;
+								const imagePathExtension = `${imagePath}.${extension}`;
+
+								if (fs.existsSync(imagePath)) {
+									return `url('file://${imagePath}')`;
+								}
+
+								if (fs.existsSync(imagePathExtension)) {
+									return `url('file://${imagePathExtension}')`;
+								}
+							}
+
+							return false;
+						}
+
 						// Set some default settings
-						if ((gamesdata.launchernickname.indexOf("gcs") > -1) == "1") {
-							// Set game banner image
-							game_banner = `url('./../images/games-backg/${gamesdata.launchernickname}/${gamesdata.gamenickname}.jpg')`;
+						if (gamesdata.launchernickname.includes("gcs")) {
+							installGame = "installGameId()";
+							runGame = "runGameId()";
+							specialButtonFunction = "goGamePageId()";
 
-							// Define action functions
-							install_game = "installGameId()";
-							run_game = "runGameId()";
-							special_game_button = "goGamePageId()"
+							gameBanner = `url('${defaultImageDirectory}/${gamesdata.gamenickname}.jpg')`;
 
-						} else if ((gamesdata.launchernickname.indexOf("steam") > -1) == "1") {
-							// Set game banner image
-							game_banner = `url('file:///tmp/regataos-gcs/config/steam-games/img/${gamesdata.gamenickname}.jpg')`;
+						} else if (gamesdata.launchernickname.includes("steam")) {
+							installGame = runGame = `run_${gamesdata.launchernickname}_game()`;
 
-							// Define action functions
-							install_game = "run_steam_game()";
-							run_game = "run_steam_game()";
+							const steamImg = `/tmp/regataos-gcs/config/${gamesdata.launchernickname}-games/img`
+							gameBanner = getGameBannerUrl(steamImg, gamesdata.gamenickname);
 
-						} else if ((gamesdata.launchernickname.indexOf("gog") > -1) == "1") {
-							// Set game banner image
-							if (fs.existsSync(`/tmp/regataos-gcs/config/gog-games/img/${gamesdata.gamenickname}.webp`)) {
-								game_banner = `url('file:///tmp/regataos-gcs/config/gog-games/img/${gamesdata.gamenickname}.webp')`;
+						} else if ((gamesdata.launchernickname.includes("gog")) ||
+							(gamesdata.launchernickname.includes("epicstore"))) {
+							installGame = `install_${gamesdata.launchernickname}_game()`;
+							runGame = `run_${gamesdata.launchernickname}_game()`;
+							specialButtonFunction = `uninstall_${gamesdata.launchernickname}_game()`;
 
-							} else if (fs.existsSync(`/opt/regataos-gcs/www/images/games-backg/${gamesdata.launchernickname}/${gamesdata.gamenickname}.jpg`)) {
-								game_banner = `url('./../images/games-backg/${gamesdata.launchernickname}/${gamesdata.gamenickname}.jpg')`;
+							const imgDir = `/tmp/regataos-gcs/config/${gamesdata.launchernickname}-games/img`
+							gameBanner = getGameBannerUrl(imgDir, gamesdata.gamenickname);
+
+							if (!gameBanner) {
+								if (gamesdata.launchernickname.includes("epicstore")) {
+									gameBanner = `url('${gamesdata.game_img1}')`;
+								} else {
+									gameBanner = `url('${defaultImageDirectory}/${gamesdata.gamenickname}.jpg')`;
+								}
 							}
-
-							// Define action functions
-							install_game = "install_gog_game()";
-							run_game = "run_gog_game()";
-							special_game_button = "uninstall_gog_game()"
-
-						} else if ((gamesdata.launchernickname.indexOf("epicstore") > -1) == "1") {
-							// Set game banner image
-							if (fs.existsSync(`/tmp/regataos-gcs/config/epicstore-games/img/${gamesdata.gamenickname}.jpg`)) {
-								game_banner = `url('file:///tmp/regataos-gcs/config/epicstore-games/img/${gamesdata.gamenickname}.jpg')`;
-
-							} else if (fs.existsSync(`/tmp/regataos-gcs/config/epicstore-games/img/${gamesdata.gamenickname}.png`)) {
-								game_banner = `url('file:///tmp/regataos-gcs/config/epicstore-games/img/${gamesdata.gamenickname}.png')`;
-
-							} else if (fs.existsSync(`/tmp/regataos-gcs/config/epicstore-games/img/${gamesdata.gamenickname}`)) {
-								game_banner = `url('file:///tmp/regataos-gcs/config/epicstore-games/img/${gamesdata.gamenickname}')`;
-
-							} else {
-								game_banner = `url('${gamesdata.game_img1}')`;
-							}
-
-							// Define action functions
-							install_game = "install_epicstore_game()";
-							run_game = "run_epicstore_game()";
-							special_game_button = "uninstall_epicstore_game()"
 
 						} else {
-							game_banner = `url('./../images/games-backg/${gamesdata.launchernickname}/${gamesdata.gamenickname}.jpg')`;
+							gameBanner = `url('${defaultImageDirectory}/${gamesdata.gamenickname}.jpg')`;
 						}
 
 						// Set game plataform
-						if ((gamesdata.launchernickname.indexOf("steam") > -1) == "1") {
-							if ((gamesdata.gamenative.indexOf("true") > -1) == "1") {
-								game_plataform = "nativegame";
-							} else {
-								game_plataform = "steamplay";
-							}
-
+						if (gamesdata.launchernickname.includes("steam")) {
+							gamePlataform = gamesdata.gamenative.includes("true") ? "nativegame" : "steamplay";
 						} else {
-							game_plataform = "gcs";
-							game_access = "GAME ACCESS"
+							gamePlataform = "gcs";
+							gameAccess = "GAME ACCESS";
 						}
 
 						// Special button
-						if ((gamesdata.launchernickname.indexOf("gcs") > -1) == "1") {
-							special_button = `
-							<div title="Mais sobre o jogo" class="morefor-game-button" onclick="window.gameId='${gamesdata.gamenickname}'; ${special_game_button};"> \
+						if (gamesdata.launchernickname.includes("gcs")) {
+							specialButtonHtml = `
+							  <div title="Mais sobre o jogo" class="morefor-game-button" onclick="window.gameId='${gamesdata.gamenickname}'; ${specialButtonFunction};">
 								<i class="fa fa-plus"></i>
-							</div>`;
+							  </div>`;
+
+						} else if (fs.existsSync(`${installedGamesJsonFiles}/${gamesdata.gamenickname}-${gamesdata.launchernickname}.json`) ||
+							fs.existsSync(`${installedGamesJsonFiles}/${gamesdata.gamenickname}.json`)) {
+							if (gamesdata.launchernickname.includes("epicstore") || gamesdata.launchernickname.includes("gog")) {
+								specialButtonHtml = `
+								<div title="Desinstalar jogo" class="remove-game-button" onclick="window.game_for_remove='${gamesdata.gamenickname}'; ${specialButtonFunction}; reloadPage();">
+								  <i class="fas fa-trash-alt"></i>
+								</div>`;
+							}
 
 						} else {
-							if ((fs.existsSync(`/tmp/regataos-gcs/config/installed/${gamesdata.gamenickname}-${gamesdata.launchernickname}.json`)) ||
-								(fs.existsSync(`/tmp/regataos-gcs/config/installed/${gamesdata.gamenickname}.json`))) {
-								if (((gamesdata.launchernickname.indexOf("epicstore") > -1) == "1") ||
-									((gamesdata.launchernickname.indexOf("gog") > -1) == "1")) {
-									special_button = `
-									<div title="Desinstalar jogo" class="remove-game-button" onclick="window.game_for_remove='${gamesdata.gamenickname}'; ${special_game_button}; reloadPage();"> \
-										<i class="fas fa-trash-alt"></i> \
-									</div>`;
-								}
-
-							} else {
-								special_button = "";
-							}
+							specialButtonHtml = "";
 						}
 
 						// Check if the game is installed and create the game tile according to the game installation status.
-						if ((fs.existsSync(`/tmp/regataos-gcs/config/installed/${gamesdata.gamenickname}-${gamesdata.launchernickname}.json`)) ||
-							(fs.existsSync(`/tmp/regataos-gcs/config/installed/${gamesdata.gamenickname}.json`))) {
-							play_install_button = `
-							<div id="${gamesdata.gamenickname}" class="play-box-universal" onclick="window.gameId=this.id; ${run_game};">
-								<div class="play-button">
-									<i class="fas fa-play"></i>
-									<div class="play-txt">Jogar</div>
-								</div>
-							</div>`
+						const isInstalled = fs.existsSync(`${installedGamesJsonFiles}/${gamesdata.gamenickname}.json`) ||
+							fs.existsSync(`${installedGamesJsonFiles}/${gamesdata.gamenickname}-${gamesdata.launchernickname}.json`);
 
-						} else {
-							console.log("teste2: " + gamesdata.gamenickname + ", " + gamesdata.launchernickname)
-							play_install_button = `
-							<div id="${gamesdata.gamenickname}" class="install-box-universal" onclick="window.gameId=this.id; ${install_game};">
-								<div class="play-button">
-									<i class="fas fa-download"></i>
-									<div class="install-txt">Instalar</div>
-								</div>
-							</div>`
-						}
+						const buttonId = gamesdata.gamenickname;
+						const buttonClass = isInstalled ? "play-box-universal" : "install-box-universal";
+						const buttonIconClass = isInstalled ? "fas fa-play" : "fas fa-download";
+						const buttonText = isInstalled ? "Jogar" : "Instalar";
 
-						// Request the creation of the new element (block) for each game
-						const new_game_blocks = document.createElement("div");
+						const playInstallButton = `
+						<div id="${buttonId}" class="${buttonClass}" onclick="window.gameId=this.id; ${isInstalled ? runGame : installGame};">
+							<div class="play-button">
+								<i class="${buttonIconClass}"></i>
+								<div class="install-txt">${buttonText}</div>
+							</div>
+						</div>`;
 
-						// Add classes to the new game blocks
-						new_game_blocks.classList.add("app-block", `${gamesdata.launchernickname}-block"`, `${gamesdata.gamenickname}-block`, gamesdata.gamenickname);
+						// Create game blocks
+						const newGameBlocks = document.createElement("div");
+						newGameBlocks.classList.add("app-block", `${gamesdata.launchernickname}-block"`, `${gamesdata.gamenickname}-block`, gamesdata.gamenickname);
+						newGameBlocks.style.backgroundImage = `url('./../images/games-backg/steam/steam.jpg')`;
 
-						// Add the game image in the background
-						new_game_blocks.style.backgroundImage = "url('./../images/games-backg/steam/steam.jpg')";
-
-						new_game_blocks.innerHTML = `
-						<div class= "game-img" style = "background-image: ${game_banner}"></div >
+						newGameBlocks.innerHTML = `
+						<div class="game-img" style="background-image: ${gameBanner}"></div>
 						<div class="block-play ${gamesdata.gamenickname}-hover">
-							${special_button}
-							${play_install_button}
+							${specialButtonHtml}
+							${playInstallButton}
 						</div>
 						<div class="block-text ${gamesdata.gamenickname}" title="${gamesdata.gamename}'">
 							<div class="block-title">${gamesdata.gamename}</div>
 							<div class="block-desc">${gamesdata.launcher}</div>
 							<div class="native-game">
-								<div class="native-game-img" style="background-image: url(./../images/${game_plataform}.png)"></div>
-								<div class="native-game-desc ${game_plataform}">${game_access}</div>
+							<div class="native-game-img" style="background-image: url(./../images/${gamePlataform}.png)"></div>
+							<div class="native-game-desc ${gamePlataform}">${gameAccess}</div>
 							</div>
 						</div>`;
 
 						//Finally, create the new game blocks dynamically
-						if (content_brake >= 16) {
+						if (contentBrake >= 16) {
 							return;
 						} else {
-							window.content_brake = content_brake + 1
-							all_blocks.appendChild(new_game_blocks);
+							window.contentBrake = contentBrake + 1
+							allBlocks.appendChild(newGameBlocks);
 							pagesBlocksLang();
 						}
 					}
@@ -270,30 +261,9 @@ function list_all_games() {
 // Load more games when the user scrolls to the end of the page.
 $(window).scroll(function () {
 	if ($(document).height() == $(window).scrollTop() + $(window).height()) {
-		list_all_games();
+		listAllGames();
 	}
 });
 
 // List the games according to the page accessed by the user.
-(window.location.href.indexOf("-games") > -1) ? games_list1() : list_all_games();
-
-// Game to hide as it will be removed
-function game_to_hide() {
-	var fs = require("fs");
-	var filePath = "/tmp/regataos-gcs/game-to-hide.txt"
-
-	if (fs.existsSync(filePath)) {
-		var gamenickname = fs.readFileSync(filePath, "utf8");
-		gamenickname = gamenickname.replace(/(\r\n|\n|\r)/gm, "");
-
-		$("div." + gamenickname + "-block").remove();
-
-		setTimeout(function () {
-			fs.unlinkSync(filePath);
-		}, 1000);
-	}
-}
-
-setInterval(function () {
-	game_to_hide()
-}, 1000);
+(window.location.href.includes("-games")) ? listSpecificGames() : listAllGames();
