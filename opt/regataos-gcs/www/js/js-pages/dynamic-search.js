@@ -11,216 +11,185 @@ function reloadPage() {
 }
 
 // For search page
-function listSearchedGames(gameNickname, launcherNickname, jsonFilesDirectory) {
+function listSearchedGames(gameNickname, launcherNickname, jsonDefaultDir) {
 	const fs = require("fs");
+	const path = require('path');
 	let data = "";
 
-	// Read JSON files with the list of games
-	if (fs.existsSync(`/opt/regataos-gcs/games-list/${gameNickname}-${launcherNickname}.json`)) {
-		data = fs.readFileSync(`/opt/regataos-gcs/games-list/${gameNickname}-${launcherNickname}.json`, "utf8");
-	} else {
-		data = fs.readFileSync(`/opt/regataos-gcs/games-list/${gameNickname}.json`, "utf8");
-	}
+	// Directory with JSON files of installed games
+	const installedGamesJsonFiles = "/tmp/regataos-gcs/config/installed"
 
+	// Read JSON files with the list of games
+	const filePath = fs.existsSync(path.join(jsonDefaultDir, `${gameNickname}-${launcherNickname}.json`))
+		? path.join(jsonDefaultDir, `${gameNickname}-${launcherNickname}.json`)
+		: path.join(jsonDefaultDir, `${gameNickname}.json`);
+
+	data = fs.readFileSync(filePath, "utf8");
 	const games = JSON.parse(data);
 
-	// Request the dynamic creation of game blocks on the HTML page
-	//Capture the main element where the game blocks will be created
-	const all_blocks = document.querySelector("div.blocks4");
-
 	// Define some variables in advance
-	let game_banner = "";
-	let install_game = "";
-	let run_game = "";
-	let special_game_button = "";
-	let game_plataform = "";
-	let game_access = "";
-	let special_button = "";
-	let play_install_button = "";
+	let gameBanner = "";
+	let installGame = "";
+	let runGame = "";
+	let specialButtonFunction = "";
+	let specialButtonHtml = "";
+	let gamePlataform = "";
+	let gameAccess = "";
+	let playInstallButton = "";
 
-	//Read the list of games that should appear in each block
-	//for (var i = 0; i < games.length; i++) {
+	// Dynamically create search results
+	const allBlocks = document.querySelector("div.blocks4");
+
 	games.forEach(gamesdata => {
+		// Set default image directory
+		defaultImageDirectory = `./../images/games-backg/${gamesdata.launchernickname}`;
+
+		// Set game image
+		function getGameBannerUrl(filedirectory, filename) {
+			const extensions = ["jpg", "png", "webp", "jfif"];
+			for (const extension of extensions) {
+				const imagePath = `${filedirectory}/${filename}`;
+				const imagePathExtension = `${imagePath}.${extension}`;
+
+				if (fs.existsSync(imagePath)) {
+					return `url('file://${imagePath}')`;
+				}
+
+				if (fs.existsSync(imagePathExtension)) {
+					return `url('file://${imagePathExtension}')`;
+				}
+			}
+
+			return false;
+		}
+
 		// Set some default settings
-		if ((gamesdata.launchernickname.indexOf("gcs") > -1) == "1") {
-			// Set game banner image
-			game_banner = `url('./../images/games-backg/${gamesdata.launchernickname}/${gamesdata.gamenickname}.jpg')`;
+		if (gamesdata.launchernickname.includes("gcs")) {
+			installGame = "installGameId()";
+			runGame = "runGameId()";
+			specialButtonFunction = "goGamePageId()";
 
-			// Define action functions
-			install_game = "installGameId()";
-			run_game = "runGameId()";
-			special_game_button = "goGamePageId()"
+			gameBanner = `url('${defaultImageDirectory}/${gamesdata.gamenickname}.jpg')`;
 
-		} else if ((gamesdata.launchernickname.indexOf("steam") > -1) == "1") {
-			// Set game banner image
-			game_banner = `url('file:///tmp/regataos-gcs/config/steam-games/img/${gamesdata.gamenickname}.jpg')`;
+		} else if (gamesdata.launchernickname.includes("steam")) {
+			installGame = runGame = `run_${gamesdata.launchernickname}_game()`;
 
-			// Define action functions
-			install_game = "run_steam_game()";
-			run_game = "run_steam_game()";
+			const steamImg = `/tmp/regataos-gcs/config/${gamesdata.launchernickname}-games/img`
+			gameBanner = getGameBannerUrl(steamImg, gamesdata.gamenickname);
 
-		} else if ((gamesdata.launchernickname.indexOf("gog") > -1) == "1") {
-			// Set game banner image
-			if (fs.existsSync(`/tmp/regataos-gcs/config/gog-games/img/${gamesdata.gamenickname}.webp`)) {
-				game_banner = `url('file:///tmp/regataos-gcs/config/gog-games/img/${gamesdata.gamenickname}.webp')`;
+		} else if ((gamesdata.launchernickname.includes("gog")) ||
+			(gamesdata.launchernickname.includes("epicstore"))) {
+			installGame = `install_${gamesdata.launchernickname}_game()`;
+			runGame = `run_${gamesdata.launchernickname}_game()`;
+			specialButtonFunction = `uninstall_${gamesdata.launchernickname}_game()`;
 
-			} else if (fs.existsSync(`/opt/regataos-gcs/www/images/games-backg/${gamesdata.launchernickname}/${gamesdata.gamenickname}.jpg`)) {
-				game_banner = `url('./../images/games-backg/${gamesdata.launchernickname}/${gamesdata.gamenickname}.jpg')`;
+			const imgDir = `/tmp/regataos-gcs/config/${gamesdata.launchernickname}-games/img`
+			gameBanner = getGameBannerUrl(imgDir, gamesdata.gamenickname);
+			console.log("teste: " + gameBanner)
+
+			if (!gameBanner) {
+				if (gamesdata.launchernickname.includes("epicstore")) {
+					gameBanner = `url('${gamesdata.game_img1}')`;
+				} else {
+					gameBanner = `url('${defaultImageDirectory}/${gamesdata.gamenickname}.jpg')`;
+				}
 			}
-
-			// Define action functions
-			install_game = "install_gog_game()";
-			run_game = "run_gog_game()";
-			special_game_button = "uninstall_gog_game()"
-
-		} else if ((gamesdata.launchernickname.indexOf("epicstore") > -1) == "1") {
-			// Set game banner image
-			if (fs.existsSync(`/tmp/regataos-gcs/config/epicstore-games/img/${gamesdata.gamenickname}.jpg`)) {
-				game_banner = `url('file:///tmp/regataos-gcs/config/epicstore-games/img/${gamesdata.gamenickname}.jpg')`;
-
-			} else if (fs.existsSync(`/tmp/regataos-gcs/config/epicstore-games/img/${gamesdata.gamenickname}.png`)) {
-				game_banner = `url('file:///tmp/regataos-gcs/config/epicstore-games/img/${gamesdata.gamenickname}.png')`;
-
-			} else if (fs.existsSync(`/tmp/regataos-gcs/config/epicstore-games/img/${gamesdata.gamenickname}`)) {
-				game_banner = `url('file:///tmp/regataos-gcs/config/epicstore-games/img/${gamesdata.gamenickname}')`;
-
-			} else {
-				game_banner = `url('${gamesdata.game_img1}')`;
-			}
-
-			// Define action functions
-			install_game = "install_epicstore_game()";
-			run_game = "run_epicstore_game()";
-			special_game_button = "uninstall_epicstore_game()"
 
 		} else {
-			game_banner = `url('./../images/games-backg/${gamesdata.launchernickname}/${gamesdata.gamenickname}.jpg')`;
+			gameBanner = `url('${defaultImageDirectory}/${gamesdata.gamenickname}.jpg')`;
 		}
 
 		// Set game plataform
-		if ((gamesdata.launchernickname.indexOf("steam") > -1) == "1") {
-			if ((gamesdata.gamenative.indexOf("true") > -1) == "1") {
-				game_plataform = "nativegame";
-			} else {
-				game_plataform = "steamplay";
-			}
-
+		if (gamesdata.launchernickname.includes("steam")) {
+			gamePlataform = gamesdata.gamenative.includes("true") ? "nativegame" : "steamplay";
 		} else {
-			game_plataform = "gcs";
-			game_access = "GAME ACCESS"
+			gamePlataform = "gcs";
+			gameAccess = "GAME ACCESS";
 		}
 
 		// Special button
-		if ((gamesdata.launchernickname.indexOf("gcs") > -1) == "1") {
-			special_button = `
-			<div title="Mais sobre o jogo" class="morefor-game-button" onclick="window.gameId='${gamesdata.gamenickname}'; ${special_game_button};"> \
+		if (gamesdata.launchernickname.includes("gcs")) {
+			specialButtonHtml = `
+			  <div title="Mais sobre o jogo" class="morefor-game-button" onclick="window.gameId='${gamesdata.gamenickname}'; ${specialButtonFunction};">
 				<i class="fa fa-plus"></i>
-			</div>`;
+			  </div>`;
+
+		} else if (fs.existsSync(`${installedGamesJsonFiles}/${gamesdata.gamenickname}-${gamesdata.launchernickname}.json`) ||
+			fs.existsSync(`${installedGamesJsonFiles}/${gamesdata.gamenickname}.json`)) {
+			if (gamesdata.launchernickname.includes("epicstore") || gamesdata.launchernickname.includes("gog")) {
+				specialButtonHtml = `
+				<div title="Desinstalar jogo" class="remove-game-button" onclick="window.game_for_remove='${gamesdata.gamenickname}'; ${specialButtonFunction}; reloadPage();">
+				  <i class="fas fa-trash-alt"></i>
+				</div>`;
+			}
 
 		} else {
-			if ((fs.existsSync(`/tmp/regataos-gcs/config/installed/${gamesdata.gamenickname}-${gamesdata.launchernickname}.json`)) ||
-				(fs.existsSync(`/tmp/regataos-gcs/config/installed/${gamesdata.gamenickname}.json`))) {
-				if (((gamesdata.launchernickname.indexOf("epicstore") > -1) == "1") ||
-					((gamesdata.launchernickname.indexOf("gog") > -1) == "1")) {
-					special_button = `
-					<div title="Desinstalar jogo" class="remove-game-button" onclick="window.game_for_remove='${gamesdata.gamenickname}'; ${special_game_button}; reloadPage();"> \
-						<i class="fas fa-trash-alt"></i> \
-					</div>`;
-				}
-
-			} else {
-				special_button = "";
-			}
+			specialButtonHtml = "";
 		}
 
 		// Check if the game is installed and create the game tile according to the game installation status.
-		if ((fs.existsSync(`/tmp/regataos-gcs/config/installed/${gamesdata.gamenickname}-${gamesdata.launchernickname}.json`)) ||
-			(fs.existsSync(`/tmp/regataos-gcs/config/installed/${gamesdata.gamenickname}.json`))) {
-			play_install_button = `
-			<div id="${gamesdata.gamenickname}" class="play-box-universal" onclick="window.gameId=this.id; ${run_game};">
-				<div class="play-button">
-					<i class="fas fa-play"></i>
-					<div class="play-txt">Jogar</div>
-				</div>
-			</div>`
+		const isInstalled = fs.existsSync(`${installedGamesJsonFiles}/${gamesdata.gamenickname}.json`) ||
+			fs.existsSync(`${installedGamesJsonFiles}/${gamesdata.gamenickname}-${gamesdata.launchernickname}.json`);
 
-		} else {
-			play_install_button = `
-			<div id="${gamesdata.gamenickname}" class="install-box-universal" onclick="window.gameId=this.id; ${install_game};">
-				<div class="play-button">
-					<i class="fas fa-download"></i>
-					<div class="install-txt">Instalar</div>
-				</div>
-			</div>`
-		}
+		const buttonId = gamesdata.gamenickname;
+		const buttonClass = isInstalled ? "play-box-universal" : "install-box-universal";
+		const buttonIconClass = isInstalled ? "fas fa-play" : "fas fa-download";
+		const buttonText = isInstalled ? "Jogar" : "Instalar";
 
-		// Request the creation of the new element (block) for each game
-		const new_game_blocks = document.createElement("div");
+		const playInstallButton = `
+		<div id="${buttonId}" class="${buttonClass}" onclick="window.gameId=this.id; ${isInstalled ? runGame : installGame};">
+			<div class="play-button">
+				<i class="${buttonIconClass}"></i>
+				<div class="install-txt">${buttonText}</div>
+			</div>
+		</div>`;
 
-		// Add classes to the new game blocks
-		new_game_blocks.classList.add("app-block", `${gamesdata.launchernickname}-block"`, `${gamesdata.gamenickname}-block`, gamesdata.gamenickname);
+		// Create game blocks
+		const newGameBlocks = document.createElement("div");
+		newGameBlocks.classList.add("app-block", `${gamesdata.launchernickname}-block"`, `${gamesdata.gamenickname}-block`, gamesdata.gamenickname);
+		newGameBlocks.style.backgroundImage = `url('./../images/games-backg/steam/steam.jpg')`;
 
-		// Add the game image in the background
-		new_game_blocks.style.backgroundImage = "url('./../images/games-backg/steam/steam.jpg')";
-
-		new_game_blocks.innerHTML = `
-		<div class="game-img" style="background-image: ${game_banner}"></div>
+		newGameBlocks.innerHTML = `
+		<div class="game-img" style="background-image: ${gameBanner}"></div>
 		<div class="block-play ${gamesdata.gamenickname}-hover">
-			${special_button}
-			${play_install_button}
+			${specialButtonHtml}
+			${playInstallButton}
 		</div>
 		<div class="block-text ${gamesdata.gamenickname}" title="${gamesdata.gamename}'">
 			<div class="block-title">${gamesdata.gamename}</div>
 			<div class="block-desc">${gamesdata.launcher}</div>
 			<div class="native-game">
-				<div class="native-game-img" style="background-image: url(./../images/${game_plataform}.png)"></div>
-				<div class="native-game-desc ${game_plataform}">${game_access}</div>
+			<div class="native-game-img" style="background-image: url(./../images/${gamePlataform}.png)"></div>
+			<div class="native-game-desc ${gamePlataform}">${gameAccess}</div>
 			</div>
 		</div>`;
 
-		// Finally, create the new game blocks dynamically
-		all_blocks.appendChild(new_game_blocks);
+		allBlocks.appendChild(newGameBlocks);
 		pagesBlocksLang();
 	})
 	return;
 }
 
-// This script helps to dynamically search the game
-function check_results() {
-	if (document.querySelector(".app-block-universal") !== null) {
-		document.querySelector(".noresultsfound").style.display = "none";
-
-	} else if (document.querySelector(".app-block") !== null) {
-		document.querySelector(".noresultsfound").style.display = "none";
-
-	} else {
-		document.querySelector(".noresultsfound").style.display = "block";
-		document.querySelector(".blocks4").style.display = "block";
-	}
-}
-
-// Read the JSON file with the list of games
-function showGame(gameNickname, launcherNickname, jsonFilesDirectory) {
-	listSearchedGames(gameNickname, launcherNickname, jsonFilesDirectory);
-
-	const elements = ["title-top", "title-top2"];
+// Display elements on the screen with "display: block;"
+function showElements(displayElements) {
+	const elements = document.querySelectorAll(`.${displayElements.join(", .")}`);
 	elements.forEach((element) => {
-		const showElement = document.querySelector(`.${element}`);
-		showElement.classList.add("show-element");
+		element.classList.add("show-element");
 	});
 }
 
+// Search for games according to the keyword
 function search() {
 	const fs = require('fs');
 	const keywordFile = "/tmp/regataos-gcs/search.txt"
 	const readKeyword = fs.readFileSync(keywordFile, "utf8");
 
 	if (readKeyword.length >= 2) {
-		const jsonFilesDirectory = "/opt/regataos-gcs/games-list"
-		const jsonFiles = fs.readdirSync(jsonFilesDirectory);
+		const jsonDefaultDir = "/opt/regataos-gcs/games-list"
+		const jsonFiles = fs.readdirSync(jsonDefaultDir);
 
 		for (let i = 0; i < jsonFiles.length; i++) {
-			const gameInfo = fs.readFileSync(`${jsonFilesDirectory}/${jsonFiles[i]}`, "utf8");
+			const gameInfo = fs.readFileSync(`${jsonDefaultDir}/${jsonFiles[i]}`, "utf8");
 			const listGames = JSON.parse(gameInfo);
 
 			listGames.forEach((game) => {
@@ -228,11 +197,17 @@ function search() {
 
 				if (gameKeywords && (gameKeywords.includes(readKeyword) ||
 					readKeyword.includes(game.gamekeywords.pt))) {
-					showGame(game.gamenickname, game.launchernickname, jsonFilesDirectory);
+					listSearchedGames(game.gamenickname, game.launchernickname, jsonDefaultDir);
+					showElements(["title-top", "display-search-keyword"]);
 				}
 			});
 		}
-		check_results();
+
+		// If no results were found, display unsuccessful search message
+		const noResults = document.querySelector(".app-block");
+		if (!noResults) {
+			showElements(["noresultsfound", "blocks4"]);
+		}
 	}
 }
 search();
