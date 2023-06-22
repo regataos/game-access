@@ -7,8 +7,8 @@ function home_content() {
         $(".appbc1").css("background-image", 'url("https://i.ibb.co/tmStgh6/hcw-block1.webp")');
         $(".appbc1").css("background-position", "0% 100%")
         //Date
-        const date_pt_br = "29 de junho"
-        const date_en_us = "June 29"
+        date_pt_br = "29 de junho"
+        date_en_us = "June 29"
     });
 
     // Detect User Language
