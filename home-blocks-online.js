@@ -8,8 +8,8 @@ function home_content() {
     appbc1.style.backgroundImage = 'url("https://i.ibb.co/tmStgh6/hcw-block1.webp")';
     appbc1.style.backgroundPosition = "0% 100%";
 
-    datePtBr = "29 de junho";
-    dateEnUs = "June 29";
+    const datePtBr = "29 de junho";
+    const dateEnUs = "June 29";
 
     // Detect User Language
     const user_language = selectTranslation();
