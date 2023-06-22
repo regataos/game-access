@@ -1,4 +1,4 @@
-function home_content() {
+function homeContent() {
     // Content of block 1
     const appbc1 = document.querySelector(".appbc1");
     const blockTitle = appbc1.querySelector(".block-title");
@@ -23,4 +23,4 @@ function home_content() {
     }
 }
 
-home_content();
+homeContent();
