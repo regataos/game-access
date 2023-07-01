@@ -148,6 +148,13 @@ function success_installation() {
 
 	# Notify
 	notify-send -i regataos-gcs -u normal -a 'Regata OS Game Access' "$app_name $success_notify_title" "$app_name $success_notify_text"
+
+	# Check UI status
+	echo "show installed games" >"/tmp/regataos-gcs/config/installed/show-installed-games-epic.txt"
+	echo "show installed games" >"/tmp/regataos-gcs/config/installed/show-installed-games.txt"
+	echo "rearrange game blocks" >"/tmp/regataos-gcs/config/file-status.txt"
+	sleep 2
+	echo "rearrange game blocks" >"/tmp/regataos-gcs/config/file-status.txt"
 }
 
 # Installation failed
@@ -413,7 +420,6 @@ EOM
 		echo "completed" >$progressbar_dir/progress-full
 		echo "" >$progressbar_dir/status
 		echo $success_installation >$progressbar_dir/progress
-		echo "show installed games" >"/tmp/regataos-gcs/config/installed/show-installed-games-epic.txt"
 		success_installation
 		sleep 2
 		rm -f $progressbar_dir/progress-full

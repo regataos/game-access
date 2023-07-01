@@ -34,3 +34,13 @@ game_id="$(grep -r "gameid" $HOME/.config/regataos-gcs/epicstore-games/json/$gam
 # Notify
 notify-send -i regataos-gcs -u normal -a 'Regata OS Game Access' \
 	"$game_name foi desinstalado!" "$game_name foi desinstalado com sucesso."
+
+# Check for JSON files in the directory listing installed games
+check_installed_games=$(ls "/tmp/regataos-gcs/config/installed/")
+if [[ $(echo $check_installed_games) != *"epicstore.json"* ]]; then
+	rm -f "$directory_installed_json/show-installed-games-epic.txt"
+fi
+
+# Check UI status
+file_status="/tmp/regataos-gcs/config/file-status.txt"
+echo "rearrange game blocks" > "$file_status"

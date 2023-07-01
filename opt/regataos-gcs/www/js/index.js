@@ -2,7 +2,6 @@ const fs = require('fs');
 const exec = require('child_process').exec;
 
 // View Sidebar Options
-$("#block-home").css("display", "block")
 $(".top-bar-arrow").css("display", "none")
 $("ul#top-menu").css("margin-left", "50px")
 $("a.p-home").css("font-weight", "700")

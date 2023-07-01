@@ -1,6 +1,6 @@
 // Open a pop-up that allows login to launcher
-function open_url(URL) {
-	var popup = window.open("./../pages/go-egs.html", 'popup')
+function openUrl() {
+	const popup = window.open("./../pages/go-egs.html", 'popup')
 	document.getElementById("login-button").style.pointerEvents = "none";
 
 	setTimeout(function () {
@@ -9,49 +9,119 @@ function open_url(URL) {
 	}, 3000);
 }
 
-// If necessary, display the loading status on the page
-function check_status() {
-	var verification_time = setInterval(show_loading, 1000);
-
-	function show_loading() {
-		const fs = require('fs');
-
-		if (fs.existsSync('/tmp/regataos-gcs/login-id.txt')) {
-			$("div.title-top").css("display", "none")
-			$("#epicstore-buttons").css("display", "none")
-			$("div.universal-login").css("display", "none")
-			$("div.loading").css("display", "block")
-			$("div.loading-games").css("display", "block")
-
-		} else {
-			$("#epicstore-buttons").css("display", "none")
-			$("div.universal-login").css("display", "none")
-			$("div.loading").css("display", "none")
-			$("div.loading-games").css("display", "none")
-			clearInterval(verification_time);
-		}
-	}
-}
-
 // Save login id to a cache file
-function save_login_id() {
-	const exec = require('child_process').exec;
+function saveLoginId(loginId) {
 	const fs = require('fs');
-	fs.writeFileSync("/tmp/regataos-gcs/login-id.txt", login_id, "utf8");
+	fs.writeFileSync("/tmp/regataos-gcs/login-id.txt", loginId, "utf8");
+	fs.writeFileSync("/tmp/regataos-gcs/config/file-status.txt", "user account change", "utf8");
 
 	setTimeout(function () {
-		check_status()
-		var command_line = '/opt/regataos-gcs/scripts/show-epicstore-games.sh & \
+		const commandLine = '/opt/regataos-gcs/scripts/show-epicstore-games.sh & \
 		/opt/regataos-gcs/scripts/install/scripts-install/install-game-epicstore/prepare-compatibility-mode.sh';
-		exec(command_line, function (error, call, errlog) {
-		});
+		runShellScript(commandLine)
 	}, 1000);
 }
 
 // Verify that Epic Games Store login has already been performed
 window.onmessage = function (e) {
 	if (e.data) {
-		window.login_id = e.data;
-		save_login_id();
+		const loginId = e.data;
+		saveLoginId(loginId);
 	}
 };
+
+// When user login with Epic Games Store account, hide login screen and display game tiles
+let hideLoginScreenInterval = "";
+function hideLoginScreen() {
+	const fs = require("fs");
+
+	if (fs.existsSync("/tmp/regataos-gcs/config/epicstore-games/show-egs.txt")) {
+		handleCssClass("add", "show-games", "list-account-games");
+		handleCssClass("add", "hide-element", ["loading", "loading-games", "epicstore-login"]);
+		handleCssClass("remove", "grid-element", "epicstore-login");
+		handleCssClass("remove", "show-element", ["loading", "loading-games"]);
+
+		if (fs.existsSync("/tmp/regataos-gcs/config/installed/show-installed-games-epic.txt")) {
+			handleCssClass("add", "show-element", "universal-installed-title");
+			handleCssClass("add", "show-games", "list-installed-games");
+			handleCssClass("add", "title-games-available-min", "account-title-epicstore");
+		} else {
+			handleCssClass("remove", "title-games-available-min", "account-title-epicstore");
+			handleCssClass("remove", "show-element", "universal-installed-title");
+			handleCssClass("remove", "show-games", "list-installed-games");
+		}
+
+		handleCssClass("add", "show-title-games-available", "account-title-epicstore");
+		handleCssClass("add", "show-element", ["page-buttons", "blocks3-universal"]);
+		handleCssClass("remove", "hide-element", ["page-buttons", "blocks3-universal"]);
+		handleCssClass("remove", "body-epic-background", "body-page");
+		handleCssClass("add", "body-no-background", "body-page");
+
+		const statusLoadGames = sessionStorage.getItem("loaded");
+		if ((statusLoadGames) && (statusLoadGames.includes("false"))) {
+			sessionStorage.setItem("loaded", "true");
+			detectLogin();
+		}
+
+	} else {
+		if (fs.existsSync('/tmp/regataos-gcs/login-id.txt')) {
+			handleCssClass("remove", "grid-element", "epicstore-login");
+			handleCssClass("remove", "body-epic-img", "body-page");
+			handleCssClass("add", "show-element", ["loading", "loading-games"]);
+
+		} else {
+			handleCssClass("add", "grid-element", "epicstore-login");
+			handleCssClass("add", "body-epic-img", "body-page");
+			handleCssClass("remove", "show-element", ["loading", "loading-games"]);
+			clearInterval(hideLoginScreenInterval);
+		}
+
+		sessionStorage.setItem("loaded", "false");
+		handleCssClass("remove", "show-title-games-available", "account-title-epicstore");
+		handleCssClass("remove", "title-games-available-min", "account-title-epicstore");
+		handleCssClass("remove", "show-element", ["page-buttons", "blocks3-universal", "universal-installed-title"]);
+		handleCssClass("add", "hide-element", ["page-buttons", "blocks3-universal"]);
+		handleCssClass("remove", "show-games", ["list-installed-games", "list-account-games"]);
+	}
+}
+hideLoginScreen();
+
+// Check status to make UI changes.
+function checkUiChanges() {
+	const fs = require("fs");
+	const fileStatus = "/tmp/regataos-gcs/config/file-status.txt";
+	const urlPage = window.location.href;
+
+	// Before checking UI status changes, clear the cache.
+	let interfaceStatus = fs.readFileSync(fileStatus, "utf8");
+	function resetInterfaceStatus() {
+		if (!interfaceStatus.includes("inactive")) {
+			fs.writeFileSync(fileStatus, "inactive", "utf8");
+		}
+	}
+	resetInterfaceStatus();
+
+	// Detect installed games
+	function detectInstalled() {
+		const commandLine = "/opt/regataos-gcs/scripts/search-installeds --detect";
+		runShellScript(commandLine)
+	}
+
+	fs.watch(fileStatus, (eventType, filename) => {
+		interfaceStatus = fs.readFileSync(fileStatus, "utf8");
+		if (interfaceStatus.includes("rearrange game blocks")) {
+			detectInstalled();
+
+			setTimeout(function () {
+				hideLoginScreen();
+				listAllGames(urlPage, 16);
+				resetInterfaceStatus();
+			}, 2000);
+
+		} else if (interfaceStatus.includes("user account change")) {
+			detectInstalled();
+			hideLoginScreenInterval = setInterval(hideLoginScreen, 1000);
+		}
+	});
+}
+checkUiChanges();

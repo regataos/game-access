@@ -168,16 +168,20 @@ const updateSteamCache = setInterval(create_cache_steam, 1000);
 function create_cache_steam() {
 	var fs = require("fs");
 
-	if (fs.existsSync('/tmp/regataos-gcs/config/steam-games/update-cache-steam.txt')) {
-		console.log(">> start update steam cache")
-		create_cache_steam_games()
+	if (fs.existsSync('/tmp/regataos-gcs/config/installed/show-installed-games.txt')) {
+		if (fs.existsSync('/tmp/regataos-gcs/config/steam-games/update-cache-steam.txt')) {
+			console.log(">> start update steam cache")
+			create_cache_steam_games()
+
+		} else {
+			if (fs.existsSync('/tmp/regataos-gcs/config/steam-games/show-menu-steam.txt')) {
+				console.log(">> stop update steam cache")
+				fs.writeFileSync("/tmp/regataos-gcs/config/steam-games/update-cache-steam.txt", "Update steam cache", "utf8");
+			}
+		}
 
 	} else {
-		if (fs.existsSync('/tmp/regataos-gcs/config/steam-games/show-menu-steam.txt')) {
-			console.log(">> stop update steam cache")
-			fs.writeFileSync("/tmp/regataos-gcs/config/steam-games/update-cache-steam.txt", "Update steam cache", "utf8");
-			clearInterval(updateSteamCache);
-		}
+		clearInterval(updateSteamCache);
 	}
 }
 

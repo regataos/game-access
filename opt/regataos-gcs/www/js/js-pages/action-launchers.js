@@ -65,3 +65,61 @@ function legendary_status() {
 	}
 }
 legendary_status();
+
+// Hide the "install" button when the launcher is already installed.
+function hideInstallButtonLauncher() {
+	const fs = require("fs");
+	const fileWithInstalledLaunchers = "/tmp/regataos-gcs/config/installed-launchers.conf";
+	const installedLaunchers = fs.readFileSync(fileWithInstalledLaunchers, "utf8");
+
+	const seeMoreButton = document.querySelector(".epicstore-more");
+	const installButton = document.querySelector(".epicstore-install");
+
+	if (installedLaunchers.includes("epicstore")) {
+		seeMoreButton.classList.add("show-element");
+		installButton.classList.remove("show-element");
+	} else {
+		seeMoreButton.classList.remove("show-element");
+		installButton.classList.add("show-element");
+	}
+}
+hideInstallButtonLauncher()
+
+// Detect changes in launcher installation and execute specific functions
+function detectInstallationLaunchers() {
+	const fs = require("fs");
+
+	if (!fs.existsSync("/tmp/regataos-gcs/config/epicstore-games/show-egs.txt")) {
+		return;
+	}
+
+	hideInstallButtonLauncher();
+
+	const fileWithInstalledLaunchers = "/tmp/regataos-gcs/config/installed-launchers.conf";
+	fs.watchFile(fileWithInstalledLaunchers, function () {
+		hideInstallButtonLauncher();
+	});
+}
+detectInstallationLaunchers();
+
+// Cancel user account removal
+function cancel_remove_account() {
+	const fs = require('fs');
+	const removeUserAccountFile = "/tmp/regataos-gcs/remove-user-account-epicstore.txt";
+	handleCssClass("remove", "show-element", "remove-user-account");
+	if (fs.existsSync(removeUserAccountFile)) {
+		fs.unlinkSync(removeUserAccountFile);
+	}
+}
+
+// Proceed with user account removal
+function remove_account_epicstore() {
+	const fs = require('fs');
+	const commandLine = '/opt/regataos-gcs/scripts/remove-user-account -epicstore';
+	handleCssClass("remove", "show-element", "remove-user-account");
+	fs.unlinkSync("/tmp/regataos-gcs/remove-user-account-epicstore.txt")
+	fs.unlinkSync("/tmp/regataos-gcs/config/epicstore-games/show-egs.txt")
+	setTimeout(function () {
+		runShellScript(commandLine)
+	}, 2000);
+}

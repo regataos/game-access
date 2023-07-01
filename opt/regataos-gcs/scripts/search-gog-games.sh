@@ -22,23 +22,25 @@ function restore_suggested_games() {
 	directory_1="/tmp/regataos-gcs/config/gog-games/json-old"
 	directory_2="/opt/regataos-gcs/games-list"
 
-	mv -f "$directory_1/awp.json" "$directory_2/awp.json"
-	mv -f "$directory_1/fallout3.json" "$directory_2/fallout3.json"
-	mv -f "$directory_1/lost-ember.json" "$directory_2/lost-ember.json"
-	mv -f "$directory_1/mrr-edge.json" "$directory_2/mrr-edge.json"
-	mv -f "$directory_1/ptnn.json" "$directory_2/ptnn.json"
-	mv -f "$directory_1/sniper-contracts.json" "$directory_2/sniper-contracts.json"
-	mv -f "$directory_1/sniper3.json" "$directory_2/sniper3.json"
-	mv -f "$directory_1/tw2.json" "$directory_2/tw2.json"
-	mv -f "$directory_1/tw3.json" "$directory_2/tw3.json"
+	if test -e "$directory_1" && [[ $(ls "$directory_1/") == *".json"* ]]; then
+		mv -f "$directory_1/awp.json" "$directory_2/awp.json"
+		mv -f "$directory_1/fallout3.json" "$directory_2/fallout3.json"
+		mv -f "$directory_1/lost-ember.json" "$directory_2/lost-ember.json"
+		mv -f "$directory_1/mrr-edge.json" "$directory_2/mrr-edge.json"
+		mv -f "$directory_1/ptnn.json" "$directory_2/ptnn.json"
+		mv -f "$directory_1/sniper-contracts.json" "$directory_2/sniper-contracts.json"
+		mv -f "$directory_1/sniper3.json" "$directory_2/sniper3.json"
+		mv -f "$directory_1/tw2.json" "$directory_2/tw2.json"
+		mv -f "$directory_1/tw3.json" "$directory_2/tw3.json"
 
-	# Clear cache
-	rm -f $directory_2/*-gog.json
-	rm -f /tmp/regataos-gcs/config/installed/*-gog.json
-	rm -f /tmp/regataos-gcs/config/installed/show-installed-games-gog.txt
+		# Clear cache
+		rm -f $directory_2/*-gog.json
+		rm -f /tmp/regataos-gcs/config/installed/*-gog.json
+		rm -f /tmp/regataos-gcs/config/installed/show-installed-games-gog.txt
 
-	if test -e "$HOME/.config/regataos-gcs/gog-games/gamedb.json"; then
-		rm -f "$HOME/.config/regataos-gcs/gog-games/gamedb.json"
+		if test -e "$HOME/.config/regataos-gcs/gog-games/gamedb.json"; then
+			rm -f "$HOME/.config/regataos-gcs/gog-games/gamedb.json"
+		fi
 	fi
 }
 

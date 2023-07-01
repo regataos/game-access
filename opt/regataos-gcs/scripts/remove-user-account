@@ -1,0 +1,41 @@
+#!/bin/bash
+
+gcsTempDir="/tmp/regataos-gcs"
+gcsTools="/opt/regataos-gcs/tools"
+prefixesDir="$HOME/.local/share/wineprefixes"
+checkInstalledLaunchers="$(cat $gcsTempDir/config/installed-launchers.conf)"
+
+function removeEpicstoreAccount() {
+    # Hide the on-screen confirmation message.
+    rm -f "$gcsTempDir/remove-user-account-epicstore.txt"
+    rm -f "$gcsTempDir/remove-user-account-epicstore.txt"
+    rm -f "$gcsTempDir/config/epicstore-games/show-egs.txt"
+    $gcsTools/legendary/legendary auth --delete
+
+    if [[ $(echo $checkInstalledLaunchers) == *"epicstore"* ]]; then
+        rm -rf "$prefixesDir/epicstore-compatibility-mode"
+
+        if test -e "$gcsTempDir/config/external-games-folder.txt"; then
+            fileExternalDir="$(cat "$gcsTempDir/config/external-games-folder.txt")"
+            externalDir="$(echo $fileExternalDir)";
+
+            if [[ $(echo $fileExternalDir) != *"game-access"* ]]; then
+                externalDir="$(echo $fileExternalDir)/game-access"
+            fi
+
+            if test -e "$(echo $externalDir)/wineprefixes-gcs/epicstore-compatibility-mode"; then
+                rm -rf "$(echo $externalDir)/wineprefixes-gcs/epicstore-compatibility-mode"
+            fi
+        fi
+    fi
+
+    echo "user account change" > "/tmp/regataos-gcs/config/file-status.txt"
+}
+
+case $1 in
+   "-epicstore") removeEpicstoreAccount
+         ;;
+   *) echo "Invalid option!"
+      exit 1
+      ;;
+esac

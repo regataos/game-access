@@ -35,5 +35,4 @@ function go_settings() {
 
 function go_to_page() {
 	document.getElementById("iframegcs").contentWindow.document.location.href = "pages/" + launchername + "-games.html";
-	$(".block-top").css("display", "none");
 }

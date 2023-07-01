@@ -10,15 +10,14 @@
 	<link rel="stylesheet" type="text/css" href="./../css/roboto-style.css">
 	<script type="text/javascript" src="./../js/jquery.min.js"></script>
 	<script type="text/javascript" src="./../js/fas-icons.js"></script>
-	<script type="text/javascript" src="./../js/js-pages/search-installed-games.js"></script>
-	<script type="text/javascript" src="./../js/js-pages/action-launchers.js"></script>
-	<script type="text/javascript" src="./../js/js-pages/action-games.js"></script>
+	<script type="text/javascript" src="./../js/js-pages/universal-functions/get-games-image-path.js"></script>
+	<script type="text/javascript" src="./../js/js-pages/universal-functions/run-shell-script.js"></script>
+	<script type="text/javascript" src="./../js/js-pages/universal-functions/reload-page.js"></script>
 	<script type="text/javascript" src="./../js/confirm-installation.js"></script>
 	<script type="text/javascript" src="./../js/translations/language/pages-lang.js"></script>
 	<script type="text/javascript" src="./../js/translations/language/pages-blocks-lang.js"></script>
 </head>
-<body>
-
+<body class="body-page">
 <div class="blocks">
 <div class="blocks2">
 <div class="title-top-box">
@@ -29,28 +28,28 @@
 		<div class="view-more universal-more epicstore-more" onclick="run_launcher('epicstore');">Ver mais na Epic Games Store</div>
 		<div id="epicstore-remove-account" class="remove-account" onclick="remove_user_account_epicstore();">Remover conta</div>
 	</div>
+	<script type="text/javascript" src="./../js/js-pages/action-launchers.js"></script>
 </div>
 
 <div class="blocks3-universal">
-	<div id="universal-installed" class="inner-blocks universal-installed-games"></div>
+	<div id="installed-games" class="list-installed-games"></div>
+
 	<div class="title-top universal-account-title account-title-epicstore">Disponíveis na sua conta da Epic Games Store</div>
-	<div id="universal-account" class="inner-blocks universal-all-games"></div>
-	<script type="text/javascript" src="./../js/js-pages/epicstore-games-list.js"></script>
-	<script type="text/javascript" src="./../js/js-pages/epicstore-login.js"></script>
+	<div id="account-games" class="list-account-games"></div>
 </div>
 
-<div id="epicstore-buttons">
-	<div id="login-button" class="universal-login login-button-epicstore" onclick='open_url();'>Fazer login na Epic Games Store</div>
-	<div id="login-button" class="universal-login epicstore-install" onclick="window.launcher_name='epicstore'; run_launcher();">Instalar Epic Games Store</div>
+<div id="epicstore-buttons" class="epicstore-login">
+	<div id="login-button" class="universal-login login-button-epicstore" onclick='openUrl();'>Fazer login na Epic Games Store</div>
+	<div id="login-button" class="universal-login install-button-epicstore epicstore-install" onclick="window.launcher_name='epicstore'; run_launcher();">Instalar Epic Games Store</div>
 </div>
 
 <div class="loading">
 	<div class="loader"></div>
 </div>
 <div class="loading-games">Carregando a sua biblioteca de jogos...</div>
-
 <script type="text/javascript" src="./../js/js-pages/games-list.js"></script>
-<script type="text/javascript" src="./../js/js-pages/check-installed-games.js"></script>
+<script type="text/javascript" src="./../js/js-pages/epicstore-login.js"></script>
+<script type="text/javascript" src="./../js/js-pages/action-games.js"></script>
 
 </div>
 </div>

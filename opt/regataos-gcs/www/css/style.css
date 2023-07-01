@@ -926,7 +926,7 @@ a.p-home {
 }
 
 #block-home {
-	display: block;
+	display: none;
     width: 230px;
     margin-left: auto;
     margin-right: auto;
@@ -1129,4 +1129,12 @@ a.p-home {
 .external-games-folder-button-txt {
 	font-size: 16px;
     padding: 1px;
+}
+
+.show-element {
+	display: block !important;
+}
+
+.hide-element {
+	display: none;
 }

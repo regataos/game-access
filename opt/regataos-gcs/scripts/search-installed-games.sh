@@ -93,15 +93,3 @@ for i in /opt/regataos-gcs/games-list/*.json; do
 		fi
 	fi
 done
-
-# Check for installed games from the Epic Games Store
-verifyGameInstallJson=$(ls /tmp/regataos-gcs/config/installed/)
-if [[ $(echo $verifyGameInstallJson) == *"epicstore.json"* ]]; then
-	echo "show EGS installed" > "/tmp/regataos-gcs/config/installed/show-installed-games-epic.txt"
-	echo "show installed" > "/tmp/regataos-gcs/config/installed/show-installed-games-epic.txt"
-else
-	rm -f "/tmp/regataos-gcs/config/installed/show-installed-games-epic.txt"
-	if [[ $(echo $verifyGameInstallJson) != *"json"* ]]; then
-		rm -f "/tmp/regataos-gcs/config/installed/show-installed-games.txt"
-	fi
-fi

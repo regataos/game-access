@@ -6,7 +6,6 @@ function show_confirmbox_installation() {
 		if (!err) {
 			const launcher = fs.readFileSync("/tmp/regataos-gcs/confirm-installation", "utf8");
 			const launchername = launcher.replace(/(\r\n|\n|\r)/gm, "");
-			console.log("teste: " + launchername)
 
 			$('.' + launchername + '-install').css('display', 'block')
 			window[('confirm_' + launchername + '_installation')]();
@@ -47,7 +46,6 @@ function install_launcher() {
 
 		function checkInstallation() {
 			if (!fs.existsSync(`/tmp/regataos-gcs/installing-${launchername}`)) {
-				check_installed_launchers();
 				clearInterval(checkInstallationTime);
 			}
 		}
@@ -95,13 +93,11 @@ function show_confirmbox_uninstall_game_epicstore() {
 // Remove user account
 function show_remove_user_account() {
 	const fs = require('fs');
-
-	fs.access("/tmp/regataos-gcs/remove-user-account-epicstore.txt", (err) => {
-		if (!err) {
-			$('.remove-user-account').css('display', 'block')
-			return;
-		}
-	});
+	const removeUserAccountFile = "/tmp/regataos-gcs/remove-user-account-epicstore.txt";
+	if (fs.existsSync(removeUserAccountFile)) {
+		handleCssClass("add", "show-element", "remove-user-account");
+		return;
+	}
 }
 
 setInterval(function () {
@@ -276,14 +272,6 @@ function default_folder() {
 
 // Uninstall game from Epic Games Store
 function start_uninstall_epicstore_game() {
-	// If necessary, reload the page
-	const iframeurl = document.getElementById("iframegcs").contentWindow.location.href;
-	if (((iframeurl.indexOf("search.html") > -1) == "1") ||
-		((iframeurl.indexOf("allgames.html") > -1) == "1")) {
-		fs.writeFileSync("/tmp/regataos-gcs/reload-page.txt", "reload");
-	}
-
-	// Remove game
 	const exec = require('child_process').exec;
 	const command_line = '/opt/regataos-gcs/scripts/remove/scripts-remove/uninstall-game-epicstore/uninstall-epicstore-game.sh';
 	exec(command_line, function (error, call, errlog) {
@@ -304,14 +292,6 @@ function cancel_uninstall_epicstore_game() {
 
 // Uninstall game from GOG Galaxy
 function start_uninstall_gog_game() {
-	// If necessary, reload the page
-	const iframeurl = document.getElementById("iframegcs").contentWindow.location.href;
-	if (((iframeurl.indexOf("search.html") > -1) == "1") ||
-		((iframeurl.indexOf("allgames.html") > -1) == "1")) {
-		fs.writeFileSync("/tmp/regataos-gcs/reload-page.txt", "reload");
-	}
-
-	// Remove game
 	const exec = require('child_process').exec;
 	const command_line = '/opt/regataos-gcs/scripts/action-games/remove-game';
 	exec(command_line, function (error, call, errlog) {

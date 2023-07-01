@@ -9,6 +9,8 @@
 	<script type="text/javascript" src="js/jquery.min.js"></script>
 	<script type="text/javascript" src="js/fas-icons.js"></script>
 	<script type="text/javascript" src="js/update-css.js"></script>
+	<script type="text/javascript" src="js/js-pages/universal-functions/reload-page.js"></script>
+	<script type="text/javascript" src="js/js-pages/universal-functions/run-shell-script.js"></script>
 	<script type="text/javascript" src="js/index.js"></script>
 	<script type="text/javascript" src="js/go-pagesfile.js"></script>
 	<script type="text/javascript" src="js/js-pages/highlighting-pages.js"></script>
@@ -17,10 +19,9 @@
 	<script type="text/javascript" src="js/open-launcher-folder.js"></script>
 	<script type="text/javascript" src="js/translations/language/confirm-box.js"></script>
 	<script type="text/javascript" src="js/translations/language/index-lang.js"></script>
-	<script type="text/javascript" src="js/js-pages/check-installed-launcher.js"></script>
+	<script type="text/javascript" src="js/check-installed-launcher.js"></script>
 	<script type="text/javascript" src="js/js-pages/confirm-box-uninstall.js"></script>
 	<script type="text/javascript" src="js/js-pages/action-launchers.js"></script>
-	<script type="text/javascript" src="js/js-pages/remove-account.js"></script>
 	<script type="text/javascript" src="js/confirm-cancel-installation.js"></script>
 	<script type="text/javascript" src="js/confirm-installation.js"></script>
 	<script type="text/javascript" src="js/confirm-uninstall.js"></script>
@@ -170,7 +171,7 @@
 <script type="text/javascript" src="js/search.js"></script>
 </div>
 
-	<iframe onload="check_installed_launchers();" src="pages/home.html" frameborder="0" class="iframe_gcs" id="iframegcs"></iframe>
+	<iframe onload="checkInstalledLaunchers();" src="pages/home.html" frameborder="0" class="iframe_gcs" id="iframegcs"></iframe>
 
     <script>
 		const gui = require('nw.gui');

@@ -34,11 +34,6 @@ const fs = require('fs');
 	});
 
 	cancel_uninstall();
-
-	setTimeout(() => {
-		$(".block-" + launchername).css("display", "none");
-		$("div#block-home").css("display", "block");
-	}, "300");
 }
 
 setInterval(function() {

@@ -54,6 +54,7 @@ installation_path="$GAME_PATH"
 	fi
 
 	echo "show installed games" >"/tmp/regataos-gcs/config/installed/show-installed-games-epic.txt"
+	echo "show installed games" >"/tmp/regataos-gcs/config/installed/show-installed-games.txt"
 
 ) | env GTK_THEME=Adwaita:dark zenity --progress --pulsate --width 450 --window-icon "/usr/share/pixmaps/regataos-gcs.png" \
 	--title "Regata OS Game Access" \
@@ -63,3 +64,9 @@ installation_path="$GAME_PATH"
 # Notify
 notify-send -i regataos-gcs -u normal -a 'Regata OS Game Access' \
 	"$game_name imported successfully!" "$game_name was imported successfully."
+
+# Check UI status
+file_status="/tmp/regataos-gcs/config/file-status.txt"
+echo "rearrange game blocks" > "$file_status"
+sleep 2
+echo "rearrange game blocks" > "$file_status"

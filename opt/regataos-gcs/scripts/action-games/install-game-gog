@@ -72,3 +72,7 @@ fi
 
 # Run game
 (env $GAMEVAR gamemoderun wine "$PREFIX_LOCATION/dosdevices/c:/Program Files (x86)/GOG Galaxy/GalaxyClient.exe" /runWithoutUpdating /deelevated /command=launch /gameId=$gameid /path="") 2>&1 | tee $LOG_FILE
+
+# Check UI status
+file_status="/tmp/regataos-gcs/config/file-status.txt"
+echo "rearrange game blocks" > "$file_status"

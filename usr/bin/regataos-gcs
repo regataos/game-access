@@ -37,6 +37,9 @@ if test -e "$HOME/.config/regataos-gcs/external-games-folder.txt"; then
 	fi
 fi
 
+# File status
+echo "inactive" > "/tmp/regataos-gcs/config/file-status.txt"
+
 # Copy the Mangohud configuration file
 if test ! -e "$HOME/.config/MangoHud"; then
 	mkdir -p "$HOME/.config/MangoHud"

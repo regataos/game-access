@@ -1,15 +1,3 @@
-// Reload page
-function reloadPage() {
-	setTimeout(function () {
-		const fs = require("fs");
-		const reloadFilePath = "/tmp/regataos-gcs/reload-page.txt";
-		if (fs.existsSync(reloadFilePath)) {
-			location.reload();
-			fs.unlinkSync(reloadFilePath);
-		}
-	}, 10000);
-}
-
 // For search page
 function listSearchedGames(gameNickname, launcherNickname, jsonDefaultDir) {
 	const fs = require("fs");
@@ -28,7 +16,6 @@ function listSearchedGames(gameNickname, launcherNickname, jsonDefaultDir) {
 	const games = JSON.parse(data);
 
 	// Define some variables in advance
-	let gameBanner = "";
 	let installGame = "";
 	let runGame = "";
 	let specialButtonFunction = "";
@@ -37,30 +24,10 @@ function listSearchedGames(gameNickname, launcherNickname, jsonDefaultDir) {
 	let gameAccess = "";
 
 	// Dynamically create search results
-	const allBlocks = document.querySelector("div.blocks4");
+	const allBlocks = document.querySelector("#account-games");
 
-	games.forEach(gamesdata => {
-		// Set default image directory
-		defaultImageDirectory = `./../images/games-backg/${gamesdata.launchernickname}`;
-
-		// Set game image
-		function getGameBannerUrl(filedirectory, filename) {
-			const extensions = ["jpg", "png", "webp", "jfif"];
-			for (const extension of extensions) {
-				const imagePath = `${filedirectory}/${filename}`;
-				const imagePathExtension = `${imagePath}.${extension}`;
-
-				if (fs.existsSync(imagePath)) {
-					return `url('file://${imagePath}')`;
-				}
-
-				if (fs.existsSync(imagePathExtension)) {
-					return `url('file://${imagePathExtension}')`;
-				}
-			}
-
-			return false;
-		}
+	for (let i = 0; i < games.length; i++) {
+		let gamesdata = games[i];
 
 		// Set some default settings
 		if (gamesdata.launchernickname.includes("gcs")) {
@@ -68,34 +35,18 @@ function listSearchedGames(gameNickname, launcherNickname, jsonDefaultDir) {
 			runGame = "runGameId()";
 			specialButtonFunction = "goGamePageId()";
 
-			gameBanner = `url('${defaultImageDirectory}/${gamesdata.gamenickname}.jpg')`;
-
 		} else if (gamesdata.launchernickname.includes("steam")) {
 			installGame = runGame = `run_${gamesdata.launchernickname}_game()`;
-
-			const steamImg = `/tmp/regataos-gcs/config/${gamesdata.launchernickname}-games/img`
-			gameBanner = getGameBannerUrl(steamImg, gamesdata.gamenickname);
 
 		} else if ((gamesdata.launchernickname.includes("gog")) ||
 			(gamesdata.launchernickname.includes("epicstore"))) {
 			installGame = `install_${gamesdata.launchernickname}_game()`;
 			runGame = `run_${gamesdata.launchernickname}_game()`;
 			specialButtonFunction = `uninstall_${gamesdata.launchernickname}_game()`;
-
-			const imgDir = `/tmp/regataos-gcs/config/${gamesdata.launchernickname}-games/img`
-			gameBanner = getGameBannerUrl(imgDir, gamesdata.gamenickname);
-
-			if (!gameBanner) {
-				if (gamesdata.launchernickname.includes("epicstore")) {
-					gameBanner = `url('${gamesdata.game_img1}')`;
-				} else {
-					gameBanner = `url('${defaultImageDirectory}/${gamesdata.gamenickname}.jpg')`;
-				}
-			}
-
-		} else {
-			gameBanner = `url('${defaultImageDirectory}/${gamesdata.gamenickname}.jpg')`;
 		}
+
+		// Set the game image
+		const gameBanner = getGamesImagePath(gamesdata.launchernickname, gamesdata.gamenickname, gamesdata.game_img1);
 
 		// Set game plataform
 		if (gamesdata.launchernickname.includes("steam")) {
@@ -116,7 +67,7 @@ function listSearchedGames(gameNickname, launcherNickname, jsonDefaultDir) {
 			fs.existsSync(`${installedGamesJsonFiles}/${gamesdata.gamenickname}.json`)) {
 			if (gamesdata.launchernickname.includes("epicstore") || gamesdata.launchernickname.includes("gog")) {
 				specialButtonHtml = `
-				<div title="Desinstalar jogo" class="remove-game-button" onclick="window.game_for_remove='${gamesdata.gamenickname}'; ${specialButtonFunction}; reloadPage();">
+				<div title="Desinstalar jogo" class="remove-game-button" onclick="window.game_for_remove='${gamesdata.gamenickname}'; ${specialButtonFunction};">
 				  <i class="fas fa-trash-alt"></i>
 				</div>`;
 			}
@@ -132,21 +83,20 @@ function listSearchedGames(gameNickname, launcherNickname, jsonDefaultDir) {
 		const buttonId = gamesdata.gamenickname;
 		const buttonClass = isInstalled ? "play-box-universal" : "install-box-universal";
 		const buttonIconClass = isInstalled ? "fas fa-play" : "fas fa-download";
+		const buttonTextClass = isInstalled ? "play" : "install";
 		const buttonText = isInstalled ? "Jogar" : "Instalar";
 
 		const playInstallButton = `
 		<div id="${buttonId}" class="${buttonClass}" onclick="window.gameId=this.id; ${isInstalled ? runGame : installGame};">
 			<div class="play-button">
 				<i class="${buttonIconClass}"></i>
-				<div class="install-txt">${buttonText}</div>
+				<div class="${buttonTextClass}-txt">${buttonText}</div>
 			</div>
 		</div>`;
 
 		// Create game blocks
 		const newGameBlocks = document.createElement("div");
 		newGameBlocks.classList.add("app-block", `${gamesdata.launchernickname}-block"`, `${gamesdata.gamenickname}-block`, gamesdata.gamenickname);
-		newGameBlocks.style.backgroundImage = `url('./../images/games-backg/steam/steam.jpg')`;
-
 		newGameBlocks.innerHTML = `
 		<div class="game-img" style="background-image: ${gameBanner}"></div>
 		<div class="block-play ${gamesdata.gamenickname}-hover">
@@ -164,7 +114,7 @@ function listSearchedGames(gameNickname, launcherNickname, jsonDefaultDir) {
 
 		allBlocks.appendChild(newGameBlocks);
 		pagesBlocksLang();
-	})
+	}
 	return;
 }
 
@@ -185,6 +135,7 @@ function search() {
 	if (readKeyword.length >= 2) {
 		const jsonDefaultDir = "/opt/regataos-gcs/games-list"
 		const jsonFiles = fs.readdirSync(jsonDefaultDir);
+		let contentBrake = 0;
 
 		for (let i = 0; i < jsonFiles.length; i++) {
 			const gameInfo = fs.readFileSync(`${jsonDefaultDir}/${jsonFiles[i]}`, "utf8");
@@ -195,8 +146,18 @@ function search() {
 
 				if (gameKeywords && (gameKeywords.includes(readKeyword) ||
 					readKeyword.includes(game.gamekeywords.pt))) {
-					listSearchedGames(game.gamenickname, game.launchernickname, jsonDefaultDir);
 					showElements(["title-top", "display-search-keyword"]);
+
+					if (contentBrake >= 16) {
+						return;
+					} else {
+						const allBlocks = document.querySelector("#account-games");
+						const searchResult = allBlocks.querySelector(`div.${game.gamenickname}-block`);
+						if (searchResult == null) {
+							contentBrake = contentBrake + 1;
+							listSearchedGames(game.gamenickname, game.launchernickname, jsonDefaultDir);
+						}
+					}
 				}
 			});
 		}
@@ -204,8 +165,15 @@ function search() {
 		// If no results were found, display unsuccessful search message
 		const noResults = document.querySelector(".app-block");
 		if (!noResults) {
-			showElements(["noresultsfound", "blocks4"]);
+			showElements(["noresultsfound", "search-results"]);
 		}
 	}
 }
 search();
+
+// Load more games when the user scrolls to the end of the page.
+$(window).scroll(function () {
+	if ($(document).height() == $(window).scrollTop() + $(window).height()) {
+		search();
+	}
+});

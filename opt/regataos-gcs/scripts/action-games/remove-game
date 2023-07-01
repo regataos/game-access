@@ -16,6 +16,10 @@ function remove_game() {
         --title "Regata OS Game Access" --text "$zenity_text" --auto-close --auto-kill --no-cancel
 
         notify-send -i regataos-gcs -u normal -a 'Regata OS Game Access' "$notify_text1" "$notify_text2"
+
+        # Check UI status
+        file_status="/tmp/regataos-gcs/config/file-status.txt"
+        echo "rearrange game blocks" > "$file_status"
     fi
 }
 

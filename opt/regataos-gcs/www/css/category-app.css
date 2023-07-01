@@ -20,13 +20,18 @@ div.universal-title {
 	transition: all .2s ease-in-out;
 }
 
-div.universal-account-title {
+.universal-account-title {
+	display: block;
 	float: none;
 	width: 95%;
 	margin-top: 100px;
 	margin-left: auto;
 	margin-right: auto;
 	transition: all .2s ease-in-out;
+}
+
+.account-title-epicstore {
+	display: none;
 }
 
 .display-search-keyword {
@@ -40,6 +45,7 @@ div.universal-account-title {
     margin-top: 97px;
     margin-right: 10px;
     margin-bottom: 0px;
+	z-index: 1000;
 }
 
 .view-more {
@@ -77,7 +83,6 @@ div.universal-account-title {
 }
 
 .universal-login {
-	display: none;
 	position: relative;
 	float: left;
 	font-family: Roboto;
@@ -174,19 +179,11 @@ div.universal-account-title {
     transition: all 0.3s ease-in-out;
 }
 
-.blocks3 {
-    position: relative;
-	display: grid;
-    grid-template-columns: auto auto auto auto auto auto;
-	width: 95%;
-	margin-left: auto;
-    margin-right: auto;
-    -webkit-transition: all 0.3s ease-in-out;
-    transition: all 0.3s ease-in-out;
-}
-
 .list-config-options {
 	display: block;
+    width: 95%;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .title-top-box {
@@ -258,8 +255,8 @@ div.universal-account-title {
     animation-duration: .5s;
 }
 
-.blocks4 {
-	position: relative;
+#account-games, #installed-games {
+    position: relative;
     display: grid;
     grid-template-columns: auto auto auto auto auto auto;
     width: 95%;
@@ -269,15 +266,8 @@ div.universal-account-title {
     transition: all 0.3s ease-in-out;
 }
 
-.inner-blocks {
-    position: relative;
-    display: grid;
-    grid-template-columns: auto auto auto auto auto auto;
-    width: 95%;
-    margin-left: auto;
-    margin-right: auto;
-    -webkit-transition: all 0.3s ease-in-out;
-    transition: all 0.3s ease-in-out;
+.list-account-games, .list-installed-games {
+	display: none;
 }
 
 .app-block {
@@ -317,10 +307,6 @@ div.universal-account-title {
 .universal-installed-title {
 	display: none;
 	transition: all .4s ease-in-out;
-}
-
-.universal-account-title {
-	display: none;
 }
 
 .app-block-universal {
@@ -370,27 +356,6 @@ div.universal-account-title {
     border-bottom-right-radius: 5px;
 }
 
-.block-text-universal {
-	position: absolute;
-	bottom: 0;
-    left: 0;
-	width: 100%;
-	height: 85px;
-	box-sizing: border-box;
-	background-color: rgb(4, 4, 4, 0.37);
-	background-image: url(./../images/games-backg/steam/steam.jpg);
-    background-position: 50% 50%;
-    background-size: cover;
-    background-repeat: no-repeat;
-	padding: 15px;
-	border-bottom-left-radius: 5px;
-    border-bottom-right-radius: 5px;
-}
-
-.block-text-universal:hover > .block-play-universal {
-	opacity: 1 !important;
-}
-
 .block-title {
 	width: 100%;
     float: left;
@@ -407,10 +372,6 @@ div.universal-account-title {
 	margin-bottom: 5px;
 }
 
-.block-text-universal .block-title {
-	margin-bottom: 5px;
-}
-
 .block-desc {
 	position: absolute;
     bottom: 0px;
@@ -422,10 +383,6 @@ div.universal-account-title {
 	margin-top: 0px;
 	margin-left: 0px;
     padding-bottom: 15px;
-}
-
-.block-text-universal .block-desc {
-	margin-top: 5px;
 }
 
 .native-game {
@@ -519,11 +476,11 @@ div.universal-account-title {
 }
 
 #epicstore-buttons {
-	width: 100%;
 	position: relative;
 	display: none;
 	justify-content: center;
 	align-items: center;
+	width: 100%;
 	grid-template-columns: auto auto;
 	margin-top: 280px;
 }
@@ -750,6 +707,40 @@ div.universal-account-title {
 
 .fa-plus:active {
     font-size: 18px;
+}
+
+.body-page {
+	background-image: url();
+}
+
+.body-epic-img {
+	background-image: url('./../images/games-backg/epicstore/epicstore-backg.jpg');
+}
+
+.show-element {
+	display: block !important;
+}
+
+.grid-element {
+	display: grid !important;
+}
+
+.hide-element {
+	display: none;
+}
+
+.show-games {
+	display: grid !important;
+	min-height: 280px;
+}
+
+.show-title-games-available {
+	display: block !important;
+	margin-top: 100px;
+}
+
+.title-games-available-min {
+	margin-top: 25px;
 }
 
 /* Responsive CSS */
