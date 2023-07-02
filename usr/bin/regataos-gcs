@@ -137,7 +137,7 @@ else
 fi
 
 # Run Game Access app
-/opt/regataos-gcs/scripts/search-installeds &
+/opt/regataos-gcs/scripts/search-installeds -search &
 $run_gcs &
 /bin/bash /opt/regataos-gcs/scripts/check-support-amd-fsr.sh &
 legendary_egl_sync &

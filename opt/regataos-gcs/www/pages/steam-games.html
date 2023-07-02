@@ -11,9 +11,9 @@
 	<script type="text/javascript" src="./../js/jquery.min.js"></script>
 	<script type="text/javascript" src="./../js/fas-icons.js"></script>
 	<script type="text/javascript" src="./../js/js-pages/universal-functions/get-games-image-path.js"></script>
+	<script type="text/javascript" src="./../js/js-pages/universal-functions/run-shell-script.js"></script>
 	<script type="text/javascript" src="./../js/js-pages/universal-functions/reload-page.js"></script>
 	<script type="text/javascript" src="./../js/js-pages/action-launchers.js"></script>
-	<script type="text/javascript" src="./../js/js-pages/action-games.js"></script>
 	<script type="text/javascript" src="./../js/translations/language/pages-lang.js"></script>
 	<script type="text/javascript" src="./../js/translations/language/pages-blocks-lang.js"></script>
 </head>
@@ -27,11 +27,14 @@
 		</div>
 
 		<div class="blocks3-universal">
-			<div id="universal-installed" class="inner-blocks universal-installed-games"></div>
+			<div id="installed-games" class="list-installed-games"></div>
+
 			<div class="title-top universal-account-title account-title-steam">Disponíveis na sua conta Steam</div>
-			<div id="universal-account" class="inner-blocks universal-all-games"></div>
+			<div id="account-games" class="list-account-games"></div>
 		</div>
 		<!-- Check Steam Games -->
+		<script type="text/javascript" src="./../js/js-pages/games-list.js"></script>
+		<script type="text/javascript" src="./../js/js-pages/action-games.js"></script>
 		<script type="text/javascript" src="./../js/js-pages/steam-games-list.js"></script>
 	</div>
 </div>

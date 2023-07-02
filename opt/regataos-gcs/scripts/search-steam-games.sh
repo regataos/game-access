@@ -114,7 +114,7 @@ else
 		fi
 
 		# Verify that the JSON file has the information Game Access needs
-		if [[ $(grep -r "appid" "/tmp/regataos-gcs/config/steam-games/json/steam-id/$steam_games.json") != *"appid"* ]]; then
+		if [[ $(grep -r "appid" "/tmp/regataos-gcs/config/steam-games/json/steam-id/$steam_games.json") == *"appid"* ]]; then
 			steam_games_status="account games"
 		fi
 	fi
