@@ -59,7 +59,7 @@ $('input[id="add-external-games-folder"]').change(function(e){
 	echo "${path}" > "/tmp/regataos-gcs/config/external-games-folder.txt"; \
 	rm -rf "$HOME/Game Access/External-Disc"; \
 	ln -sf "${path}" "$HOME/Game Access/External-Disc"; \
-	/opt/regataos-gcs/scripts/search-installeds start`;
+	/opt/regataos-gcs/scripts/search-installeds -search`;
 	exec(create_external_games_folder_file,function(error,call,errlog){
 	});
 
@@ -87,7 +87,7 @@ function remove_external_games_folder() {
 	}, 1000);
 
 	const exec = require('child_process').exec;
-	const search_games = `/opt/regataos-gcs/scripts/search-installeds start`;
+	const search_games = `/opt/regataos-gcs/scripts/search-installeds -search`;
 	exec(search_games,function(error,call,errlog){
 	});
 }

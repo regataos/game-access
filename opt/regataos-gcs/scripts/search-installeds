@@ -1,14 +1,16 @@
 #!/bin/bash
 
 # Search for installed games
+sleepTime="$2"
 function search_installeds() {
-	sleep 5
+	if [ ! -z "$sleepTime" ];then
+		sleep $sleepTime
+	fi
 
-	/bin/bash /opt/regataos-gcs/scripts/search-installed-games.sh & \
-	/bin/bash /opt/regataos-gcs/scripts/search-steam-games.sh & \
-	/bin/bash /opt/regataos-gcs/scripts/search-gog-games.sh & \
-	/bin/bash /opt/regataos-gcs/scripts/search-installed-games-gog.sh & \
-	/bin/bash /opt/regataos-gcs/scripts/search-epicstore-games.sh &
+	/bin/bash /opt/regataos-gcs/scripts/search-epicstore-games.sh
+	/bin/bash /opt/regataos-gcs/scripts/search-gog-games.sh
+	/bin/bash /opt/regataos-gcs/scripts/search-installed-games-gog.sh
+	/bin/bash /opt/regataos-gcs/scripts/search-installed-games.sh &
 
 	# Capture the games installation folder from the Epic Games Store
 	if test -e "/tmp/progressbar-gcs/download-percentage-legendary"; then
@@ -27,29 +29,53 @@ function detect_games() {
 	check_installed_games=$(ls $directory_installed_json/)
 
 	if [[ $(echo $check_installed_games) == *".json"* ]]; then
-		echo "Show installed games" > "$directory_installed_json/show-installed-games.txt"
-
-		if [[ $(echo $check_installed_games) == *"epicstore.json"* ]]; then
-			echo "show EGS installed" > "$directory_installed_json/show-installed-games-epic.txt"
-
-		elif [[ $(echo $check_installed_games) == *"steam.json"* ]]; then
-			echo "show Steam installed" > "$directory_installed_json/show-installed-games-steam.txt"
-
-		else
-			rm -f "$directory_installed_json/show-installed-games-epic.txt"
-		fi
-
+		echo "Show installed games!" > "$directory_installed_json/show-installed-games.txt"
 	else 
 		rm -f "$directory_installed_json/show-installed-games.txt"
 	fi
+
+	if [[ $(echo $check_installed_games) == *"epicstore.json"* ]]; then
+		alert="Show EGS installed!"
+		echo "$alert" > "$directory_installed_json/show-installed-games-epic.txt"
+	else
+		rm -f "$directory_installed_json/show-installed-games-epic.txt"
+	fi
+
+	if [[ $(echo $check_installed_games) == *"steam.json"* ]]; then
+		alert="Show Steam installed!"
+		echo "$alert" > "$directory_installed_json/show-installed-games-steam.txt"
+	else
+		rm -f "$directory_installed_json/show-installed-games-steam.txt"
+	fi
+}
+
+detect_games_loop() {
+	search_installeds &
+
+	while :
+	do
+		# Check if the Regata OS Game Access is running
+		ps -C "regataosgcs" > /dev/null
+		if [ $? = 0 ]; then
+			/bin/bash /opt/regataos-gcs/scripts/search-steam-games.sh & \
+			detect_games
+		else
+			echo "Nothing to do..."
+			break
+		fi
+
+		sleep 10
+	done
 }
 
 case $1 in
    "-search") detect_games && search_installeds
         ;;
-   "--detect") detect_games
+   "-detect") detect_games
         ;;
+   "-detect-in-loop") detect_games_loop
+		;;
    *) echo "Invalid option!"
-      exit 1
-      ;;
+		exit 1
+		;;
 esac

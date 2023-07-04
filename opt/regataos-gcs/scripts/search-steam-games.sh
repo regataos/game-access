@@ -43,9 +43,14 @@ function search_installed_games() {
 						game_name=$(echo "$check_content" | tr 'A-Z' 'a-z' | sed 's/: \|- \|(\|)\|, \|™\|\.//g')
 						game_name=$(echo $game_name | sed 's/-//g' | sed 's/ /-/g')
 
-						if test -e "/tmp/regataos-gcs/config/steam-games/json/games/$game_name-steam.json"; then
-							cp -f "/tmp/regataos-gcs/config/steam-games/json/games/$game_name-steam.json" \
-							"/tmp/regataos-gcs/config/installed/$game_name-steam.json"
+						if test -e "/tmp/regataos-gcs/config/installed/$game_name-steam.json" && \
+						test ! -e "/tmp/regataos-gcs/config/steam-games/json/games/$game_name-steam.json"; then
+							rm -f "/tmp/regataos-gcs/config/installed/$game_name-steam.json"
+						else
+							if test -e "/tmp/regataos-gcs/config/steam-games/json/games/$game_name-steam.json"; then
+								cp -f "/tmp/regataos-gcs/config/steam-games/json/games/$game_name-steam.json" \
+								"/tmp/regataos-gcs/config/installed/$game_name-steam.json"
+							fi
 						fi
 					fi
 				done
@@ -63,6 +68,10 @@ if test -e "$config_file"; then
 
 	if [ ! -z $check_steam_id ];then
 		if test ! -e "$user_id_dir/$check_steam_id.json"; then
+			rm -f "$user_id_dir/"*
+			rm -f "/tmp/regataos-gcs/config/steam-games/json/games/"*
+			rm -f "/opt/regataos-gcs/games-list/"*-steam.json
+
 			wget --no-check-certificate -O "$user_id_dir/$check_steam_id.json" "$user_games_link"
 		fi
 
@@ -74,7 +83,16 @@ if test -e "$config_file"; then
 				echo "show steam games" > "/tmp/regataos-gcs/config/steam-games/show-menu-steam.txt"
 			fi
 
+			# Check for installed or downloaded games.
 			search_installed_games
+
+			if [[ $(ls "/tmp/regataos-gcs/config/installed/") == *"steam.json"* ]]; then
+				echo "Show Steam installed!" > "/tmp/regataos-gcs/config/installed/show-installed-games-steam.txt"
+			else
+				rm -f "/tmp/regataos-gcs/config/installed/show-installed-games-steam.txt"
+			fi
+
+			echo "rearrange game blocks" > "/tmp/regataos-gcs/config/file-status.txt"
 
 		else
 			echo "No Steam games" > "/tmp/regataos-gcs/config/steam-games/no-steam-games.txt"

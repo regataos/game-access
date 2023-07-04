@@ -81,7 +81,7 @@ function listAllGames(specifyLauncher, contentBrake) {
 
 					// Generate game block.
 					const newGameBlock = document.createElement("div");
-					newGameBlock.classList.add("app-block", `${launchernickname}-block"`, `${gamenickname}-block`, gamenickname);
+					newGameBlock.classList.add("app-block", `${launchernickname}-block`, `${gamenickname}-block`, gamenickname);
 					newGameBlock.innerHTML = `
 						<div class="game-img" style="background-image: ${gameBanner}"></div>
 						<div class="block-play ${gamenickname}-hover">
@@ -116,7 +116,7 @@ function listAllGames(specifyLauncher, contentBrake) {
 												</div>
 											</div>`;
 
-										newGameBlock.classList.add("app-block", "hide-element", `${launchernickname}-block"`, `${gamenickname}-block`, gamenickname);
+										newGameBlock.classList.add("app-block", "hide-element", `${launchernickname}-block`, `${gamenickname}-block`, gamenickname);
 										newGameBlock.innerHTML = `
 											<div class="game-img" style="background-image: ${gameBanner}"></div>
 											<div class="block-play ${gamenickname}-hover">

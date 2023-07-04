@@ -63,45 +63,46 @@ EPICGAMEJSON
 
 # If necessary, create the cache with game files
 for i in $HOME/.config/legendary/metadata/*.json; do
-	game_title="$(grep -R '"app_title"' $i | cut -d'"' -f 4- | cut -d'"' -f -1 | head -1 | tail -2 | sed 's|\\u00ae||g' | sed 's|\\u2122||g')"
-	game_name="$(grep -R '"app_name"' $i | cut -d'"' -f 4- | cut -d'"' -f -1 | head -1 | tail -2)"
 	categories="$(grep -R '"path": "games"' $i | cut -d'"' -f 4- | cut -d'"' -f -1 | head -1 | tail -2)"
 
-	# Capture image1 url
-	file_search1="$i"
-	search1='"DieselGameBox"'
-	line_search1=$(cat -n $file_search1 | grep -w $search1 | head -4 | tail -1 | awk '{print $1}')
-	search_result1=$(
-		qt=$(wc -l $file_search1 | awk '{print $1}')
-		sed -n ''$line_search1','$qt'p' $file_search1
-	)
-	game_img1=$(echo "$search_result1" | head -4 | grep url | cut -d'"' -f 4- | cut -d'"' -f -1)
-
-	# Capture image2 url
-	file_search2="$i"
-	search2='"DieselGameBoxLogo"'
-	line_search2=$(cat -n $file_search2 | grep -w $search2 | head -4 | tail -1 | awk '{print $1}')
-	search_result2=$(
-		qt=$(wc -l $file_search2 | awk '{print $1}')
-		sed -n ''$line_search2','$qt'p' $file_search2
-	)
-	game_img2=$(echo "$search_result2" | head -4 | grep url | cut -d'"' -f 4- | cut -d'"' -f -1)
-
-	# Game Folder
-	file_search3="$i"
-	search3='"FolderName"'
-	line_search3=$(cat -n $file_search3 | grep -w $search3 | head -1 | tail -1 | awk '{print $1}')
-	search_result3=$(
-		qt=$(wc -l $file_search3 | awk '{print $1}')
-		sed -n ''$line_search3','$qt'p' $file_search3
-	)
-	gamefolder=$(echo "$search_result3" | head -4 | grep value | cut -d'"' -f 4- | cut -d'"' -f -1)
-
-	# Make the game name lowercase
-	gamename_lowercase=$(echo "$game_title" | tr 'A-Z' 'a-z' | sed 's/[[:punct:]]\|: \|- \|(\|)\|, \|™\|+\|\.//g')
-	gamename_lowercase=$(echo "$gamename_lowercase" | sed 's/[[:space:]]/-/g' | sed "s/'//g")
-
 	if [[ $(echo $categories) == *"games"* ]]; then
+		game_title="$(grep -R '"app_title"' $i | cut -d'"' -f 4- | cut -d'"' -f -1 | head -1 | tail -2 | sed 's|\\u00ae||g' | sed 's|\\u2122||g')"
+		game_name="$(grep -R '"app_name"' $i | cut -d'"' -f 4- | cut -d'"' -f -1 | head -1 | tail -2)"
+
+		# Capture image1 url
+		file_search1="$i"
+		search1='"DieselGameBox"'
+		line_search1=$(cat -n $file_search1 | grep -w $search1 | head -4 | tail -1 | awk '{print $1}')
+		search_result1=$(
+			qt=$(wc -l $file_search1 | awk '{print $1}')
+			sed -n ''$line_search1','$qt'p' $file_search1
+		)
+		game_img1=$(echo "$search_result1" | head -4 | grep url | cut -d'"' -f 4- | cut -d'"' -f -1)
+
+		# Capture image2 url
+		file_search2="$i"
+		search2='"DieselGameBoxLogo"'
+		line_search2=$(cat -n $file_search2 | grep -w $search2 | head -4 | tail -1 | awk '{print $1}')
+		search_result2=$(
+			qt=$(wc -l $file_search2 | awk '{print $1}')
+			sed -n ''$line_search2','$qt'p' $file_search2
+		)
+		game_img2=$(echo "$search_result2" | head -4 | grep url | cut -d'"' -f 4- | cut -d'"' -f -1)
+
+		# Game Folder
+		file_search3="$i"
+		search3='"FolderName"'
+		line_search3=$(cat -n $file_search3 | grep -w $search3 | head -1 | tail -1 | awk '{print $1}')
+		search_result3=$(
+			qt=$(wc -l $file_search3 | awk '{print $1}')
+			sed -n ''$line_search3','$qt'p' $file_search3
+		)
+		gamefolder=$(echo "$search_result3" | head -4 | grep value | cut -d'"' -f 4- | cut -d'"' -f -1)
+
+		# Make the game name lowercase
+		gamename_lowercase=$(echo "$game_title" | tr 'A-Z' 'a-z' | sed 's/[[:punct:]]\|: \|- \|(\|)\|, \|™\|+\|\.//g')
+		gamename_lowercase=$(echo "$gamename_lowercase" | sed 's/[[:space:]]/-/g' | sed "s/'//g")
+
 		# Download game image
 		image_type=$(echo $game_img1 | cut -d'.' -f 4-)
 		if [ -z $image_type ]; then

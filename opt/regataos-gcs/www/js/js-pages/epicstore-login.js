@@ -46,14 +46,14 @@ function hideLoginScreen() {
 		if (fs.existsSync(showInstalledGamesFile)) {
 			handleCssClass("add", "show-element", "universal-installed-title");
 			handleCssClass("add", "show-games", "list-installed-games");
-			handleCssClass("add", "title-games-available-min", "account-title-epicstore");
+			handleCssClass("add", "title-games-available-min", "universal-account-title");
 		} else {
-			handleCssClass("remove", "title-games-available-min", "account-title-epicstore");
+			handleCssClass("remove", "title-games-available-min", "universal-account-title");
 			handleCssClass("remove", "show-element", "universal-installed-title");
 			handleCssClass("remove", "show-games", "list-installed-games");
 		}
 
-		handleCssClass("add", "show-title-games-available", "account-title-epicstore");
+		handleCssClass("add", "show-title-games-available", "universal-account-title");
 		handleCssClass("add", "show-element", ["page-buttons", "blocks3-universal"]);
 		handleCssClass("remove", "hide-element", ["page-buttons", "blocks3-universal"]);
 		handleCssClass("remove", "body-epic-background", "body-page");
@@ -80,8 +80,8 @@ function hideLoginScreen() {
 		}
 
 		sessionStorage.setItem("loaded", "false");
-		handleCssClass("remove", "show-title-games-available", "account-title-epicstore");
-		handleCssClass("remove", "title-games-available-min", "account-title-epicstore");
+		handleCssClass("remove", "show-title-games-available", "universal-account-title");
+		handleCssClass("remove", "title-games-available-min", "universal-account-title");
 		handleCssClass("remove", "show-element", ["page-buttons", "blocks3-universal", "universal-installed-title"]);
 		handleCssClass("add", "hide-element", ["page-buttons", "blocks3-universal"]);
 		handleCssClass("remove", "show-games", ["list-installed-games", "list-account-games"]);
@@ -109,17 +109,9 @@ function checkUiChanges() {
 	}
 	resetInterfaceStatus();
 
-	// Detect installed games
-	function detectInstalled() {
-		const commandLine = "/opt/regataos-gcs/scripts/search-installeds --detect";
-		runShellScript(commandLine)
-	}
-
 	fs.watch(fileStatus, (eventType, filename) => {
 		interfaceStatus = fs.readFileSync(fileStatus, "utf8");
 		if (interfaceStatus.includes("rearrange game blocks")) {
-			detectInstalled();
-
 			setTimeout(function () {
 				hideLoginScreen();
 				listAllGames(urlPage, 16);
@@ -127,7 +119,6 @@ function checkUiChanges() {
 			}, 2000);
 
 		} else if (interfaceStatus.includes("user account change")) {
-			detectInstalled();
 			hideLoginScreenInterval = setInterval(hideLoginScreen, 1000);
 		}
 	});
