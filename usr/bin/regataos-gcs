@@ -67,7 +67,6 @@ fi
 rm -f "/tmp/regataos-gcs/run-regataos-gcs.txt"
 
 # Clear cache
-rm -f /tmp/regataos-gcs/config/steam-games/json/steam-id/*
 rm -f "/tmp/regataos-gcs/config/gog-games/games-folders2.txt"
 
 # Set up the desktop location for Wine

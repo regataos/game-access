@@ -30,18 +30,20 @@ window.onmessage = function (e) {
 	}
 };
 
-// When user login with Epic Games Store account, hide login screen and display game tiles
-let hideLoginScreenInterval = "";
+// Check if the user is logged in and if the games available in the Epic Games Store 
+// account should be displayed on the screen.
 function hideLoginScreen() {
 	const fs = require("fs");
 
-	if (fs.existsSync("/tmp/regataos-gcs/config/epicstore-games/show-egs.txt")) {
+	function showGameBlocks() {
+		const showInstalledGamesFile = "/tmp/regataos-gcs/config/installed/show-installed-games-epic.txt";
+
 		handleCssClass("add", "show-games", "list-account-games");
 		handleCssClass("add", "hide-element", ["loading", "loading-games", "epicstore-login"]);
 		handleCssClass("remove", "grid-element", "epicstore-login");
 		handleCssClass("remove", "show-element", ["loading", "loading-games"]);
 
-		if (fs.existsSync("/tmp/regataos-gcs/config/installed/show-installed-games-epic.txt")) {
+		if (fs.existsSync(showInstalledGamesFile)) {
 			handleCssClass("add", "show-element", "universal-installed-title");
 			handleCssClass("add", "show-games", "list-installed-games");
 			handleCssClass("add", "title-games-available-min", "account-title-epicstore");
@@ -62,13 +64,14 @@ function hideLoginScreen() {
 			sessionStorage.setItem("loaded", "true");
 			detectLogin();
 		}
+	}
 
-	} else {
+	let hideLoginScreenInterval = "";
+	function showLoginScreen() {
 		if (fs.existsSync('/tmp/regataos-gcs/login-id.txt')) {
 			handleCssClass("remove", "grid-element", "epicstore-login");
 			handleCssClass("remove", "body-epic-img", "body-page");
 			handleCssClass("add", "show-element", ["loading", "loading-games"]);
-
 		} else {
 			handleCssClass("add", "grid-element", "epicstore-login");
 			handleCssClass("add", "body-epic-img", "body-page");
@@ -83,6 +86,11 @@ function hideLoginScreen() {
 		handleCssClass("add", "hide-element", ["page-buttons", "blocks3-universal"]);
 		handleCssClass("remove", "show-games", ["list-installed-games", "list-account-games"]);
 	}
+
+	// Old verification method. This may be removed in the future.
+	const oldcheckUserLoginFile = "/tmp/regataos-gcs/config/epicstore-games/show-egs.txt";
+	const checkUserLogin = fs.existsSync(oldcheckUserLoginFile);
+	checkUserLogin ? showGameBlocks() : showLoginScreen();
 }
 hideLoginScreen();
 

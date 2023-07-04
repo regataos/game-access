@@ -30,12 +30,15 @@ function detect_games() {
 		echo "Show installed games" > "$directory_installed_json/show-installed-games.txt"
 
 		if [[ $(echo $check_installed_games) == *"epicstore.json"* ]]; then
-			if test ! -e "$directory_installed_json/show-installed-games-epic.txt"; then
-				echo "show EGS installed" > "$directory_installed_json/show-installed-games-epic.txt"
-			fi
+			echo "show EGS installed" > "$directory_installed_json/show-installed-games-epic.txt"
+
+		elif [[ $(echo $check_installed_games) == *"steam.json"* ]]; then
+			echo "show Steam installed" > "$directory_installed_json/show-installed-games-steam.txt"
+
 		else
 			rm -f "$directory_installed_json/show-installed-games-epic.txt"
 		fi
+
 	else 
 		rm -f "$directory_installed_json/show-installed-games.txt"
 	fi

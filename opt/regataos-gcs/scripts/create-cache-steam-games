@@ -39,5 +39,10 @@ fi
 
 #Save game image to cache
 if test ! -e "/tmp/regataos-gcs/config/steam-games/img/$gamename_lowercase.jpg"; then
-	wget --no-check-certificate -O "/tmp/regataos-gcs/config/steam-games/img/$gamename_lowercase.jpg" "https://cdn.cloudflare.steamstatic.com/steam/apps/$gameid/header.jpg"
+	wget --no-check-certificate -O "/tmp/regataos-gcs/config/steam-games/img/$gamename_lowercase.jpg" \
+	"https://cdn.cloudflare.steamstatic.com/steam/apps/$gameid/header.jpg"
+fi
+
+if [[ $(ls "/tmp/regataos-gcs/config/steam-games/json/games/") == *"steam.json"* ]]; then
+	echo "show steam games" > "/tmp/regataos-gcs/config/steam-games/show-menu-steam.txt"
 fi

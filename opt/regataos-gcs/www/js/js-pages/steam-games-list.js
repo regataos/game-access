@@ -1,188 +1,91 @@
 // Create the cache with JSON files of games available in the user's Steam account
-function create_cache_steam_games() {
-	var fs = require("fs");
+function createCacheSteamGames() {
+	const fs = require("fs");
+	const steamGameFiles = "/tmp/regataos-gcs/config/steam-games";
 
-	if (fs.existsSync('/tmp/regataos-gcs/config/steam-games/json/steam-id/show-steam-games.txt')) {
+	if (fs.existsSync(`${steamGameFiles}/json/steam-id/show-steam-games.txt`)) {
+		fs.readdirSync(`${steamGameFiles}/json/steam-id/`).forEach(jsonFile => {
+			const filePath = `${steamGameFiles}/json/steam-id/${jsonFile}`;
 
-		var files = [];
-
-		// Read JSON files with the list of games
-		fs.readdirSync("/tmp/regataos-gcs/config/steam-games/json/steam-id").forEach(files => {
-			fs.readFile("/tmp/regataos-gcs/config/steam-games/json/steam-id/" + files, "utf8", function (err, data) {
-				if (!err) {
-					var steam_games = JSON.parse(data);
-					steam_games = steam_games.response.games;
-
-					steam_games.forEach(games => {
-						// Simplify game name to create a nickname
-						let gamename_lowercase = games.name.toLowerCase();
-						gamename_lowercase = gamename_lowercase.replace(/[:-]/g, "");
-						gamename_lowercase = gamename_lowercase.replace(/[.]/g, "")
-						gamename_lowercase = gamename_lowercase.replace(/(|)/g, "")
-						gamename_lowercase = gamename_lowercase.replace(/(,)/g, "")
-						gamename_lowercase = gamename_lowercase.replace(/(>)/g, "")
-						gamename_lowercase = gamename_lowercase.replace(/(_)/g, "")
-						gamename_lowercase = gamename_lowercase.replace(/[+®]/g, "")
-						gamename_lowercase = gamename_lowercase.replace(/(&)/g, "and")
-						gamename_lowercase = gamename_lowercase.replace(/\s+/g, "-");
-						gamename_lowercase = gamename_lowercase.replace(/'|\(|\)/g, "")
-						gamename_lowercase = gamename_lowercase.replace(/[!-]/g, '');
-						gamename_lowercase = gamename_lowercase.replace(/[!?]/g, '');
-						gamename_lowercase = gamename_lowercase.replace(/(™)/g, '');
-						gamename_lowercase = gamename_lowercase.replace(/(ç)/g, 'c');
-						gamename_lowercase = gamename_lowercase.replace(/(á)|(â)|(ã)|(à)/g, 'a');
-						gamename_lowercase = gamename_lowercase.replace(/(é)|(ê)|(ẽ)/g, 'e');
-						gamename_lowercase = gamename_lowercase.replace(/(í)/g, 'i');
-						gamename_lowercase = gamename_lowercase.replace(/(ó)|(ô)|(ô)/g, 'o');
-						gamename_lowercase = gamename_lowercase.replace(/(ü)|(ú)|(û)|(ũ)/g, 'u');
-
-						// If not, create the games JSON file
-						if (!fs.existsSync('/tmp/regataos-gcs/config/steam-games/json/games/' + gamename_lowercase + '-steam.json')) {
-							// Make the request, putting the id directly in the URL, and send the return to the variable "res"
-							const https = require('https');
-							https.get(`https://store.steampowered.com/api/appdetails?appids=${games.appid}&cc=br&l=br`, (res) => {
-								let data = "";
-
-								// Take the data from the url and put it into the variable "data"
-								res.on("data", (chunk) => {
-									data += chunk;
-								});
-
-								// Convert raw content to JSON and show return
-								res.on("end", () => {
-									try {
-										let json = JSON.parse(data);
-										let game_name = json[games.appid].data.name;
-										let game_id = json[games.appid].data.steam_appid;
-										let game_type = json[games.appid].data.type;
-										let game_native = json[games.appid].data.platforms.linux;
-										let gamekeywords = gamename_lowercase.replace(/(-)/g, " ");
-
-										// Create JSON file with game information
-										const exec = require('child_process').exec;
-										var command_line = 'export game_name="' + game_name + '"; export gamename_lowercase="' + gamename_lowercase + '"; export gamekeywords="' + gamekeywords + '"; export gameid="' + game_id + '"; export gametype="' + game_type + '"; export gamenative="' + game_native + '"; /opt/regataos-gcs/scripts/create-cache-steam-games';
-										console.log(command_line);
-										exec(command_line, function (error, call, errlog) {
-										});
-
-									} catch (error) {
-										console.error(error.message);
-									};
-								});
-
-							}).on("error", (error) => {
-								// No internet or something like that, unable to make the request on the site
-								console.error(error.message);
-							});
-
-						}
-
-						if (!fs.existsSync('/tmp/regataos-gcs/config/steam-games/img/' + gamename_lowercase + '.jpg')) {
-							// Make the request, putting the id directly in the URL, and send the return to the variable "res"
-							const https = require('https');
-							https.get(`https://store.steampowered.com/api/appdetails?appids=${games.appid}&cc=br&l=br`, (res) => {
-								let data = "";
-
-								// Take the data from the url and put it into the variable "data"
-								res.on("data", (chunk) => {
-									data += chunk;
-								});
-
-								// Convert raw content to JSON and show return
-								res.on("end", () => {
-									try {
-										let json = JSON.parse(data);
-										let game_name = json[games.appid].data.name;
-										let game_id = json[games.appid].data.steam_appid;
-										let game_type = json[games.appid].data.type;
-										let game_native = json[games.appid].data.platforms.linux;
-										let gamekeywords = gamename_lowercase.replace(/(-)/g, " ");
-
-										// Create JSON file with game information
-										const exec = require('child_process').exec;
-										var command_line = 'export game_name="' + game_name + '"; export gamename_lowercase="' + gamename_lowercase + '"; export gamekeywords="' + gamekeywords + '"; export gameid="' + game_id + '"; export gametype="' + game_type + '"; export gamenative="' + game_native + '"; /opt/regataos-gcs/scripts/create-cache-steam-games';
-										console.log(command_line);
-										exec(command_line, function (error, call, errlog) {
-										});
-
-									} catch (error) {
-										console.error(error.message);
-									};
-								});
-
-							}).on("error", (error) => {
-								// No internet or something like that, unable to make the request on the site
-								console.error(error.message);
-							});
-						}
-
-						if (!fs.existsSync('/opt/regataos-gcs/games-list/' + gamename_lowercase + '-steam.json')) {
-							// Make the request, putting the id directly in the URL, and send the return to the variable "res"
-							const https = require('https');
-							https.get(`https://store.steampowered.com/api/appdetails?appids=${games.appid}&cc=br&l=br`, (res) => {
-								let data = "";
-
-								// Take the data from the url and put it into the variable "data"
-								res.on("data", (chunk) => {
-									data += chunk;
-								});
-
-								// Convert raw content to JSON and show return
-								res.on("end", () => {
-									try {
-										let json = JSON.parse(data);
-										let game_name = json[games.appid].data.name;
-										let game_id = json[games.appid].data.steam_appid;
-										let game_type = json[games.appid].data.type;
-										let game_native = json[games.appid].data.platforms.linux;
-										let gamekeywords = gamename_lowercase.replace(/(-)/g, " ");
-
-										// Create JSON file with game information
-										const exec = require('child_process').exec;
-										var command_line = 'export game_name="' + game_name + '"; export gamename_lowercase="' + gamename_lowercase + '"; export gamekeywords="' + gamekeywords + '"; export gameid="' + game_id + '"; export gametype="' + game_type + '"; export gamenative="' + game_native + '"; /opt/regataos-gcs/scripts/create-cache-steam-games';
-										exec(command_line, function (error, call, errlog) {
-										});
-
-									} catch (error) {
-										console.error(error.message);
-									};
-								});
-
-							}).on("error", (error) => {
-								// No internet or something like that, unable to make the request on the site
-								console.error(error.message);
-							});
-						}
-					})
-
-					console.log(">> remove update steam cache file")
-					fs.unlinkSync('/tmp/regataos-gcs/config/steam-games/update-cache-steam.txt')
+			fs.readFile(filePath, "utf8", (err, data) => {
+				if (err) {
+					console.error(err);
 					return;
 				}
+
+				let steamGames = JSON.parse(data);
+				steamGames = steamGames.response.games;
+
+				steamGames.forEach((games) => {
+					const gamename = games.name;
+					const appid = games.appid;
+
+					let gamenameLowercase = gamename.toLowerCase()
+						.replace(/[-:.,|>()_+®&'()!?™ç]/g, '')
+						.replace(/[áàâã]/g, 'a')
+						.replace(/[éêẽ]/g, 'e')
+						.replace(/í/g, 'i')
+						.replace(/[óôõ]/g, 'o')
+						.replace(/[üúûũ]/g, 'u');
+
+					gamenameLowercase = gamenameLowercase.replace(/\s+/g, '-');
+					console.log(gamenameLowercase);
+
+					function createGameJsonFile() {
+						const https = require('https');
+						https.get(`https://store.steampowered.com/api/appdetails?appids=${appid}&cc=br&l=br`, (res) => {
+							let data = "";
+
+							// Take the data from the url and put it into the variable "data"
+							res.on("data", (chunk) => {
+								data += chunk;
+							});
+
+							// Convert raw content to JSON and show return
+							res.on("end", () => {
+								try {
+									const gameJson = JSON.parse(data);
+									const {
+										name: game_name,
+										steam_appid: game_id,
+										type: game_type,
+										platforms: { linux: game_native }
+									} = gameJson[appid].data;
+
+									const gamekeywords = gamenameLowercase.replace(/(-)/g, " ");
+
+									// Create JSON file with game information
+									const commandLine = `
+									export game_name="${game_name}"; \
+									export gamename_lowercase="${gamenameLowercase}"; \
+									export gamekeywords="${gamekeywords}"; \
+									export gameid="${game_id}"; \
+									export gametype="${game_type}"; \
+									export gamenative="${game_native}"; \
+									/opt/regataos-gcs/scripts/create-cache-steam-games`;
+
+									runShellScript(commandLine);
+
+								} catch (error) {
+									console.error(error.message);
+								};
+							});
+						}).on("error", (error) => {
+							console.error(error.message);
+						});
+					}
+
+					// If not, create the games JSON file
+					if ((!fs.existsSync(`${steamGameFiles}/json/games/${gamenameLowercase}-steam.json`)) ||
+						(!fs.existsSync(`${steamGameFiles}/img/${gamenameLowercase}.jpg`))) {
+						createGameJsonFile();
+					}
+				})
 			});
 		});
 	}
 }
-
-const updateSteamCache = setInterval(create_cache_steam, 1000);
-function create_cache_steam() {
-	var fs = require("fs");
-
-	if (fs.existsSync('/tmp/regataos-gcs/config/installed/show-installed-games.txt')) {
-		if (fs.existsSync('/tmp/regataos-gcs/config/steam-games/update-cache-steam.txt')) {
-			create_cache_steam_games()
-
-		} else {
-			if (fs.existsSync('/tmp/regataos-gcs/config/steam-games/show-menu-steam.txt')) {
-				console.log(">> stop update steam cache")
-				fs.writeFileSync("/tmp/regataos-gcs/config/steam-games/update-cache-steam.txt", "Update steam cache", "utf8");
-			}
-		}
-
-	} else {
-		clearInterval(updateSteamCache);
-	}
-}
+createCacheSteamGames();
 
 function list_steam_games_account_load() {
 	var fs = require("fs");
@@ -249,12 +152,10 @@ function show_steam_games() {
 var page_url = window.location.href
 if ((page_url.indexOf("steam-games") > -1) == "1") {
 	list_steam_games_account_load();
-	list_installed_steam_games();
 
 	setTimeout(function () {
 		setInterval(function () {
 			list_steam_games_account_load();
-			list_installed_steam_games();
 		}, 1000);
 	}, 1000);
 

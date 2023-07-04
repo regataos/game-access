@@ -1,13 +1,8 @@
 #!/bin/bash
 
 # Create config directory.
-if test ! -e /tmp/regataos-gcs; then
-	mkdir -p /tmp/regataos-gcs
-	chmod 777 /tmp/regataos-gcs
-fi
-
-if test ! -e "/tmp/regataos-gcs/config"; then
-	ln -sf "$HOME/.config/regataos-gcs" "/tmp/regataos-gcs/config"
+if test ! -e "$HOME/.local/share/Steam/steam.sh"; then
+	exit 0;
 fi
 
 if test ! -e "/tmp/regataos-gcs/config/steam-games.conf"; then
@@ -30,232 +25,64 @@ if test ! -e "/tmp/regataos-gcs/config/steam-games/json/games"; then
 	mkdir -p "/tmp/regataos-gcs/config/steam-games/json/games"
 fi
 
-if test ! -e "$HOME/.local/share/Steam/steam.sh"; then
-	exit 0;
-fi
+# Check for games installed by the Steam client.
+function search_installed_games() {
+	library_folders="$HOME/.local/share/Steam/config/libraryfolders.vdf"
+	if test -e "$library_folders"; then
+		for directory in $(cat "$library_folders" | grep path | awk '{print $2}' | sed 's/"//g'); do
+			steam_library="$directory/steamapps"
+			check_acf_files="$(ls "$steam_library/" | grep acf)"
 
-# Start update steam cache.
-echo "Update steam cache" > "/tmp/regataos-gcs/config/steam-games/update-cache-steam.txt"
-
-# Check if any external directory has been configured for installing games
-# with Game Access and if the Steam library is pointing to this same location.
-steam_games_status="checking..."
-steam_config_file="$HOME/.local/share/Steam/config/config.vdf"
-
-if test -e "/tmp/regataos-gcs/config/external-games-folder.txt"; then
-	# Check if Steam is installed and if there is a user logged into the client.
-	if test -e "$HOME/.local/share/Steam/steam.sh" && \
-	[[ $(grep -r SteamID "$steam_config_file" | awk '{print $1}') == *"SteamID"* ]]; then
-		# Browse the external library of steam games.
-		external_library=$(find "$(cat /tmp/regataos-gcs/config/external-games-folder.txt)" -type f -iname appmanifest_*.acf | head -1 | tail -2 | sed 's/appmanifest//' | cut -d'_' -f -1 | sed 's/steamapps\//steamapps/')
-		get_external_library="$(echo "$external_library" | sed 's|/steamapps||')"
-
-		# Check if the external steam game library has been added by the user and
-		# check again if the external steam game library is available.
-		if [[ $(grep -r "$get_external_library" "$HOME/.local/share/Steam/config/libraryfolders.vdf") == *"$get_external_library"* ]] && \
-		test -e "$(echo "$external_library")"; then
-			# Check if there is any acf data file to start searching for installed Steam games.
-			check_external_acf_files="$(ls "$external_library/" | grep acf)"
-
-			if [[ $check_external_acf_files == *"acf"* ]]; then
-				for f in $check_external_acf_files; do
-					check_content=$(cat "$external_library/$f" | grep name | cut -d'"' -f 4- | sed 's/"//')
+			if [[ $check_acf_files == *"acf"* ]]; then
+				for file in $check_acf_files; do
+					check_content="$(cat "$steam_library/$file" | grep '"name"' | cut -d'"' -f 4- | sed 's/"//g')"
 
 					if [[ $check_content != *"Steamworks"* ]] && \
 					[[ $check_content != *"Proton"* ]] && \
-					[[ $check_content != *"Steam Linux Runtime"* ]]
-					then
-						steam_games_status="game detected"
-						echo "File -> $f"
-						break
-					fi
-				done
-			fi
-		fi
-	fi
+					[[ $check_content != *"Steam Linux Runtime"* ]]; then
+						game_name=$(echo "$check_content" | tr 'A-Z' 'a-z' | sed 's/: \|- \|(\|)\|, \|™\|\.//g')
+						game_name=$(echo $game_name | sed 's/-//g' | sed 's/ /-/g')
 
-else
-	# Check if there are any games installed in the default Steam installation directory.
-	check_internal_acf_files="$(ls $HOME/.local/share/Steam/steamapps/ | grep acf)"
-	if [[ $check_internal_acf_files == *"acf"* ]]; then
-		for f in $check_internal_acf_files; do
-			check_content=$(cat $HOME/.local/share/Steam/steamapps/$f | grep name | cut -d'"' -f 4- | sed 's/"//')
-
-			if [[ $check_content != *"Steamworks"* ]] && \
-			[[ $check_content != *"Proton"* ]] && \
-			[[ $check_content != *"Steam Linux Runtime"* ]]
-			then
-				steam_games_status="game detected"
-				echo "File -> $f"
-				break
-			fi
-		done
-	fi
-fi
-
-if [[ $steam_games_status == *"game detected"* ]]; then
-	if test -e "/tmp/regataos-gcs/config/steam-games/no-steam-games.txt"; then
-		rm -f "/tmp/regataos-gcs/config/steam-games/no-steam-games.txt"
-	fi
-
-	echo "show steam installed" > "/tmp/regataos-gcs/config/installed/show-installed-games.txt"
-	echo "show steam installed" > "/tmp/regataos-gcs/config/installed/show-installed-games-steam.txt"
-
-else
-	# Download the json file with game information
-	if test -e "$HOME/.local/share/Steam/steam.sh" && \
-		[[ $(grep -r SteamID "$steam_config_file" | awk '{print $1}') == *"SteamID"* ]]; then
-		echo "$(grep -r SteamID "$steam_config_file" | awk '{print $2}' | sed 's/"//g')" > "/tmp/regataos-gcs/config/steam-games/json/steam-id/all-steam-id.txt"
-		steam_games=$(cat "/tmp/regataos-gcs/config/steam-games/json/steam-id/all-steam-id.txt" | head -1)
-
-		if test ! -e "/tmp/regataos-gcs/config/steam-games/json/steam-id/$steam_games.json"; then
-			wget --no-check-certificate -O "/tmp/regataos-gcs/config/steam-games/json/steam-id/$steam_games.json" \
-			"http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=F06912D875764FDC65C1880539873AE0&steamid=$steam_games&format=json&include_appinfo=true"
-		fi
-
-		# Verify that the JSON file has the information Game Access needs
-		if [[ $(grep -r "appid" "/tmp/regataos-gcs/config/steam-games/json/steam-id/$steam_games.json") == *"appid"* ]]; then
-			steam_games_status="account games"
-		fi
-	fi
-
-	# Make sure you can view available games on the user's account.
-	if [[ $steam_games_status != *"account games"* ]]; then
-		echo "No Steam games" > "/tmp/regataos-gcs/config/steam-games/no-steam-games.txt"
-		rm -f "/tmp/regataos-gcs/config/installed/show-installed-games-steam.txt"
-		rm -f /tmp/regataos-gcs/config/installed/*-steam.json
-		rm -f /opt/regataos-gcs/games-list/*-steam.json
-		rm -f /tmp/regataos-gcs/config/steam-games/img/*
-		rm -f /tmp/regataos-gcs/config/steam-games/json/games/*
-
-		if [[ $(ls /tmp/regataos-gcs/config/installed/) != *"json"* ]]; then
-			rm -f "/tmp/regataos-gcs/config/installed/show-installed-games.txt"
-		fi
-
-	else
-		if test -e "/tmp/regataos-gcs/config/steam-games/no-steam-games.txt" ;then
-			rm -f "/tmp/regataos-gcs/config/steam-games/no-steam-games.txt"
-		fi
-	fi
-fi
-
-# Run game processes only if necessary.
-if test ! -e "/tmp/regataos-gcs/config/steam-games/no-steam-games.txt" ;then
-	# View all available games in the user's Steam account
-	if test -e "$steam_config_file"; then
-		# Download the json file with game information
-		echo "$(grep -r SteamID $steam_config_file | awk '{print $2}' | sed 's/"//g')" > "/tmp/regataos-gcs/config/steam-games/json/steam-id/all-steam-id.txt"
-
-		while IFS= read -r steam_games || [[ -n "$steam_games" ]]; do
-		if test ! -e "/tmp/regataos-gcs/config/steam-games/json/steam-id/$steam_games.json"; then
-    		wget --no-check-certificate -O "/tmp/regataos-gcs/config/steam-games/json/steam-id/$steam_games.json" \
-			"http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=F06912D875764FDC65C1880539873AE0&steamid=$steam_games&format=json&include_appinfo=true"
-
-			# Verify that the JSON file has the information Game Access needs
-			if [[ $(grep -r "appid" "/tmp/regataos-gcs/config/steam-games/json/steam-id/$steam_games.json") == *"appid"* ]]; then
-				echo "show steam games" > "/tmp/regataos-gcs/config/steam-games/json/steam-id/show-steam-games.txt"
-			fi
-
-		else
-			# Verify that the JSON file has the information Game Access needs
-			if [[ $(grep -r "appid" "/tmp/regataos-gcs/config/steam-games/json/steam-id/$steam_games.json") == *"appid"* ]]; then
-				echo "show steam games" > "/tmp/regataos-gcs/config/steam-games/json/steam-id/show-steam-games.txt"
-			fi
-		fi
-		done < "/tmp/regataos-gcs/config/steam-games/json/steam-id/all-steam-id.txt"
-	fi
-
-	# Check if the Steam game is still installed
-	for i in /tmp/regataos-gcs/config/installed/*-steam.json; do
-		file_id=$(echo $i | cut -d"/" -f 6- | cut -d"." -f -1)
-
-		if ! test -e "$HOME/.local/share/Steam/steamapps/$file_id.acf"; then
-			rm -f "/tmp/regataos-gcs/config/installed/$file_id-steam.json"
-		fi
-	done
-
-	# Get game information and check if they are installed
-	for i in $HOME/.local/share/Steam/steamapps/*.acf; do
-		game_name="$(grep -R '"name"' $i | cut -d'"' -f 4- | cut -d'"' -f -1)"
-		game_appid="$(grep -R '"appid"' $i | awk '{print $2}' | sed 's/"\|,//g')"
-		echo "Installed game name: $game_name, ID: $game_appid"
-
-		#Make the game name lowercase
-		gamename_lowercase=$(echo "$game_name" | tr 'A-Z' 'a-z' | sed 's/: \|- \|(\|)\|, \|™\|\.//g')
-		gamename_lowercase=$(echo $gamename_lowercase | sed 's/ \|-//g')
-		echo "$gamename_lowercase"
-
-		if [ ! -z $game_appid ];then
-			if test -e "/tmp/regataos-gcs/config/steam-games/json/games/$gamename_lowercase-steam.json"; then
-				cp -f "/tmp/regataos-gcs/config/steam-games/json/games/$gamename_lowercase-steam.json" "/tmp/regataos-gcs/config/installed/$gamename_lowercase-steam.json"
-			fi
-		fi
-	done
-
-	if test -e "/tmp/regataos-gcs/config/external-games-folder.txt"; then
-		external_steam_folder=$(find "$(cat /tmp/regataos-gcs/config/external-games-folder.txt)" -type f -iname appmanifest_*.acf | head -1 | tail -2 | sed 's/appmanifest//' | cut -d'_' -f -1 | sed 's/steamapps\//steamapps/')
-
-		if test -e "$HOME/.local/share/Steam/config/libraryfolders.vdf"; then
-			get_external_lib_dir="$(echo "$external_steam_folder" | sed 's|/steamapps||')"
-
-			if [[ $(grep -r "$get_external_lib_dir" "$HOME/.local/share/Steam/config/libraryfolders.vdf") == *"$get_external_lib_dir"* ]]; then
-				for i in "$(echo "$external_steam_folder")"/*acf; do
-					game_name="$(grep -R '"name"' "$i" | cut -d'"' -f 4- | cut -d'"' -f -1)"
-					game_appid="$(grep -R '"appid"' "$i" | awk '{print $2}' | sed 's/"\|,//g')"
-					echo "Installed game name: $game_name, ID: $game_appid"
-
-					#Make the game name lowercase
-					gamename_lowercase=$(echo "$game_name" | tr 'A-Z' 'a-z' | sed 's/: \|- \|(\|)\|, \|™\|\.//g')
-					gamename_lowercase=$(echo $gamename_lowercase | sed 's/ \|-//g')
-					echo "$gamename_lowercase"
-
-					if [ ! -z $game_appid ];then
-						if test -e "/tmp/regataos-gcs/config/steam-games/json/games/$gamename_lowercase-steam.json"; then
-							cp -f "/tmp/regataos-gcs/config/steam-games/json/games/$gamename_lowercase-steam.json" "/tmp/regataos-gcs/config/installed/$gamename_lowercase-steam.json"
+						if test -e "/tmp/regataos-gcs/config/steam-games/json/games/$game_name-steam.json"; then
+							cp -f "/tmp/regataos-gcs/config/steam-games/json/games/$game_name-steam.json" \
+							"/tmp/regataos-gcs/config/installed/$game_name-steam.json"
 						fi
 					fi
 				done
 			fi
-		fi
+		done
 	fi
-fi
+}
 
-# Check if a game is still in the installed or downloading list
-for i in /tmp/regataos-gcs/config/installed/*-steam.json; do
-	game_name="$(grep -R '"gamenickname"' $i | cut -d'"' -f 4- | cut -d'"' -f -1)"
-	game_id="$(grep -R '"gameid"' $i | awk '{print $2}' | sed 's/"\|,//g')"
+# Download the json file with game information
+config_file="$HOME/.local/share/Steam/config/config.vdf"
+if test -e "$config_file"; then
+	user_id_dir="/tmp/regataos-gcs/config/steam-games/json/steam-id"
+	check_steam_id="$(grep -r SteamID $config_file | awk '{print $2}' | head -1 | tail -1 | sed 's/"//g')"
+	user_games_link="http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=F06912D875764FDC65C1880539873AE0&steamid=$check_steam_id&format=json&include_appinfo=true"
 
-	if test ! -e "$HOME/.local/share/Steam/steamapps/appmanifest_$(echo $game_id).acf"; then
-		if test -e "/tmp/regataos-gcs/config/external-games-folder.txt"; then
-			external_steam_folder=$(find "$(echo $(cat /tmp/regataos-gcs/config/external-games-folder.txt))" -type f -iname "appmanifest_$(echo $game_id).acf")
+	if [ ! -z $check_steam_id ];then
+		if test ! -e "$user_id_dir/$check_steam_id.json"; then
+			wget --no-check-certificate -O "$user_id_dir/$check_steam_id.json" "$user_games_link"
+		fi
 
-			if test ! -e "$(echo "$external_steam_folder")"; then
-				rm -f "/tmp/regataos-gcs/config/installed/$game_name-steam.json"
+		if [[ $(grep -r "appid" "$user_id_dir/$check_steam_id.json") == *"appid"* ]]; then
+			echo "show steam games" > "/tmp/regataos-gcs/config/steam-games/json/steam-id/show-steam-games.txt"
+			rm -f "/tmp/regataos-gcs/config/steam-games/no-steam-games.txt"
+
+			if [[ $(ls "/tmp/regataos-gcs/config/steam-games/json/games/") == *"steam.json"* ]]; then
+				echo "show steam games" > "/tmp/regataos-gcs/config/steam-games/show-menu-steam.txt"
 			fi
 
+			search_installed_games
+
 		else
-			rm -f "/tmp/regataos-gcs/config/installed/$game_name-steam.json"
+			echo "No Steam games" > "/tmp/regataos-gcs/config/steam-games/no-steam-games.txt"
+			rm -f "/tmp/regataos-gcs/config/installed/show-installed-games-steam.txt"
+			rm -f /tmp/regataos-gcs/config/installed/*-steam.json
+			rm -f /opt/regataos-gcs/games-list/*-steam.json
+			rm -f /tmp/regataos-gcs/config/steam-games/img/*
+			rm -f /tmp/regataos-gcs/config/steam-games/json/games/*
 		fi
 	fi
-done
-
-if test -e "$HOME/.local/share/Steam/steam.sh" && \
-	[[ $(grep -r SteamID $steam_config_file | awk '{print $1}') != *"SteamID"* ]]; then
-	echo "No Steam games" > "/tmp/regataos-gcs/config/steam-games/no-steam-games.txt"
-	rm -f "/tmp/regataos-gcs/config/installed/show-installed-games-steam.txt"
-	rm -f /tmp/regataos-gcs/config/installed/*-steam.json
-	rm -f /opt/regataos-gcs/games-list/*-steam.json
-	rm -f /tmp/regataos-gcs/config/steam-games/img/*
-	rm -f /tmp/regataos-gcs/config/steam-games/json/games/*
-
-    if [[ $(ls "/tmp/regataos-gcs/config/installed/") != *"json"* ]]; then
-		rm -f "/tmp/regataos-gcs/config/installed/show-installed-games.txt"
-	fi
-fi
-
-# Check if there are JSON files of the games to display the Steam option in the menu
-if [[ $(ls "/tmp/regataos-gcs/config/steam-games/json/games/") == *"steam.json"* ]]; then
-	echo "show steam games" > "/tmp/regataos-gcs/config/steam-games/show-menu-steam.txt"
-else
-	rm -f "/tmp/regataos-gcs/config/steam-games/show-menu-steam.txt"
 fi
