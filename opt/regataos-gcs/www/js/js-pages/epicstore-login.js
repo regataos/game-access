@@ -73,6 +73,7 @@ function hideLoginScreen() {
 			handleCssClass("remove", "body-epic-img", "body-page");
 			handleCssClass("add", "show-element", ["loading", "loading-games"]);
 		} else {
+			handleCssClass("remove", "hide-element", "epicstore-login");
 			handleCssClass("add", "grid-element", "epicstore-login");
 			handleCssClass("add", "body-epic-img", "body-page");
 			handleCssClass("remove", "show-element", ["loading", "loading-games"]);

@@ -1,5 +1,5 @@
 // For search page
-function listSearchedGames(gamename, gamenickname, gamenative, game_img1, gamerun_appid, launcher, launchernickname) {
+function listSearchedGames(gamename, gamenickname, gamenative, game_img1, gamerun_appid, gameid, launcher, launchernickname) {
 	const fs = require("fs");
 	const installedGamesJsonFiles = "/tmp/regataos-gcs/config/installed"
 	const allBlocks = document.querySelector("#account-games");
@@ -19,13 +19,13 @@ function listSearchedGames(gamename, gamenickname, gamenative, game_img1, gameru
 
 	} else if (launchernickname.includes("steam")) {
 		installGame = `install_${launchernickname}_game('${gamenickname}')`;
-		runGame = `run_${launchernickname}_game('${gamenickname})')`;
+		runGame = `run_${launchernickname}_game('${gamenickname})', '${gameid}')`;
 		gamePlataform = gamenative.includes("true") ? "nativegame" : "steamplay";
 
 	} else if ((launchernickname.includes("gog")) ||
 		(launchernickname.includes("epicstore"))) {
 		installGame = `install_${launchernickname}_game('${gamenickname}')`;
-		runGame = `run_${launchernickname}_game('${gamenickname})')`;
+		runGame = `run_${launchernickname}_game('${gamenickname})', '${gameid}')`;
 		specialButtonFunction = `uninstall_${launchernickname}_game('${gamenickname}')`;
 
 	} else {
@@ -61,13 +61,12 @@ function listSearchedGames(gamename, gamenickname, gamenative, game_img1, gameru
 		specialButtonHtml = "";
 	}
 
-	const buttonId = gamenickname;
 	const buttonClass = isInstalled ? "play-box-universal" : "install-box-universal";
 	const buttonIconClass = isInstalled ? "fas fa-play" : "fas fa-download";
 	const buttonTextClass = isInstalled ? "play" : "install";
 	const buttonText = isInstalled ? "Jogar" : "Instalar";
 	const playInstallButton = `
-		<div id="${buttonId}" class="${buttonClass}" onclick="${isInstalled ? runGame : installGame};">
+		<div class="${gamenickname}-block ${buttonClass}" onclick="${isInstalled ? runGame : installGame};">
 			<div class="play-button">
 				<i class="${buttonIconClass}"></i>
 				<div class="${buttonTextClass}-txt">${buttonText}</div>
@@ -112,7 +111,7 @@ function search() {
 			const listGames = JSON.parse(gameInfo);
 
 			listGames.forEach((game) => {
-				const { gamename, gamenickname, gamenative, game_img1, gamerun_appid, launcher, launchernickname, gamekeywords } = game;
+				const { gamename, gamenickname, gamenative, game_img1, gamerun_appid, gameid, launcher, launchernickname, gamekeywords } = game;
 				const { en, pt } = game.gamekeywords;
 				const keywordLanguage = en || gamekeywords;
 				const showResults = keywordLanguage && (keywordLanguage.includes(readKeyword) || readKeyword.includes(pt));
@@ -127,7 +126,7 @@ function search() {
 						const searchResult = allBlocks.querySelector(`div.${gamenickname}-block`);
 						if (searchResult == null) {
 							contentBrake = contentBrake + 1;
-							listSearchedGames(gamename, gamenickname, gamenative, game_img1, gamerun_appid, launcher, launchernickname);
+							listSearchedGames(gamename, gamenickname, gamenative, game_img1, gamerun_appid, gameid, launcher, launchernickname);
 						}
 					}
 				}

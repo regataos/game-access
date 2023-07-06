@@ -30,7 +30,7 @@ function listAllGames(specifyLauncher, contentBrake) {
 
 			const dataReceived = JSON.parse(data);
 			dataReceived.forEach((gameData) => {
-				const { gamename, gamenickname, gamenative, game_img1, gamerun_appid, launcher, launchernickname } = gameData;
+				const { gamename, gamenickname, gamenative, game_img1, gamerun_appid, gameid, launcher, launchernickname } = gameData;
 
 				if ((specifyLauncher.replace("-games", "").includes(launchernickname)) ||
 					(specifyLauncher.includes("allgames")) || (specifyLauncher.includes("installed"))) {
@@ -42,13 +42,13 @@ function listAllGames(specifyLauncher, contentBrake) {
 
 					} else if (launchernickname.includes("steam")) {
 						installGame = `install_${launchernickname}_game('${gamenickname}')`;
-						runGame = `run_${launchernickname}_game('${gamenickname})')`;
+						runGame = `run_${launchernickname}_game('${gamenickname})', '${gameid}')`;
 						gamePlataform = gamenative.includes("true") ? "nativegame" : "steamplay";
 
 					} else if ((launchernickname.includes("gog")) ||
 						(launchernickname.includes("epicstore"))) {
 						installGame = `install_${launchernickname}_game('${gamenickname}')`;
-						runGame = `run_${launchernickname}_game('${gamenickname})')`;
+						runGame = `run_${launchernickname}_game('${gamenickname})', '${gameid}')`;
 						specialButtonFunction = `uninstall_${launchernickname}_game('${gamenickname}')`;
 
 					} else {
@@ -84,7 +84,7 @@ function listAllGames(specifyLauncher, contentBrake) {
 					const buttonTextClass = isInstalled ? "play" : "install";
 					const buttonText = isInstalled ? "Jogar" : "Instalar";
 					let playInstallButton = `
-						<div class="${buttonClass}" onclick="${isInstalled ? runGame : installGame};">
+						<div class="${gamenickname}-block ${buttonClass}" onclick="${isInstalled ? runGame : installGame};">
 							<div class="play-button">
 								<i class="${buttonIconClass}"></i>
 								<div class="${buttonTextClass}-txt">${buttonText}</div>

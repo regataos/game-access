@@ -16,8 +16,8 @@ function runShellProcess(commandLine) {
 // This script performs actions for the games
 //If necessary, request the installation of the launcher
 function show_confirm_install() {
-	const command_line = `echo "${launchername}" > "/tmp/regataos-gcs/confirm-installation"`;
-	runShellProcess(command_line);
+	const commandLine = `echo "${launchername}" > "/tmp/regataos-gcs/confirm-installation"`;
+	runShellProcess(commandLine);
 }
 
 // Auto close Game Access
@@ -45,8 +45,8 @@ function autoCloseGameAccess() {
 			pagename = pagename.split("pages/")[1];
 			pagename = pagename.replace('.html', '');
 
-			const command_line = `echo "${pagename}" > "/tmp/regataos-gcs/go-page-auto"`;
-			runShellProcess(command_line);
+			const commandLine = `echo "${pagename}" > "/tmp/regataos-gcs/go-page-auto"`;
+			runShellProcess(commandLine);
 		}
 	}
 }
@@ -68,52 +68,40 @@ function run_game(gamenickname, launchername, rungame) {
 		autoCloseGameAccess();
 
 		setTimeout(function () {
-			$(`.${gamenickname}-hover .play-box`).css("opacity", ".5")
-			$(`.${gamenickname}-hover .play-box`).css("cursor", "default")
-			$(`.${gamenickname}-hover .play-box`).css("pointer-events", "none");
+			$(`.${gamename}-block .play-box-universal`).css("opacity", ".5")
+			$(`.${gamename}-block .play-box-universal`).css("cursor", "default")
+			$(`.${gamename}-block .play-box-universal`).css("pointer-events", "none");
 		}, 1000);
 
 		setTimeout(function () {
-			$(`.${gamenickname}-hover .play-box`).css("opacity", "1")
-			$(`.${gamenickname}-hover .play-box`).css("cursor", "pointer")
-			$(`.${gamenickname}-hover .play-box`).css("pointer-events", "auto");
+			$(`.${gamename}-block .play-box-universal`).css("opacity", "1")
+			$(`.${gamename}-block .play-box-universal`).css("cursor", "pointer")
+			$(`.${gamename}-block .play-box-universal`).css("pointer-events", "auto");
 		}, 30000);
 
 		setTimeout(function () {
-			$(`.${gamename}-hover .play-box-universal`).css("opacity", ".5")
-			$(`.${gamename}-hover .play-box-universal`).css("cursor", "default")
-			$(`.${gamename}-hover .play-box-universal`).css("pointer-events", "none");
+			$(`.${gamename}-block .install-box-universal`).css("opacity", ".5")
+			$(`.${gamename}-block .install-box-universal`).css("cursor", "default")
+			$(`.${gamename}-block .install-box-universal`).css("pointer-events", "none");
 		}, 1000);
 
 		setTimeout(function () {
-			$(`.${gamename}-hover .play-box-universal`).css("opacity", "1")
-			$(`.${gamename}-hover .play-box-universal`).css("cursor", "pointer")
-			$(`.${gamename}-hover .play-box-universal`).css("pointer-events", "auto");
-		}, 30000);
-
-		setTimeout(function () {
-			$(`.${gamename}-hover .install-box`).css("opacity", ".5")
-			$(`.${gamename}-hover .install-box`).css("cursor", "default")
-			$(`.${gamename}-hover .install-box`).css("pointer-events", "none");
-		}, 1000);
-
-		setTimeout(function () {
-			$(`.${gamename}-hover .install-box`).css("opacity", "1")
-			$(`.${gamename}-hover .install-box`).css("cursor", "pointer")
-			$(`.${gamename}-hover .install-box`).css("pointer-events", "auto");
+			$(`.${gamename}-block .install-box-universal`).css("opacity", "1")
+			$(`.${gamename}-block .install-box-universal`).css("cursor", "pointer")
+			$(`.${gamename}-block .install-box-universal`).css("pointer-events", "auto");
 		}, 8000);
 
 	} else {
 		setTimeout(function () {
-			$(`.${gamename}-hover .install-box`).css("opacity", ".5")
-			$(`.${gamename}-hover .install-box`).css("cursor", "default")
-			$(`.${gamename}-hover .install-box`).css("pointer-events", "none");
+			$(`.${gamename}-block .install-box-universal`).css("opacity", ".5")
+			$(`.${gamename}-block .install-box-universal`).css("cursor", "default")
+			$(`.${gamename}-block .install-box-universal`).css("pointer-events", "none");
 		}, 1000);
 
 		setTimeout(function () {
-			$(`.${gamename}-hover .install-box`).css("opacity", "1")
-			$(`.${gamename}-hover .install-box`).css("cursor", "pointer")
-			$(`.${gamename}-hover .install-box`).css("pointer-events", "auto");
+			$(`.${gamename}-block .install-box-universal`).css("opacity", "1")
+			$(`.${gamename}-block .install-box-universal`).css("cursor", "pointer")
+			$(`.${gamename}-block .install-box-universal`).css("pointer-events", "auto");
 		}, 8000);
 
 		show_confirm_install();
@@ -121,18 +109,18 @@ function run_game(gamenickname, launchername, rungame) {
 }
 
 // Run Steam game
-function run_steam_game(gamenickname) {
+function run_steam_game(gamenickname, gameid) {
 	const fs = require("fs");
 
 	if (!fs.existsSync(`/tmp/regataos-gcs/running-${gamenickname}`)) {
-		const command_line = `
+		const commandLine = `
 		export GAME_NICKNAME="${gamenickname}";
 		export GAME_ID="${gameid}";
 		echo "${gamenickname}" > /tmp/regataos-gcs/running-${gamenickname};
 		/opt/regataos-gcs/scripts/action-games/auto-close-game-access &
 		/opt/regataos-gcs/scripts/action-games/rungame-steam`;
 
-		runShellProcess(command_line);
+		runShellProcess(commandLine);
 		autoCloseGameAccess();
 
 		setTimeout(function () {
@@ -151,8 +139,8 @@ function run_steam_game(gamenickname) {
 
 // Install Steam game
 function install_steam_game(gamenickname) {
-	const command_line = `steam steam://rungameid/${gamenickname} & sleep 10; steam steam://open/downloads`;
-	runShellProcess(command_line);
+	const commandLine = `steam steam://rungameid/${gamenickname} & sleep 10; steam steam://open/downloads`;
+	runShellProcess(commandLine);
 
 	setTimeout(function () {
 		$(`.${gamenickname}-block .install-box-universal`).css("opacity", ".5")
@@ -172,8 +160,8 @@ function install_epicstore_game(gamenickname) {
 	const fs = require("fs");
 
 	function runInstallation() {
-		const command_line = `echo "${gamenickname}" > "/tmp/regataos-gcs/start-installation-epicstore.txt"`;
-		runShellProcess(command_line);
+		const commandLine = `echo "${gamenickname}" > "/tmp/regataos-gcs/start-installation-epicstore.txt"`;
+		runShellProcess(commandLine);
 
 		setTimeout(function () {
 			$(`.${gamenickname}-block .install-box-universal`).css("opacity", ".5")
@@ -230,17 +218,17 @@ function uninstall_epicstore_game(gamenickname) {
 }
 
 // Run game from Epic Games Store
-function run_epicstore_game(gamenickname) {
+function run_epicstore_game(gamenickname, gameid) {
 	const fs = require("fs");
 
 	if (!fs.existsSync(`/tmp/regataos-gcs/running-${gamenickname}`)) {
-		const command_line = `echo "${gamenickname}" > "/tmp/regataos-gcs/running-${gamenickname}";
+		const commandLine = `echo "${gamenickname}" > "/tmp/regataos-gcs/running-${gamenickname}";
 		export GAMENICK="${gamenickname}";
-		export GAMEID="${gamenickname}";
+		export GAMEID="${gameid}";
 		/opt/regataos-gcs/scripts/action-games/auto-close-game-access &
 		/opt/regataos-gcs/scripts/action-games/rungame-epicstore`;
 
-		runShellProcess(command_line);
+		runShellProcess(commandLine);
 		autoCloseGameAccess();
 
 		setTimeout(function () {
@@ -259,10 +247,10 @@ function run_epicstore_game(gamenickname) {
 
 // Start installing game from GOG Galaxy
 function install_gog_game(gamenickname) {
-	const command_line = `export GAME_NIcKNAME="${gamenickname}";
+	const commandLine = `export GAME_NIcKNAME="${gamenickname}";
 	/opt/regataos-gcs/scripts/action-games/install-game-gog`;
 
-	runShellProcess(command_line);
+	runShellProcess(commandLine);
 
 	setTimeout(function () {
 		$(`.${gamenickname}-block .install-box-universal`).css("opacity", ".5")
@@ -279,17 +267,17 @@ function install_gog_game(gamenickname) {
 
 // Uninstall game from GOG Galaxy
 function uninstall_gog_game(gamenickname) {
-	const command_line = `echo "${gamenickname}" > "/tmp/regataos-gcs/start-uninstallation-gog.txt"`;
-	runShellProcess(command_line);
+	const commandLine = `echo "${gamenickname}" > "/tmp/regataos-gcs/start-uninstallation-gog.txt"`;
+	runShellProcess(commandLine);
 }
 
 // Run game from GOG Galaxy
 function run_gog_game(gamenickname) {
-	const command_line = `export GAME_NIcKNAME="${gamenickname}";
+	const commandLine = `export GAME_NIcKNAME="${gamenickname}";
 	/opt/regataos-gcs/scripts/action-games/auto-close-game-access &
 	/opt/regataos-gcs/scripts/action-games/rungame-gog`;
 
-	runShellProcess(command_line);
+	runShellProcess(commandLine);
 	autoCloseGameAccess();
 
 	setTimeout(function () {
@@ -307,8 +295,8 @@ function run_gog_game(gamenickname) {
 
 // Show suggested games or titles available in the user's library
 function run_search_gog_games() {
-	const command_line = '/opt/regataos-gcs/scripts/search-gog-games.sh';
-	runShellProcess(command_line);
+	const commandLine = '/opt/regataos-gcs/scripts/search-gog-games.sh';
+	runShellProcess(commandLine);
 }
 run_search_gog_games();
 
