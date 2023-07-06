@@ -1,25 +1,36 @@
 // For search page
-function listSearchedGames(gamename, gamenickname, gamenative, game_img1, launcher, launchernickname) {
+function listSearchedGames(gamename, gamenickname, gamenative, game_img1, gamerun_appid, launcher, launchernickname) {
 	const fs = require("fs");
 	const installedGamesJsonFiles = "/tmp/regataos-gcs/config/installed"
 	const allBlocks = document.querySelector("#account-games");
 
-	let installGame = "installGameId()";
-	let runGame = "runGameId()";
-	let specialButtonFunction = "goGamePageId()";
+	let installGame = "";
+	let runGame = "";
+	let specialButtonFunction = "";
 	let specialButtonHtml = "";
 	let gamePlataform = "gcs";
 	let gameAccess = "GAME ACCESS";
 
 	// Set some default settings
-	if (launchernickname.includes("steam")) {
-		installGame = runGame = `run_${launchernickname}_game()`;
+	if (launchernickname.includes("gcs")) {
+		installGame = `confirmInstallGameId('${gamenickname}')`;
+		runGame = `runGameId('${gamenickname}')`;
+		specialButtonFunction = `goGamePageId('${gamenickname}')`;
+
+	} else if (launchernickname.includes("steam")) {
+		installGame = `install_${launchernickname}_game('${gamenickname}')`;
+		runGame = `run_${launchernickname}_game('${gamenickname})')`;
+		gamePlataform = gamenative.includes("true") ? "nativegame" : "steamplay";
 
 	} else if ((launchernickname.includes("gog")) ||
 		(launchernickname.includes("epicstore"))) {
-		installGame = `install_${launchernickname}_game()`;
-		runGame = `run_${launchernickname}_game()`;
-		specialButtonFunction = `uninstall_${launchernickname}_game()`;
+		installGame = `install_${launchernickname}_game('${gamenickname}')`;
+		runGame = `run_${launchernickname}_game('${gamenickname})')`;
+		specialButtonFunction = `uninstall_${launchernickname}_game('${gamenickname}')`;
+
+	} else {
+		installGame = `run_launcher('${launchernickname}')`;
+		runGame = `run_game('${gamenickname}', '${launchernickname}', '${gamerun_appid}')`;
 	}
 
 	// Set the game image
@@ -36,15 +47,18 @@ function listSearchedGames(gamename, gamenickname, gamenative, game_img1, launch
 
 	if (launchernickname.includes("gcs")) {
 		specialButtonHtml = `
-			<div title="Mais sobre o jogo" class="morefor-game-button" onclick="window.gameId='${gamenickname}'; ${specialButtonFunction};">
+			<div title="Mais sobre o jogo" class="morefor-game-button" onclick="${specialButtonFunction};">
 				<i class="fa fa-plus"></i>
 			</div>`;
 
 	} else if ((isInstalled) && launchernickname.includes("epicstore") || launchernickname.includes("gog")) {
 		specialButtonHtml = `
-			<div title="Desinstalar jogo" class="remove-game-button" onclick="window.game_for_remove='${gamenickname}'; ${specialButtonFunction};">
+			<div title="Desinstalar jogo" class="remove-game-button" onclick="${specialButtonFunction};">
 				<i class="fas fa-trash-alt"></i>
 			</div>`;
+
+	} else {
+		specialButtonHtml = "";
 	}
 
 	const buttonId = gamenickname;
@@ -53,7 +67,7 @@ function listSearchedGames(gamename, gamenickname, gamenative, game_img1, launch
 	const buttonTextClass = isInstalled ? "play" : "install";
 	const buttonText = isInstalled ? "Jogar" : "Instalar";
 	const playInstallButton = `
-		<div id="${buttonId}" class="${buttonClass}" onclick="window.gameId=this.id; ${isInstalled ? runGame : installGame};">
+		<div id="${buttonId}" class="${buttonClass}" onclick="${isInstalled ? runGame : installGame};">
 			<div class="play-button">
 				<i class="${buttonIconClass}"></i>
 				<div class="${buttonTextClass}-txt">${buttonText}</div>
@@ -98,7 +112,7 @@ function search() {
 			const listGames = JSON.parse(gameInfo);
 
 			listGames.forEach((game) => {
-				const { gamename, gamenickname, gamenative, game_img1, launcher, launchernickname, gamekeywords } = game;
+				const { gamename, gamenickname, gamenative, game_img1, gamerun_appid, launcher, launchernickname, gamekeywords } = game;
 				const { en, pt } = game.gamekeywords;
 				const keywordLanguage = en || gamekeywords;
 				const showResults = keywordLanguage && (keywordLanguage.includes(readKeyword) || readKeyword.includes(pt));
@@ -113,7 +127,7 @@ function search() {
 						const searchResult = allBlocks.querySelector(`div.${gamenickname}-block`);
 						if (searchResult == null) {
 							contentBrake = contentBrake + 1;
-							listSearchedGames(gamename, gamenickname, gamenative, game_img1, launcher, launchernickname);
+							listSearchedGames(gamename, gamenickname, gamenative, game_img1, gamerun_appid, launcher, launchernickname);
 						}
 					}
 				}

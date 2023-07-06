@@ -180,9 +180,9 @@ div.universal-title {
 
 .list-config-options {
 	display: block;
-    width: 95%;
-    margin-left: auto;
-    margin-right: auto;
+    float: left;
+	max-width: 700px;
+    margin-left: 20px;
 }
 
 .title-top-box {

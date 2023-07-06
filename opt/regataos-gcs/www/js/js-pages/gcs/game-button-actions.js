@@ -28,88 +28,87 @@ checkGameInstalled();
 setInterval(function () { checkGameInstalled() }, 1000);
 
 // Start installing game
-function confirmInstallGameId() {
+function confirmInstallGameId(gamenickname) {
     const fs = require("fs");
 
     function runInstallation() {
         const exec = require('child_process').exec;
-        var command_line = `echo "${gameId}" > "/tmp/regataos-gcs/start-installation-gcs.txt"`;
-        exec(command_line,function(error,call,errlog){
+        const command_line = `echo "${gamenickname}" > "/tmp/regataos-gcs/start-installation-gcs.txt"`;
+        exec(command_line, function (error, call, errlog) {
         });
 
-        const buttonPlay = document.getElementById(gameId);
+        const buttonPlay = document.getElementById(gamenickname);
 
-        setTimeout(function(){
+        setTimeout(function () {
             buttonPlay.style.opacity = ".5";
             buttonPlay.style.cursor = "default";
             buttonPlay.style.pointerEvents = "none";
-        },1000);
+        }, 1000);
 
-        setTimeout(function(){
+        setTimeout(function () {
             buttonPlay.style.opacity = "1";
             buttonPlay.style.cursor = "pointer";
             buttonPlay.style.pointerEvents = "auto";
-        },2000);
+        }, 2000);
     }
 
-	if (!fs.existsSync(`/tmp/regataos-gcs/installing-${gameId}`)) {
-		if (fs.existsSync(`/tmp/progressbar-gcs/queued-process`)) {
-			let checkInstallQueue = fs.readFileSync("/tmp/progressbar-gcs/queued-process", "utf8");
+    if (!fs.existsSync(`/tmp/regataos-gcs/installing-${gamenickname}`)) {
+        if (fs.existsSync(`/tmp/progressbar-gcs/queued-process`)) {
+            let checkInstallQueue = fs.readFileSync("/tmp/progressbar-gcs/queued-process", "utf8");
+            if (checkInstallQueue.includes(gamenickname)) {
+                runInstallation();
+            }
 
-			if ((checkInstallQueue.indexOf(gameId) > -1) == "0") {
-				runInstallation();
-			}
-		} else {
-			runInstallation();
-		}
-	}
+        } else {
+            runInstallation();
+        }
+    }
 }
 
 //Remove the game
-function removeGameId() {
+function removeGameId(gamenickname) {
     const exec = require('child_process').exec;
-
-    let newGameId = gameId.replace('-remove', '');
-
+    const newGameId = gamenickname.replace('-remove', '');
     const commandInstallGame = `export gameNickname="${newGameId}"; /opt/regataos-gcs/scripts/remove/scripts-remove/uninstall-game-gcs/uninstall-gcs-game.sh`;
     exec(commandInstallGame, function (error, call, errlog) {
     });
 }
 
 //Run the game
-function runGameId() {
-    const exec = require('child_process').exec;
+function runGameId(gamenickname) {
     const fs = require("fs");
-    let newGameId = gameId.replace('-run', '');
+    const newGameId = gamenickname.replace('-run', '');
 
-	if (!fs.existsSync(`/tmp/regataos-gcs/running-${newGameId}`)) {
-        const commandInstallGame = `echo "${newGameId}" > /tmp/regataos-gcs/running-${newGameId}; \
+    if (!fs.existsSync(`/tmp/regataos-gcs/running-${newGameId}`)) {
+        const exec = require('child_process').exec;
+        const commandInstallGame = `
+        echo "${newGameId}" > /tmp/regataos-gcs/running-${newGameId}; \
         export gameNickname="${newGameId}"; /opt/regataos-gcs/scripts/action-games/rungame-gcs`;
         exec(commandInstallGame, function (error, call, errlog) {
         });
 
         autoCloseGameAccess();
 
-        const buttonPlay = document.getElementById(gameId);
+        const buttonPlay = document.getElementById(newGameId);
 
-        setTimeout(function(){
+        setTimeout(function () {
             buttonPlay.style.opacity = ".5";
             buttonPlay.style.cursor = "default";
             buttonPlay.style.pointerEvents = "none";
-        },1000);
+        }, 1000);
 
-        setTimeout(function(){
+        setTimeout(function () {
             buttonPlay.style.opacity = "1";
             buttonPlay.style.cursor = "pointer";
             buttonPlay.style.pointerEvents = "auto";
-        },10000);
+        }, 10000);
     }
 }
 
 //Go game page
-function goGamePageId() {
-    setTimeout(function(){
-        sessionStorage.setItem("game-gcs-id", gameId);
+function goGamePageId(gamenickname) {
+    setTimeout(function () {
+        sessionStorage.setItem("game-gcs-id", gamenickname);
         window.location.href = './../pages/gcs-games.html';
     }, 500);
 }

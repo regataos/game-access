@@ -52,32 +52,31 @@ function autoCloseGameAccess() {
 }
 
 // Function to run games
-function run_game() {
+function run_game(gamenickname, launchername, rungame) {
 	const fs = require('fs');
-	const gamenickname = gameId;
 
-	var installed_launchers = fs.readFileSync("/tmp/regataos-gcs/config/installed-launchers.conf", "utf8");
-	if ((installed_launchers.indexOf(launchername) > -1) == "1") {
-		const command_line = `export GAMEVAR="${winevariable}";
-		export GAME="${gamename}";
+	const installedLaunchers = fs.readFileSync("/tmp/regataos-gcs/config/installed-launchers.conf", "utf8");
+	if (installedLaunchers.includes(launchername)) {
+		const commandLine = `
+		export GAME="${gamenickname}";
 		export LAUNCHER="${launchername}";
 		export RUNGAME="${rungame}";
 		/opt/regataos-gcs/scripts/action-games/auto-close-game-access &
 		/opt/regataos-gcs/scripts/action-games/rungame`;
+		runShellProcess(commandLine);
 
-		runShellProcess(command_line);
 		autoCloseGameAccess();
 
 		setTimeout(function () {
-			$(`.${gamename}-hover .play-box`).css("opacity", ".5")
-			$(`.${gamename}-hover .play-box`).css("cursor", "default")
-			$(`.${gamename}-hover .play-box`).css("pointer-events", "none");
+			$(`.${gamenickname}-hover .play-box`).css("opacity", ".5")
+			$(`.${gamenickname}-hover .play-box`).css("cursor", "default")
+			$(`.${gamenickname}-hover .play-box`).css("pointer-events", "none");
 		}, 1000);
 
 		setTimeout(function () {
-			$(`.${gamename}-hover .play-box`).css("opacity", "1")
-			$(`.${gamename}-hover .play-box`).css("cursor", "pointer")
-			$(`.${gamename}-hover .play-box`).css("pointer-events", "auto");
+			$(`.${gamenickname}-hover .play-box`).css("opacity", "1")
+			$(`.${gamenickname}-hover .play-box`).css("cursor", "pointer")
+			$(`.${gamenickname}-hover .play-box`).css("pointer-events", "auto");
 		}, 30000);
 
 		setTimeout(function () {
@@ -122,9 +121,8 @@ function run_game() {
 }
 
 // Run Steam game
-function run_steam_game() {
+function run_steam_game(gamenickname) {
 	const fs = require("fs");
-	const gamenickname = gameId;
 
 	if (!fs.existsSync(`/tmp/regataos-gcs/running-${gamenickname}`)) {
 		const command_line = `
@@ -152,11 +150,8 @@ function run_steam_game() {
 }
 
 // Install Steam game
-function install_steam_game() {
-	const gamenickname = gameId;
-	const command_line = `steam steam://rungameid/${gameid} & sleep 10;
-	steam steam://open/downloads`;
-
+function install_steam_game(gamenickname) {
+	const command_line = `steam steam://rungameid/${gamenickname} & sleep 10; steam steam://open/downloads`;
 	runShellProcess(command_line);
 
 	setTimeout(function () {
@@ -173,9 +168,8 @@ function install_steam_game() {
 }
 
 // Start installing game from Epic Games Store
-function install_epicstore_game() {
+function install_epicstore_game(gamenickname) {
 	const fs = require("fs");
-	const gamenickname = gameId;
 
 	function runInstallation() {
 		const command_line = `echo "${gamenickname}" > "/tmp/regataos-gcs/start-installation-epicstore.txt"`;
@@ -208,11 +202,11 @@ function install_epicstore_game() {
 }
 
 // Uninstall game from Epic Games Store
-function uninstall_epicstore_game() {
+function uninstall_epicstore_game(gamenickname) {
 	const fs = require("fs");
 
 	const gameToRemove = "/tmp/regataos-gcs/start-uninstallation-epicstore.txt"
-	fs.writeFileSync(gameToRemove, game_for_remove);
+	fs.writeFileSync(gameToRemove, gamenickname);
 
 	// Refresh the page
 	const fileStatus = "/tmp/regataos-gcs/config/file-status.txt";
@@ -236,14 +230,13 @@ function uninstall_epicstore_game() {
 }
 
 // Run game from Epic Games Store
-function run_epicstore_game() {
+function run_epicstore_game(gamenickname) {
 	const fs = require("fs");
-	const gamenickname = gameId;
 
 	if (!fs.existsSync(`/tmp/regataos-gcs/running-${gamenickname}`)) {
 		const command_line = `echo "${gamenickname}" > "/tmp/regataos-gcs/running-${gamenickname}";
 		export GAMENICK="${gamenickname}";
-		export GAMEID="${gameid}";
+		export GAMEID="${gamenickname}";
 		/opt/regataos-gcs/scripts/action-games/auto-close-game-access &
 		/opt/regataos-gcs/scripts/action-games/rungame-epicstore`;
 
@@ -265,8 +258,7 @@ function run_epicstore_game() {
 }
 
 // Start installing game from GOG Galaxy
-function install_gog_game() {
-	const gamenickname = gameId;
+function install_gog_game(gamenickname) {
 	const command_line = `export GAME_NIcKNAME="${gamenickname}";
 	/opt/regataos-gcs/scripts/action-games/install-game-gog`;
 
@@ -286,14 +278,13 @@ function install_gog_game() {
 }
 
 // Uninstall game from GOG Galaxy
-function uninstall_gog_game() {
-	const command_line = `echo "${game_for_remove}" > "/tmp/regataos-gcs/start-uninstallation-gog.txt"`;
+function uninstall_gog_game(gamenickname) {
+	const command_line = `echo "${gamenickname}" > "/tmp/regataos-gcs/start-uninstallation-gog.txt"`;
 	runShellProcess(command_line);
 }
 
 // Run game from GOG Galaxy
-function run_gog_game() {
-	const gamenickname = gameId;
+function run_gog_game(gamenickname) {
 	const command_line = `export GAME_NIcKNAME="${gamenickname}";
 	/opt/regataos-gcs/scripts/action-games/auto-close-game-access &
 	/opt/regataos-gcs/scripts/action-games/rungame-gog`;

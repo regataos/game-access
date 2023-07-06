@@ -11,9 +11,9 @@ function listAllGames(specifyLauncher, contentBrake) {
 		numBrake = 0;
 	}
 
-	let installGame = "installGameId()";
-	let runGame = "runGameId()";
-	let specialButtonFunction = "goGamePageId()";
+	let installGame = "";
+	let runGame = "";
+	let specialButtonFunction = "";
 	let specialButtonHtml = "";
 	let gamePlataform = "gcs";
 	let gameAccess = "GAME ACCESS";
@@ -30,20 +30,30 @@ function listAllGames(specifyLauncher, contentBrake) {
 
 			const dataReceived = JSON.parse(data);
 			dataReceived.forEach((gameData) => {
-				const { gamename, gamenickname, gamenative, game_img1, launcher, launchernickname } = gameData;
+				const { gamename, gamenickname, gamenative, game_img1, gamerun_appid, launcher, launchernickname } = gameData;
 
 				if ((specifyLauncher.replace("-games", "").includes(launchernickname)) ||
 					(specifyLauncher.includes("allgames")) || (specifyLauncher.includes("installed"))) {
 					// Set some default settings.
-					if (launchernickname.includes("steam")) {
-						installGame = runGame = `run_${launchernickname}_game()`;
+					if (launchernickname.includes("gcs")) {
+						installGame = `confirmInstallGameId('${gamenickname}')`;
+						runGame = `runGameId('${gamenickname}')`;
+						specialButtonFunction = `goGamePageId('${gamenickname}')`;
+
+					} else if (launchernickname.includes("steam")) {
+						installGame = `install_${launchernickname}_game('${gamenickname}')`;
+						runGame = `run_${launchernickname}_game('${gamenickname})')`;
 						gamePlataform = gamenative.includes("true") ? "nativegame" : "steamplay";
 
 					} else if ((launchernickname.includes("gog")) ||
 						(launchernickname.includes("epicstore"))) {
-						installGame = `install_${launchernickname}_game()`;
-						runGame = `run_${launchernickname}_game()`;
-						specialButtonFunction = `uninstall_${launchernickname}_game()`;
+						installGame = `install_${launchernickname}_game('${gamenickname}')`;
+						runGame = `run_${launchernickname}_game('${gamenickname})')`;
+						specialButtonFunction = `uninstall_${launchernickname}_game('${gamenickname}')`;
+
+					} else {
+						installGame = `run_launcher('${launchernickname}')`;
+						runGame = `run_game('${gamenickname}', '${launchernickname}', '${gamerun_appid}')`;
 					}
 
 					// Set the game image.
@@ -55,24 +65,26 @@ function listAllGames(specifyLauncher, contentBrake) {
 
 					if (launchernickname.includes("gcs")) {
 						specialButtonHtml = `
-							<div title="Mais sobre o jogo" class="morefor-game-button" onclick="window.gameId='${gamenickname}'; ${specialButtonFunction};">
+							<div title="Mais sobre o jogo" class="morefor-game-button" onclick="${specialButtonFunction};">
 								<i class="fa fa-plus"></i>
 							</div>`;
 
 					} else if ((isInstalled) && launchernickname.includes("epicstore") || launchernickname.includes("gog")) {
 						specialButtonHtml = `
-							<div title="Desinstalar jogo" class="remove-game-button" onclick="window.game_for_remove='${gamenickname}'; ${specialButtonFunction};">
+							<div title="Desinstalar jogo" class="remove-game-button" onclick="${specialButtonFunction};">
 								<i class="fas fa-trash-alt"></i>
 							</div>`;
+
+					} else {
+						specialButtonHtml = "";
 					}
 
-					const buttonId = gamenickname;
 					const buttonClass = isInstalled ? "play-box-universal" : "install-box-universal";
 					const buttonIconClass = isInstalled ? "fas fa-play" : "fas fa-download";
 					const buttonTextClass = isInstalled ? "play" : "install";
 					const buttonText = isInstalled ? "Jogar" : "Instalar";
 					let playInstallButton = `
-						<div class="${buttonClass}" onclick="window.gameId='${buttonId}'; ${isInstalled ? runGame : installGame};">
+						<div class="${buttonClass}" onclick="${isInstalled ? runGame : installGame};">
 							<div class="play-button">
 								<i class="${buttonIconClass}"></i>
 								<div class="${buttonTextClass}-txt">${buttonText}</div>
@@ -109,7 +121,7 @@ function listAllGames(specifyLauncher, contentBrake) {
 									if (isInstalled) {
 										specialButtonHtml = ""
 										playInstallButton = `
-											<div class="install-box-universal" onclick="window.gameId='${gamenickname}'; ${isInstalled ? runGame : installGame};">
+											<div class="install-box-universal" onclick="${isInstalled ? runGame : installGame};">
 												<div class="play-button">
 													<i class="fas fa-download"></i>
 													<div class="install-txt">Instalar</div>
