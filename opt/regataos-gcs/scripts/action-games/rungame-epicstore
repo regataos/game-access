@@ -45,7 +45,7 @@ fi
 # Enable AMD FSR
 if [[ $(grep -r amd-fsr $GCS_CONFIG) == *"amd-fsr=true"* ]]; then
 	# Enable AMD FSR with gamescope
-	fsr_with_gamescope="true"
+	fsr_with_gamescope="false"
 
 	if [[ $(echo $fsr_with_gamescope) == *"true"* ]]; then
 		# Check user resolution
@@ -69,7 +69,7 @@ if [[ $(grep -r amd-fsr $GCS_CONFIG) == *"amd-fsr=true"* ]]; then
 
 	else
 		export WINE_FULLSCREEN_FSR=1
-		export WINE_FULLSCREEN_FSR_STRENGTH=1
+		export WINE_FULLSCREEN_FSR_STRENGTH=2
 	fi
 fi
 

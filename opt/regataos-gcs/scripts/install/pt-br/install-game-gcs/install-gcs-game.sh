@@ -187,7 +187,7 @@ function install_app() {
 		# Enable AMD FSR
 		if [[ $(grep -r amd-fsr $GCS_CONFIG) == *"amd-fsr=true"* ]]; then
 			export WINE_FULLSCREEN_FSR=1
-			export WINE_FULLSCREEN_FSR_STRENGTH=1
+			export WINE_FULLSCREEN_FSR_STRENGTH=2
 		fi
 
 		# Enable performance info
