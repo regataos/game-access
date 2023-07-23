@@ -1,8 +1,7 @@
 // This script helps to dynamically create game blocks.
 function listAllGames(specifyLauncher, contentBrake) {
 	const fs = require("fs");
-	const allGamesJsonFiles = "/opt/regataos-gcs/games-list"
-	const installedGamesJsonFiles = "/tmp/regataos-gcs/config/installed"
+	const installedGamesJsonFiles = "/tmp/regataos-gcs/config/installed";
 	const accountGameBlocks = document.querySelector("#account-games");
 	const installedGameBlocks = document.querySelector("#installed-games");
 
@@ -19,6 +18,23 @@ function listAllGames(specifyLauncher, contentBrake) {
 	let gameAccess = "GAME ACCESS";
 
 	// Read JSON jsonFiles with the list of games.
+	let allGamesJsonFiles = "/opt/regataos-gcs/games-list";
+
+	if (specifyLauncher.includes("epicstore")) {
+		allGamesJsonFiles = "/tmp/regataos-gcs/config/epicstore-games/json";
+
+	} else if (specifyLauncher.includes("gog")) {
+		const getInstalledLaunchers = fs.readFileSync("/tmp/regataos-gcs/config/installed-launchers.conf", "utf8");
+		if (getInstalledLaunchers.includes("gog")) {
+			if (fs.existsSync("/tmp/regataos-gcs/config/gog-games/gamedb.json")) {
+				allGamesJsonFiles = "/tmp/regataos-gcs/config/gog-games/json";
+			}
+		}
+
+	} else if (specifyLauncher.includes("steam")) {
+		allGamesJsonFiles = "/tmp/regataos-gcs/config/steam-games/json/games";
+	}
+
 	fs.readdirSync(allGamesJsonFiles).forEach(jsonFile => {
 		const filePath = `${allGamesJsonFiles}/${jsonFile}`;
 
@@ -213,3 +229,26 @@ function startListAllGames() {
 	});
 }
 startListAllGames();
+
+// Hide the "install" button when the launcher is already installed.
+function hideInstallButtonLauncher() {
+	const fs = require("fs");
+	const fileWithInstalledLaunchers = "/tmp/regataos-gcs/config/installed-launchers.conf";
+	const installedLaunchers = fs.readFileSync(fileWithInstalledLaunchers, "utf8");
+
+	const seeMoreButton = document.querySelector(".epicstore-more");
+	const installButton = document.querySelector(".epicstore-install");
+
+	if ((!seeMoreButton) && (!seeMoreButton)) {
+		return;
+	}
+
+	if (installedLaunchers.includes("epicstore")) {
+		seeMoreButton.classList.add("show-element");
+		installButton.classList.remove("show-element");
+	} else {
+		seeMoreButton.classList.remove("show-element");
+		installButton.classList.add("show-element");
+	}
+}
+hideInstallButtonLauncher()

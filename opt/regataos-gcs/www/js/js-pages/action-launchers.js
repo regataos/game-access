@@ -66,25 +66,6 @@ function legendary_status() {
 }
 legendary_status();
 
-// Hide the "install" button when the launcher is already installed.
-function hideInstallButtonLauncher() {
-	const fs = require("fs");
-	const fileWithInstalledLaunchers = "/tmp/regataos-gcs/config/installed-launchers.conf";
-	const installedLaunchers = fs.readFileSync(fileWithInstalledLaunchers, "utf8");
-
-	const seeMoreButton = document.querySelector(".epicstore-more");
-	const installButton = document.querySelector(".epicstore-install");
-
-	if (installedLaunchers.includes("epicstore")) {
-		seeMoreButton.classList.add("show-element");
-		installButton.classList.remove("show-element");
-	} else {
-		seeMoreButton.classList.remove("show-element");
-		installButton.classList.add("show-element");
-	}
-}
-hideInstallButtonLauncher()
-
 // Detect changes in launcher installation and execute specific functions
 function detectInstallationLaunchers() {
 	const fs = require("fs");

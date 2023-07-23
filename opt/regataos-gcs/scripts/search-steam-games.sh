@@ -1,10 +1,6 @@
 #!/bin/bash
 
 # Create config directory.
-if test ! -e "$HOME/.local/share/Steam/steam.sh"; then
-	exit 0;
-fi
-
 if test ! -e "/tmp/regataos-gcs/config/steam-games.conf"; then
 	echo "" > "/tmp/regataos-gcs/config/steam-games.conf"
 fi
@@ -23,6 +19,10 @@ fi
 
 if test ! -e "/tmp/regataos-gcs/config/steam-games/json/games"; then
 	mkdir -p "/tmp/regataos-gcs/config/steam-games/json/games"
+fi
+
+if test ! -e "$HOME/.local/share/Steam/steam.sh"; then
+	exit 0;
 fi
 
 # Check for games installed by the Steam client.
