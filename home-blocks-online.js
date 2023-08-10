@@ -2,13 +2,13 @@ function home_content() {
     $(document).ready(function () {
         // Content of block 1
         //Title
-        $(".appbc1 .block-title").text("The Elder Scrolls Online");
+        $(".appbc1 .block-title").text("Europa Universalis IV");
         //Block image
-        $(".appbc1").css("background-image", 'url("https://i.ibb.co/W2kYL76/teso-block1.webp")');
+        $(".appbc1").css("background-image", 'url("https://i.ibb.co/0Q1stgV/eun-block1.webp")');
         $(".appbc1").css("background-position", "0% 100%")
         //Date
-        date_pt_br = "27 de julho"
-        date_en_us = "July 27"
+        date_pt_br = "17 de agosto"
+        date_en_us = "August 17"
     });
 
     // Detect User Language
