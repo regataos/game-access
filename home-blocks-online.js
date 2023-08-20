@@ -2,13 +2,13 @@ function home_content() {
     $(document).ready(function () {
         // Content of block 1
         //Title
-        $(".appbc1 .block-title").text("Europa Universalis IV");
+        $(".appbc1 .block-title").text("Black Book");
         //Block image
-        $(".appbc1").css("background-image", 'url("https://i.ibb.co/0Q1stgV/eun-block1.webp")');
+        $(".appbc1").css("background-image", 'url("https://i.ibb.co/Q6Cgz1b/bbk-block1.webp")');
         $(".appbc1").css("background-position", "0% 100%")
         //Date
-        date_pt_br = "17 de agosto"
-        date_en_us = "August 17"
+        date_pt_br = "24 de agosto"
+        date_en_us = "August 24"
     });
 
     // Detect User Language
