@@ -2,13 +2,13 @@ function home_content() {
     $(document).ready(function () {
         // Content of block 1
         //Title
-        $(".appbc1 .block-title").text("Out of Line");
+        $(".appbc1 .block-title").text("Soulstice");
         //Block image
-        $(".appbc1").css("background-image", 'url("https://i.ibb.co/Y0XXH7T/out-of-line.webp")');
+        $(".appbc1").css("background-image", 'url("https://i.ibb.co/7tTq9DB/soulstice.webp")');
         $(".appbc1").css("background-position", "0% 100%")
         //Date
-        date_pt_br = "28 de setembro"
-        date_en_us = "September 28"
+        date_pt_br = "5 de outubro"
+        date_en_us = "October 5"
     });
 
     // Detect User Language
