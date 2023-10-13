@@ -2,13 +2,13 @@ function home_content() {
     $(document).ready(function () {
         // Content of block 1
         //Title
-        $(".appbc1 .block-title").text("Soulstice");
+        $(".appbc1 .block-title").text("Q.U.B.E. Ultimate Bundle");
         //Block image
-        $(".appbc1").css("background-image", 'url("https://i.ibb.co/7tTq9DB/soulstice.webp")');
+        $(".appbc1").css("background-image", 'url("https://i.ibb.co/0XS2pV6/qube-ultimate-bundle.webp")');
         $(".appbc1").css("background-position", "0% 100%")
         //Date
-        date_pt_br = "5 de outubro"
-        date_en_us = "October 5"
+        date_pt_br = "19 de outubro"
+        date_en_us = "October 19"
     });
 
     // Detect User Language
