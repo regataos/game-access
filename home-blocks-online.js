@@ -2,13 +2,13 @@ function home_content() {
     $(document).ready(function () {
         // Content of block 1
         //Title
-        $(".appbc1 .block-title").text("Eternal Threads");
+        $(".appbc1 .block-title").text("Tandem: a Tale of Shadows");
         //Block image
-        $(".appbc1").css("background-image", 'url("https://i.ibb.co/F7p8Syw/eternal-threads.webp")');
+        $(".appbc1").css("background-image", 'url("https://i.ibb.co/YhYJmkh/tandem-a-tale-of-shadows.webp")');
         $(".appbc1").css("background-position", "0% 100%")
         //Date
-        date_pt_br = "26 de outubro"
-        date_en_us = "October 26"
+        date_pt_br = "02 de novembro"
+        date_en_us = "November 02"
     });
 
     // Detect User Language
