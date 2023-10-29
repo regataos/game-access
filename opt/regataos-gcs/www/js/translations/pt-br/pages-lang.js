@@ -1,5 +1,5 @@
 // Portuguese language translation for all pages
-$(document).ready(function() {
+$(document).ready(function () {
 	// For all pages
 	//Display FPS HUD
 	$(".fpshud p").text("Exibir contador de FPS");
@@ -24,8 +24,8 @@ $(document).ready(function() {
 	$(".nogamefound-desc").text("Infelizmente, ainda não achei nenhum jogo instalado.");
 	$(".allgames-title").text("Lista com alguns dos jogos que você pode rodar com o Regata OS Game Access");
 	$(".loading-games").text("Carregando a sua biblioteca de jogos...");
-	$(".remove-game-button").attr({title:"Desinstalar jogo"});
-	$(".morefor-game-button").attr({title:"Mais sobre o jogo"});
+	$(".remove-game-button").attr({ title: "Desinstalar jogo" });
+	$(".morefor-game-button").attr({ title: "Mais sobre o jogo" });
 
 	// Steam games
 	//Page title
@@ -99,6 +99,13 @@ $(document).ready(function() {
 	$(".option-fps-hud-desc").text("Esta opção habilita um HUD que exibe informações sobre o desempenho dos jogos e uso do hardware.");
 	$(".fps-hud-desc").text("Exibir FPS HUD");
 
+	//FPS display position
+	$("#fps-hud-position-title").text("Posição do FPS HUD:");
+	$(".fps-top-left").text("No canto superior esquerdo da tela");
+	$(".fps-top-right").text("No canto superior direito da tela");
+	$(".fps-bottom-left").text("No canto inferior esquerdo da tela");
+	$(".fps-bottom-right").text("No canto inferior direito da tela");
+
 	//AMD FSR option
 	$(".option-amd-fsr-title").text("Ativar o AMD FidelityFX Super Resolution (FSR)");
 	$(".option-amd-fsr-desc").text("Esta opção habilita o recurso AMD FSR para ajudar a impulsionar suas taxas de quadros nos jogos.");
@@ -113,5 +120,5 @@ $(document).ready(function() {
 	$(".option-find-games-external-folder").text("Localizar automaticamente jogos em uma pasta externa");
 	$(".option-find-games-external-folder-desc").text("Esta opção permite ao Game Access buscar também jogos em um outro diretório/disco externo.");
 	$(".external-games-folder-button-txt").text("Adicionar pasta externa");
-	$("#remove-external-games-folder-dir").attr({title:"Remover"});
+	$("#remove-external-games-folder-dir").attr({ title: "Remover" });
 });

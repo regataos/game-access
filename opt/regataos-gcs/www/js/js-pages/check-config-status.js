@@ -1,84 +1,86 @@
 // Check if FPS HUD is enabled
-function check_fps() {
+function checkFps() {
 	const fs = require('fs');
-	var read_settings = fs.readFileSync("/tmp/regataos-gcs/config/regataos-gcs.conf", "utf8");
+	const readSettings = fs.readFileSync("/tmp/regataos-gcs/config/regataos-gcs.conf", "utf8");
+	const checkBox = document.querySelector("#fps-hud-enabled");
+	const fpsHudOptions = document.querySelector("#show-fps-hud-options");
 
-	if ((read_settings.indexOf("fps=true") > -1) == "1") {
-		$(".option-fps-hud-enabled").css("display", "block")
-		$(".option-fps-hud-disabled").css("display", "none")
-
-	} else if ((read_settings.indexOf("fps=false") > -1) == "1") {
-		$(".option-fps-hud-enabled").css("display", "none")
-		$(".option-fps-hud-disabled").css("display", "block")
-
+	if (readSettings.includes("fps=true")) {
+		checkBox.checked = "checked";
+		fpsHudOptions.style.display = "block";
+	} else if (readSettings.includes("fps=false")) {
+		checkBox.checked = "";
+		fpsHudOptions.style.display = "none";
 	} else {
-		$(".option-fps-hud-enabled").css("display", "none")
-		$(".option-fps-hud-disabled").css("display", "block")
+		checkBox.checked = "";
+		fpsHudOptions.style.display = "none";
+	}
+
+	const readMangohudSettings = fs.readFileSync("/tmp/regataos-gcs/config/MangoHud.conf", "utf8");
+	const fpsPositionButton = document.querySelector("#fps-hud-position");
+
+	if (readMangohudSettings.includes("position")) {
+		const languageDetected = checkConfigFile(readMangohudSettings, "position=");
+		fpsPositionButton.classList.add(`fps-${languageDetected}`);
+	} else {
+		fpsPositionButton.classList.add("fps-top-left");
 	}
 }
-check_fps()
+checkFps()
+
+// Check if AMD FSR is enabled
+function checkAmdFsr() {
+	const fs = require('fs');
+	const readSettings = fs.readFileSync("/tmp/regataos-gcs/config/regataos-gcs.conf", "utf8");
+	const checkBox = document.querySelector("#amd-fsr-enabled");
+
+	if (readSettings.includes("amd-fsr=true")) {
+		checkBox.checked = "checked";
+	} else if (readSettings.includes("amd-fsr=false")) {
+		checkBox.checked = "";
+	} else {
+		checkBox.checked = "";
+	}
+}
+checkAmdFsr()
 
 // Check if the automatically close game access function is enabled
-function check_auto_close() {
+function checkAutoClose() {
 	const fs = require('fs');
-	var read_settings = fs.readFileSync("/tmp/regataos-gcs/config/regataos-gcs.conf", "utf8");
+	const readSettings = fs.readFileSync("/tmp/regataos-gcs/config/regataos-gcs.conf", "utf8");
+	const checkBox = document.querySelector("#auto-close-enabled");
 
-	if ((read_settings.indexOf("auto-close=true") > -1) == "1") {
-		$(".option-auto-close-enabled").css("display", "block")
-		$(".option-auto-close-disabled").css("display", "none")
-
-	} else if ((read_settings.indexOf("auto-close=false") > -1) == "1") {
-		$(".option-auto-close-enabled").css("display", "none")
-		$(".option-auto-close-disabled").css("display", "block")
-
+	if (readSettings.includes("auto-close=true")) {
+		checkBox.checked = "checked";
+	} else if (readSettings.includes("auto-close=false")) {
+		checkBox.checked = "";
 	} else {
-		$(".option-auto-close-enabled").css("display", "none")
-		$(".option-auto-close-disabled").css("display", "block")
+		checkBox.checked = "";
 	}
 }
-check_auto_close()
+checkAutoClose()
 
 function check_external_games_folder() {
 	const fs = require('fs');
 
 	fs.access("/tmp/regataos-gcs/config/external-games-folder.txt", (err) => {
-	if (!err) {
-		let external_games_dir = fs.readFileSync("/tmp/regataos-gcs/config/external-games-folder.txt", "utf8");
+		if (!err) {
+			let external_games_dir = fs.readFileSync("/tmp/regataos-gcs/config/external-games-folder.txt", "utf8");
 			external_games_dir = external_games_dir.replace(/(\r\n|\n|\r)/gm, "");
 
-		$(".external-games-folder-dir-desc").text(external_games_dir);
-		$(".external-games-folder-dir").css("display", "block")
+			$(".external-games-folder-dir-desc").text(external_games_dir);
+			$(".external-games-folder-dir").css("display", "block")
 
-		return;
-	} else {
-		$(".external-games-folder-dir").css("display", "none")
+			return;
+		} else {
+			$(".external-games-folder-dir").css("display", "none")
 
-		const exec = require('child_process').exec;
-		const remove_external_games_folder_file = 'rm -f "$HOME/Game Access/External-Disc"';
-		exec(remove_external_games_folder_file,function(error,call,errlog){
-		});
-	}
+			const exec = require('child_process').exec;
+			const remove_external_games_folder_file = 'rm -f "$HOME/Game Access/External-Disc"';
+			exec(remove_external_games_folder_file, function (error, call, errlog) {
+			});
+		}
 	});
 }
 
 check_external_games_folder()
-
-// Check if AMD FSR is enabled
-function check_amdfsr() {
-	const fs = require('fs');
-	var read_settings = fs.readFileSync("/tmp/regataos-gcs/config/regataos-gcs.conf", "utf8");
-
-	if ((read_settings.indexOf("amd-fsr=true") > -1) == "1") {
-		$(".option-amd-fsr-enabled").css("display", "block")
-		$(".option-amd-fsr-disabled").css("display", "none")
-
-	} else if ((read_settings.indexOf("amd-fsr=false") > -1) == "1") {
-		$(".option-amd-fsr-enabled").css("display", "none")
-		$(".option-amd-fsr-disabled").css("display", "block")
-
-	} else {
-		$(".option-amd-fsr-enabled").css("display", "none")
-		$(".option-amd-fsr-disabled").css("display", "block")
-	}
-}
-check_amdfsr()

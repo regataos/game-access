@@ -1,53 +1,66 @@
 #!/bin/bash
 
+advancedOption=$2
+regataosgcsSettings="$HOME/.config/regataos-gcs/regataos-gcs.conf"
+mangohudSettings="$HOME/.config/MangoHud/MangoHud.conf"
+
 # Enable/desable FPS
 function fps_hud() {
-    if [[ $(grep -r fps "$HOME/.config/regataos-gcs/regataos-gcs.conf") == *"fps=true"* ]]; then
-        sed -i 's/\(fps=true\)/fps=false/' "$HOME/.config/regataos-gcs/regataos-gcs.conf"
+    if [[ $(echo "$advancedOption") == *"position"* ]]; then
+        # Before making changes to the mangohud configuration file,
+        # first check that the "position" option has the correct
+        # positioning data on the hud screen.
+        if [ ! -z $(echo "$advancedOption" | cut -d"=" -f 2-) ];then
+            fpsHudPosition=$(echo "$advancedOption" | cut -d"-" -f 4-)
 
-    elif [[ $(grep -r fps "$HOME/.config/regataos-gcs/regataos-gcs.conf") == *"fps=false"* ]]; then
-        sed -i 's/\(fps=false\)/fps=true/' "$HOME/.config/regataos-gcs/regataos-gcs.conf"
-
+            if [ ! -z $fpsHudPosition ];then
+                sed -i '/position=/d' "$mangohudSettings"
+                sed -i '/^$/d' "$mangohudSettings"
+                echo "position=$fpsHudPosition" >> "$mangohudSettings"
+            fi
+        fi
     else
-        echo "fps=true" >> "$HOME/.config/regataos-gcs/regataos-gcs.conf"
-        sed -i '/^$/d' "$HOME/.config/regataos-gcs/regataos-gcs.conf"
-    fi
-}
-
-# Enable/disable automatic closing of Game Access
-function auto_close() {
-    if [[ $(grep -r auto-close "$HOME/.config/regataos-gcs/regataos-gcs.conf") == *"auto-close=true"* ]]; then
-        sed -i 's/\(auto-close=true\)/auto-close=false/' "$HOME/.config/regataos-gcs/regataos-gcs.conf"
-
-    elif [[ $(grep -r auto-close "$HOME/.config/regataos-gcs/regataos-gcs.conf") == *"auto-close=false"* ]]; then
-        sed -i 's/\(auto-close=false\)/auto-close=true/' "$HOME/.config/regataos-gcs/regataos-gcs.conf"
-
-    else
-        echo "auto-close=true" >> "$HOME/.config/regataos-gcs/regataos-gcs.conf"
-        sed -i '/^$/d' "$HOME/.config/regataos-gcs/regataos-gcs.conf"
+        if [[ $(echo "$advancedOption") == *"true"* ]]; then
+            sed -i 's/\(fps=false\)/fps=true/' "$regataosgcsSettings"
+        elif [[ $(echo "$advancedOption") == *"false"* ]]; then
+            sed -i 's/\(fps=true\)/fps=false/' "$regataosgcsSettings"
+        else
+            echo "fps=true" >> "$regataosgcsSettings"
+            sed -i '/^$/d' "$regataosgcsSettings"
+        fi
     fi
 }
 
 # Enable/desable AMD FSR
 function amd_fsr() {
-    if [[ $(grep -r amd-fsr "$HOME/.config/regataos-gcs/regataos-gcs.conf") == *"amd-fsr=true"* ]]; then
-        sed -i 's/\(amd-fsr=true\)/amd-fsr=false/' "$HOME/.config/regataos-gcs/regataos-gcs.conf"
-
-    elif [[ $(grep -r amd-fsr "$HOME/.config/regataos-gcs/regataos-gcs.conf") == *"amd-fsr=false"* ]]; then
-        sed -i 's/\(amd-fsr=false\)/amd-fsr=true/' "$HOME/.config/regataos-gcs/regataos-gcs.conf"
-
+    if [[ $(echo "$advancedOption") == *"true"* ]]; then
+        sed -i 's/\(amd-fsr=false\)/amd-fsr=true/' "$regataosgcsSettings"
+    elif [[ $(echo "$advancedOption") == *"false"* ]]; then
+        sed -i 's/\(amd-fsr=true\)/amd-fsr=false/' "$regataosgcsSettings"
     else
         /opt/regataos-gcs/scripts/check-support-amd-fsr.sh start
-        sed -i '/^$/d' "$HOME/.config/regataos-gcs/regataos-gcs.conf"
+        sed -i '/^$/d' "$regataosgcsSettings"
+    fi
+}
+
+# Enable/disable automatic closing of Game Access
+function auto_close() {
+    if [[ $(echo "$advancedOption") == *"true"* ]]; then
+        sed -i 's/\(auto-close=false\)/auto-close=true/' "$regataosgcsSettings"
+    elif [[ $(echo "$advancedOption") == *"false"* ]]; then
+        sed -i 's/\(auto-close=true\)/auto-close=false/' "$regataosgcsSettings"
+    else
+        echo "auto-close=true" >> "$regataosgcsSettings"
+        sed -i '/^$/d' "$regataosgcsSettings"
     fi
 }
 
 case $1 in
    "-fpshud") fps_hud
          ;;
-   "-autoclose") auto_close
-         ;;
    "-amd-fsr") amd_fsr
+         ;;
+   "-autoclose") auto_close
          ;;
    *) echo "Invalid option!"
       exit 1

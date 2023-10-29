@@ -49,6 +49,10 @@ if test ! -e "$HOME/.config/MangoHud/MangoHud.conf"; then
 	cp -f "/opt/regataos-wine/custom-configs/mangohud/MangoHud.conf" "$HOME/.config/MangoHud/MangoHud.conf"
 fi
 
+if test ! -e "/tmp/regataos-gcs/config/MangoHud.conf"; then
+	ln -sf "$HOME/.config/MangoHud/MangoHud.conf" "/tmp/regataos-gcs/config/MangoHud.conf"
+fi
+
 # Create download cache
 if test ! -e "$HOME/.config/regataos-gcs/progressbar-gcs"; then
 	mkdir -p "$HOME/.config/regataos-gcs/progressbar-gcs/"

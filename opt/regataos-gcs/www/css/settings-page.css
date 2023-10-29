@@ -10,21 +10,26 @@
 
 .config-option-title {
     font-family: Roboto;
-    font-size: 18px;
+    font-size: 20px;
     margin-bottom: 5px;
 }
 
 .config-option-desc {
     font-family: Roboto;
-    font-size: 15px;
+    font-size: 16px;
 }
 
 .checkbox-fps-hud {
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    width: 160px;
+    width: 170px;
     margin-top: 0px;
+    margin-left: 5px;
+}
+
+.checkbox-amd-fsr {
+    width: 180px;
     margin-left: 5px;
 }
 
@@ -32,13 +37,13 @@
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    width: 220px;
+    width: 240px;
     margin-top: 0px;
     margin-left: 5px;
 }
 
 .option-settings-desc {
-    font-size: 15px;
+    font-size: 17px;
     font-family: Roboto;
     line-height: 1.4em;
 }
@@ -93,14 +98,92 @@
     transform: rotate(45deg);
 }
 
-.option-fps-hud-enabled {
-    display: none;
-}
-
-.option-amd-fsr-enabled {
-    display: none;
-}
-
+.option-fps-hud-enabled,
+.option-amd-fsr-enabled,
 .option-auto-close-enabled {
+    display: block;
+}
+
+/* Select fps hud position */
+#show-fps-hud-options {
+    float: left;
+    margin-left: 5px;
+    margin-bottom: 20px;
+    transition: all .3s;
+}
+
+#fps-hud-position-title {
+    font-size: 17px;
+    font-family: Roboto;
+    line-height: 1.4em;
+    float: left;
+    margin-top: 6px;
+    margin-right: 5px;
+}
+
+#fps-position,
+#fps-hud-position {
+    float: left;
+    cursor: pointer;
+    background-color: #383e42;
+    border: 0px;
+    border-radius: 3px;
+    padding: 3px 15px;
+    padding-bottom: 2px;
+    margin-left: 5px !important;
+    text-align: center;
+    height: 36px;
+    color: #fff;
+    margin-left: 10px;
+    font-size: 15px;
+    font-family: Roboto;
+    line-height: 1.4em;
+    font-weight: 300;
+    transition: all .3s;
+}
+
+#fps-hud-position:hover {
+    background-color: #43494d;
+    border: 0px;
+}
+
+#fps-position {
     display: none;
+    left: 141px;
+    width: auto;
+    height: auto;
+    padding: 10px 0px;
+    position: absolute;
+    z-index: 1000;
+    border-radius: 3px;
+    cursor: auto;
+    background-color: #383e4291;
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 1px 3px;
+    transition: all .3s;
+}
+
+#fps-position div {
+    padding: 12px 20px;
+    transition: all .3s;
+    text-align: left;
+    margin-left: 10px;
+    margin-right: 10px;
+    border-radius: 3px;
+    transition: all .3s;
+}
+
+.division-options {
+    cursor: auto !important;
+    margin: 10px 10px !important;
+    padding: 0 !important;
+    border-bottom: 2px solid #495054;
+}
+
+#fps-position div:focus,
+#fps-position div:hover {
+    background-color: #43494d;
+    cursor: pointer;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 1px 3px;
 }
