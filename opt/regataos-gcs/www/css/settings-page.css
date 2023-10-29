@@ -20,12 +20,14 @@
 }
 
 .checkbox-fps-hud {
+    float: left;
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    width: 170px;
+    width: 155px;
     margin-top: 0px;
     margin-left: 5px;
+    margin-right: 10px;
 }
 
 .checkbox-amd-fsr {
@@ -105,20 +107,16 @@
 }
 
 /* Select fps hud position */
+.option-fps-hud-desc {
+    margin-bottom: 5px;
+}
+
 #show-fps-hud-options {
     float: left;
+    margin-top: 9px;
     margin-left: 5px;
     margin-bottom: 20px;
     transition: all .3s;
-}
-
-#fps-hud-position-title {
-    font-size: 17px;
-    font-family: Roboto;
-    line-height: 1.4em;
-    float: left;
-    margin-top: 6px;
-    margin-right: 5px;
 }
 
 #fps-position,
@@ -149,7 +147,7 @@
 
 #fps-position {
     display: none;
-    left: 141px;
+    left: 175px;
     width: auto;
     height: auto;
     padding: 10px 0px;
@@ -186,4 +184,72 @@
     background-color: #43494d;
     cursor: pointer;
     box-shadow: rgba(0, 0, 0, 0.2) 0px 1px 3px;
+}
+
+#fps-hud-appearance-title {
+    font-size: 17px;
+    font-family: Roboto;
+    line-height: 1.4em;
+}
+
+#fps-hud-appearance {
+    float: left;
+    width: 400px;
+    margin-left: 5px;
+}
+
+#fps-hud-appearance input {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 10px;
+    border-radius: 5px;
+    background: linear-gradient(to right, #0078f2 65%, #48505a 50%);
+    outline: none;
+}
+
+#fps-hud-appearance input::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: #fff;
+    cursor: pointer;
+    box-shadow: rgba(0, 0, 0, 0.8) 0px 0px 3px;
+}
+
+#fps-hud-appearance ul {
+    padding-left: 0px;
+    margin-top: 0px;
+    margin-left: 5px;
+}
+
+#fps-hud-appearance .lines-range {
+    height: 26px;
+    padding-left: 0px;
+    margin-top: 0px;
+    margin-left: 5px;
+    margin-bottom: 0px;
+}
+
+#fps-hud-appearance .lines-range li {
+    display: inline-block;
+    height: 20px;
+    width: 7px;
+    background-color: #3f464e;
+    border-radius: 3px;
+}
+
+#fps-hud-appearance ul li {
+    display: inline-block;
+    margin-left: 117px;
+}
+
+#fps-hud-appearance ul li:first-child {
+    display: inline-block;
+    margin-left: 0px;
+}
+
+#fps-hud-appearance ul .lines-number {
+
 }

@@ -40,7 +40,6 @@
 		</div>
 
 		<div id="show-fps-hud-options">
-			<div id="fps-hud-position-title">FPS HUD position:</div>
 			<button id="fps-hud-position" onclick="showSpecifiedMenu(this.id, 'fps-position')">At the top left corner of the screen</button>
 			<div id="fps-position">
 				<div class="fps-top-left" onclick="showSpecifiedMenu('fps-hud-position', 'fps-position', 'fps-top-left')">At the top left corner of the screen</div>
@@ -51,6 +50,23 @@
 				<div class="division-options"></div>
 				<div class="fps-bottom-right" onclick="showSpecifiedMenu('fps-hud-position', 'fps-position', 'fps-bottom-right')">At the bottom right corner of the screen</div>
 			</div>
+		</div>
+
+		<div id="fps-hud-appearance">
+			<div id="fps-hud-appearance-title">Choose a style for the FPS HUD</div>
+			<input id="fpsHudLookRange" type="range" step='1' min="1" max="4" value="3">
+			<ul class="lines-range">
+				<li class="fps-hud-appearance-1" style="margin-left: 5px;"></li>
+				<li class="fps-hud-appearance-2" style="margin-left: 117px;"></li>
+				<li class="fps-hud-appearance-3" style="margin-left: 113px;"></li>
+				<li class="fps-hud-appearance-4" style="margin-left: 115px;"></li>
+			</ul>
+			<ul class="lines-number">
+				<li style="margin-left: 5px;">1</li>
+				<li style="margin-left: 117px;">2</li>
+				<li style="margin-left: 112px;">3</li>
+				<li style="margin-left: 114px;">4</li>
+			</ul>
 		</div>
 	</div>
 

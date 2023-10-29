@@ -100,11 +100,13 @@ $(document).ready(function () {
 	$(".fps-hud-desc").text("View FPS HUD");
 
 	//FPS display position
-	$("#fps-hud-position-title").text("FPS HUD position:");
 	$(".fps-top-left").text("At the top left corner of the screen");
 	$(".fps-top-right").text("At the top right corner of the screen");
 	$(".fps-bottom-left").text("At the bottom left corner of the screen");
 	$(".fps-bottom-right").text("At the bottom right corner of the screen");
+
+	//FPS look
+	$("#fps-hud-appearance-title").text("Choose a style for the FPS HUD");
 
 	//AMD FSR option
 	$(".option-amd-fsr-title").text("Enable AMD FidelityFX Super Resolution (FSR)");

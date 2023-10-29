@@ -19,6 +19,15 @@ function fps_hud() {
                 echo "position=$fpsHudPosition" >> "$mangohudSettings"
             fi
         fi
+
+    elif [[ $(echo "$advancedOption") == *"preset"* ]]; then
+        if [[ $(echo "$advancedOption") == *"preset"* ]]; then
+            fpsHudLook=$(echo "$advancedOption" | cut -d"-" -f 3-)
+            sed -i '/preset=/d' "$mangohudSettings"
+            sed -i '/^$/d' "$mangohudSettings"
+            echo "preset=$fpsHudLook" >> "$mangohudSettings"
+        fi
+
     else
         if [[ $(echo "$advancedOption") == *"true"* ]]; then
             sed -i 's/\(fps=false\)/fps=true/' "$regataosgcsSettings"
