@@ -69,6 +69,11 @@ function checkFps() {
 		document.querySelector(".fps-hud-appearance-1").style.backgroundColor = "#0078f2";
 		document.querySelector(".fps-hud-appearance-2").style.backgroundColor = "#0078f2";
 		document.querySelector(".fps-hud-appearance-3").style.backgroundColor = "#0078f2";
+
+		const lookName = document.querySelector("#look-name");
+		lookName.classList.add("look-name-3");
+		langSelectingFpsHudLook("look-name-3")
+
 	}
 }
 checkFps()
