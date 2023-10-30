@@ -24,7 +24,7 @@
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    width: 155px;
+    width: 170px;
     margin-top: 0px;
     margin-left: 5px;
     margin-right: 10px;
@@ -108,7 +108,7 @@
 
 /* Select fps hud position */
 .option-fps-hud-desc {
-    margin-bottom: 5px;
+    margin-bottom: 15px;
 }
 
 #show-fps-hud-options {
@@ -120,6 +120,7 @@
 }
 
 #fps-position,
+#fps-hud-preview,
 #fps-hud-position {
     float: left;
     cursor: pointer;
@@ -140,6 +141,11 @@
     transition: all .3s;
 }
 
+#fps-hud-preview {
+    margin-left: 10px !important;
+}
+
+#fps-hud-preview:hover,
 #fps-hud-position:hover {
     background-color: #43494d;
     border: 0px;
@@ -194,14 +200,23 @@
 
 #fps-hud-appearance {
     float: left;
-    width: 400px;
+    width: 100%;
+    margin-top: 10px;
     margin-left: 5px;
 }
 
-#fps-hud-appearance input {
-    -webkit-appearance: none;
+#fps-hud-appearance-main {
+    display: flex;
     width: 100%;
-    height: 10px;
+    position: relative;
+}
+
+#fps-hud-appearance input {
+    position: relative;
+    -webkit-appearance: none;
+    width: 400px;
+    height: 8px;
+    float: left;
     border-radius: 5px;
     background: linear-gradient(to right, #0078f2 65%, #48505a 50%);
     outline: none;
@@ -210,8 +225,8 @@
 #fps-hud-appearance input::-webkit-slider-thumb {
     -webkit-appearance: none;
     appearance: none;
-    width: 25px;
-    height: 25px;
+    width: 22px;
+    height: 22px;
     border-radius: 50%;
     background: #fff;
     cursor: pointer;
@@ -225,6 +240,8 @@
 }
 
 #fps-hud-appearance .lines-range {
+    width: 100%;
+    float: left;
     height: 26px;
     padding-left: 0px;
     margin-top: 0px;
@@ -236,7 +253,7 @@
     display: inline-block;
     height: 20px;
     width: 7px;
-    background-color: #3f464e;
+    background-color: #48505a;
     border-radius: 3px;
 }
 
@@ -250,6 +267,51 @@
     margin-left: 0px;
 }
 
-#fps-hud-appearance ul .lines-number {
+#fps-hud-appearance .lines-number {
+    width: 100%;
+    float: left;
+}
 
+#fps-hud-appearance .lines-number li {
+    font-size: 17px;
+    font-family: Roboto;
+    line-height: 1.4em;
+    font-weight: 700;
+}
+
+#fps-hud-look-name {
+    position: relative;
+    width: auto;
+    float: left;
+    margin-left: 10px;
+}
+
+.triangle-div {
+    display: inline-block;
+    margin-right: 50px;
+    position: absolute;
+    top: -4px;
+}
+
+.triangle-left {
+    width: 0; 
+    height: 0; 
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent; 
+    border-right: 10px solid #383e42; 
+}
+
+#look-name {
+    position: relative;
+    top: -20px;
+    background-color: #383e42;
+    padding: 10px 20px;
+    border-radius: 3px;
+    margin-left: 10px;
+    width: auto;
+    text-align: center;
+}
+
+#input-range-div {
+    width: 400px;
 }

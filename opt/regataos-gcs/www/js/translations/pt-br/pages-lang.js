@@ -96,7 +96,7 @@ $(document).ready(function () {
 
 	//FPS option
 	$(".option-fps-hud-title").text("Mostrar o FPS dos jogos");
-	$(".option-fps-hud-desc").text("Esta opção habilita um HUD que exibe informações sobre o desempenho dos jogos e uso do hardware.");
+	$(".option-fps-hud-desc").text("Esta opção habilita um HUD que exibe detalhes sobre o desempenho dos jogos e uso do hardware. Você também pode escolher em que canto da tela ele irá aparecer e qual será a aparência.");
 	$(".fps-hud-desc").text("Exibir FPS HUD");
 
 	//FPS display position
@@ -107,6 +107,7 @@ $(document).ready(function () {
 
 	//FPS look
 	$("#fps-hud-appearance-title").text("Escolha um estilo para o FPS HUD");
+	$("#fps-hud-preview").text("Visualizar o FPS HUD");
 
 	//AMD FSR option
 	$(".option-amd-fsr-title").text("Ativar o AMD FidelityFX Super Resolution (FSR)");
@@ -124,3 +125,17 @@ $(document).ready(function () {
 	$(".external-games-folder-button-txt").text("Adicionar pasta externa");
 	$("#remove-external-games-folder-dir").attr({ title: "Remover" });
 });
+
+function langSelectingFpsHudLook(classItem) {
+	const styleName = {
+		"look-name-1": "Exibir apenas o FPS",
+		"look-name-2": "FPS HUD na horizontal",
+		"look-name-3": "FPS HUD extendido",
+		"look-name-4": "FPS HUD mais detalhado"
+	};
+
+	if (typeof styleName[classItem] !== "undefined") {
+		const displayStyleName = document.querySelector(`.${classItem}`);
+		displayStyleName.innerHTML = styleName[classItem];
+	}
+}

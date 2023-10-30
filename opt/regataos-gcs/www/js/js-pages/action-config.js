@@ -77,35 +77,47 @@ fpsHudLookRange.addEventListener("input", (event) => {
 	exec(setFpsHudPosition, function (error, call, errlog) {
 	});
 
+	const lookName = document.querySelector("#look-name");
+	lookName.className = "";
+	lookName.classList.add(`look-name-${fpsHudLookRangeValue}`);
+	langSelectingFpsHudLook(`look-name-${fpsHudLookRangeValue}`)
+
 	if (fpsHudLookRangeValue == 1) {
-		fpsHudLookRange.style.background = "linear-gradient(to right, #0078f2 0%, #3f464e 0%)";
+		fpsHudLookRange.style.background = "linear-gradient(to right, #0078f2 0%, #48505a 0%)";
 		document.querySelector(".fps-hud-appearance-1").style.backgroundColor = "#0078f2";
-		document.querySelector(".fps-hud-appearance-2").style.backgroundColor = "#3f464e";
-		document.querySelector(".fps-hud-appearance-3").style.backgroundColor = "#3f464e";
-		document.querySelector(".fps-hud-appearance-4").style.backgroundColor = "#3f464e";
+		document.querySelector(".fps-hud-appearance-2").style.backgroundColor = "#48505a";
+		document.querySelector(".fps-hud-appearance-3").style.backgroundColor = "#48505a";
+		document.querySelector(".fps-hud-appearance-4").style.backgroundColor = "#48505a";
 
 	} else if (fpsHudLookRangeValue == 2) {
-		fpsHudLookRange.style.background = "linear-gradient(to right, #0078f2 35%, #3f464e 0%)";
+		fpsHudLookRange.style.background = "linear-gradient(to right, #0078f2 35%, #48505a 0%)";
 		document.querySelector(".fps-hud-appearance-1").style.backgroundColor = "#0078f2";
 		document.querySelector(".fps-hud-appearance-2").style.backgroundColor = "#0078f2";
-		document.querySelector(".fps-hud-appearance-3").style.backgroundColor = "#3f464e";
-		document.querySelector(".fps-hud-appearance-4").style.backgroundColor = "#3f464e";
+		document.querySelector(".fps-hud-appearance-3").style.backgroundColor = "#48505a";
+		document.querySelector(".fps-hud-appearance-4").style.backgroundColor = "#48505a";
 
 	} else if (fpsHudLookRangeValue == 3) {
-		fpsHudLookRange.style.background = "linear-gradient(to right, #0078f2 65%, #3f464e 50%)";
+		fpsHudLookRange.style.background = "linear-gradient(to right, #0078f2 65%, #48505a 50%)";
 		document.querySelector(".fps-hud-appearance-1").style.backgroundColor = "#0078f2";
 		document.querySelector(".fps-hud-appearance-2").style.backgroundColor = "#0078f2";
 		document.querySelector(".fps-hud-appearance-3").style.backgroundColor = "#0078f2";
-		document.querySelector(".fps-hud-appearance-4").style.backgroundColor = "#3f464e";
+		document.querySelector(".fps-hud-appearance-4").style.backgroundColor = "#48505a";
 
 	} else if (fpsHudLookRangeValue == 4) {
-		fpsHudLookRange.style.background = "linear-gradient(to right, #0078f2 100%, #3f464e 0%)";
+		fpsHudLookRange.style.background = "linear-gradient(to right, #0078f2 100%, #48505a 0%)";
 		document.querySelector(".fps-hud-appearance-1").style.backgroundColor = "#0078f2";
 		document.querySelector(".fps-hud-appearance-2").style.backgroundColor = "#0078f2";
 		document.querySelector(".fps-hud-appearance-3").style.backgroundColor = "#0078f2";
 		document.querySelector(".fps-hud-appearance-4").style.backgroundColor = "#0078f2";
 	}
 })
+
+function previewFpsHud() {
+	const exec = require('child_process').exec;
+	const runFpsHudPreview = "/opt/regataos-gcs/scripts/settings-page -preview-fpshud";
+	exec(runFpsHudPreview, function (error, call, errlog) {
+	});
+}
 
 // Enable/disable automatic closing of Game Access
 function enableAutoClose() {
