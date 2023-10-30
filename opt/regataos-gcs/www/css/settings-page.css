@@ -134,7 +134,7 @@
     height: 36px;
     color: #fff;
     margin-left: 10px;
-    font-size: 15px;
+    font-size: 17px;
     font-family: Roboto;
     line-height: 1.4em;
     font-weight: 300;
@@ -153,7 +153,7 @@
 
 #fps-position {
     display: none;
-    left: 175px;
+    left: 190px;
     width: auto;
     height: auto;
     padding: 10px 0px;
@@ -196,6 +196,7 @@
     font-size: 17px;
     font-family: Roboto;
     line-height: 1.4em;
+    margin-bottom: 10px;
 }
 
 #fps-hud-appearance {
@@ -303,13 +304,18 @@
 
 #look-name {
     position: relative;
-    top: -20px;
+    top: -15px;
     background-color: #383e42;
-    padding: 10px 20px;
+    padding: 10px 15px;
+    padding-bottom: 7px;
     border-radius: 3px;
     margin-left: 10px;
     width: auto;
     text-align: center;
+    font-size: 17px;
+    font-family: Roboto;
+    line-height: 1.4em;
+    font-weight: 300;
 }
 
 #input-range-div {
