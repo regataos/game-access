@@ -65,7 +65,6 @@ fi
 
 # Enable performance info
 if [[ $(grep -r fps $GCS_CONFIG) == *"fps=true"* ]]; then
-    export MANGOHUD_CONFIG=cpu_temp,cpu_mhz,ram,vram,gpu_core_clock,gpu_temp,gpu_name,benchmark_percentiles,gamemode,font_size=19
 
     if [[ $(echo $game_plataform) == *"windows"* ]]; then
         export MANGOHUD=1
