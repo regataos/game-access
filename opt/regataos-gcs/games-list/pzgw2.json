@@ -1,0 +1,14 @@
+[
+	{
+		"gamename": "Plants vs Zombies Garden Warfare 2",
+		"gamenickname": "pzgw2",
+		"gameexecutable": "GW2.Main_Win64_Retail.exe",
+		"gamerun_appid": "",
+		"winevariable": "WINEESYNC=1",
+		"gamekeywords": "Plants vs Zombies Garden Warfare 2, plants vs zombies garden warfare 2, aventura, tiro em terceira pessoa, ação, acao, action, third person shooter, adventure, ea app, ea games",
+		"launcher": "EA App",
+		"launchernickname": "eadesktop",
+		"gameorigin": "suggestedgame",
+		"game_access": "false"
+	}
+]

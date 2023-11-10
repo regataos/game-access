@@ -1,0 +1,14 @@
+[
+	{
+		"gamename": "Mirror's Edge Catalyst",
+		"gamenickname": "mirrors-edge-catalyst",
+		"gameexecutable": "MirrorsEdgeCatalyst.exe",
+		"gamerun_appid": "",
+		"winevariable": "WINEESYNC=1 WINE_LARGE_ADDRESS_AWARE=1",
+		"gamekeywords": "Mirror's Edge Catalyst, mirrors edge catalyst, ação, acao, action, aventura em primeira pessoa, adventure in first person, fps, ea app, ea games",
+		"launcher": "EA App",
+		"launchernickname": "eadesktop",
+		"gameorigin": "suggestedgame",
+		"game_access": "false"
+    }
+]

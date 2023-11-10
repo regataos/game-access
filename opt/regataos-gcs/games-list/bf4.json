@@ -1,0 +1,14 @@
+[
+	{
+		"gamename": "Battlefield 4",
+		"gamenickname": "bf4",
+		"gameexecutable": "bf4.exe",
+		"gamerun_appid": "",
+		"winevariable": "WINEESYNC=1 WINE_LARGE_ADDRESS_AWARE=1",
+		"gamekeywords": "Battlefield 4, battlefield 4, bf4, bf, tiro em primeira pessoa, first person shooter, fps, multiplayer, ea app, ea games",
+		"launcher": "EA App",
+		"launchernickname": "eadesktop",
+		"gameorigin": "suggestedgame",
+		"game_access": "false"
+    }
+]

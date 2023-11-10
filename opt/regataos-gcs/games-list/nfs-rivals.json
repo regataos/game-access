@@ -1,0 +1,14 @@
+[
+	{
+		"gamename": "Need for Speed Rivals",
+		"gamenickname": "nfs-rivals",
+		"gameexecutable": "NFS14.exe",
+		"gamerun_appid": "",
+		"winevariable": "WINEESYNC=1 WINE_LARGE_ADDRESS_AWARE=1",
+		"gamekeywords": "Need for Speed Rivals, need for speed rivals, nfs, corrida, automobilismo, race, motor racing, ea app, ea games",
+		"launcher": "EA App",
+		"launchernickname": "eadesktop",
+		"gameorigin": "suggestedgame",
+		"game_access": "false"
+	}
+]

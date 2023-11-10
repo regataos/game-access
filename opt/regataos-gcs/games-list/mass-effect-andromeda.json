@@ -1,0 +1,14 @@
+[
+	{
+		"gamename": "Mass Effect: Andromeda",
+		"gamenickname": "mass-effect-andromeda",
+		"gameexecutable": "MassEffectAndromeda.exe",
+		"gamerun_appid": "",
+		"winevariable": "WINEESYNC=1 WINE_LARGE_ADDRESS_AWARE=1",
+		"gamekeywords": "Mass Effect Andromeda, mass effect andromeda, ação, acao, tiro em terceira pessoa, action, first person shooter, fps, ea app, ea games",
+		"launcher": "EA App",
+		"launchernickname": "eadesktop",
+		"gameorigin": "suggestedgame",
+		"game_access": "false"
+    }
+]
