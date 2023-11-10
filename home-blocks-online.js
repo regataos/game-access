@@ -2,13 +2,13 @@ function home_content() {
     $(document).ready(function () {
         // Content of block 1
         //Title
-        $(".appbc1 .block-title").text("Tandem: a Tale of Shadows");
+        $(".appbc1 .block-title").text("Golden Light");
         //Block image
-        $(".appbc1").css("background-image", 'url("https://i.ibb.co/YhYJmkh/tandem-a-tale-of-shadows.webp")');
+        $(".appbc1").css("background-image", 'url("https://i.ibb.co/BKHHhGp/golden-light-block1.webp")');
         $(".appbc1").css("background-position", "0% 100%")
         //Date
-        date_pt_br = "02 de novembro"
-        date_en_us = "November 02"
+        date_pt_br = "16 de novembro"
+        date_en_us = "November 16"
     });
 
     // Detect User Language
