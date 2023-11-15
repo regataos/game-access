@@ -1,0 +1,14 @@
+[
+	{
+		"gamename": "Immortals Fenyx Rising",
+		"gamenickname": "immortals-fenyx-rising",
+		"gameexecutable": "ImmortalsFenyxRising.exe",
+		"gamerun_appid": "uplay://launch/5405/0",
+		"winevariable": "WINEESYNC=1 WINE_LARGE_ADDRESS_AWARE=1",
+		"gamekeywords": "Immortals Fenyx Rising, immortals fenyx rising, tiro em terceira pessoa, tático, mundo aberto, third person shooting, open world, tactical, ubisoft connect",
+		"launcher": "Ubisoft Connect",
+		"launchernickname": "ubisoftconnect",
+		"gameorigin": "suggestedgame",
+		"game_access": "false"
+	}
+]

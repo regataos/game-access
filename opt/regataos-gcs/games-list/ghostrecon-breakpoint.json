@@ -1,0 +1,14 @@
+[
+	{
+		"gamename": "Ghost Recon Breakpoint",
+		"gamenickname": "ghostrecon-breakpoint",
+		"gameexecutable": "GRB.exe",
+		"gamerun_appid": "uplay://launch/11903/0",
+		"winevariable": "WINEESYNC=1 WINE_LARGE_ADDRESS_AWARE=1",
+		"gamekeywords": "Tom Clancy's Ghost Recon Breakpoint, tom clancys ghost recon breakpoint, tiro em terceira pessoa, tático, mundo aberto, third person shooting, open world, tactical, ubisoft connect",
+		"launcher": "Ubisoft Connect",
+		"launchernickname": "ubisoftconnect",
+		"gameorigin": "suggestedgame",
+		"game_access": "false"
+	}
+]
