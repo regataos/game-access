@@ -2,13 +2,13 @@ function home_content() {
     $(document).ready(function () {
         // Content of block 1
         //Title
-        $(".appbc1 .block-title").text("Golden Light");
+        $(".appbc1 .block-title").text("Earthlock");
         //Block image
-        $(".appbc1").css("background-image", 'url("https://i.ibb.co/BKHHhGp/golden-light-block1.webp")');
+        $(".appbc1").css("background-image", 'url("https://i.ibb.co/4M6Vn5F/earthlock-block1.webp")');
         $(".appbc1").css("background-position", "0% 100%")
         //Date
-        date_pt_br = "16 de novembro"
-        date_en_us = "November 16"
+        date_pt_br = "23 de novembro"
+        date_en_us = "November 23"
     });
 
     // Detect User Language
