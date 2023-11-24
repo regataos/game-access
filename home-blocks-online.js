@@ -2,13 +2,13 @@ function home_content() {
     $(document).ready(function () {
         // Content of block 1
         //Title
-        $(".appbc1 .block-title").text("Earthlock");
+        $(".appbc1 .block-title").text("Deliver Us Mars");
         //Block image
-        $(".appbc1").css("background-image", 'url("https://i.ibb.co/4M6Vn5F/earthlock-block1.webp")');
+        $(".appbc1").css("background-image", 'url("https://i.ibb.co/MBVMDp8/dm-block1.webp")');
         $(".appbc1").css("background-position", "0% 100%")
         //Date
-        date_pt_br = "23 de novembro"
-        date_en_us = "November 23"
+        date_pt_br = "30 de novembro"
+        date_en_us = "November 30"
     });
 
     // Detect User Language
