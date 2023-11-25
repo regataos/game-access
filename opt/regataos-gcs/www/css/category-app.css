@@ -11,6 +11,15 @@
 	padding-top: 5px;
 }
 
+.account-title-gog {
+    float: none;
+    width: 95%;
+    padding-left: 0px;
+	margin-top: 30px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 .settings-title {
 	width: 100%;
 }
@@ -47,11 +56,11 @@ div.universal-title {
 }
 
 .view-more {
-	position: relative;
+	position: absolute;
+    right: 0px;
     text-align: center;
     width: auto;
     height: auto;
-    float: right;
 	font-family: Roboto;
 	font-size: 17px;
 	font-weight: 400;
@@ -254,7 +263,7 @@ div.universal-title {
     animation-duration: .5s;
 }
 
-#account-games, #installed-games {
+#account-games, #installed-games, #universal-account {
     position: relative;
     display: grid;
     grid-template-columns: auto auto auto auto auto auto;
@@ -266,7 +275,7 @@ div.universal-title {
 }
 
 .list-account-games, .list-installed-games {
-	display: none !important;
+	display: none;
 }
 
 .app-block {

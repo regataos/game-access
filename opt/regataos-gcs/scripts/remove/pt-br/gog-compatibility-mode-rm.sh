@@ -40,7 +40,9 @@ function remove_app() {
 	rm -f "$HOME/.local/share/applications/GOG GALAXY.desktop"
 	rm -f $HOME/.config/regataos-gcs/$app_nickname.conf
 	rm -f $HOME/.config/regataos-gcs/$app_nickname-games.conf
-	echo "update page" > "/tmp/regataos-gcs/up-page-gog.txt"
+	/opt/regataos-gcs/scripts/search-gog-games.sh start
+	rm -rf /tmp/regataos-gcs/config/gog-games/*
+	echo "reload page" > "/tmp/regataos-gcs/up-page-gog.txt"
 }
 
 # Uninstall failed notify

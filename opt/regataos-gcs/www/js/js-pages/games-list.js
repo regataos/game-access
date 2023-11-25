@@ -16,6 +16,7 @@ function listAllGames(specifyLauncher, contentBrake) {
 	let specialButtonHtml = "";
 	let gamePlataform = "gcs";
 	let gameAccess = "GAME ACCESS";
+	let gameBanner = "";
 
 	// Read JSON jsonFiles with the list of games.
 	let allGamesJsonFiles = "/opt/regataos-gcs/games-list";
@@ -73,10 +74,14 @@ function listAllGames(specifyLauncher, contentBrake) {
 					}
 
 					// Set the game image.
-					const gameBanner = getGamesImagePath(launchernickname, gamenickname, game_img1);
+					if (game_img1) {
+						gameBanner = `url('${game_img1}')`;
+					} else {
+						gameBanner = getGamesImagePath(launchernickname, gamenickname);
+					}
 
 					// Check if the game is installed and create the game tile according to the game installation status.
-					const isInstalled = fs.existsSync(`${installedGamesJsonFiles}/${gamenickname}.json`) ||
+					let isInstalled = fs.existsSync(`${installedGamesJsonFiles}/${gamenickname}.json`) ||
 						fs.existsSync(`${installedGamesJsonFiles}/${gamenickname}-${launchernickname}.json`);
 
 					if (launchernickname.includes("gcs")) {
@@ -85,11 +90,13 @@ function listAllGames(specifyLauncher, contentBrake) {
 								<i class="fa fa-plus"></i>
 							</div>`;
 
-					} else if ((isInstalled) && launchernickname.includes("epicstore") || launchernickname.includes("gog")) {
-						specialButtonHtml = `
+					} else if (isInstalled !== false) {
+						if (launchernickname.includes("epicstore") || launchernickname.includes("gog")) {
+							specialButtonHtml = `
 							<div title="Desinstalar jogo" class="remove-game-button" onclick="${specialButtonFunction};">
 								<i class="fas fa-trash-alt"></i>
 							</div>`;
+						}
 
 					} else {
 						specialButtonHtml = "";

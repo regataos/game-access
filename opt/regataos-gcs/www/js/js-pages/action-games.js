@@ -292,16 +292,3 @@ function run_gog_game(gamenickname) {
 		$(`.${gamenickname}-block .play-box-universal`).css("pointer-events", "auto");
 	}, 50000);
 }
-
-// Show suggested games or titles available in the user's library
-function run_search_gog_games() {
-	const commandLine = '/opt/regataos-gcs/scripts/search-gog-games.sh';
-	runShellProcess(commandLine);
-}
-run_search_gog_games();
-
-setTimeout(function () {
-	setInterval(function () {
-		run_search_gog_games()
-	}, 1000);
-}, 1000);

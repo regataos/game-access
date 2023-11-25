@@ -1,5 +1,5 @@
 // Get games image path
-function getGamesImagePath(launcher, filename, byurl) {
+function getGamesImagePath(launcher, filename) {
     const fs = require("fs");
     const defaultImageDirectory = `/opt/regataos-gcs/www/images/games-backg/${launcher}`;
     const imgDir = `/tmp/regataos-gcs/config/${launcher}-games/img`;
@@ -12,19 +12,12 @@ function getGamesImagePath(launcher, filename, byurl) {
         if (fs.existsSync(imagePath)) {
             return `url('file://${imagePath}')`;
         }
-
         if (fs.existsSync(imagePathExtension)) {
             return `url('file://${imagePathExtension}')`;
         }
-
         if (fs.existsSync(`${defaultImageDirectory}/${filename}.jpg`)) {
             return `url('file://${defaultImageDirectory}/${filename}.jpg')`;
         }
-
-        if (byurl !== undefined || byurl !== null) {
-            return `url('${byurl}')`;
-        }
     }
-
     return "false";
 }

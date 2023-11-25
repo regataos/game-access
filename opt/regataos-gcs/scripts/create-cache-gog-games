@@ -18,6 +18,7 @@ cat > "/tmp/regataos-gcs/config/gog-games/json/$gamename_lowercase-gog.json" << 
 		"gamename": "$game_name",
 		"gamenickname": "$gamename_lowercase",
 		"gameid": "$game_id",
+		"gameid": "$gamename_lowercase",
 		"gamekeywords": "$game_name, $gamekeywords, gog galaxy",
 		"launcher": "GOG Galaxy",
 		"launchernickname": "gog",

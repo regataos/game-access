@@ -1,29 +1,40 @@
 @media screen and (max-width: 2360px) {
-	#account-games, #installed-games {
+
+	#account-games,
+	#installed-games,
+	#universal-account {
 		grid-template-columns: auto auto auto auto auto;
 	}
 }
 
 @media screen and (max-width: 2220px) {
-	#account-games, #installed-games {
+
+	#account-games,
+	#installed-games,
+	#universal-account {
 		grid-template-columns: auto auto auto auto;
 	}
 }
 
 @media screen and (max-width: 2048px) {
+
 	/* slide */
 	.slideshow {
 		height: 595px;
 	}
+
 	.slideshow .slides {
 		height: 570px;
 	}
+
 	.slideshow .slide .image-container {
 		height: 850px;
 	}
+
 	.slideshow .slide .text {
 		font-size: 20px;
 	}
+
 	.btn {
 		font: 13px/1.2 "Oxygen", sans-serif;
 	}
@@ -36,25 +47,36 @@
 }
 
 @media screen and (max-width: 1860px) {
+
 	/* blocks home */
 	.home-blocks .app-block,
 	.home-blocks .appbc1 {
 		height: 300px;
 	}
 
-	#account-games, #installed-games {
+	#account-games,
+	#installed-games,
+	#universal-account {
 		width: 97%;
+	}
+
+	.account-title-gog {
+		width: 97%;
+		padding-left: 20px;
 	}
 }
 
 @media screen and (max-width: 1441px) {
+
 	/* slide */
 	.slideshow {
 		height: 470px;
 	}
+
 	.slideshow .slides {
 		height: 450px;
 	}
+
 	.slideshow .slide .image-container {
 		height: 650px;
 	}
@@ -72,21 +94,27 @@
 }
 
 @media screen and (max-width: 1420px) {
+
 	/* page games gcs */
 	.content-box {
 		max-width: 1000px;
 	}
+
 	.post-box {
 		width: 60%;
 	}
+
 	#hardware-minimum {
 		width: 275px;
 	}
+
 	#hardware-recommended {
 		width: 275px;
 	}
 
-	#account-games, #installed-games {
+	#account-games,
+	#installed-games,
+	#universal-account {
 		grid-template-columns: auto auto auto;
 	}
 }
@@ -100,7 +128,9 @@
 		max-width: 500px;
 	}
 
-	#account-games, #installed-games {
+	#account-games,
+	#installed-games,
+	#universal-account {
 		grid-template-columns: auto auto;
 	}
 
@@ -128,7 +158,7 @@
 		float: left;
 		width: 49%;
 		margin-top: 25px;
-    	margin-right: 0px;
+		margin-right: 0px;
 		margin-bottom: 50px;
 	}
 

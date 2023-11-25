@@ -1,45 +1,42 @@
 #!/bin/bash
 
+allSuggestedGames="/opt/regataos-gcs/games-list"
+gogGamesNoLongerSuggested="/tmp/regataos-gcs/config/gog-games/json-old"
+
 # Move suggested games JSON files to JSON files created from user library on GOG Galaxy
 function move_suggested_games() {
-	directory_1="/opt/regataos-gcs/games-list"
-	directory_2="/tmp/regataos-gcs/config/gog-games/json-old"
-	mkdir -p "$directory_2/"
-
-	mv -f "$directory_1/awp.json" "$directory_2/awp.json"
-	mv -f "$directory_1/fallout3.json" "$directory_2/fallout3.json"
-	mv -f "$directory_1/lost-ember.json" "$directory_2/lost-ember.json"
-	mv -f "$directory_1/mrr-edge.json" "$directory_2/mrr-edge.json"
-	mv -f "$directory_1/ptnn.json" "$directory_2/ptnn.json"
-	mv -f "$directory_1/sniper-contracts.json" "$directory_2/sniper-contracts.json"
-	mv -f "$directory_1/sniper3.json" "$directory_2/sniper3.json"
-	mv -f "$directory_1/tw2.json" "$directory_2/tw2.json"
-	mv -f "$directory_1/tw3.json" "$directory_2/tw3.json"
+	mkdir -p "$gogGamesNoLongerSuggested/"
+	mv -fv "$allSuggestedGames/awp.json" "$gogGamesNoLongerSuggested/awp.json"
+	mv -fv "$allSuggestedGames/fallout3.json" "$gogGamesNoLongerSuggested/fallout3.json"
+	mv -fv "$allSuggestedGames/lost-ember.json" "$gogGamesNoLongerSuggested/lost-ember.json"
+	mv -fv "$allSuggestedGames/mrr-edge.json" "$gogGamesNoLongerSuggested/mrr-edge.json"
+	mv -fv "$allSuggestedGames/ptnn.json" "$gogGamesNoLongerSuggested/ptnn.json"
+	mv -fv "$allSuggestedGames/sniper-contracts.json" "$gogGamesNoLongerSuggested/sniper-contracts.json"
+	mv -fv "$allSuggestedGames/sniper3.json" "$gogGamesNoLongerSuggested/sniper3.json"
+	mv -fv "$allSuggestedGames/tw2.json" "$gogGamesNoLongerSuggested/tw2.json"
+	mv -fv "$allSuggestedGames/tw3.json" "$gogGamesNoLongerSuggested/tw3.json"
 }
 
 # Restore suggested games JSON files for GOG Galaxy
 function restore_suggested_games() {
-	directory_1="/tmp/regataos-gcs/config/gog-games/json-old"
-	directory_2="/opt/regataos-gcs/games-list"
-
-	if test -e "$directory_1" && [[ $(ls "$directory_1/") == *".json"* ]]; then
-		mv -f "$directory_1/awp.json" "$directory_2/awp.json"
-		mv -f "$directory_1/fallout3.json" "$directory_2/fallout3.json"
-		mv -f "$directory_1/lost-ember.json" "$directory_2/lost-ember.json"
-		mv -f "$directory_1/mrr-edge.json" "$directory_2/mrr-edge.json"
-		mv -f "$directory_1/ptnn.json" "$directory_2/ptnn.json"
-		mv -f "$directory_1/sniper-contracts.json" "$directory_2/sniper-contracts.json"
-		mv -f "$directory_1/sniper3.json" "$directory_2/sniper3.json"
-		mv -f "$directory_1/tw2.json" "$directory_2/tw2.json"
-		mv -f "$directory_1/tw3.json" "$directory_2/tw3.json"
+	if test -e "$gogGamesNoLongerSuggested" && [[ $(ls "$gogGamesNoLongerSuggested/") == *".json"* ]]; then
+		mv -fv "$gogGamesNoLongerSuggested/awp.json" "$allSuggestedGames/awp.json"
+		mv -fv "$gogGamesNoLongerSuggested/fallout3.json" "$allSuggestedGames/fallout3.json"
+		mv -fv "$gogGamesNoLongerSuggested/lost-ember.json" "$allSuggestedGames/lost-ember.json"
+		mv -fv "$gogGamesNoLongerSuggested/mrr-edge.json" "$allSuggestedGames/mrr-edge.json"
+		mv -fv "$gogGamesNoLongerSuggested/ptnn.json" "$allSuggestedGames/ptnn.json"
+		mv -fv "$gogGamesNoLongerSuggested/sniper-contracts.json" "$allSuggestedGames/sniper-contracts.json"
+		mv -fv "$gogGamesNoLongerSuggested/sniper3.json" "$allSuggestedGames/sniper3.json"
+		mv -fv "$gogGamesNoLongerSuggested/tw2.json" "$allSuggestedGames/tw2.json"
+		mv -fv "$gogGamesNoLongerSuggested/tw3.json" "$allSuggestedGames/tw3.json"
 
 		# Clear cache
-		rm -f $directory_2/*-gog.json
-		rm -f /tmp/regataos-gcs/config/installed/*-gog.json
-		rm -f /tmp/regataos-gcs/config/installed/show-installed-games-gog.txt
+		rm -fv $allSuggestedGames/*-gog.json
+		rm -fv /tmp/regataos-gcs/config/installed/*-gog.json
+		rm -fv /tmp/regataos-gcs/config/installed/show-installed-games-gog.txt
 
 		if test -e "$HOME/.config/regataos-gcs/gog-games/gamedb.json"; then
-			rm -f "$HOME/.config/regataos-gcs/gog-games/gamedb.json"
+			rm -fv "$HOME/.config/regataos-gcs/gog-games/gamedb.json"
 		fi
 	fi
 }
@@ -63,17 +60,14 @@ if [[ $(cat "$HOME/.config/regataos-gcs/installed-launchers.conf") == *"gog"* ]]
 				echo "gamedb.json: No such file or directory!"
 				restore_suggested_games
 			fi
-
 		else
 			echo "galaxy-2.0.db: No such file or directory!"
 			restore_suggested_games
 		fi
-
 	else
 		echo "The "userId" was not found!"
 		restore_suggested_games
 	fi
-
 else
 	echo "GOG Galaxy is not installed!"
 	restore_suggested_games

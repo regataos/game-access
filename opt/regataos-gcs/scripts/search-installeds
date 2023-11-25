@@ -23,10 +23,27 @@ function search_installeds() {
 	fi
 }
 
+# Check GOG Login
+function checkGogLogin() {
+	user=$(users | awk '{print $1}')
+
+	if [[ $(grep -r userId "$HOME/.local/share/wineprefixes/gog-compatibility-mode/drive_c/users/$user/AppData/Local/GOG.com/Galaxy/Configuration/config.json") == *"userId"* ]]; then
+		if ! test -e "$HOME/.config/regataos-gcs/gog-games/gamedb.json"; then
+			ps -C "search-gog-games.sh" > /dev/null
+			if [ $? = 1 ]; then
+				/opt/regataos-gcs/scripts/search-gog-games.sh start
+			fi
+		fi
+	fi
+}
+
 # Check for JSON files in the directory listing installed games
 function detect_games() {
 	directory_installed_json="/tmp/regataos-gcs/config/installed"
 	check_installed_games=$(ls $directory_installed_json/)
+
+	# For GOG Games
+	/bin/bash /opt/regataos-gcs/scripts/search-gog-games.sh
 
 	if [[ $(echo $check_installed_games) == *".json"* ]]; then
 		echo "Show installed games!" > "$directory_installed_json/show-installed-games.txt"
@@ -58,12 +75,11 @@ detect_games_loop() {
 		ps -C "regataosgcs" > /dev/null
 		if [ $? = 0 ]; then
 			/bin/bash /opt/regataos-gcs/scripts/search-steam-games.sh & \
-			detect_games
+			detect_games & checkGogLogin
 		else
 			echo "Nothing to do..."
 			break
 		fi
-
 		sleep 10
 	done
 }
