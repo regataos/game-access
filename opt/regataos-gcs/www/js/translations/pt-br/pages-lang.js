@@ -16,6 +16,9 @@ $(document).ready(function () {
 	//Check internet connection
 	$(".networkoff-title").text("Não foi possível conectar-se à Internet");
 	$(".networkoff-desc").html("Verifique os cabos de rede, modem e roteador ou<br/> conecte à rede Wi-Fi novamente.");
+	//Game blocks
+	document.querySelector(".home-game2 .block-desc").innerHTML = "Divertido jogo de tiro em primeira pessoa estilo arena.";
+	document.querySelector(".home-game3 .block-desc").innerHTML = "Desperte como um guerreiro implacável.";
 
 	// All Games page
 	//Page title

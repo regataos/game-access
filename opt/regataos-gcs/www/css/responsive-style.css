@@ -1,4 +1,7 @@
 @media screen and (max-width: 2360px) {
+	.home-game-img {
+		height: 300px;
+	}
 
 	#account-games,
 	#installed-games,
@@ -17,8 +20,6 @@
 }
 
 @media screen and (max-width: 2048px) {
-
-	/* slide */
 	.slideshow {
 		height: 595px;
 	}
@@ -38,20 +39,11 @@
 	.btn {
 		font: 13px/1.2 "Oxygen", sans-serif;
 	}
-
-	/* home game blocks */
-	.home-blocks .app-block,
-	.home-blocks .appbc1 {
-		height: 350px;
-	}
 }
 
 @media screen and (max-width: 1860px) {
-
-	/* blocks home */
-	.home-blocks .app-block,
-	.home-blocks .appbc1 {
-		height: 300px;
+	.home-game-img {
+		height: 220px;
 	}
 
 	#account-games,
@@ -67,8 +59,6 @@
 }
 
 @media screen and (max-width: 1441px) {
-
-	/* slide */
 	.slideshow {
 		height: 470px;
 	}
@@ -81,12 +71,6 @@
 		height: 650px;
 	}
 
-	/* blocks home */
-	.home-blocks .app-block,
-	.home-blocks .appbc1 {
-		height: 250px;
-	}
-
 	.home-blocks .block-text {
 		min-height: 104px;
 		padding: 15px;
@@ -94,8 +78,6 @@
 }
 
 @media screen and (max-width: 1420px) {
-
-	/* page games gcs */
 	.content-box {
 		max-width: 1000px;
 	}
@@ -133,10 +115,6 @@
 	#universal-account {
 		grid-template-columns: auto auto;
 	}
-
-	.appbc1 {
-		width: 100%;
-	}
 }
 
 @media screen and (max-width: 1175px) {
@@ -151,25 +129,28 @@
 
 @media screen and (max-width: 1080px) {
 	.home-blocks3 {
-		display: block;
+		display: grid;
 	}
 
-	.home-blocks .app-block {
-		float: left;
-		width: 49%;
-		margin-top: 25px;
-		margin-right: 0px;
-		margin-bottom: 50px;
-	}
-
-	.home-blocks .app-block:last-child {
-		float: right;
-	}
-
-	.home-blocks .appbc1 {
+	.big-block-home {
 		width: 100%;
-		height: 350px;
-		margin-top: 0px;
-		margin-bottom: 0px;
+	}
+
+	.home-game1 {
+		width: 100%;
+		margin-left: 0px;
+		margin-right: 0px;
+	}
+
+	.home-game1 .home-game-img {
+		height: 300px;
+	}
+
+	.big-block-home-flex, .home-game2 {
+		margin-left: 0px;
+	}
+
+	.home-game3 {
+		margin-right: 0px;
 	}
 }
