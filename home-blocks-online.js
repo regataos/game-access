@@ -5,10 +5,7 @@ function home_content() {
         $(".appbc1 .block-title").text("Deliver Us Mars");
         //Block image
         $(".appbc1").css("background-image", 'url("https://i.ibb.co/MBVMDp8/dm-block1.webp")');
-        $(".appbc1").css("background-position", "50% 0%");
-        $(".appbc1").css("background-size", "100% auto");
-        $(".appbc1").css("height", "330px");
-        $(".appbc1").css("width", "130%");
+        $(".appbc1").css("background-position", "0% 100%")
         //Date
         date_pt_br = "30 de novembro"
         date_en_us = "November 30"
