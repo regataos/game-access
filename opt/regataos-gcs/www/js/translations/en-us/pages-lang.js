@@ -17,8 +17,8 @@ $(document).ready(function () {
 	$(".networkoff-title").text("Unable to connect to the Internet");
 	$(".networkoff-desc").html("Check the network, modem and router cables or<br/> connect to the Wi-Fi network again.");
 	//Game blocks
-	document.querySelector(".home-game2 .block-desc").innerHTML = "Fun and addictive arena-style first person shooter.";
-	document.querySelector(".home-game3 .block-desc").innerHTML = "Awaken as a ruthless warrior.";
+	$(".home-game2 .block-desc").html("Fun and addictive arena-style first person shooter.");
+	$(".home-game3 .block-desc").html("Awaken as a ruthless warrior.");
 
 	// All Games page
 	//Page title
