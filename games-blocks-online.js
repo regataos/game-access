@@ -1,9 +1,9 @@
 function showFreeGameHome() {
     // Content of block 1
-    const gameTile = "Deliver Us Mars";
-    const gameImg = 'url("https://i.ibb.co/MBVMDp8/dm-block1.webp")';
-    const endPromotionPtBt = "30 de novembro";
-    const endPromotionEnUS = "November 30";
+    const gameTile = "GigaBash";
+    const gameImg = 'url("https://i.ibb.co/smRBw2C/gigabash-block1.webp")';
+    const endPromotionPtBt = "13 de dezembro";
+    const endPromotionEnUS = "December 13";
 
     document.querySelector(".home-game1 .block-title").innerHTML = gameTile;
     document.querySelector(".home-game1 .home-game-img").style.backgroundImage = gameImg;
