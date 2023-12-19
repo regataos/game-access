@@ -17,9 +17,9 @@
 		"execute_args": "",
 		"gamefolder": "lol",
 		"custom_runtime": "true",
-		"custom_runtime_name": "lutris-ge-lol-p8-12-x86_64",
-		"custom_runtime_download": "https://github.com/GloriousEggroll/wine-ge-custom/releases/download/GE-LOL-p8-12/wine-lutris-ge-lol-p8-12-x86_64.tar.xz",
-		"custom_runtime_file": "wine-lutris-ge-lol-p8-12-x86_64.tar.xz",
+		"custom_runtime_name": "lutris-GE-Proton8-27-LoL-x86_64",
+		"custom_runtime_download": "https://github.com/GloriousEggroll/wine-ge-custom/releases/download/GE-Proton8-27-LoL/wine-lutris-GE-Proton8-27-LoL-x86_64.tar.xz",
+		"custom_runtime_file": "wine-lutris-GE-Proton8-27-LoL-x86_64.tar.xz",
 		"plataform": "windows",
 		"gamenative": "gcs",
 		"game_access": "true",
@@ -50,7 +50,7 @@
 			"minimum": {
 				"cpu": "Intel Core i3-530, AMD A6-3650",
 				"gpu": "NVIDIA GeForce 9600 GT, AMD Radeon HD 6570",
-				"memory": "4 GB",
+				"memory": "6 GB",
 				"disk": "16 GB"
 			},
 			"recommended": {
