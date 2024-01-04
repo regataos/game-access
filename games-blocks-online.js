@@ -1,9 +1,9 @@
 function showFreeGameHome() {
     // Content of block 1
-    const gameTile = "Cat Quest";
-    const gameImg = 'url("https://i.ibb.co/ZGXrCLB/cat-quest.webp")';
-    const endPromotionPtBt = "29 de dezembro";
-    const endPromotionEnUS = "December 29";
+    const gameTile = "Marvel's Guardians of the Galaxy";
+    const gameImg = 'url("https://i.ibb.co/xgZv2dW/mgg.webp")';
+    const endPromotionPtBt = "11 de janeiro";
+    const endPromotionEnUS = "January 11";
 
     document.querySelector(".home-game1 .block-title").innerHTML = gameTile;
     document.querySelector(".home-game1 .home-game-img").style.backgroundImage = gameImg;
