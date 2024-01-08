@@ -69,15 +69,6 @@
             margin: 0;
             padding: 0;
         }
-        .story-page {
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background-color: #f0f0f0;
-            color: #333;
-            text-align: center;
-        }
         h1 {
             font-size: 2em;
             margin-bottom: 0.5em;
@@ -87,33 +78,35 @@
         }
     </style>
     <script async src="https://cdn.ampproject.org/v0.js"></script>
+    <script async custom-element="amp-story" src="https://cdn.ampproject.org/v0/amp-story-1.0.js"></script>
 </head>
 <body>
 
     <!-- Página 1 -->
-        <amp-story standalone
-                   title="Web Story AMP"
-                   publisher="Nome do Editor"
-                   publisher-logo-src="URL_LOGO_EDITOR">
-            <amp-story-page id="page1">
-                <amp-story-grid-layer template="fill">
-                    <h1>Página 1</h1>
-                </amp-story-grid-layer>
-                <amp-story-grid-layer template="vertical">
-                    <p>Este é o texto da primeira página do web story.</p>
-                </amp-story-grid-layer>
-            </amp-story-page>
+    <amp-story standalone
+               title="Web Story AMP"
+               publisher="Nome do Editor"
+               publisher-logo-src="URL_LOGO_EDITOR"
+               poster-portrait-src="URL_POSTER_PORTRAIT">
+        <amp-story-page id="page1">
+            <amp-story-grid-layer template="fill">
+                <h1>Página 1</h1>
+            </amp-story-grid-layer>
+            <amp-story-grid-layer template="vertical">
+                <p>Este é o texto da primeira página do web story.</p>
+            </amp-story-grid-layer>
+        </amp-story-page>
 
-            <!-- Página 2 -->
-            <amp-story-page id="page2">
-                <amp-story-grid-layer template="fill">
-                    <h1>Página 2</h1>
-                </amp-story-grid-layer>
-                <amp-story-grid-layer template="vertical">
-                    <p>Este é o texto da segunda página do web story.</p>
-                </amp-story-grid-layer>
-            </amp-story-page>
-        </amp-story>
+        <!-- Página 2 -->
+        <amp-story-page id="page2">
+            <amp-story-grid-layer template="fill">
+                <h1>Página 2</h1>
+            </amp-story-grid-layer>
+            <amp-story-grid-layer template="vertical">
+                <p>Este é o texto da segunda página do web story.</p>
+            </amp-story-grid-layer>
+        </amp-story-page>
+    </amp-story>
 
 </body>
 </html>
