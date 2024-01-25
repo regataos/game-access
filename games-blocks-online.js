@@ -1,9 +1,9 @@
 function showFreeGameHome() {
     // Content of block 1
-    const gameTile = "Marvel's Guardians of the Galaxy";
-    const gameImg = 'url("https://i.ibb.co/xgZv2dW/mgg.webp")';
-    const endPromotionPtBt = "11 de janeiro";
-    const endPromotionEnUS = "January 11";
+    const gameTile = "LOVE";
+    const gameImg = 'url("https://i.ibb.co/VCk9JMX/love.webp")';
+    const endPromotionPtBt = "25 de janeiro";
+    const endPromotionEnUS = "January 25";
 
     document.querySelector(".home-game1 .block-title").innerHTML = gameTile;
     document.querySelector(".home-game1 .home-game-img").style.backgroundImage = gameImg;
