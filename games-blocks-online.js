@@ -1,9 +1,9 @@
 function showFreeGameHome() {
     // Content of block 1
     const gameTile = "LOVE";
-    const gameImg = 'url("https://i.ibb.co/VCk9JMX/love.webp")';
-    const endPromotionPtBt = "25 de janeiro";
-    const endPromotionEnUS = "January 25";
+    const gameImg = 'url("https://i.ibb.co/zQSWXLx/infinifactory.webp")';
+    const endPromotionPtBt = "01 de fevereiro";
+    const endPromotionEnUS = "February 01";
 
     document.querySelector(".home-game1 .block-title").innerHTML = gameTile;
     document.querySelector(".home-game1 .home-game-img").style.backgroundImage = gameImg;
