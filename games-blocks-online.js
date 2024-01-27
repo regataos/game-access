@@ -1,6 +1,6 @@
 function showFreeGameHome() {
     // Content of block 1
-    const gameTile = "LOVE";
+    const gameTile = "Infinifactory";
     const gameImg = 'url("https://i.ibb.co/zQSWXLx/infinifactory.webp")';
     const endPromotionPtBt = "01 de fevereiro";
     const endPromotionEnUS = "February 01";
