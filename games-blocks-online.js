@@ -1,9 +1,9 @@
 function showFreeGameHome() {
     // Content of block 1
-    const gameTile = "Infinifactory";
-    const gameImg = 'url("https://i.ibb.co/zQSWXLx/infinifactory.webp")';
-    const endPromotionPtBt = "01 de fevereiro";
-    const endPromotionEnUS = "February 01";
+    const gameTile = "Super Meat Boy Forever";
+    const gameImg = 'url("https://i.ibb.co/VJH7xyY/smbf.webp")';
+    const endPromotionPtBt = "29 de fevereiro";
+    const endPromotionEnUS = "February 29";
 
     document.querySelector(".home-game1 .block-title").innerHTML = gameTile;
     document.querySelector(".home-game1 .home-game-img").style.backgroundImage = gameImg;
