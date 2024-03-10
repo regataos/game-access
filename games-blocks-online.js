@@ -2,8 +2,8 @@ function showFreeGameHome() {
     // Content of block 1
     const gameTile = "Astro Duel 2";
     const gameImg = 'url("https://i.ibb.co/G7tK89H/astro-duel-2.webp")';
-    const endPromotionPtBt = "14 de fevereiro";
-    const endPromotionEnUS = "February 14";
+    const endPromotionPtBt = "14 de Março";
+    const endPromotionEnUS = "March 14";
 
     document.querySelector(".home-game1 .block-title").innerHTML = gameTile;
     document.querySelector(".home-game1 .home-game-img").style.backgroundImage = gameImg;
