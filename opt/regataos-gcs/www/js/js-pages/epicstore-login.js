@@ -14,10 +14,17 @@ function saveLoginId(loginId) {
 	const fs = require('fs');
 	fs.writeFileSync("/tmp/regataos-gcs/login-id.txt", loginId, "utf8");
 	fs.writeFileSync("/tmp/regataos-gcs/config/file-status.txt", "user account change", "utf8");
+	let commandLine = "";
 
 	setTimeout(function () {
-		const commandLine = '/opt/regataos-gcs/scripts/show-epicstore-games.sh & \
-		/opt/regataos-gcs/scripts/install/scripts-install/install-game-epicstore/prepare-compatibility-mode.sh';
+		if (!fs.existsSync("/opt/wine-gcs/bin/wine")) {
+			commandLine = '/opt/regataos-gcs/scripts/install/scripts-install/download-wine-gcs.sh; \
+			/opt/regataos-gcs/scripts/show-epicstore-games.sh & \
+			/opt/regataos-gcs/scripts/install/scripts-install/install-game-epicstore/prepare-compatibility-mode.sh';
+		} else {
+			commandLine = '/opt/regataos-gcs/scripts/show-epicstore-games.sh & \
+			/opt/regataos-gcs/scripts/install/scripts-install/install-game-epicstore/prepare-compatibility-mode.sh';
+		}
 		runShellScript(commandLine)
 	}, 1000);
 }

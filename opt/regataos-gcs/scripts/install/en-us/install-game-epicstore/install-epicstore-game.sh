@@ -1,6 +1,11 @@
 #!/bin/bash
 #
 
+# Download compatibility mode
+if test ! -e "/opt/wine-gcs/bin/wine"; then
+	/opt/regataos-gcs/scripts/install/scripts-install/download-wine-gcs.sh start
+fi
+
 # Settings and variables
 #General information
 if [ -z $game_nickname ]; then

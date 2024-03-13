@@ -32,11 +32,15 @@ function install_launcher() {
 
 	const launcher = fs.readFileSync("/tmp/regataos-gcs/confirm-installation", "utf8");
 	const launchername = launcher.replace(/(\r\n|\n|\r)/gm, "");
+	let command_line ="";
+	if (!fs.existsSync("/opt/wine-gcs/bin/wine")) {
+		command_line = "/opt/regataos-gcs/scripts/install/scripts-install/download-wine-gcs.sh; \
+		/opt/regataos-gcs/scripts/install/scripts-install/" + launchername + "-compatibility-mode.sh";
+	} else {
+		command_line = "/opt/regataos-gcs/scripts/install/scripts-install/" + launchername + "-compatibility-mode.sh";
+	}
 
-	const command_line = "/opt/regataos-gcs/scripts/install/scripts-install/" + launchername + "-compatibility-mode.sh";
-	console.log(command_line);
-	exec(command_line, function (error, call, errlog) {
-	});
+	exec(command_line, function (error, call, errlog) {});
 
 	cancel_install();
 

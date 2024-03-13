@@ -1,0 +1,4 @@
+#!/bin/bash
+#
+# A simple script to extract the compatibility tool files for Game Access
+tar xf "$1" -C "$2"

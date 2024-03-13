@@ -8,6 +8,13 @@
 # (This doesn't change often, use the sha256sum of the file when reporting problems)
 WINETRICKS_VERSION=20240105
 
+export CUSTOM_WINE_DIR="/opt/wine-gcs"
+export LD_LIBRARY_PATH="$CUSTOM_WINE_DIR/lib:$CUSTOM_WINE_DIR/lib64"
+export WINEDLLPATH="$CUSTOM_WINE_DIR/lib/wine:$CUSTOM_WINE_DIR/lib64/wine"
+export WINESERVER="$CUSTOM_WINE_DIR/bin/wineserver"
+export WINELOADER="$CUSTOM_WINE_DIR/bin/wine"
+export WINE="$CUSTOM_WINE_DIR/bin/wine"
+
 # This is a UTF-8 file
 # You should see an o with two dots over it here [ö]
 # You should see a micro (u with a tail) here [µ]

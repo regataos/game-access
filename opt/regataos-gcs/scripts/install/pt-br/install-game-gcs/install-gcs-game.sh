@@ -1,6 +1,11 @@
 #!/bin/bash
 #
 
+# Download compatibility mode
+if test ! -e "/opt/wine-gcs/bin/wine"; then
+	/opt/regataos-gcs/scripts/install/scripts-install/download-wine-gcs.sh start
+fi
+
 # Settings and variables
 if [ -z $gameNickname ]; then
 	if test -e "/tmp/regataos-gcs/start-installation-gcs.txt"; then
@@ -236,7 +241,7 @@ function install_app() {
 			# Variables for custom Wine
 			export CUSTOM_WINE_DIR="$(cat $HOME/.config/regataos-gcs/custom-runtime/$game_nickname.txt)"
 
-			export WINEDLLPATH="$CUSTOM_WINE_DIR/lib:$CUSTOM_WINE_DIR/lib64"
+			export WINEDLLPATH="$CUSTOM_WINE_DIR/lib/wine:$CUSTOM_WINE_DIR/lib64/wine"
 			export WINESERVER="$CUSTOM_WINE_DIR/bin/wineserver"
 			export WINELOADER="$CUSTOM_WINE_DIR/bin/wine"
 			export WINE="$CUSTOM_WINE_DIR/bin/wine"
