@@ -24,7 +24,7 @@ winetricks prefix=default-compatibility-mode -q -f msls31
 
 # Install d3dcompiler_47 dll
 overrideDll() {
-    wine reg add 'HKEY_CURRENT_USER\Software\Wine\DllOverrides' /v $1 /d native /f >/dev/null 2>&1
+    wine-gcs reg add 'HKEY_CURRENT_USER\Software\Wine\DllOverrides' /v $1 /d native /f >/dev/null 2>&1
 }
 
 for dll in $(ls /opt/regataos-wine/dlls/default/x64/ | grep "dll"); do

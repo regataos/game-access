@@ -81,4 +81,4 @@ fi
 /opt/regataos-gcs/scripts/action-games/auto-close-game-access &
 
 # Run launcher
-(gamemoderun wine "$PREFIX_LOCATION/$RUNLAUNCHER" $LAUNCHEROPTIONS) 2>&1 | tee $LOG_FILE
+(gamemoderun wine-gcs "$PREFIX_LOCATION/$RUNLAUNCHER" $LAUNCHEROPTIONS) 2>&1 | tee $LOG_FILE

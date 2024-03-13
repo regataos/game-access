@@ -137,9 +137,8 @@ if [[ $(echo $game_plataform) == *"windows"* ]]; then
     if [[ $(echo $custom_runtime) == *"true"* ]]; then
         (gamemoderun $CUSTOM_WINE_DIR/bin/wine "$PREFIX_LOCATION/$runGame") 2>&1 | tee $LOG_FILE
     else
-        (gamemoderun wine "$PREFIX_LOCATION/$runGame") 2>&1 | tee $LOG_FILE
+        (gamemoderun wine-gcs "$PREFIX_LOCATION/$runGame") 2>&1 | tee $LOG_FILE
     fi
-
 else
     (gamemoderun "$HOME/Game Access/$game_folder/$runGame") 2>&1 | tee $LOG_FILE
 fi

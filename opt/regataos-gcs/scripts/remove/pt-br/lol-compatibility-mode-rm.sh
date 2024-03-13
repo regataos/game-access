@@ -29,7 +29,7 @@ function remove_app() {
 # Uninstall failed notify
 function success_uninstall() {
 	# Notify
-	notify-send -i emblem-ok-symbolic -u normal -a 'Regata OS Game Access' "$app_name $success_notify_title" "$app_name $success_notify_text"
+	notify-send -i emblem-ok-symbolic -u normal -a 'Regata OS Game Access' "$app_name $success_notify_title"
 }
 
 # Uninstall failed notify

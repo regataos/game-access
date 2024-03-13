@@ -107,7 +107,7 @@ function install_app() {
 
 	# Install d3dcompiler_47 dll
 	overrideDll() {
-		wine reg add 'HKEY_CURRENT_USER\Software\Wine\DllOverrides' /v $1 /d native /f >/dev/null 2>&1
+		wine-gcs reg add 'HKEY_CURRENT_USER\Software\Wine\DllOverrides' /v $1 /d native /f >/dev/null 2>&1
 	}
 
 	for dll in $(ls /opt/regataos-wine/dlls/default/x64/ | grep "dll"); do
@@ -122,7 +122,7 @@ function install_app() {
 		overrideDll $(echo "$dll" | sed s/.dll//)
 	done
 
-	wine "/tmp/regataos-gcs/$app_download_file_name" /silent &
+	wine-gcs "/tmp/regataos-gcs/$app_download_file_name" /silent &
 	close_app
 
 	# If Vulkan is supported, enable DXVK and VKD3D-Proton
@@ -136,7 +136,7 @@ function success_installation() {
 	sed -i '/^$/d' "$HOME/.config/regataos-gcs/installed-launchers.conf"
 
 	# Notify
-	notify-send -i regataos-gcs -u normal -a 'Regata OS Game Access' "$app_name $success_notify_title" "$app_name $success_notify_text"
+	notify-send -i regataos-gcs -u normal -a 'Regata OS Game Access' "$app_name $success_notify_title"
 
 	# Create desktop shortcut
 	#Check desktop

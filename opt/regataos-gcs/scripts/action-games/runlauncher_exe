@@ -15,6 +15,6 @@ export PROTON_EAC_RUNTIME="/opt/regataos-wine/runtimes-anticheats/eac_runtime"
 export RADV_PERFTEST=gpl
 
 # Run launcher
-(wine "$RUN_EXE") 2>&1 | tee $LOG_FILE
+(wine-gcs "$RUN_EXE") 2>&1 | tee $LOG_FILE
 
 echo "Running: $RUN_EXE" >> $LOG_FILE

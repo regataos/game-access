@@ -151,11 +151,10 @@ fi
 
 # Run game
 if [[ $(echo $fsr_with_gamescope) == *"true"* ]]; then
-	(/opt/regataos-gcs/tools/legendary/legendary launch "$GAMEID" --wine-prefix "$PREFIX_LOCATION" \
+	(/opt/regataos-gcs/tools/legendary/legendary launch "$GAMEID" --wine "wine-gcs" --wine-prefix "$PREFIX_LOCATION" \
 	--wrapper "gamemoderun gamescope $(echo $GAMESCOPE_FSR) --") 2>&1 | tee $LOG_FILE
-
 else
-	(/opt/regataos-gcs/tools/legendary/legendary launch "$GAMEID" --wine-prefix "$PREFIX_LOCATION" \
+	(/opt/regataos-gcs/tools/legendary/legendary launch "$GAMEID" --wine "wine-gcs" --wine-prefix "$PREFIX_LOCATION" \
 	--wrapper "gamemoderun") 2>&1 | tee $LOG_FILE
 fi
 

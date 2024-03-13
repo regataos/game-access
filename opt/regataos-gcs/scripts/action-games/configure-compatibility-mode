@@ -60,7 +60,7 @@ function configure_dxvk_vkd3d() {
                 overrideDll() {
                     export WINEPREFIX=$(echo "$WINEPREFIX")
 
-                    wine reg add 'HKEY_CURRENT_USER\Software\Wine\DllOverrides' /v $1 /d native /f >/dev/null 2>&1
+                    wine-gcs reg add 'HKEY_CURRENT_USER\Software\Wine\DllOverrides' /v $1 /d native /f >/dev/null 2>&1
                 }
 
                 # Enable DXVK for Direct3D 9/10/11 over Vulkan

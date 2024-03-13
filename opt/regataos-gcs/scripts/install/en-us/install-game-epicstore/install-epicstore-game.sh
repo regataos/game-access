@@ -147,7 +147,7 @@ function success_installation() {
 	cp -f "$HOME/.config/regataos-gcs/epicstore-games/json/$game_nickname-epicstore.json" "$HOME/.config/regataos-gcs/installed/$game_nickname-epicstore.json"
 
 	# Notify
-	notify-send -i regataos-gcs -u normal -a 'Regata OS Game Access' "$app_name $success_notify_title" "$app_name $success_notify_text"
+	notify-send -i regataos-gcs -u normal -a 'Regata OS Game Access' "$app_name $success_notify_title"
 
 	# Check UI status
 	echo "show installed games" >"/tmp/regataos-gcs/config/installed/show-installed-games-epic.txt"

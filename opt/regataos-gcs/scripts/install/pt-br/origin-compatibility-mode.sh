@@ -62,7 +62,7 @@ function success_installation() {
 	rm -f "$app_nickname_dir/drive_c/Program Files (x86)/Origin/vcredist_x86.exe"
 
 	# Notify
-	notify-send -i regataos-gcs -u normal -a 'Regata OS Game Access' "$app_name $success_notify_title" "$app_name $success_notify_text"
+	notify-send -i regataos-gcs -u normal -a 'Regata OS Game Access' "$app_name $success_notify_title"
 
 	# Create desktop shortcut
 	#Check desktop

@@ -41,7 +41,7 @@ function install_app() {
 	export WINEDLLOVERRIDES="winemenubuilder,winedbg="
 	export WINEPREFIX="$app_nickname_dir"
 
-	wine msiexec /i /tmp/regataos-gcs/$app_download_file_name /q
+	wine-gcs msiexec /i /tmp/regataos-gcs/$app_download_file_name /q
 	killall EpicGamesLauncher.exe
 }
 
@@ -51,7 +51,7 @@ function success_installation() {
 	sed -i '/^$/d' "$HOME/.config/regataos-gcs/installed-launchers.conf"
 
 	# Notify
-	notify-send -i regataos-gcs -u normal -a 'Regata OS Game Access' "$app_name $success_notify_title" "$app_name $success_notify_text"
+	notify-send -i regataos-gcs -u normal -a 'Regata OS Game Access' "$app_name $success_notify_title"
 
 	# Create desktop shortcut
 	rm -f "$HOME/.local/share/applications/Programs/Epic Games Launcher.desktop"

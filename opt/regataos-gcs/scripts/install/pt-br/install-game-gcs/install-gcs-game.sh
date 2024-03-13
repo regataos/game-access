@@ -265,13 +265,13 @@ function install_app() {
 
 		elif [[ $(echo $game_nickname) == *"warframe"* ]]; then
 			clearDesktopIcons &
-			wine msiexec /i $downloadDir/$game_download_file_name $install_args
+			wine-gcs msiexec /i $downloadDir/$game_download_file_name $install_args
 
 		else
 			if [[ $(echo $game_download_file_name) == *".exe"* ]]; then
-				wine $downloadDir/$game_download_file_name $install_args
+				wine-gcs $downloadDir/$game_download_file_name $install_args
 			else
-				wine msiexec /i $downloadDir/$game_download_file_name $install_args
+				wine-gcs msiexec /i $downloadDir/$game_download_file_name $install_args
 			fi
 		fi
 
@@ -302,7 +302,7 @@ function success_installation() {
 	fi
 
 	# Notify
-	notify-send -i regataos-gcs -u normal -a 'Regata OS Game Access' "$game_name $success_notify_title" "$game_name $success_notify_text"
+	notify-send -i regataos-gcs -u normal -a 'Regata OS Game Access' "$game_name $success_notify_title"
 }
 
 # Installation failed

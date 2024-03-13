@@ -46,7 +46,7 @@ function install_app() {
 	export WINEDLLOVERRIDES="winemenubuilder,winedbg="
 	export WINEPREFIX="$app_nickname_dir"
 
-	wine /tmp/regataos-gcs/$app_download_file_name
+	wine-gcs /tmp/regataos-gcs/$app_download_file_name
 }
 
 # Successful installation
@@ -55,7 +55,7 @@ function success_installation() {
 	sed -i '/^$/d' "$HOME/.config/regataos-gcs/installed-launchers.conf"
 
 	# Notify
-	notify-send -i regataos-gcs -u normal -a 'Regata OS Game Access' "$app_name $success_notify_title" "$app_name $success_notify_text"
+	notify-send -i regataos-gcs -u normal -a 'Regata OS Game Access' "$app_name $success_notify_title"
 
 	# Create desktop shortcut
 	rm -rf "$HOME/.local/share/applications/Programs/Rockstar Games"
