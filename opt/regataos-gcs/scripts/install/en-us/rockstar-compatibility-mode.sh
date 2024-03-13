@@ -204,7 +204,7 @@ function start_installation() {
 #
 
 killall $app_nickname-compatibility-mode.sh
-killall winetricks
+killall winetricks-gcs
 rm -rf "$app_nickname_dir"
 rm -f "/tmp/regataos-gcs/$app_download_file_name"
 

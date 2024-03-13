@@ -90,7 +90,7 @@ function prepareCustomCompatMode() {
 			fi
 		fi
 
-		winetricks prefix=$game_nickname-compatibility-mode -q -f win10
+		winetricks-gcs prefix=$game_nickname-compatibility-mode -q -f win10
 		sleep 5
 
 		rm -f $progressbar_dir/progress-movement
@@ -151,9 +151,9 @@ function prepareDefaultCompatMode() {
 		mkdir -p "$HOME/.local/share/wineprefixes/$game_nickname-compatibility-mode"
 		export WINEPREFIX="$HOME/.local/share/wineprefixes/$game_nickname-compatibility-mode"
 
-		winetricks prefix=$game_nickname-compatibility-mode -q -f nocrashdialog
-		winetricks prefix=$game_nickname-compatibility-mode -q -f d3dcompiler_43
-		winetricks prefix=$game_nickname-compatibility-mode -q -f d3dx9
+		winetricks-gcs prefix=$game_nickname-compatibility-mode -q -f nocrashdialog
+		winetricks-gcs prefix=$game_nickname-compatibility-mode -q -f d3dcompiler_43
+		winetricks-gcs prefix=$game_nickname-compatibility-mode -q -f d3dx9
 
 		# Apply DLL settings 
 		overrideDll() {
@@ -202,7 +202,7 @@ function prepareDefaultCompatMode() {
 
 		echo -e "DXVK\nVKD3D-Proton" >>"$WINEPREFIX/vulkan.txt"
 
-		winetricks prefix=$game_nickname-compatibility-mode -q -f win10
+		winetricks-gcs prefix=$game_nickname-compatibility-mode -q -f win10
 		sleep 5
 
 		rm -f $progressbar_dir/progress-movement

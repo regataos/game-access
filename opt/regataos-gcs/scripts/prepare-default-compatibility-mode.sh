@@ -13,14 +13,14 @@ if test ! -e "$HOME/.cache/winetricks/vcrun2019"; then
 fi
 
 # Preparing the wineprefix with Winetricks
-winetricks prefix=default-compatibility-mode -q -f nocrashdialog
-winetricks prefix=default-compatibility-mode -q -f d3dcompiler_43
-winetricks prefix=default-compatibility-mode -q -f d3dx9
-winetricks prefix=default-compatibility-mode -q -f xact
-winetricks prefix=default-compatibility-mode -q -f xact_x64
-winetricks prefix=default-compatibility-mode -q -f vcrun2013
-winetricks prefix=default-compatibility-mode -q -f vcrun2019
-winetricks prefix=default-compatibility-mode -q -f msls31
+winetricks-gcs prefix=default-compatibility-mode -q -f nocrashdialog
+winetricks-gcs prefix=default-compatibility-mode -q -f d3dcompiler_43
+winetricks-gcs prefix=default-compatibility-mode -q -f d3dx9
+winetricks-gcs prefix=default-compatibility-mode -q -f xact
+winetricks-gcs prefix=default-compatibility-mode -q -f xact_x64
+winetricks-gcs prefix=default-compatibility-mode -q -f vcrun2013
+winetricks-gcs prefix=default-compatibility-mode -q -f vcrun2019
+winetricks-gcs prefix=default-compatibility-mode -q -f msls31
 
 # Install d3dcompiler_47 dll
 overrideDll() {
@@ -60,6 +60,6 @@ function installMediaFoundation() {
 
 # installMediaFoundation
 
-winetricks prefix=default-compatibility-mode -q -f win10
+winetricks-gcs prefix=default-compatibility-mode -q -f win10
 
 sleep 5

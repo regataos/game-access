@@ -100,10 +100,10 @@ function install_app() {
 	fi
 
 	# Install add-ons with Winetricks
-	winetricks prefix=$app_nickname-compatibility-mode -q -f nocrashdialog
-	winetricks prefix=$app_nickname-compatibility-mode -q -f vcrun2013
-	winetricks prefix=$app_nickname-compatibility-mode -q -f vcrun2019
-	winetricks prefix=$app_nickname-compatibility-mode -q -f win10
+	winetricks-gcs prefix=$app_nickname-compatibility-mode -q -f nocrashdialog
+	winetricks-gcs prefix=$app_nickname-compatibility-mode -q -f vcrun2013
+	winetricks-gcs prefix=$app_nickname-compatibility-mode -q -f vcrun2019
+	winetricks-gcs prefix=$app_nickname-compatibility-mode -q -f win10
 
 	# Install d3dcompiler_47 dll
 	overrideDll() {
@@ -239,7 +239,7 @@ function start_installation() {
 #
 
 killall $app_nickname-compatibility-mode.sh
-killall winetricks
+killall winetricks-gcs
 rm -rf "$app_nickname_dir"
 rm -f "/tmp/regataos-gcs/$app_download_file_name"
 

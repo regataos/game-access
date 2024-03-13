@@ -387,7 +387,7 @@ function start_installation() {
 	#
 
 	killall install-gcs-game.sh
-	killall winetricks
+	killall winetricks-gcs
 	rm -rf "$GAME_INSTALL_DIR"
 	rm -rf "$HOME/.config/regataos-gcs/custom-runtime/$custom_runtime_name"
 	rm -f "$HOME/.config/regataos-gcs/custom-runtime/$game_nickname.txt"
