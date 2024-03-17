@@ -1,9 +1,9 @@
-#!/usr/bin/python3
+#!/usr/bin/python3.11
 
 import os
 import sys
-from PyQt5.QtGui import QIcon
-from PyQt5.QtWidgets import QApplication, QMenu, QSystemTrayIcon
+from PyQt6.QtGui import QIcon
+from PyQt6.QtWidgets import QApplication, QMenu, QSystemTrayIcon
 
 class SystemTrayIcon(QSystemTrayIcon):
     def __init__(self, icon, parent=None):
@@ -31,11 +31,11 @@ class SystemTrayIcon(QSystemTrayIcon):
         self.activated.connect(self.onTrayIconActivated)
 
     def onTrayIconActivated(self, reason):
-        if reason == QSystemTrayIcon.Trigger:
+        if reason == QSystemTrayIcon.ActivationReason.Trigger:
             print("Click with the left mouse button.")
             os.system('/bin/bash gcs_icontray_functions -show-hide-gcs')
 
-        elif reason == QSystemTrayIcon.Context:
+        elif reason == QSystemTrayIcon.ActivationReason.Context:
             print("Click with the right mouse button.")
 
 def main():
@@ -49,7 +49,7 @@ def main():
     tray_icon.setToolTip(title)
     tray_icon.show()
 
-    sys.exit(app.exec_())
+    sys.exit(app.exec())
 
 if __name__ == "__main__":
     main()
