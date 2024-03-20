@@ -13,6 +13,20 @@ alias wineboot="$CUSTOM_WINE_DIR/bin/wineboot"
 alias winecfg="$CUSTOM_WINE_DIR/bin/winecfg"
 alias msiexec="$CUSTOM_WINE_DIR/bin/msiexec"
 
+# If necessary, copy the files from DXVK, DXVK-NVAPI and VKD3D-Proton
+if test -e "$WINEPREFIX/vulkan.txt"; then
+    cp -fv /opt/regataos-wine/dxvk/x64/*.dll $WINEPREFIX/drive_c/windows/system32/
+    cp -fv /opt/regataos-wine/dxvk/x32/*.dll $WINEPREFIX/drive_c/windows/syswow64/
+
+    cp -fv /opt/regataos-wine/vkd3d-proton/x64/*.dll $WINEPREFIX/drive_c/windows/system32/
+    cp -fv /opt/regataos-wine/vkd3d-proton/x86/*.dll $WINEPREFIX/drive_c/windows/syswow64/
+    
+    if test -e /usr/bin/nvidia-xconfig; then
+        cp -fv /opt/regataos-wine/dxvk-nvapi/x32/*.dll $WINEPREFIX/drive_c/windows/syswow64/
+        cp -fv /opt/regataos-wine/dxvk-nvapi/x64/*.dll $WINEPREFIX/drive_c/windows/system32/
+    fi
+fi
+
 to_execute=$(echo "$@")
 if [[ $(echo "$to_execute") == *"msiexec"* ]]; then
     $CUSTOM_WINE_DIR/bin/wine $CUSTOM_WINE_DIR/bin/msiexec /i "$@"

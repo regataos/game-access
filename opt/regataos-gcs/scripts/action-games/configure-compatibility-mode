@@ -71,8 +71,8 @@ function configure_dxvk_vkd3d() {
 
                 # If GPU is NVIDIA, install DXVK-NVAPI
                 if test -e /usr/bin/nvidia-xconfig; then
-                    ln -sfv /opt/regataos-wine/dxvk-nvapi/x32/*.dll $WINEPREFIX/drive_c/windows/syswow64/
-                    ln -sfv /opt/regataos-wine/dxvk-nvapi/x64/*.dll $WINEPREFIX/drive_c/windows/system32/
+                    cp -fv /opt/regataos-wine/dxvk-nvapi/x32/*.dll $WINEPREFIX/drive_c/windows/syswow64/
+                    cp -fv /opt/regataos-wine/dxvk-nvapi/x64/*.dll $WINEPREFIX/drive_c/windows/system32/
 
                     for dll in $(ls /opt/regataos-wine/dxvk-nvapi/x32/ | grep "dll"); do
                         overrideDll $(echo "$dll" | sed s/.dll//)

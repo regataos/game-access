@@ -28,13 +28,13 @@ overrideDll() {
 }
 
 for dll in $(ls /opt/regataos-wine/dlls/default/x64/ | grep "dll"); do
-    cp -f "/opt/regataos-wine/dlls/default/x64/$dll" "$WINEPREFIX/drive_c/windows/system32/$dll"
+    cp -fv "/opt/regataos-wine/dlls/default/x64/$dll" "$WINEPREFIX/drive_c/windows/system32/$dll"
 
     overrideDll $(echo "$dll" | sed s/.dll//)
 done
 
 for dll in $(ls /opt/regataos-wine/dlls/default/x32/ | grep "dll"); do
-    cp -f "/opt/regataos-wine/dlls/default/x32/$dll" "$WINEPREFIX/drive_c/windows/syswow64/$dll"
+    cp -fv "/opt/regataos-wine/dlls/default/x32/$dll" "$WINEPREFIX/drive_c/windows/syswow64/$dll"
 
     overrideDll $(echo "$dll" | sed s/.dll//)
 done
