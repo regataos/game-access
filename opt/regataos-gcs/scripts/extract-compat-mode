@@ -2,3 +2,12 @@
 #
 # A simple script to extract the compatibility tool files for Game Access
 tar xf "$1" -C "$2"
+
+# Check DXVK and Proton-VKD3D installation scripts
+if test ! -e "/opt/regataos-wine/dxvk/setup_dxvk.sh"; then
+	ln -sf "/opt/regataos-wine/setup_dxvk.sh" "/opt/regataos-wine/dxvk/setup_dxvk.sh"
+fi
+
+if test ! -e "/opt/regataos-wine/vkd3d-proton/setup_vkd3d-proton.sh"; then
+	ln -sf "/opt/regataos-wine/setup_vkd3d-proton.sh" "/opt/regataos-wine/vkd3d-proton/setup_vkd3d-proton.sh"
+fi
