@@ -29,12 +29,7 @@ install_dotnet_status="Isso pode demorar alguns minutos..."
 
 #Download information
 app_download_status="Baixando o instalador do Rockstar Games Launcher..."
-
-mkdir -p "/tmp/apps-scripts/"
-wget --no-check-certificate -O "/tmp/apps-scripts/3370768.txt" "https://rockstar-games-launcher.en.uptodown.com/windows/download/3370768"
-get_link_download=$(cat /tmp/apps-scripts/3370768.txt | grep data-url | cut -d'=' -f 2- | sed 's/"//g')
-app_download_link="$(echo $get_link_download)"
-
+app_download_link="https://dl-eu.opendataapi.net/lutris/games/GTA/rockstar-games-launcher-1-0-36-344.exe"
 app_download_file_name="Rockstar-Games-Launcher.exe"
 
 #Default settings

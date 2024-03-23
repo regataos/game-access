@@ -43,6 +43,7 @@ function install_app() {
 
 	wine-gcs msiexec /i /tmp/regataos-gcs/$app_download_file_name /q
 	killall EpicGamesLauncher.exe
+	sleep 120
 }
 
 # Successful installation
