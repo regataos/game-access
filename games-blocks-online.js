@@ -1,9 +1,9 @@
 function showFreeGameHome() {
     // Content of block 1
-    const gameTile = "Astro Duel 2";
-    const gameImg = 'url("https://i.ibb.co/G7tK89H/astro-duel-2.webp")';
-    const endPromotionPtBt = "14 de Março";
-    const endPromotionEnUS = "March 14";
+    const gameTile = "Call of the Wild: The Angler";
+    const gameImg = 'url("https://i.ibb.co/Yfh6k0z/cw-block1.webp")';
+    const endPromotionPtBt = "28 de Março";
+    const endPromotionEnUS = "March 28";
 
     document.querySelector(".home-game1 .block-title").innerHTML = gameTile;
     document.querySelector(".home-game1 .home-game-img").style.backgroundImage = gameImg;
