@@ -22,6 +22,12 @@ function enableFpsHud() {
 	exec(showFpsHud, function (error, call, errlog) { });
 }
 
+function setFpsHudPosition(position) {
+	const exec = require('child_process').exec;
+	const setFpsHudPosition = `/opt/regataos-gcs/scripts/settings-page -fpshud -position-${position}`;
+	exec(setFpsHudPosition, function (error, call, errlog) {});
+}
+
 sessionStorage.setItem("hideMenu", "");
 function hideSpecifiedMenu() {
 	let buttonId = sessionStorage.getItem("buttonId");
@@ -38,20 +44,30 @@ function showSpecifiedMenu(buttonId, menuId, optionId) {
 	let extendedMenu = document.querySelector(`#${menuId}`);
 	let styleDefaultValue = extendedMenu.style.display;
 
-	if (styleDefaultValue == "" || styleDefaultValue == "none") {
+	function openMenu() {
 		extendedMenu.style.display = "block";
 		sessionStorage.setItem("hideMenu", menuId);
 		sessionStorage.setItem("buttonId", buttonId);
-	} else {
-		extendedMenu.style.display = "none";
-		let buttonText = document.querySelector(`.${optionId}`).textContent;
-		document.querySelector(`#${buttonId}`).textContent = buttonText;
 	}
 
-	const exec = require('child_process').exec;
-	const setFpsHudPosition = `/opt/regataos-gcs/scripts/settings-page -fpshud -position-${optionId}`;
-	exec(setFpsHudPosition, function (error, call, errlog) {
-	});
+	if (styleDefaultValue == "" || styleDefaultValue == "none") {
+		// check if there are any menus open
+		let checkMenuOpen = sessionStorage.getItem("hideMenu");
+		if (checkMenuOpen && checkMenuOpen != menuId) {
+			document.querySelector(`#${menuId}`).style.display = "none";
+			setTimeout(function () {
+				openMenu();
+			}, 100);
+		} else {
+			openMenu();
+		}
+
+	} else {
+		extendedMenu.style.display = "none";
+		const buttonText = document.querySelector(`#${optionId} span`).textContent;
+		console.log(buttonText)
+		document.querySelector(`#${buttonId} span`).textContent = buttonText;
+	}
 }
 
 function enableFsr() {
@@ -114,7 +130,7 @@ fpsHudLookRange.addEventListener("input", (event) => {
 
 function previewFpsHud() {
 	const exec = require('child_process').exec;
-	const runFpsHudPreview = "/opt/regataos-gcs/scripts/settings-page -preview-fpshud";
+	const runFpsHudPreview = "sleep 1; /opt/regataos-gcs/scripts/settings-page -preview-fpshud";
 	exec(runFpsHudPreview, function (error, call, errlog) {
 	});
 }

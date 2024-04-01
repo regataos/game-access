@@ -22,7 +22,7 @@ function checkFps() {
 
 	// Check FPS HUD position
 	const readMangohudSettings = fs.readFileSync("/tmp/regataos-gcs/config/MangoHud.conf", "utf8");
-	const fpsPositionButton = document.querySelector("#fps-hud-position");
+	const fpsPositionButton = document.querySelector("#fps-hud-position span");
 
 	if (readMangohudSettings.includes("position")) {
 		const getPosition = checkConfigFile(readMangohudSettings, "position=");

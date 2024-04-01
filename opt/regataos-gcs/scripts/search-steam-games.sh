@@ -63,7 +63,7 @@ function search_installed_games() {
 config_file="$HOME/.local/share/Steam/config/config.vdf"
 if test -e "$config_file"; then
 	user_id_dir="/tmp/regataos-gcs/config/steam-games/json/steam-id"
-	check_steam_id="$(grep -r SteamID $config_file | awk '{print $2}' | head -1 | tail -1 | sed 's/"//g')"
+	check_steam_id="$(grep -r SteamID "$config_file" | awk '{print $2}' | head -1 | tail -1 | sed 's/"//g')"
 	user_games_link="http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=F06912D875764FDC65C1880539873AE0&steamid=$check_steam_id&format=json&include_appinfo=true"
 
 	if [ ! -z $check_steam_id ];then
