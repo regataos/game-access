@@ -1,9 +1,9 @@
 function showFreeGameHome() {
     // Content of block 1
-    const gameTile = "Call of the Wild: The Angler";
-    const gameImg = 'url("https://i.ibb.co/Yfh6k0z/cw-block1.webp")';
-    const endPromotionPtBt = "28 de Março";
-    const endPromotionEnUS = "March 28";
+    const gameTile = "Thief";
+    const gameImg = 'url("https://i.ibb.co/VqfHhMR/thief-block1.webp")';
+    const endPromotionPtBt = "11 de abril";
+    const endPromotionEnUS = "April 11";
 
     document.querySelector(".home-game1 .block-title").innerHTML = gameTile;
     document.querySelector(".home-game1 .home-game-img").style.backgroundImage = gameImg;
