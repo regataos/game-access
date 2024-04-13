@@ -1,9 +1,9 @@
 function showFreeGameHome() {
     // Content of block 1
-    const gameTile = "Thief";
-    const gameImg = 'url("https://i.ibb.co/VqfHhMR/thief-block1.webp")';
-    const endPromotionPtBt = "11 de abril";
-    const endPromotionEnUS = "April 11";
+    const gameTile = "Ghostrunner";
+    const gameImg = 'url("https://i.ibb.co/NsdhVZr/ghostrunner-block1.webp")';
+    const endPromotionPtBt = "18 de abril";
+    const endPromotionEnUS = "April 18";
 
     document.querySelector(".home-game1 .block-title").innerHTML = gameTile;
     document.querySelector(".home-game1 .home-game-img").style.backgroundImage = gameImg;
