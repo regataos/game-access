@@ -1,127 +1,75 @@
-function home_content() {
-    $(document).ready(function () {
-        // Content of slide 1
-        //Block image
-        $("#slide-img1").css("background-image", 'url("./../images/games-slide/slide1-lol.webp")');
-        $(".slideshow .slide .slide-img1").css("background-position", '0% 100%');
-        $(".slide-content .slide-title1").text("League of Legends");
+function homeSlideContent() {
+    // Image of the 1st item on the slide.
+    document.querySelector("#slide-img1").style.backgroundImage = 'url("./../images/games-slide/slide1-apex-legends.webp")';
+    document.querySelector("#slide-img1").style.backgroundPosition = "0% 100%";
+    document.querySelector(".slide-content .slide-title1").innerHTML = "Apex Legends";
 
-        // Content of slide 2
-        //Block image
-        $("#slide-img2").css("background-image", 'url("./../images/games-slide/slide2-ts4.webp")');
-        $(".slide-content .slide-title2").text("The Sims 4");
+    // Image of the 2st item on the slide.
+    document.querySelector("#slide-img2").style.backgroundImage = 'url("./../images/games-slide/slide2-ts4.webp")';
+    document.querySelector(".slide-content .slide-title2").innerHTML = "The Sims 4";
 
-        // Content of slide 3
-        //Block image
-        $("#slide-img3").css("background-image", 'url("./../images/games-slide/slide3-ow2.webp")');
-        $("#slide-img3").css("background-position", '50% 100%');
-        $(".slide-content .slide-title3").text("Overwatch 2");
+    // Image of the 3st item on the slide.
+    document.querySelector("#slide-img3").style.backgroundImage = 'url("./../images/games-slide/slide3-ow2.webp")';
+    document.querySelector("#slide-img3").style.backgroundPosition = "50% 100%";
+    document.querySelector(".slide-content .slide-title3").innerHTML = "Overwatch 2";
 
-        // Content of slide 4
-        //Block image
-        $("#slide-img4").css("background-image", 'url("./../images/games-slide/slide4-rl.webp")');
-        $("#slide-img4").css("background-position", '50% 0%');
-        $(".slide-content .slide-title4").text("Rocket League");
-    });
+    // Image of the 4st item on the slide.
+    document.querySelector("#slide-img4").style.backgroundImage = 'url("./../images/games-slide/slide4-rl.webp")';
+    document.querySelector("#slide-img4").style.backgroundPosition = "50% 0%";
+    document.querySelector(".slide-content .slide-title4").innerHTML = "Rocket League";
 
     // Detect User Language
     const userLanguage = selectTranslation();
+    if (userLanguage.includes("pt-br") || userLanguage.includes("pt-pt")) {
+        // Title and description of the 1st item on the slide.
+        document.querySelector(".slide-content .slide-desc1 p").innerHTML = "Herois lendários que lutam por glória e fortuna nos limites da Fronteira";
+        document.querySelector(".slide-content .slide-button1").innerHTML = "Jogue agora com EA App";
 
-    if ((userLanguage.indexOf("pt-br") > -1) == "1") {
-        $(document).ready(function () {
-            // Content of slide 1
-            //Title and description
-            $(".slide-content .slide-desc1 p").text("Chame os amigos, escolha um Campeão e faça jogadas memoráveis");
-            $(".slide-content .slide-button1").text("Jogue agora");
+        // Title and description of the 2st item on the slide.
+        document.querySelector(".slide-content .slide-desc2 p").innerHTML = "Solte sua imaginação e dê aos seus Sims aparências e personalidades únicas";
+        document.querySelector(".slide-content .slide-button2").innerHTML = "Jogue agora com EA App";
 
-            // Content of slide 2
-            //Title and description
-            $(".slide-content .slide-desc2 p").text("Solte sua imaginação e dê aos seus Sims aparências e personalidades únicas");
-            $(".slide-content .slide-button2").text("Jogue agora com EA App");
+        // Title and description of the 3st item on the slide.
+        document.querySelector(".slide-content .slide-desc3 p").innerHTML = "Lute ao lado de seus amigos em batalhas espalhadas ao redor do mundo";
+        document.querySelector(".slide-content .slide-button3").innerHTML = "Jogue agora com Battle.net";
 
-            // Content of slide 3
-            //Title and description
-            $(".slide-content .slide-desc3 p").text("Lute ao lado de seus amigos em batalhas espalhadas ao redor do mundo");
-            $(".slide-content .slide-button3").text("Jogue agora com Battle.net");
+        // Title and description of the 4st item on the slide.
+        document.querySelector(".slide-content .slide-desc4 p").innerHTML = "Participe de competições radicais de futebol com verdadeiras super máquinas";
+        document.querySelector(".slide-content .slide-button4").innerHTML = "Jogue agora com Epic Games Store";
 
-            // Content of slide 4
-            //Title and description
-            $(".slide-content .slide-desc4 p").text("Participe de competições radicais de futebol com verdadeiras super máquinas");
-            $(".slide-content .slide-button4").text("Jogue agora com a Epic Games Store");
-        });
+    } else if (userLanguage.includes("en-us")) {
+        // Title and description of the 1st item on the slide.
+        document.querySelector(".slide-content .slide-desc1 p").innerHTML = "Legendary heroes who fight for glory and fortune on the edge of the Frontier";
+        document.querySelector(".slide-content .slide-button1").innerHTML = "Play now with EA App";
 
-    } else if ((userLanguage.indexOf("pt-pt") > -1) == "1") {
-        $(document).ready(function () {
-            // Content of slide 1
-            //Block image
-            $(".slideshow .slide .slide-img1").css("background-image", 'url("https://i.ibb.co/QK6SXCt/img1.jpg")');
+        // Title and description of the 2st item on the slide.
+        document.querySelector(".slide-content .slide-desc2 p").innerHTML = "Unleash your imagination and give your Sims unique looks and personalities";
+        document.querySelector(".slide-content .slide-button2").innerHTML = "Play now with EA App";
 
-            //Title and description
-            $(".slide-content .slide-desc1 p").text("Chame os amigos, escolha um Campeão e faça jogadas memoráveis");
-            $(".slide-content .slide-button1").text("Jogue agora");
+        // Title and description of the 3st item on the slide.
+        document.querySelector(".slide-content .slide-desc3 p").innerHTML = "Fight alongside your friends in battles scattered around the world";
+        document.querySelector(".slide-content .slide-button3").innerHTML = "Play now with Battle.net";
 
-            // Content of slide 2
-            //Title and description
-            $(".slide-content .slide-desc2 p").text("Solte sua imaginação e dê aos seus Sims aparências e personalidades únicas");
-            $(".slide-content .slide-button2").text("Jogue agora com Origin");
-
-            // Content of slide 3
-            //Title and description
-            $(".slide-content .slide-desc3 p").text("Lute ao lado de seus amigos em batalhas espalhadas ao redor do mundo");
-            $(".slide-content .slide-button3").text("Jogue agora com Battle.net");
-
-            // Content of slide 4
-            //Title and description
-            $(".slide-content .slide-desc4 p").text("Participe de competições radicais de futebol com verdadeiras super máquinas");
-            $(".slide-content .slide-button4").text("Jogue agora com a Epic Games Store");
-        });
-
-    } else if ((userLanguage.indexOf("en-us") > -1) == "1") {
-        $(document).ready(function () {
-            // Content of slide 1
-            //Title and description
-            $(".slide-content .slide-desc1 p").text("Call your friends, choose a champion and make memorable plays");
-            $(".slide-content .slide-button1").text("Play now");
-
-            // Content of slide 2
-            //Title and description
-            $(".slide-content .slide-desc2 p").text("Unleash your imagination and give your Sims unique looks and personalities");
-            $(".slide-content .slide-button2").text("Play now with Origin");
-
-            // Content of slide 3
-            //Title and description
-            $(".slide-content .slide-desc3 p").text("Fight alongside your friends in battles scattered around the world");
-            $(".slide-content .slide-button3").text("Play now with Battle.net");
-
-            // Content of slide 4
-            //Title and description
-            $(".slide-content .slide-desc4 p").text("Participate in extreme football competitions with real super machines");
-            $(".slide-content .slide-button4").text("Play now with the Epic Games Store");
-        });
+        // Title and description of the 4st item on the slide.
+        document.querySelector(".slide-content .slide-desc4 p").innerHTML = "Participate in extreme football competitions with real super machines";
+        document.querySelector(".slide-content .slide-button4").innerHTML = "Play now with Epic Games Store";
 
     } else {
-        $(document).ready(function () {
-            // Content of slide 1
-            //Title and description
-            $(".slide-content .slide-desc1 p").text("Call your friends, choose a champion and make memorable plays");
-            $(".slide-content .slide-button1").text("Play now");
+        // Title and description of the 1st item on the slide.
+        document.querySelector(".slide-content .slide-desc1 p").innerHTML = "Legendary heroes who fight for glory and fortune on the edge of the Frontier";
+        document.querySelector(".slide-content .slide-button1").innerHTML = "Play now with EA App";
 
-            // Content of slide 2
-            //Title and description
-            $(".slide-content .slide-desc2 p").text("Unleash your imagination and give your Sims unique looks and personalities");
-            $(".slide-content .slide-button2").text("Play now");
+        // Title and description of the 2st item on the slide.
+        document.querySelector(".slide-content .slide-desc2 p").innerHTML = "Unleash your imagination and give your Sims unique looks and personalities";
+        document.querySelector(".slide-content .slide-button2").innerHTML = "Play now with EA App";
 
-            // Content of slide 3
-            //Title and description
-            $(".slide-content .slide-desc3 p").text("Fight alongside your friends in battles scattered around the world");
-            $(".slide-content .slide-button3").text("Play now with Battle.net");
+        // Title and description of the 3st item on the slide.
+        document.querySelector(".slide-content .slide-desc3 p").innerHTML = "Fight alongside your friends in battles scattered around the world";
+        document.querySelector(".slide-content .slide-button3").innerHTML = "Play now with Battle.net";
 
-            // Content of slide 4
-            //Title and description
-            $(".slide-content .slide-desc4 p").text("Participate in extreme football competitions with real super machines");
-            $(".slide-content .slide-button4").text("Play now with the Epic Games Store");
-        });
+        // Title and description of the 4st item on the slide.
+        document.querySelector(".slide-content .slide-desc4 p").innerHTML = "Participate in extreme football competitions with real super machines";
+        document.querySelector(".slide-content .slide-button4").innerHTML = "Play now with Epic Games Store";
     }
 }
-
-home_content();
+homeSlideContent();
