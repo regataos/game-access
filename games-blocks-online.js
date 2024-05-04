@@ -1,9 +1,9 @@
 function showFreeGameHome() {
     // Content of block 1
-    const gameTile = "INDUSTRIA";
-    const gameImg = 'url("https://i.ibb.co/Jm55cNV/industria-block1.webp")';
-    const endPromotionPtBt = "02 de maio";
-    const endPromotionEnUS = "May 02";
+    const gameTile = "Orcs Must Die! 3";
+    const gameImg = 'url("https://i.ibb.co/tsf9R17/omd-block1.webp")';
+    const endPromotionPtBt = "09 de maio";
+    const endPromotionEnUS = "May 09";
 
     document.querySelector(".home-game1 .block-title").innerHTML = gameTile;
     document.querySelector(".home-game1 .home-game-img").style.backgroundImage = gameImg;
