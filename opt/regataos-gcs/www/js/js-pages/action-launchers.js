@@ -50,16 +50,16 @@ function run_steam_client() {
 }
 
 // Remove user account
-function remove_user_account_epicstore() {
-	const removeAccountEpic = 'echo "remove account" > "/tmp/regataos-gcs/remove-user-account-epicstore.txt"';
-	runShellProcessLauncher(removeAccountEpic);
+function remove_user_account(launcher) {
+	const removeAccount = `echo "${launcher}" > "/tmp/regataos-gcs/remove-user-account.txt"`;
+	runShellProcessLauncher(removeAccount);
 }
 
 // Check if you have logged in to the Epic Games Store
 function legendary_status() {
 	const fs = require("fs");
 
-	if (fs.existsSync("/tmp/regataos-gcs/config/epicstore-games/show-egs.txt")) {
+	if (fs.existsSync("/tmp/regataos-gcs/config/epicstore-games/show-games.txt")) {
 		const legendaryStatus = '/opt/regataos-gcs/tools/legendary/legendary status';
 		runShellProcessLauncher(legendaryStatus);
 	}
@@ -70,7 +70,7 @@ legendary_status();
 function detectInstallationLaunchers() {
 	const fs = require("fs");
 
-	if (!fs.existsSync("/tmp/regataos-gcs/config/epicstore-games/show-egs.txt")) {
+	if (!fs.existsSync("/tmp/regataos-gcs/config/epicstore-games/show-games.txt")) {
 		return;
 	}
 
@@ -86,7 +86,7 @@ detectInstallationLaunchers();
 // Cancel user account removal
 function cancel_remove_account() {
 	const fs = require('fs');
-	const removeUserAccountFile = "/tmp/regataos-gcs/remove-user-account-epicstore.txt";
+	const removeUserAccountFile = "/tmp/regataos-gcs/remove-user-account.txt";
 	handleCssClass("remove", "show-element", "remove-user-account");
 	if (fs.existsSync(removeUserAccountFile)) {
 		fs.unlinkSync(removeUserAccountFile);
@@ -94,13 +94,15 @@ function cancel_remove_account() {
 }
 
 // Proceed with user account removal
-function remove_account_epicstore() {
+function remove_account_launcher() {
 	const fs = require('fs');
-	const commandLine = '/opt/regataos-gcs/scripts/remove-user-account -epicstore';
+	const checkLauncher = fs.readFileSync("/tmp/regataos-gcs/remove-user-account.txt", "utf8");
+	const commandLine = `/opt/regataos-gcs/scripts/remove-user-account -${checkLauncher}`;
+
 	handleCssClass("remove", "show-element", "remove-user-account");
-	fs.unlinkSync("/tmp/regataos-gcs/remove-user-account-epicstore.txt")
-	fs.unlinkSync("/tmp/regataos-gcs/config/epicstore-games/show-egs.txt")
+	fs.unlinkSync("/tmp/regataos-gcs/remove-user-account.txt");
+
 	setTimeout(function () {
-		runShellScript(commandLine)
+		runShellScript(commandLine);
 	}, 2000);
 }

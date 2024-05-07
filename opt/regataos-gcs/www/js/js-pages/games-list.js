@@ -24,6 +24,9 @@ function listAllGames(specifyLauncher, contentBrake) {
 	if (specifyLauncher.includes("epicstore")) {
 		allGamesJsonFiles = "/tmp/regataos-gcs/config/epicstore-games/json";
 
+	} else if (specifyLauncher.includes("amazon")) {
+		allGamesJsonFiles = "/tmp/regataos-gcs/config/amazon-games/json";
+
 	} else if (specifyLauncher.includes("gog")) {
 		const getInstalledLaunchers = fs.readFileSync("/tmp/regataos-gcs/config/installed-launchers.conf", "utf8");
 		if (getInstalledLaunchers.includes("gog")) {
@@ -63,7 +66,7 @@ function listAllGames(specifyLauncher, contentBrake) {
 						gamePlataform = gamenative.includes("true") ? "nativegame" : "steamplay";
 
 					} else if ((launchernickname.includes("gog")) ||
-						(launchernickname.includes("epicstore"))) {
+						(launchernickname.includes("epicstore")) || (launchernickname.includes("amazon"))) {
 						installGame = `install_${launchernickname}_game('${gamenickname}')`;
 						runGame = `run_${launchernickname}_game('${gamenickname})', '${gameid}')`;
 						specialButtonFunction = `uninstall_${launchernickname}_game('${gamenickname}')`;
@@ -91,7 +94,7 @@ function listAllGames(specifyLauncher, contentBrake) {
 							</div>`;
 
 					} else if (isInstalled !== false) {
-						if (launchernickname.includes("epicstore") || launchernickname.includes("gog")) {
+						if (launchernickname.includes("epicstore") || launchernickname.includes("gog") || launchernickname.includes("amazon")) {
 							specialButtonHtml = `
 							<div title="Desinstalar jogo" class="remove-game-button" onclick="${specialButtonFunction};">
 								<i class="fas fa-trash-alt"></i>

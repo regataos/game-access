@@ -10,7 +10,7 @@ function block_function1() {
 		});
 
 	} else {
-		if (fs.existsSync("/tmp/regataos-gcs/config/epicstore-games/show-egs.txt")) {
+		if (fs.existsSync("/tmp/regataos-gcs/config/epicstore-games/show-games.txt")) {
 			window.open("https://www.epicgames.com/store/free-games", 'popup')
 
 		} else {

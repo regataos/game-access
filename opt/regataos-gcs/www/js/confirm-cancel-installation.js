@@ -1,60 +1,47 @@
 // Open box confirm cancel installation
 function showconfirmbox_installation() {
-const fs = require('fs');
+    const fs = require('fs');
 
-fs.access('/tmp/progressbar-gcs/confirm-cancel-installation', (err) => {
-if (!err) {
-	confirm_cancel_installation();
-	$(".confirmation-cancel-installation").css("display", "block")
-	return;
-}
-});
+    fs.access('/tmp/progressbar-gcs/confirm-cancel-installation', (err) => {
+        if (!err) {
+            confirm_cancel_installation();
+            document.querySelector(".confirmation-cancel-installation").style.display = "block";
+            return;
+        }
+    });
 
 }
 
 // Close confirm box
 function hideconfirmboxinstallation() {
-const exec = require('child_process').exec;
-
-	var command_line = "rm -f /tmp/progressbar-gcs/confirm-cancel-installation";
-    console.log(command_line);
-    exec(command_line,function(error,call,errlog){
-    });
-
-	$(".confirmation-cancel-installation").css("display", "none")
+    const exec = require('child_process').exec;
+    const commandLine = "rm -f /tmp/progressbar-gcs/confirm-cancel-installation";
+    exec(commandLine, function (error, call, errlog) { });
+    document.querySelector(".confirmation-cancel-installation").style.display = "none";
 }
 
 // If prompted, Cancel download
 function cancel_down() {
-const exec = require('child_process').exec;
-const fs = require('fs');
+    const exec = require('child_process').exec;
+    const fs = require('fs');
 
-	hideconfirmboxinstallation();
+    hideconfirmboxinstallation();
 
-	fs.readFile('/tmp/progressbar-gcs/wget-pid', (err, wgetpid) => {
-	if (err) throw err;
-	console.log(wgetpid);
-	var wgetpid = wgetpid
+    fs.readFile('/tmp/progressbar-gcs/wget-pid', (err, wgetpid) => {
+        if (err) throw err;
+        const wgetpid = wgetpid
 
-    var command_line = "kill -CONT "+wgetpid;
-    console.log(command_line);
-    exec(command_line,function(error,call,errlog){
+        const commandLine1 = "kill -CONT " + wgetpid;
+        exec(commandLine1, function (error, call, errlog) { });
+
+        const commandLine2 = "kill SIGKILL " + wgetpid;
+        exec(commandLine2, function (error, call, errlog) { });
     });
 
-    var command_line = "kill SIGKILL "+wgetpid;
-    console.log(command_line);
-    exec(command_line,function(error,call,errlog){
-    });
-
-	});
-
-	var command_line = "chmod +x /tmp/progressbar-gcs/script-cancel; /tmp/progressbar-gcs/script-cancel start";
-    console.log(command_line);
-    exec(command_line,function(error,call,errlog){
-    });
-
+    const commandLine3 = "chmod +x /tmp/progressbar-gcs/script-cancel; /tmp/progressbar-gcs/script-cancel start";
+    exec(commandLine3, function (error, call, errlog) { });
 }
 
-setInterval(function() {
-	showconfirmbox_installation();
+setInterval(function () {
+    showconfirmbox_installation();
 }, 500);

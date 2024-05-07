@@ -101,7 +101,7 @@ div.universal-title {
 	border-radius: 2em;
 	background-image: linear-gradient(to right, #36414d, #485563, #485563, #36414d);
 	background-size: 300% 100%;
-	transition: all .4s ease-in-out;
+	transition: all .3s ease-in-out;
     margin-right: auto;
 	margin-left: auto;
 	padding-top: 18px;
@@ -479,11 +479,7 @@ div.universal-title {
     background-repeat: no-repeat;
 }
 
-.epicstore-game-img {
-    background-size: cover;
-}
-
-#epicstore-buttons {
+#epicstore-buttons, #amazon-buttons {
 	position: relative;
 	display: none;
 	justify-content: center;
@@ -493,7 +489,8 @@ div.universal-title {
 	margin-top: 280px;
 }
 
-#epicstore-buttons .login-button-epicstore {
+#epicstore-buttons .login-button-epicstore,
+#amazon-buttons .login-button-amazon {
 	margin-left: 15px;
 	margin-right: 15px;
 }
@@ -723,6 +720,12 @@ div.universal-title {
 
 .body-epic-img {
 	background-image: url('./../images/games-backg/epicstore/epicstore-backg.jpg');
+	background-size: cover;
+}
+
+.body-amazon-img {
+	background-image: url('./../images/games-backg/amazon/amazon-backg.jpg');
+	background-size: cover;
 }
 
 .show-element {

@@ -7,9 +7,8 @@ checkInstalledLaunchers="$(cat $gcsTempDir/config/installed-launchers.conf)"
 
 function removeEpicstoreAccount() {
     # Hide the on-screen confirmation message.
-    rm -f "$gcsTempDir/remove-user-account-epicstore.txt"
-    rm -f "$gcsTempDir/remove-user-account-epicstore.txt"
-    rm -f "$gcsTempDir/config/epicstore-games/show-egs.txt"
+    rm -f "$gcsTempDir/remove-user-account.txt"
+    rm -f "$gcsTempDir/config/epicstore-games/show-games.txt"
     $gcsTools/legendary/legendary auth --delete
 
     if [[ $(echo $checkInstalledLaunchers) == *"epicstore"* ]]; then
@@ -32,8 +31,17 @@ function removeEpicstoreAccount() {
     echo "user account change" > "/tmp/regataos-gcs/config/file-status.txt"
 }
 
+function removeAmazonAccount() {
+    rm -f "$gcsTempDir/remove-user-account.txt"
+    rm -f "$gcsTempDir/config/amazon-games/show-games.txt"
+    rm -f "$gcsTempDir/config/amazon-games/library.json"
+    /opt/regataos-gcs/tools/nile/nile auth --logout
+}
+
 case $1 in
    "-epicstore") removeEpicstoreAccount
+         ;;
+   "-amazon") removeAmazonAccount
          ;;
    *) echo "Invalid option!"
       exit 1

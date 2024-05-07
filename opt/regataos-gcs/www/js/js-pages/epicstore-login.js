@@ -96,7 +96,7 @@ function hideLoginScreen() {
 	}
 
 	// Old verification method. This may be removed in the future.
-	const oldcheckUserLoginFile = "/tmp/regataos-gcs/config/epicstore-games/show-egs.txt";
+	const oldcheckUserLoginFile = "/tmp/regataos-gcs/config/epicstore-games/show-games.txt";
 	const checkUserLogin = fs.existsSync(oldcheckUserLoginFile);
 	checkUserLogin ? showGameBlocks() : showLoginScreen();
 }

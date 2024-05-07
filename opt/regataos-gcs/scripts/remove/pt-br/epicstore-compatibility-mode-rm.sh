@@ -21,7 +21,7 @@ app_nickname_dir="$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mo
 
 # Uninstall app
 function remove_app() {
-	if test ! -e "/tmp/regataos-gcs/config/epicstore-games/show-egs.txt"; then
+	if test ! -e "/tmp/regataos-gcs/config/epicstore-games/show-games.txt"; then
 		if test -e "$HOME/.config/regataos-gcs/external-games-folder.txt"; then
 			external_directory_file="$(cat "$HOME/.config/regataos-gcs/external-games-folder.txt")"
 
@@ -75,7 +75,7 @@ cd "/$DESKTOP_DIR"
 rm -f "Epic Games Launcher.desktop"
 
 # Confirm uninstall
-if test ! -e "/tmp/regataos-gcs/config/epicstore-games/show-egs.txt"; then
+if test ! -e "/tmp/regataos-gcs/config/epicstore-games/show-games.txt"; then
 	if test -e "$app_nickname_dir/$app_executable" ; then
 		uninstall_failed
 	else

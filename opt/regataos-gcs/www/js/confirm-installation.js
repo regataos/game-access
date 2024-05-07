@@ -97,7 +97,8 @@ function show_confirmbox_uninstall_game_epicstore() {
 // Remove user account
 function show_remove_user_account() {
 	const fs = require('fs');
-	const removeUserAccountFile = "/tmp/regataos-gcs/remove-user-account-epicstore.txt";
+	const removeUserAccountFile = "/tmp/regataos-gcs/remove-user-account.txt";
+
 	if (fs.existsSync(removeUserAccountFile)) {
 		handleCssClass("add", "show-element", "remove-user-account");
 		return;

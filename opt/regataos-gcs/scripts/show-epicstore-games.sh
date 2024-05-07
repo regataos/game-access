@@ -19,7 +19,7 @@ if test -e "/tmp/regataos-gcs/login-id.txt"; then
 
     # Verify successful login to Epic Games Store
     if test -e "$HOME/.config/legendary/user.json"; then
-        echo "Show EGS" > "/tmp/regataos-gcs/config/epicstore-games/show-egs.txt"
+        echo "Show EGS" > "/tmp/regataos-gcs/config/epicstore-games/show-games.txt"
     fi
 
     # Remove file with login id
