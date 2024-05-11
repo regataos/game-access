@@ -92,6 +92,8 @@ window.onmessage = function (e) {
 
 // Check if the user is logged in and if the games available in the Amazon Games 
 // account should be displayed on the screen.
+let hideLoginScreenInterval = "";
+
 function hideLoginScreen() {
 	const fs = require("fs");
 
@@ -124,11 +126,12 @@ function hideLoginScreen() {
 			sessionStorage.setItem("loaded", "true");
 			detectLogin();
 		}
+
+		clearInterval(hideLoginScreenInterval);
 	}
 
-	let hideLoginScreenInterval = "";
 	function showLoginScreen() {
-		if (fs.existsSync('/tmp/regataos-gcs/login-id.txt')) {
+		if (fs.existsSync("/tmp/regataos-gcs/login-amazon-games.txt")) {
 			handleCssClass("remove", "grid-element", "amazon-login");
 			handleCssClass("remove", "body-amazon-img", "body-page");
 			handleCssClass("add", "show-element", ["loading", "loading-games"]);
@@ -137,7 +140,6 @@ function hideLoginScreen() {
 			handleCssClass("add", "grid-element", "amazon-login");
 			handleCssClass("add", "body-amazon-img", "body-page");
 			handleCssClass("remove", "show-element", ["loading", "loading-games"]);
-			clearInterval(hideLoginScreenInterval);
 		}
 
 		sessionStorage.setItem("loaded", "false");
@@ -154,3 +156,49 @@ function hideLoginScreen() {
 	checkUserLogin ? showGameBlocks() : showLoginScreen();
 }
 hideLoginScreen();
+
+function detectLoggedAccount() {
+	const fs = require("fs");
+	if (!fs.existsSync("/tmp/regataos-gcs/config/amazon-games/show-games.txt")) {
+		hideLoginScreenInterval = setInterval(hideLoginScreen, 1000);
+	} else {
+		hideLoginScreen();
+	}
+}
+detectLoggedAccount();
+
+// Hide the "install" button when the launcher is already installed.
+function hideInstallButtonLauncher() {
+	const fs = require("fs");
+	const fileWithInstalledLaunchers = "/tmp/regataos-gcs/config/installed-launchers.conf";
+	const installedLaunchers = fs.readFileSync(fileWithInstalledLaunchers, "utf8");
+
+	const seeMoreButtonAmazon = document.querySelector(".amazon-more");
+	const installButtonAmazon = document.querySelector(".amazon-install");
+
+	if (installedLaunchers.includes("amazon")) {
+		seeMoreButtonAmazon.classList.add("show-element");
+		installButtonAmazon.classList.remove("show-element");
+	} else {
+		seeMoreButtonAmazon.classList.remove("show-element");
+		installButtonAmazon.classList.add("show-element");
+	}
+}
+hideInstallButtonLauncher();
+
+// Detect changes in launcher installation and execute specific functions
+function detectInstallationLaunchers() {
+	const fs = require("fs");
+
+	if (!fs.existsSync("/tmp/regataos-gcs/config/amazon-games/show-games.txt")) {
+		return;
+	}
+
+	hideInstallButtonLauncher();
+
+	const fileWithInstalledLaunchers = "/tmp/regataos-gcs/config/installed-launchers.conf";
+	fs.watchFile(fileWithInstalledLaunchers, function () {
+		hideInstallButtonLauncher();
+	});
+}
+detectInstallationLaunchers();

@@ -28,7 +28,7 @@ function removeEpicstoreAccount() {
         fi
     fi
 
-    echo "user account change" > "/tmp/regataos-gcs/config/file-status.txt"
+    echo "reload page" > "/tmp/regataos-gcs/reload-page.txt"
 }
 
 function removeAmazonAccount() {
@@ -36,6 +36,7 @@ function removeAmazonAccount() {
     rm -f "$gcsTempDir/config/amazon-games/show-games.txt"
     rm -f "$gcsTempDir/config/amazon-games/library.json"
     /opt/regataos-gcs/tools/nile/nile auth --logout
+    echo "reload page" > "/tmp/regataos-gcs/reload-page.txt"
 }
 
 case $1 in

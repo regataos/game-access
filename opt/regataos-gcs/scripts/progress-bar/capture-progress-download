@@ -99,6 +99,50 @@ do
 
 				echo "$file_size_bytes" > /tmp/progressbar-gcs/file-size-bytes
 			fi
+
+		elif test -e "/tmp/progressbar-gcs/download-percentage-nile"; then
+			lines=$(wc -l /tmp/progressbar-gcs/download-percentage-nile | cut -d"/" -f -1)
+			if [ $lines -ge 12 ]; then
+				# Progress bar and percentage
+				progress=$(cat /tmp/progressbar-gcs/download-percentage-nile | grep "Progress" | awk '{print $5}' | tail -1 | head -1 | cut -d"." -f -1)
+
+				if [[ $progress == *"100.00%"* ]]; then
+					echo "100%"
+				else
+					echo "$progress%" > /tmp/progressbar-gcs/progress
+				fi
+
+				# Internet connection speed and estimated time of conclusion
+				check_progress=$(cat /tmp/progressbar-gcs/download-percentage-nile | grep "Progress" | awk '{print $5}' | tail -1 | head -1 | cut -d"." -f -1)
+
+				if [[ $check_progress == *"100.00%"* ]]; then
+					rm -f "/tmp/progressbar-gcs/speed"
+					rm -f "/tmp/progressbar-gcs/eta"
+				else
+					speed=$(cat /tmp/progressbar-gcs/download-percentage-nile | grep "Download" | awk '{print $6 $7}' | tail -1 | head -1 | sed 's/K/ K/' | sed 's/M/ M/' | sed 's/G/ G/')
+					echo $speed > /tmp/progressbar-gcs/speed
+					eta=$(cat /tmp/progressbar-gcs/download-percentage-nile | grep "ETA" | awk '{print $11}' | tail -1 | head -1)
+					echo "$(echo $eta)h" > /tmp/progressbar-gcs/eta
+				fi
+
+				# Download Size
+				game_size=$(cat /tmp/progressbar-gcs/download-percentage-nile | grep "Download size" | awk '{print $5}' | tail -1 | head -1 | cut -d"." -f -1)
+
+				if [[ $game_size =~ $(echo "^[0-9]+$") ]]; then
+					download_size_bytes=$(( $game_size * 1024*1024 ))
+				fi
+
+				echo "$download_size_bytes" > /tmp/progressbar-gcs/download-size-bytes
+
+				# Downloading File Size
+				download_percentage=$(cat /tmp/progressbar-gcs/download-percentage-nile | grep "Downloaded" | awk '{print $5}' | tail -1 | head -1 | sed 's/,//g' | cut -d"." -f -1)
+
+				if [[ $download_percentage =~ $(echo "^[0-9]+$") ]]; then
+					file_size_bytes=$(( $download_percentage * 1024*1024 ))
+				fi
+
+				echo "$file_size_bytes" > /tmp/progressbar-gcs/file-size-bytes
+			fi
 		else
 			echo "Nothing to do..."
 		fi

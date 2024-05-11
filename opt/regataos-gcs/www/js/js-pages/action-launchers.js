@@ -66,23 +66,6 @@ function legendary_status() {
 }
 legendary_status();
 
-// Detect changes in launcher installation and execute specific functions
-function detectInstallationLaunchers() {
-	const fs = require("fs");
-
-	if (!fs.existsSync("/tmp/regataos-gcs/config/epicstore-games/show-games.txt")) {
-		return;
-	}
-
-	hideInstallButtonLauncher();
-
-	const fileWithInstalledLaunchers = "/tmp/regataos-gcs/config/installed-launchers.conf";
-	fs.watchFile(fileWithInstalledLaunchers, function () {
-		hideInstallButtonLauncher();
-	});
-}
-detectInstallationLaunchers();
-
 // Cancel user account removal
 function cancel_remove_account() {
 	const fs = require('fs');

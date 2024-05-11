@@ -39,6 +39,8 @@ window.onmessage = function (e) {
 
 // Check if the user is logged in and if the games available in the Epic Games Store 
 // account should be displayed on the screen.
+let hideLoginScreenInterval = "";
+
 function hideLoginScreen() {
 	const fs = require("fs");
 
@@ -71,9 +73,10 @@ function hideLoginScreen() {
 			sessionStorage.setItem("loaded", "true");
 			detectLogin();
 		}
+
+		clearInterval(hideLoginScreenInterval);
 	}
 
-	let hideLoginScreenInterval = "";
 	function showLoginScreen() {
 		if (fs.existsSync('/tmp/regataos-gcs/login-id.txt')) {
 			handleCssClass("remove", "grid-element", "epicstore-login");
@@ -84,7 +87,6 @@ function hideLoginScreen() {
 			handleCssClass("add", "grid-element", "epicstore-login");
 			handleCssClass("add", "body-epic-img", "body-page");
 			handleCssClass("remove", "show-element", ["loading", "loading-games"]);
-			clearInterval(hideLoginScreenInterval);
 		}
 
 		sessionStorage.setItem("loaded", "false");
@@ -102,33 +104,48 @@ function hideLoginScreen() {
 }
 hideLoginScreen();
 
-// Check status to make UI changes.
-function checkUiChanges() {
+function detectLoggedAccount() {
 	const fs = require("fs");
-	const fileStatus = "/tmp/regataos-gcs/config/file-status.txt";
-	const urlPage = window.location.href;
-
-	// Before checking UI status changes, clear the cache.
-	let interfaceStatus = fs.readFileSync(fileStatus, "utf8");
-	function resetInterfaceStatus() {
-		if (!interfaceStatus.includes("inactive")) {
-			fs.writeFileSync(fileStatus, "inactive", "utf8");
-		}
+	if (!fs.existsSync("/tmp/regataos-gcs/config/epicstore-games/show-games.txt")) {
+		hideLoginScreenInterval = setInterval(hideLoginScreen, 1000);
+	} else {
+		hideLoginScreen();
 	}
-	resetInterfaceStatus();
+}
+detectLoggedAccount();
 
-	fs.watch(fileStatus, (eventType, filename) => {
-		interfaceStatus = fs.readFileSync(fileStatus, "utf8");
-		if (interfaceStatus.includes("rearrange game blocks")) {
-			setTimeout(function () {
-				hideLoginScreen();
-				listAllGames(urlPage, 16);
-				resetInterfaceStatus();
-			}, 2000);
+// Hide the "install" button when the launcher is already installed.
+function hideInstallButtonLauncher() {
+	const fs = require("fs");
+	const fileWithInstalledLaunchers = "/tmp/regataos-gcs/config/installed-launchers.conf";
+	const installedLaunchers = fs.readFileSync(fileWithInstalledLaunchers, "utf8");
 
-		} else if (interfaceStatus.includes("user account change")) {
-			hideLoginScreenInterval = setInterval(hideLoginScreen, 1000);
-		}
+	const seeMoreButtonEpic = document.querySelector(".epicstore-more");
+	const installButtonEpic = document.querySelector(".epicstore-install");
+
+	if (installedLaunchers.includes("epicstore")) {
+		seeMoreButtonEpic.classList.add("show-element");
+		installButtonEpic.classList.remove("show-element");
+	} else {
+		seeMoreButtonEpic.classList.remove("show-element");
+		installButtonEpic.classList.add("show-element");
+	}
+}
+hideInstallButtonLauncher()
+
+// Detect changes in launcher installation and execute specific functions
+function detectInstallationLaunchers() {
+	const fs = require("fs");
+
+	if (!fs.existsSync("/tmp/regataos-gcs/config/epicstore-games/show-games.txt")) {
+		return;
+	}
+
+	hideInstallButtonLauncher();
+
+	const fileWithInstalledLaunchers = "/tmp/regataos-gcs/config/installed-launchers.conf";
+	fs.watchFile(fileWithInstalledLaunchers, function () {
+		hideInstallButtonLauncher();
 	});
 }
-checkUiChanges();
+detectInstallationLaunchers();

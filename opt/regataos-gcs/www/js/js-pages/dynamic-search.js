@@ -10,6 +10,7 @@ function listSearchedGames(gamename, gamenickname, gamenative, game_img1, gameru
 	let specialButtonHtml = "";
 	let gamePlataform = "gcs";
 	let gameAccess = "GAME ACCESS";
+	let gameBanner = "";
 
 	// Set some default settings
 	if (launchernickname.includes("gcs")) {
@@ -33,8 +34,12 @@ function listSearchedGames(gamename, gamenickname, gamenative, game_img1, gameru
 		runGame = `run_game('${gamenickname}', '${launchernickname}', '${gamerun_appid}')`;
 	}
 
-	// Set the game image
-	const gameBanner = getGamesImagePath(launchernickname, gamenickname, game_img1);
+	// Set the game image.
+	if (game_img1) {
+		gameBanner = `url('${game_img1}')`;
+	} else {
+		gameBanner = getGamesImagePath(launchernickname, gamenickname);
+	}
 
 	// Set game plataform
 	if (launchernickname.includes("steam")) {
