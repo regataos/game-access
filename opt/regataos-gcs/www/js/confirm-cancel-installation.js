@@ -1,4 +1,5 @@
 // Open box confirm cancel installation
+setInterval(showconfirmbox_installation, 500);
 function showconfirmbox_installation() {
     const fs = require('fs');
 
@@ -9,7 +10,6 @@ function showconfirmbox_installation() {
             return;
         }
     });
-
 }
 
 // Close confirm box
@@ -29,19 +29,15 @@ function cancel_down() {
 
     fs.readFile('/tmp/progressbar-gcs/wget-pid', (err, wgetpid) => {
         if (err) throw err;
-        const wgetpid = wgetpid
+        const getpid = wgetpid
 
-        const commandLine1 = "kill -CONT " + wgetpid;
+        const commandLine1 = "kill -CONT " + getpid;
         exec(commandLine1, function (error, call, errlog) { });
 
-        const commandLine2 = "kill SIGKILL " + wgetpid;
+        const commandLine2 = "kill SIGKILL " + getpid;
         exec(commandLine2, function (error, call, errlog) { });
     });
 
     const commandLine3 = "chmod +x /tmp/progressbar-gcs/script-cancel; /tmp/progressbar-gcs/script-cancel start";
     exec(commandLine3, function (error, call, errlog) { });
 }
-
-setInterval(function () {
-    showconfirmbox_installation();
-}, 500);

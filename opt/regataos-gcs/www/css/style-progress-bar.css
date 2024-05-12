@@ -48,22 +48,21 @@ min-height: 115px;
 line-height: 1.4em;
 background-color: #1b1c1d;
 margin-top: 0px;
-padding-top: 25px;
+padding-top: 20px;
 padding-left: 12px;
 padding-right: 11px;
-padding-bottom: 25px;
+padding-bottom: 20px;
 }
 
 .down-functions {
-width: 100%;
-float: right;
-margin-top: 15px;
-margin-left: 100px;
+width: 70%;
+float: left;
+margin-top: 5px;
 }
 
 .more-info {
 position: absolute;
-bottom: 0;
+top: 18px;
 right: 0;
 height: 15px;
 width: 15px;
@@ -93,7 +92,7 @@ background-image:url("../images/arrow-right-off.png") !important;
 .more-info2 {
 display: none;
 position: absolute;
-bottom: 0;
+top: 18px;
 right: 0;
 height: 15px;
 width: 15px;
@@ -249,8 +248,7 @@ text-align: right;
 font-size: 18px;
 color: #b5bdc7;
 text-align: right;
-width: 100px;
-margin-left: 117px;
+width: auto;
 }
 
 .queued {

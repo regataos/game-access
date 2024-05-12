@@ -292,3 +292,93 @@ function run_gog_game(gamenickname) {
 		$(`.${gamenickname}-block .play-box-universal`).css("pointer-events", "auto");
 	}, 50000);
 }
+
+// Start installing game from Amazon Games
+function install_amazon_game(gamenickname) {
+	const fs = require("fs");
+
+	function runInstallation() {
+		const commandLine = `echo "${gamenickname}" > "/tmp/regataos-gcs/start-installation-amazon.txt"`;
+		runShellProcess(commandLine);
+
+		setTimeout(function () {
+			$(`.${gamenickname}-block .install-box-universal`).css("opacity", ".5")
+			$(`.${gamenickname}-block .install-box-universal`).css("cursor", "default")
+			$(`.${gamenickname}-block .install-box-universal`).css("pointer-events", "none");
+		}, 1000);
+
+		setTimeout(function () {
+			$(`.${gamenickname}-block .install-box-universal`).css("opacity", "1")
+			$(`.${gamenickname}-block .install-box-universal`).css("cursor", "pointer")
+			$(`.${gamenickname}-block .install-box-universal`).css("pointer-events", "auto");
+		}, 5000);
+	}
+
+	if (!fs.existsSync(`/tmp/regataos-gcs/installing-${gamenickname}`)) {
+		if (fs.existsSync(`/tmp/progressbar-gcs/queued-process`)) {
+			let checkInstallQueue = fs.readFileSync("/tmp/progressbar-gcs/queued-process", "utf8");
+
+			if ((checkInstallQueue.indexOf(gamenickname) > -1) == "0") {
+				runInstallation();
+			}
+		} else {
+			runInstallation();
+		}
+	}
+}
+
+// Uninstall game from Amazon Games
+function uninstall_amazon_game(gamenickname) {
+	const fs = require("fs");
+
+	const gameToRemove = "/tmp/regataos-gcs/start-uninstallation-amazon.txt"
+	fs.writeFileSync(gameToRemove, gamenickname);
+
+	// Refresh the page
+	const fileStatus = "/tmp/regataos-gcs/config/file-status.txt";
+
+	//Before checking UI status changes, clear the cache.
+	let interfaceStatus = fs.readFileSync(fileStatus, "utf8");
+	if (!interfaceStatus.includes("inactive")) {
+		fs.writeFileSync(fileStatus, "inactive", "utf8");
+	}
+
+	fs.watch(fileStatus, (eventType, filename) => {
+		interfaceStatus = fs.readFileSync(fileStatus, "utf8");
+		if (interfaceStatus.includes("rearrange game blocks")) {
+			const getPageUrl = window.location.href;
+			if ((getPageUrl.includes("search.html")) ||
+				(getPageUrl.includes("allgames.html"))) {
+				reloadPage(1000);
+			}
+		}
+	});
+}
+
+// Run game from Amazon Games
+function run_amazon_game(gamenickname, gameid) {
+	const fs = require("fs");
+
+	if (!fs.existsSync(`/tmp/regataos-gcs/running-${gamenickname}`)) {
+		const commandLine = `echo "${gamenickname}" > "/tmp/regataos-gcs/running-${gamenickname}";
+		export GAMENICK="${gamenickname}";
+		export GAMEID="${gameid}";
+		/opt/regataos-gcs/scripts/action-games/auto-close-game-access &
+		/opt/regataos-gcs/scripts/action-games/rungame-amazon`;
+
+		runShellProcess(commandLine);
+		autoCloseGameAccess();
+
+		setTimeout(function () {
+			$(`.${gamenickname}-block .play-box-universal`).css("opacity", ".5")
+			$(`.${gamenickname}-block .play-box-universal`).css("cursor", "default")
+			$(`.${gamenickname}-block .play-box-universal`).css("pointer-events", "none");
+		}, 1000);
+
+		setTimeout(function () {
+			$(`.${gamenickname}-block .play-box-universal`).css("opacity", "1")
+			$(`.${gamenickname}-block .play-box-universal`).css("cursor", "pointer")
+			$(`.${gamenickname}-block .play-box-universal`).css("pointer-events", "auto");
+		}, 10000);
+	}
+}

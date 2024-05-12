@@ -315,7 +315,7 @@ EOM
 	echo $app_download_status >$progressbar_dir/status
 	sleep 1
 	echo "show progress bar" >$progressbar_dir/progressbar
-	echo "legendary" >$progressbar_dir/legendary-pid
+	echo "legendary" >$progressbar_dir/tool-pid
 
 	# Prepare installation directory 
 	create_installation_directory

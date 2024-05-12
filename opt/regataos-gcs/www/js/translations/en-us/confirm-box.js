@@ -41,6 +41,23 @@ function confirm_epicstore_uninstall() {
 	});
 }
 
+// Confirmation notification for amazon
+function confirm_amazon_installation() {
+	$(document).ready(function() {
+		$(".confir-title").html("Amazon Games is not yet installed.<br>Do you want to install Amazon Games?");
+		$(".true-button").text("Yes");
+		$(".false-button").text("Cancel");
+	});
+}
+
+function confirm_amazon_uninstall() {
+	$(document).ready(function() {
+		$(".confir-title").text("Uninstall Amazon Games?");
+		$(".true-button").text("Yes");
+		$(".false-button").text("Cancel");
+	});
+}
+
 // Confirmation notification for gog
 function confirm_gog_installation() {
 	$(document).ready(function() {

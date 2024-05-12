@@ -836,7 +836,7 @@ a.p-home {
 	overflow:hidden;
 	overflow-x:hidden;
 	overflow-y:hidden;
-	height:180px;
+	height:155px;
 	width:100%;
 	position:absolute;
 	bottom:0;
@@ -900,7 +900,7 @@ a.p-home {
 
 /* buttons side bar */
 .block-title {
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 	font-size: 14px;
 }
 
@@ -938,7 +938,7 @@ a.p-home {
     width: 230px;
     margin-left: auto;
     margin-right: auto;
-    margin-top: 30px;
+    margin-top: 20px;
 	opacity: 1;
 	animation-name: example;
 	animation-duration: .5s;

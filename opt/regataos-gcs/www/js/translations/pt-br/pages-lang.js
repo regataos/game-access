@@ -63,6 +63,19 @@ $(document).ready(function () {
 	//Remove account button
 	$(".remove-account").text("Remover conta");
 
+	// Amazon Games page
+	//Page title
+	$(".installed-title-amazon").text("Jogos instalados");
+	$(".account-title-amazon").text("Disponíveis na sua conta do Amazon Games");
+	//View more
+	$(".amazon-more").text("Ver mais no Amazon Games");
+	//Install
+	$(".amazon-install").text("Instalar o Amazon Games");
+	//Login button
+	$(".login-button-amazon").text("Fazer login no Amazon Games");
+	//Remove account button
+	$(".remove-account").text("Remover conta");
+
 	// GOG Galaxy page
 	//Page title
 	$(".gog-title").text("Games para jogar com o GOG Galaxy");

@@ -65,19 +65,6 @@ function show_progressbar() {
 
 }
 
-// If necessary, increase the size of the progress bar box
-setInterval(downspeed, 500);
-function downspeed() {
-	fs.access('/tmp/progressbar-gcs/speed', (err) => {
-		if (!err) {
-			$("#iframepb").css("height", "205px")
-			return;
-		} else {
-			$("#iframepb").css("height", "180px")
-		}
-	});
-}
-
 // Show the link to the installed games page
 setInterval(installed_page, 500);
 function installed_page() {

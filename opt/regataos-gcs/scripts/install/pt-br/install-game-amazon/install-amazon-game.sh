@@ -111,7 +111,6 @@ function create_installation_directory() {
 function install_app() {
 	rm -f "/tmp/regataos-gcs/game-patch-amazon.txt"
 	sed -i "/$game_nickname/d" "/tmp/regataos-gcs/gcs-for-install.txt"
-	/opt/regataos-gcs/tools/nile/nile import "$game_id" --path "$GAME_INSTALL_DIR/$game_folder" 2>&1 | (pv -n >/tmp/regataos-gcs/instalation-nile)
 }
 
 # Successful installation
@@ -283,15 +282,16 @@ EOM
 	echo $app_download_status >$progressbar_dir/status
 	sleep 1
 	echo "show progress bar" >$progressbar_dir/progressbar
-	echo "nile" >$progressbar_dir/nile-pid
+	echo "nile" >$progressbar_dir/tool-pid
 
 	# Prepare installation directory 
 	create_installation_directory
 
-	/opt/regataos-gcs/tools/nile/nile install "$game_id" --base-path "$GAME_INSTALL_DIR/" --info 2>&1 | (pv -n >$progressbar_dir/download-percentage-nile)
+	/opt/regataos-gcs/tools/nile/nile install "$game_id" --base-path "$GAME_INSTALL_DIR/" &> "$progressbar_dir/download-percentage-nile"
 
 	echo 100% >$progressbar_dir/progress
 	sleep 3
+	cp -f "$progressbar_dir/download-percentage-nile" "/var/log/regataos-logs/install-amazon-game.log"
 	rm -f $progressbar_dir/download-percentage-nile
 	rm -f $progressbar_dir/speed
 	rm -f $progressbar_dir/download-download-size
@@ -381,7 +381,7 @@ EOM
 	install_app
 
 	# Confirm installation
-	if [[ $(cat /tmp/regataos-gcs/instalation-nile) == *"has been imported"* ]]; then
+	if [[ $(cat /var/log/regataos-logs/install-amazon-game.log) == *"Download complete"* ]]; then
 		rm -f $progressbar_dir/progress-movement
 		echo "completed" >$progressbar_dir/progress-full
 		echo "" >$progressbar_dir/status

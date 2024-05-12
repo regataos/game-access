@@ -91,12 +91,60 @@
 	</div>
 </div>
 
+<!-- For Amazon Games -->
+<div class="confirmation-box confirm-start-game-installation-amazon">
+	<div class="donwload-game-confirmation">
+		<div class="donwload-game-title">Fazer o download do jogo ou importá-lo?</div>
+
+		<div class="checkbox-install-games install-default-directory">
+			<label class="checkbox game-default-directory" onclick="default_folder_enabled();">
+				<p class="install-default-directory-desc">Baixar o jogo no diretório padrão</p>
+				<input id="default-folder-enabled" type="checkbox" checked="checked">
+				<span class="checkmark-game"></span>
+			</label>
+		</div>
+		<div class="checkbox-install-games install-other-directory">
+			<label class="checkbox game-default-directory" onclick="default_folder_disabled();">
+				<p class="install-default-directory-desc">Baixar o jogo no diretório padrão</p>
+				<input id="default-folder-disabled" type="checkbox">
+				<span class="checkmark-game"></span>
+			</label>
+		</div>
+
+		<div class="donwload-game-button">
+			<label class="label-run-game" id="capture-patch" for="select-installation-folder" onclick="default_folder();">
+				<div class="download-game-txt">Download</div>
+			</label>
+			<input id="select-installation-folder" type="file" nwdirectory/>
+		</div>
+
+		<div class="donwload-import-button">
+			<label class="label-run-game" id="capture-patch" for="select-file" onclick="import_game_amazon();">
+				<div class="import-game-txt">Importar</div>
+			</label>
+			<input id="select-file" type="file" nwdirectory/>
+		</div>
+
+		<div class="donwload-cancel-button" onclick="cancel_game_installation();">Cancelar</div>
+	</div>
+</div>
+
 <div class="confirm-start-game-uninstallation confirmation-box">
 	<div class="uninstall-game-confirmation">
 		<div class="confir-title-game">Você realmente quer desinstalar o jogo? Isso deve apagar todos os arquivos.</div>
 		<div class="cbuttons">
 			<div class="confirm-button uninstall-game-button" onclick="start_uninstall_epicstore_game();">Desinstalar</div>
 			<div class="confirm-button uninstall-cancel-button" onclick="cancel_uninstall_epicstore_game();">Cancelar</div>
+		</div>
+	</div>
+</div>
+
+<div class="confirm-start-game-uninstallation-amazon confirmation-box">
+	<div class="uninstall-game-confirmation">
+		<div class="confir-title-game">Você realmente quer desinstalar o jogo? Isso deve apagar todos os arquivos.</div>
+		<div class="cbuttons">
+			<div class="confirm-button uninstall-game-button" onclick="start_uninstall_amazon_game();">Desinstalar</div>
+			<div class="confirm-button uninstall-cancel-button" onclick="cancel_uninstall_amazon_game();">Cancelar</div>
 		</div>
 	</div>
 </div>

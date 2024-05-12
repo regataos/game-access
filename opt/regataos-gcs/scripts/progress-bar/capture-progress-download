@@ -62,7 +62,7 @@ do
 				# Progress bar and percentage
 				progress=$(cat /tmp/progressbar-gcs/download-percentage-legendary | grep "Progress" | awk '{print $5}' | tail -1 | head -1 | cut -d"." -f -1)
 
-				if [[ $progress == *"100.00%"* ]]; then
+				if [[ $progress == *"100"* ]]; then
 					echo "100%"
 				else
 					echo "$progress%" > /tmp/progressbar-gcs/progress
@@ -71,14 +71,14 @@ do
 				# Internet connection speed and estimated time of conclusion
 				check_progress=$(cat /tmp/progressbar-gcs/download-percentage-legendary | grep "Progress" | awk '{print $5}' | tail -1 | head -1 | cut -d"." -f -1)
 
-				if [[ $check_progress == *"100.00%"* ]]; then
+				if [[ $check_progress == *"100"* ]]; then
 					rm -f "/tmp/progressbar-gcs/speed"
 					rm -f "/tmp/progressbar-gcs/eta"
 				else
 					speed=$(cat /tmp/progressbar-gcs/download-percentage-legendary | grep "Download" | awk '{print $6 $7}' | tail -1 | head -1 | sed 's/K/ K/' | sed 's/M/ M/' | sed 's/G/ G/')
 					echo $speed > /tmp/progressbar-gcs/speed
 					eta=$(cat /tmp/progressbar-gcs/download-percentage-legendary | grep "ETA" | awk '{print $11}' | tail -1 | head -1)
-					echo "$(echo $eta)h" > /tmp/progressbar-gcs/eta
+					echo "$(echo $eta)s" > /tmp/progressbar-gcs/eta
 				fi
 
 				# Download Size
@@ -105,8 +105,11 @@ do
 			if [ $lines -ge 12 ]; then
 				# Progress bar and percentage
 				progress=$(cat /tmp/progressbar-gcs/download-percentage-nile | grep "Progress" | awk '{print $5}' | tail -1 | head -1 | cut -d"." -f -1)
+				progress2=$(cat /tmp/progressbar-gcs/download-percentage-nile | tail -1 | head -1)
 
-				if [[ $progress == *"100.00%"* ]]; then
+				if [[ $progress2 == *"Download complete"* ]]; then
+					echo "100%"
+				elif [[ $progress == *"100"* ]]; then
 					echo "100%"
 				else
 					echo "$progress%" > /tmp/progressbar-gcs/progress
@@ -114,15 +117,19 @@ do
 
 				# Internet connection speed and estimated time of conclusion
 				check_progress=$(cat /tmp/progressbar-gcs/download-percentage-nile | grep "Progress" | awk '{print $5}' | tail -1 | head -1 | cut -d"." -f -1)
+				check_progress2=$(cat /tmp/progressbar-gcs/download-percentage-nile | tail -1 | head -1)
 
-				if [[ $check_progress == *"100.00%"* ]]; then
+				if [[ $check_progress2 == *"Download complete"* ]]; then
+					rm -f "/tmp/progressbar-gcs/speed"
+					rm -f "/tmp/progressbar-gcs/eta"
+				elif [[ $check_progress == *"100"* ]]; then
 					rm -f "/tmp/progressbar-gcs/speed"
 					rm -f "/tmp/progressbar-gcs/eta"
 				else
 					speed=$(cat /tmp/progressbar-gcs/download-percentage-nile | grep "Download" | awk '{print $6 $7}' | tail -1 | head -1 | sed 's/K/ K/' | sed 's/M/ M/' | sed 's/G/ G/')
 					echo $speed > /tmp/progressbar-gcs/speed
 					eta=$(cat /tmp/progressbar-gcs/download-percentage-nile | grep "ETA" | awk '{print $11}' | tail -1 | head -1)
-					echo "$(echo $eta)h" > /tmp/progressbar-gcs/eta
+					echo "$(echo $eta)s" > /tmp/progressbar-gcs/eta
 				fi
 
 				# Download Size
