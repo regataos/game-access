@@ -51,6 +51,7 @@ function checkLauncherChanges() {
 
 	fs.watchFile(fileWithInstalledLaunchers, function () {
 		checkInstalledLaunchers();
+		console.log("Update elements in the UI...")
 	});
 }
 checkLauncherChanges();

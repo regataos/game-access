@@ -1,11 +1,11 @@
 // Check the page url and check the user login.
-let url = window.location.href;
+const getPageUrl = window.location.href;
 
 // For Epic Games Store
-if (url.includes("https://www.epicgames.com/id/login?redirectUrl=https://www.epicgames.com/id/api/redirect")) {
+if (getPageUrl.includes("https://www.epicgames.com/id/login?redirectUrl=https://www.epicgames.com/id/api/redirect")) {
 	console.log("Epic Games Store login screen");
 
-} else if (url.includes("https://www.epicgames.com/id/api/redirect")) {
+} else if (getPageUrl.includes("https://www.epicgames.com/id/api/redirect")) {
 	console.log("Account logged into the Epic Games Store. Saving session id for use with legendary.");
 
 	const child = document.querySelector("pre");
@@ -19,10 +19,10 @@ if (url.includes("https://www.epicgames.com/id/login?redirectUrl=https://www.epi
 }
 
 // For Amazon Games
-if (url.includes("https://www.amazon.com/ap/signin")) {
+if (getPageUrl.includes("https://www.amazon.com/ap/signin")) {
 	console.log("Amazon Games login screen");
 
-} else if (url.includes("https://www.amazon.com/?openid.assoc_handle")) {
+} else if (getPageUrl.includes("https://www.amazon.com/?openid.assoc_handle")) {
 	console.log("Account logged into the Amazon Games. Saving session id for use with nile tool.");
 
 	const pageUrl = window.location.href;

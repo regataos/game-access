@@ -29,8 +29,8 @@ function launchers_list() {
 					const launchernickname = '"' + data.launcher_nickname + '"'
 
 					new_game_blocks.innerHTML = " \
-						<div onclick='window.launchername=" + launchernickname + "; go_to_page(); back_button_pages(); check_fps();' class='icon-app' title='" + data.launcher_name + "' style='background-image:url(images/icon-apps/" + data.launcher_nickname + ".png);'></div> \
-						<div onclick='window.launchername=" + launchernickname + "; go_to_page(); back_button_pages(); check_fps();' class='text-app " + data.launcher_nickname + "-title'>" + data.launcher_name + "</div>";
+						<div onclick='window.launchername=" + launchernickname + "; go_to_page(); back_button_pages();' class='icon-app' title='" + data.launcher_name + "' style='background-image:url(images/icon-apps/" + data.launcher_nickname + ".png);'></div> \
+						<div onclick='window.launchername=" + launchernickname + "; go_to_page(); back_button_pages();' class='text-app " + data.launcher_nickname + "-title'>" + data.launcher_name + "</div>";
 
 					// Create the Origin option in the Game Access sidebar only if the app is installed.
 					if ((data.launcher_nickname.indexOf("origin") > -1) == "1") {

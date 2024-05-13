@@ -754,6 +754,12 @@ div.universal-title {
 	margin-top: 25px;
 }
 
+.button-effect-disabled {
+	pointer-events: none;
+    background-image: none;
+    background-color: #252d36;
+}
+
 /* Responsive CSS */
 @-webkit-keyframes animatebottom {
     from { bottom:-30px; opacity:0 } 

@@ -37,6 +37,36 @@ window.onmessage = function (e) {
 	}
 };
 
+// Hide the "install" button when the launcher is already installed.
+function hideInstallButtonLauncher() {
+	const fs = require("fs");
+	const fileWithInstalledLaunchers = "/tmp/regataos-gcs/config/installed-launchers.conf";
+	const installedLaunchers = fs.readFileSync(fileWithInstalledLaunchers, "utf8");
+
+	const seeMoreButtonEpic = document.querySelector(".epicstore-more");
+	const installButtonEpic = document.querySelector(".epicstore-install");
+	const installButtonEpic2 = document.querySelector(".install-button-epicstore");
+
+	if (installedLaunchers.includes("epicstore")) {
+		seeMoreButtonEpic.classList.add("show-element");
+		seeMoreButtonEpic.classList.remove("hide-element");
+
+		installButtonEpic.classList.remove("show-element");
+		installButtonEpic.classList.add("hide-element");
+
+		installButtonEpic2.classList.add("button-effect-disabled");
+	} else {
+		seeMoreButtonEpic.classList.remove("show-element");
+		seeMoreButtonEpic.classList.add("hide-element");
+
+		installButtonEpic.classList.add("show-element");
+		installButtonEpic.classList.remove("hide-element");
+
+		installButtonEpic2.classList.remove("button-effect-disabled");
+	}
+}
+hideInstallButtonLauncher();
+
 // Check if the user is logged in and if the games available in the Epic Games Store 
 // account should be displayed on the screen.
 let hideLoginScreenInterval = "";
@@ -74,6 +104,7 @@ function hideLoginScreen() {
 			detectLogin();
 		}
 
+		hideInstallButtonLauncher();
 		clearInterval(hideLoginScreenInterval);
 	}
 
@@ -114,38 +145,14 @@ function detectLoggedAccount() {
 }
 detectLoggedAccount();
 
-// Hide the "install" button when the launcher is already installed.
-function hideInstallButtonLauncher() {
-	const fs = require("fs");
-	const fileWithInstalledLaunchers = "/tmp/regataos-gcs/config/installed-launchers.conf";
-	const installedLaunchers = fs.readFileSync(fileWithInstalledLaunchers, "utf8");
-
-	const seeMoreButtonEpic = document.querySelector(".epicstore-more");
-	const installButtonEpic = document.querySelector(".epicstore-install");
-
-	if (installedLaunchers.includes("epicstore")) {
-		seeMoreButtonEpic.classList.add("show-element");
-		installButtonEpic.classList.remove("show-element");
-	} else {
-		seeMoreButtonEpic.classList.remove("show-element");
-		installButtonEpic.classList.add("show-element");
-	}
-}
-hideInstallButtonLauncher()
-
 // Detect changes in launcher installation and execute specific functions
 function detectInstallationLaunchers() {
 	const fs = require("fs");
-
-	if (!fs.existsSync("/tmp/regataos-gcs/config/epicstore-games/show-games.txt")) {
-		return;
-	}
-
-	hideInstallButtonLauncher();
-
 	const fileWithInstalledLaunchers = "/tmp/regataos-gcs/config/installed-launchers.conf";
+
 	fs.watchFile(fileWithInstalledLaunchers, function () {
 		hideInstallButtonLauncher();
+		console.log("Update elements in the UI...")
 	});
 }
 detectInstallationLaunchers();

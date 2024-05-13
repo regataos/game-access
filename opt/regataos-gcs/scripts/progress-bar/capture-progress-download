@@ -35,15 +35,24 @@ do
 				fi
 
 				# Download Size
-				download_size=$(grep -r application /tmp/progressbar-gcs/download-percentage | tail -1 | head -1 | awk '{print $3}' | sed 's/(\|)//g' | sed 's/M/ MB/' | sed 's/K/ KB/' | sed 's/G/ GB/')
+				download_size=$(grep -r application /tmp/progressbar-gcs/download-percentage | tail -1 | head -1 | awk '{print $3}' | sed 's/(\|)//g' | sed 's/M/ MB/' | sed 's/K/ KB/' | sed 's/G/ GB/' | sed 's/,//')
 				download_size2=$(grep -r application /tmp/progressbar-gcs/download-percentage | tail -1 | head -1 | awk '{print $3}' | sed 's/(\|)//g' | sed 's/M//' | sed 's/K//' | sed 's/G//')
+
+				if [ -z $download_size ];then
+					download_size=$(grep -r Length /tmp/progressbar-gcs/download-percentage | tail -1 | head -1 | awk '{print $3}' | sed 's/(\|)//g' | sed 's/M/ MB/' | sed 's/K/ KB/' | sed 's/G/ GB/' | sed 's/,//')
+				fi
+
+				if [ -z $download_size2 ];then
+					download_size2=$(grep -r Length /tmp/progressbar-gcs/download-percentage | tail -1 | head -1 | awk '{print $3}' | sed 's/(\|)//g' | sed 's/M//' | sed 's/K//' | sed 's/G//')
+				fi
+
 				echo "$download_size" > /tmp/progressbar-gcs/download-size
 
 				# Downloading File Size
 				file_downloading=$(cat /tmp/progressbar-gcs/file-download-size)
 				file_size=$(du -hs $file_downloading | awk '{print $1}' | sed 's/M/ MB/' | sed 's/K/ KB/' | sed 's/G/ GB/')
 				file_size2=$(du -hs $file_downloading | awk '{print $1}' | sed 's/M//' | sed 's/K//' | sed 's/G//')
-				
+
 				if [ $file_size2 -ge $download_size2 ]; then
 					echo "$download_size /" > /tmp/progressbar-gcs/file-size
 				else
