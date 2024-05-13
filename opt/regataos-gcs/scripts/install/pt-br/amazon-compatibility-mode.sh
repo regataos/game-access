@@ -56,6 +56,7 @@ function success_installation() {
 	rm -rf "$HOME/.local/share/applications/Programs/Amazon Games"
 	rm -f "$HOME/.local/share/applications/Amazon Games.desktop"
 	cp -f "/opt/regataos-wine/desktop-files/Amazon Games.desktop" "$HOME/.local/share/applications/Amazon Games.desktop"
+	ln -sf "$app_nickname_dir/$app_executable" "$app_nickname_dir/Amazon Games.exe"
 
 	test -f "${XDG_CONFIG_HOME:-$HOME/.config}/user-dirs.dirs" && source "${XDG_CONFIG_HOME:-$HOME/.config}/user-dirs.dirs"
 	DESKTOP_DIR="${XDG_DESKTOP_DIR:-$HOME/Desktop}"
