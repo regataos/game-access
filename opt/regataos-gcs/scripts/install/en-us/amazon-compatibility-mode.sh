@@ -3,12 +3,12 @@
 
 # Settings and variables
 # General information
-app_name="Epic Games Store"
-app_nickname="epicstore"
-app_name_down="Downloading Epic Games Store"
-app_name_process="Install Epic Games Store"
-app_install_status="Installing Epic Games Store..."
-app_executable="drive_c/Program Files (x86)/Epic Games/Launcher/Portal/Binaries/Win32/EpicGamesLauncher.exe"
+app_name="Amazon Games"
+app_nickname="amazon"
+app_name_down="Downloading Amazon Games"
+app_name_process="Install Amazon Games"
+app_install_status="Installing Amazon Games..."
+app_executable="drive_c/users/$USER/AppData/Local/Amazon Games/App/Amazon Games.exe"
 start_process="Starting installation"
 conf_prefix_status="Preparing compatibility mode..."
 success_installation="Concluded!"
@@ -28,9 +28,9 @@ app_name_directx="Installing DirectX Redistributable"
 install_dotnet_status="This may take a few minutes..."
 
 # Download information
-app_download_status="Downloading Epic Games Store installer..."
-app_download_link="https://launcher-public-service-prod06.ol.epicgames.com/launcher/api/installer/download/EpicGamesLauncherInstaller.msi"
-app_download_file_name="EpicGamesLauncherInstaller.msi"
+app_download_status="Downloading Amazon Games installer..."
+app_download_link="https://download.amazongames.com/AmazonGamesSetup.exe"
+app_download_file_name="AmazonGamesSetup.exe"
 
 # Default settings
 app_nickname_dir="$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode"
@@ -41,9 +41,7 @@ function install_app() {
 	export WINEDLLOVERRIDES="winemenubuilder,winedbg="
 	export WINEPREFIX="$app_nickname_dir"
 
-	wine-gcs msiexec /i /tmp/regataos-gcs/$app_download_file_name /q
-	killall EpicGamesLauncher.exe
-	sleep 120
+	wine-gcs /tmp/regataos-gcs/$app_download_file_name /q
 }
 
 # Successful installation
@@ -55,24 +53,23 @@ function success_installation() {
 	notify-send -i regataos-gcs -u normal -a 'Regata OS Game Access' "$app_name $success_notify_title"
 
 	# Create desktop shortcut
-	rm -f "$HOME/.local/share/applications/Programs/Epic Games Launcher.desktop"
-	rm -f "$HOME/.local/share/applications/Epic Games Launcher.desktop"
-	cp -f "/opt/regataos-wine/desktop-files/Epic Games Launcher.desktop" "$HOME/.local/share/applications/Epic Games Launcher.desktop"
+	rm -rf "$HOME/.local/share/applications/Programs/Amazon Games"
+	rm -f "$HOME/.local/share/applications/Amazon Games.desktop"
+	cp -f "/opt/regataos-wine/desktop-files/Amazon Games.desktop" "$HOME/.local/share/applications/Amazon Games.desktop"
 
 	test -f "${XDG_CONFIG_HOME:-$HOME/.config}/user-dirs.dirs" && source "${XDG_CONFIG_HOME:-$HOME/.config}/user-dirs.dirs"
 	DESKTOP_DIR="${XDG_DESKTOP_DIR:-$HOME/Desktop}"
 
 	if [ -d "$DESKTOP_DIR" ]; then
 		cd "/$DESKTOP_DIR"
-		rm -f "Epic Games Launcher.desktop"
-		ln -s "$HOME/.local/share/applications/Epic Games Launcher.desktop" "Epic Games Launcher.desktop"
+		rm -f "Amazon Games.desktop"
+		ln -s "$HOME/.local/share/applications/Amazon Games.desktop" "Amazon Games.desktop"
 	fi
 }
 
 # Create game install folder
 function gameinstall_folder() {
-	rm -f "$app_nickname_dir/drive_c/Program Files/Epic Games"
-	rm -f "$app_nickname_dir/drive_c/Program Files (x86)/Epic Games"
+	rm -f "$app_nickname_dir/drive_c/Amazon Games"
 
 	if test -e "$HOME/.config/regataos-gcs/external-games-folder.txt"; then
 		external_directory_file="$(cat "$HOME/.config/regataos-gcs/external-games-folder.txt")"
@@ -85,26 +82,18 @@ function gameinstall_folder() {
 		fi
 
 		if test -e "$(echo $external_directory)/wineprefixes-gcs"; then
-			mkdir -p "$(echo $external_directory)/$app_name/Epic Games"
-			mkdir -p "$(echo $external_directory)/$app_name/Epic Games(x86)"
-
-			ln -sf "$(echo $external_directory)/$app_name/Epic Games" "$app_nickname_dir/drive_c/Program Files/"
-			ln -sf "$(echo $external_directory)/$app_name/Epic Games(x86)" "$app_nickname_dir/drive_c/Program Files (x86)/Epic Games"
-
+			mkdir -p "$(echo $external_directory)/$app_name"
+			mkdir -p "$app_nickname_dir/drive_c/Amazon Games"
+			ln -sf "$(echo $external_directory)/$app_name" "$app_nickname_dir/drive_c/Amazon Games/Library"
 		else
-			mkdir -p "$HOME/Game Access/$app_name/Epic Games"
-			mkdir -p "$HOME/Game Access/$app_name/Epic Games(x86)"
-
-			ln -sf "$HOME/Game Access/$app_name/Epic Games" "$app_nickname_dir/drive_c/Program Files/"
-			ln -sf "$HOME/Game Access/$app_name/Epic Games(x86)" "$app_nickname_dir/drive_c/Program Files (x86)/Epic Games"
+			mkdir -p "$HOME/Game Access/$app_name"
+			mkdir -p "$app_nickname_dir/drive_c/Amazon Games"
+			ln -sf "$HOME/Game Access/$app_name" "$app_nickname_dir/drive_c/Amazon Games/Library"
 		fi
 
 	else
-		mkdir -p "$HOME/Game Access/$app_name/Epic Games"
-		mkdir -p "$HOME/Game Access/$app_name/Epic Games(x86)"
-
-		ln -sf "$HOME/Game Access/$app_name/Epic Games" "$app_nickname_dir/drive_c/Program Files/"
-		ln -sf "$HOME/Game Access/$app_name/Epic Games(x86)" "$app_nickname_dir/drive_c/Program Files (x86)/Epic Games"
+		mkdir -p "$HOME/Game Access/$app_name"
+		ln -sf "$HOME/Game Access/$app_name" "$app_nickname_dir/drive_c/Amazon Games/Library"
 	fi
 }
 
@@ -122,7 +111,7 @@ rm -rf $HOME/.local/share/applications/applications
 
 # Search for processes
 if test -e "$progressbar_dir/installing"; then
-	if test ! -e "/tmp/progressbar-gcs/download-percentage-legendary"; then
+	if test ! -e "/tmp/progressbar-gcs/download-percentage-nile"; then
 		# Put the process in the installation queue
 		kmsg=$(grep -r $app_nickname $progressbar_dir/queued-process)
 		if [[ $kmsg == *"$app_nickname"* ]]; then
@@ -477,7 +466,7 @@ function start_hidden_installation() {
 }
 
 # Verify that the installation is already in place.
-if test ! -e "/tmp/progressbar-gcs/download-percentage-legendary"; then
+if test ! -e "/tmp/progressbar-gcs/download-percentage-nile"; then
 	if [[ $(ps aux | egrep "$app_nickname-compatibility-mode.sh") == *"$app_nickname-compatibility-mode.sh start"* ]]; then
 		if test -e "$progressbar_dir/download-extra.txt"; then
 			rm -f "$progressbar_dir/download-extra.txt"
