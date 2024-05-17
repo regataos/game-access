@@ -21,9 +21,9 @@ export RADV_PERFTEST=gpl
 
 # DXVK-NVAPI
 if [[ $(cat "$PREFIX_LOCATION/vulkan.txt") == *"DXVK-NVAPI"* ]]; then
-	export WINEDLLOVERRIDES="vulkan-1=n,b;winemenubuilder,winedbg=";
+	export WINEDLLOVERRIDES="vulkan-1=n,b;winemenubuilder,winedbg,libglesv2.dll=";
 else
-	export WINEDLLOVERRIDES="vulkan-1=n,b;winemenubuilder,winedbg,nvapi,nvapi64=";
+	export WINEDLLOVERRIDES="vulkan-1=n,b;winemenubuilder,winedbg,nvapi,nvapi64,libglesv2.dll=";
 fi
 
 # DXVK configuration file
