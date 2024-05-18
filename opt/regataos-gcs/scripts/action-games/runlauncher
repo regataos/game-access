@@ -51,6 +51,8 @@ if test -e "/usr/bin/nvidia-xconfig"; then
 	export __GL_SHADER_DISK_CACHE=1
 	export __GL_SHADER_DISK_CACHE_PATH="$PREFIX_LOCATION"
 	export __GL_SHADER_DISK_CACHE_SKIP_CLEANUP=1
+	export VK_LAYER_PATH="/etc/vulkan/icd.d"
+	export VK_ICD_FILENAMES="/etc/vulkan/icd.d/nvidia_icd.json"
 
 	# If necessary, run software with the NVIDIA dGPU
 	if test -e "/tmp/regataos-prime/use-hybrid-graphics.txt"; then
