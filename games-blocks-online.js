@@ -1,9 +1,9 @@
 function showFreeGameHome() {
     // Content of block 1
-    const gameTile = "Circus Electrique";
-    const gameImg = 'url("https://i.ibb.co/7Vm0GRL/circus-electrique-block1.webp")';
-    const endPromotionPtBt = "16 de maio";
-    const endPromotionEnUS = "May 16";
+    const gameTile = "Farming Simulator 22";
+    const gameImg = 'url("https://i.ibb.co/MSFddZ1/farming-simulator-22.webp")';
+    const endPromotionPtBt = "30 de maio";
+    const endPromotionEnUS = "May 30";
 
     document.querySelector(".home-game1 .block-title").innerHTML = gameTile;
     document.querySelector(".home-game1 .home-game-img").style.backgroundImage = gameImg;
