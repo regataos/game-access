@@ -1,9 +1,9 @@
 function showFreeGameHome() {
     // Content of block 1
-    const gameTile = "Farming Simulator 22";
-    const gameImg = 'url("https://i.ibb.co/MSFddZ1/farming-simulator-22.webp")';
-    const endPromotionPtBt = "30 de maio";
-    const endPromotionEnUS = "May 30";
+    const gameTile = "Chivalry 2";
+    const gameImg = 'url("https://i.ibb.co/GCZrr6d/chivalry2.webp")';
+    const endPromotionPtBt = "06 de junho";
+    const endPromotionEnUS = "June 06";
 
     document.querySelector(".home-game1 .block-title").innerHTML = gameTile;
     document.querySelector(".home-game1 .home-game-img").style.backgroundImage = gameImg;
