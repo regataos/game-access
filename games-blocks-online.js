@@ -1,9 +1,9 @@
 function showFreeGameHome() {
     // Content of block 1
-    const gameTile = "Chivalry 2";
-    const gameImg = 'url("https://i.ibb.co/GCZrr6d/chivalry2.webp")';
-    const endPromotionPtBt = "06 de junho";
-    const endPromotionEnUS = "June 06";
+    const gameTile = "Marvel's Midnight Suns";
+    const gameImg = 'url("https://i.ibb.co/1Jpkfjk/marvels-midnight-suns.webp")';
+    const endPromotionPtBt = "13 de junho";
+    const endPromotionEnUS = "June 13";
 
     document.querySelector(".home-game1 .block-title").innerHTML = gameTile;
     document.querySelector(".home-game1 .home-game-img").style.backgroundImage = gameImg;
