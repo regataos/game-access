@@ -1,9 +1,9 @@
 function showFreeGameHome() {
     // Content of block 1
-    const gameTile = "Marvel's Midnight Suns";
-    const gameImg = 'url("https://i.ibb.co/1Jpkfjk/marvels-midnight-suns.webp")';
-    const endPromotionPtBt = "13 de junho";
-    const endPromotionEnUS = "June 13";
+    const gameTile = "Sunless Skies: Sovereign Edition";
+    const gameImg = 'url("https://i.ibb.co/Rj0N90V/sunless-skies.webp")';
+    const endPromotionPtBt = "04 de julho";
+    const endPromotionEnUS = "July 04";
 
     document.querySelector(".home-game1 .block-title").innerHTML = gameTile;
     document.querySelector(".home-game1 .home-game-img").style.backgroundImage = gameImg;
