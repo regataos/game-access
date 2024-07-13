@@ -1,9 +1,9 @@
 function showFreeGameHome() {
     // Content of block 1
-    const gameTile = "The Falconeer";
-    const gameImg = 'url("https://i.ibb.co/frHHG5k/the-falconeer.webp")';
-    const endPromotionPtBt = "11 de julho";
-    const endPromotionEnUS = "July 11";
+    const gameTile = "Floppy Knights";
+    const gameImg = 'url("https://i.ibb.co/TbdHYnW/floppy-knights.webp")';
+    const endPromotionPtBt = "18 de julho";
+    const endPromotionEnUS = "July 18";
 
     document.querySelector(".home-game1 .block-title").innerHTML = gameTile;
     document.querySelector(".home-game1 .home-game-img").style.backgroundImage = gameImg;
