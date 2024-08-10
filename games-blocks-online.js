@@ -1,9 +1,9 @@
 function showFreeGameHome() {
     // Content of block 1
-    const gameTile = "F.I.S.T.: Forged In Shadow Torch";
-    const gameImg = 'url("https://i.ibb.co/DzCmyyj/fist.webp")';
-    const endPromotionPtBt = "01 de agosto";
-    const endPromotionEnUS = "August 01";
+    const gameTile = "DNF Duel";
+    const gameImg = 'url("https://i.ibb.co/0fwY261/dnf-duel.webp")';
+    const endPromotionPtBt = "15 de agosto";
+    const endPromotionEnUS = "August 15";
 
     document.querySelector(".home-game1 .block-title").innerHTML = gameTile;
     document.querySelector(".home-game1 .home-game-img").style.backgroundImage = gameImg;
