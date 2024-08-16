@@ -1,9 +1,9 @@
 function showFreeGameHome() {
     // Content of block 1
-    const gameTile = "DNF Duel";
-    const gameImg = 'url("https://i.ibb.co/0fwY261/dnf-duel.webp")';
-    const endPromotionPtBt = "15 de agosto";
-    const endPromotionEnUS = "August 15";
+    const gameTile = "Death's Gambit: Afterlife";
+    const gameImg = 'url("https://i.ibb.co/s1k3RR1/deaths-gambit-afterlife.webp")';
+    const endPromotionPtBt = "22 de agosto";
+    const endPromotionEnUS = "August 22";
 
     document.querySelector(".home-game1 .block-title").innerHTML = gameTile;
     document.querySelector(".home-game1 .home-game-img").style.backgroundImage = gameImg;
