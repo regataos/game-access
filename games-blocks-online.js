@@ -1,9 +1,9 @@
 function showFreeGameHome() {
     // Content of block 1
-    const gameTile = "Death's Gambit: Afterlife";
-    const gameImg = 'url("https://i.ibb.co/s1k3RR1/deaths-gambit-afterlife.webp")';
-    const endPromotionPtBt = "22 de agosto";
-    const endPromotionEnUS = "August 22";
+    const gameTile = "The Callisto Protocol";
+    const gameImg = 'url("https://i.ibb.co/vv0jXp5/the-callisto-protocol.webp")';
+    const endPromotionPtBt = "29 de agosto";
+    const endPromotionEnUS = "August 29";
 
     document.querySelector(".home-game1 .block-title").innerHTML = gameTile;
     document.querySelector(".home-game1 .home-game-img").style.backgroundImage = gameImg;
