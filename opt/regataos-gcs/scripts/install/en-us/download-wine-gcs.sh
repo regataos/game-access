@@ -3,7 +3,7 @@
 
 # Settings and variables
 app_name="Compatibility mode"
-app_download_link="https://github.com/regataos/wine-gcs/releases/download/wine-gcs-9.10/wine-gcs.tar.xz"
+app_download_link="https://github.com/regataos/wine-gcs/releases/download/wine-gcs-9.11/wine-gcs.tar.xz"
 app_download_file_name="wine-gcs.tar.xz"
 app_download_dir="/tmp/regataos-gcs"
 app_download_status="Downloading..."
