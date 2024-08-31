@@ -1,9 +1,9 @@
 function showFreeGameHome() {
     // Content of block 1
-    const gameTile = "The Callisto Protocol";
-    const gameImg = 'url("https://i.ibb.co/vv0jXp5/the-callisto-protocol.webp")';
-    const endPromotionPtBt = "29 de agosto";
-    const endPromotionEnUS = "August 29";
+    const gameTile = "Fallout Classic Collection";
+    const gameImg = 'url("https://i.ibb.co/ygXZ84s/fallout-classic.webp")';
+    const endPromotionPtBt = "05 de setembro";
+    const endPromotionEnUS = "September 05";
 
     document.querySelector(".home-game1 .block-title").innerHTML = gameTile;
     document.querySelector(".home-game1 .home-game-img").style.backgroundImage = gameImg;
