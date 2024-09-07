@@ -1,9 +1,9 @@
 function showFreeGameHome() {
     // Content of block 1
-    const gameTile = "Fallout Classic Collection";
-    const gameImg = 'url("https://i.ibb.co/ygXZ84s/fallout-classic.webp")';
-    const endPromotionPtBt = "05 de setembro";
-    const endPromotionEnUS = "September 05";
+    const gameTile = "Sniper Ghost Warrior Contracts";
+    const gameImg = 'url("https://i.ibb.co/ynydCXc/sniper-ghost-warrior-contracts.webp")';
+    const endPromotionPtBt = "12 de setembro";
+    const endPromotionEnUS = "September 12";
 
     document.querySelector(".home-game1 .block-title").innerHTML = gameTile;
     document.querySelector(".home-game1 .home-game-img").style.backgroundImage = gameImg;
