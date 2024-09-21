@@ -1,9 +1,9 @@
 function showFreeGameHome() {
     // Content of block 1
-    const gameTile = "Rugrats: Adventures in Gameland";
-    const gameImg = 'url("https://i.ibb.co/k9PxRdJ/rugrats-adventures-in-gameland.webp")';
-    const endPromotionPtBt = "19 de setembro";
-    const endPromotionEnUS = "September 19";
+    const gameTile = "The Last Stand: Aftermath";
+    const gameImg = 'url("https://i.ibb.co/mqSMydv/the-last-stand-aftermath.webp")';
+    const endPromotionPtBt = "26 de setembro";
+    const endPromotionEnUS = "September 26";
 
     document.querySelector(".home-game1 .block-title").innerHTML = gameTile;
     document.querySelector(".home-game1 .home-game-img").style.backgroundImage = gameImg;
