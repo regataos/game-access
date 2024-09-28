@@ -1,9 +1,9 @@
 function showFreeGameHome() {
     // Content of block 1
-    const gameTile = "The Last Stand: Aftermath";
-    const gameImg = 'url("https://i.ibb.co/mqSMydv/the-last-stand-aftermath.webp")';
-    const endPromotionPtBt = "26 de setembro";
-    const endPromotionEnUS = "September 26";
+    const gameTile = "The Spirit and the Mouse";
+    const gameImg = 'url("https://i.ibb.co/nm4bvY2/the-spirit-and-the-mouse.webp")';
+    const endPromotionPtBt = "03 de outubro";
+    const endPromotionEnUS = "october 03";
 
     document.querySelector(".home-game1 .block-title").innerHTML = gameTile;
     document.querySelector(".home-game1 .home-game-img").style.backgroundImage = gameImg;
