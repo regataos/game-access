@@ -1,9 +1,9 @@
 function showFreeGameHome() {
     // Content of block 1
-    const gameTile = "The Spirit and the Mouse";
-    const gameImg = 'url("https://i.ibb.co/nm4bvY2/the-spirit-and-the-mouse.webp")';
-    const endPromotionPtBt = "03 de outubro";
-    const endPromotionEnUS = "october 03";
+    const gameTile = "Bear and Breakfast";
+    const gameImg = 'url("https://i.ibb.co/Ydsy9s9/bear-and-breakfast.webp")';
+    const endPromotionPtBt = "10 de outubro";
+    const endPromotionEnUS = "october 10";
 
     document.querySelector(".home-game1 .block-title").innerHTML = gameTile;
     document.querySelector(".home-game1 .home-game-img").style.backgroundImage = gameImg;
