@@ -1,9 +1,9 @@
 function showFreeGameHome() {
     // Content of block 1
-    const gameTile = "Bear and Breakfast";
-    const gameImg = 'url("https://i.ibb.co/Ydsy9s9/bear-and-breakfast.webp")';
-    const endPromotionPtBt = "10 de outubro";
-    const endPromotionEnUS = "october 10";
+    const gameTile = "Invincible Presents: Atom Eve";
+    const gameImg = 'url("https://i.ibb.co/CKQR8ZB/atom-eve.webp")';
+    const endPromotionPtBt = "24 de outubro";
+    const endPromotionEnUS = "october 24";
 
     document.querySelector(".home-game1 .block-title").innerHTML = gameTile;
     document.querySelector(".home-game1 .home-game-img").style.backgroundImage = gameImg;
