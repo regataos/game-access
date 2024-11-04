@@ -1,9 +1,9 @@
 function showFreeGameHome() {
     // Content of block 1
-    const gameTile = "Invincible Presents: Atom Eve";
-    const gameImg = 'url("https://i.ibb.co/CKQR8ZB/atom-eve.webp")';
-    const endPromotionPtBt = "24 de outubro";
-    const endPromotionEnUS = "october 24";
+    const gameTile = "Ghostwire: Tokyo";
+    const gameImg = 'url("https://i.ibb.co/6y6mPkY/ghostwire-tokyo.webp")';
+    const endPromotionPtBt = "07 de outubro";
+    const endPromotionEnUS = "November 07";
 
     document.querySelector(".home-game1 .block-title").innerHTML = gameTile;
     document.querySelector(".home-game1 .home-game-img").style.backgroundImage = gameImg;
