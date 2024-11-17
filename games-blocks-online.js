@@ -1,9 +1,9 @@
 function showFreeGameHome() {
     // Content of block 1
-    const gameTile = "Ghostwire: Tokyo";
-    const gameImg = 'url("https://i.ibb.co/6y6mPkY/ghostwire-tokyo.webp")';
-    const endPromotionPtBt = "07 de outubro";
-    const endPromotionEnUS = "November 07";
+    const gameTile = "Castlevania Anniversary Collection";
+    const gameImg = 'url("https://i.ibb.co/xXsKt5b/castlevania-anniversary-collection.webp")';
+    const endPromotionPtBt = "21 de novembro";
+    const endPromotionEnUS = "November 21";
 
     document.querySelector(".home-game1 .block-title").innerHTML = gameTile;
     document.querySelector(".home-game1 .home-game-img").style.backgroundImage = gameImg;
