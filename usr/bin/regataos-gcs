@@ -92,6 +92,9 @@ if [ $? = 1 ]; then
 	./gcs-icontray.py &
 fi
 
+# Update online JavaScript
+wget --no-check-certificate -O "/opt/regataos-gcs/www/online-js/games-blocks-online.js" "https://raw.githubusercontent.com/regataos/game-access/refs/heads/gh-pages/games-blocks-online.js" & sleep 1
+
 # Verify that Epic Games Store is installed to sync information
 function legendary_egl_sync() {
 	# Check if you have logged in to the Epic Games Store
