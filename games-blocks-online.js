@@ -1,9 +1,9 @@
 function showFreeGameHome() {
     // Content of block 1
-    const gameTile = "Castlevania Anniversary Collection";
-    const gameImg = 'url("https://i.ibb.co/xXsKt5b/castlevania-anniversary-collection.webp")';
-    const endPromotionPtBt = "21 de novembro";
-    const endPromotionEnUS = "November 21";
+    const gameTile = "The Lord of The Rings Return to Moria";
+    const gameImg = 'url("https://i.ibb.co/S607BGY/the-lord-of-the-rings-return-to-moria.webp")';
+    const endPromotionPtBt = "19 de dezembro";
+    const endPromotionEnUS = "December 19";
 
     document.querySelector(".home-game1 .block-title").innerHTML = gameTile;
     document.querySelector(".home-game1 .home-game-img").style.backgroundImage = gameImg;
