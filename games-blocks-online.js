@@ -1,9 +1,9 @@
 function showFreeGameHome() {
     // Content of block 1
-    let gameTile = "";
-    const gameImg = 'url("https://cdn1.epicgames.com/offer/d5241c76f178492ea1540fce45616757/EGS_HolidaySale_2024_WrappingPaper_1920x1080_1920x1080-a0f773a33796e48cc1d33e5072271fc8?resize=1&w=854&h=480&quality=medium")';
-    const endPromotionPtBt = "19 de dezembro";
-    const endPromotionEnUS = "December 19";
+    let gameTile = "HUMANKIND";
+    const gameImg = 'url("https://cdn1.epicgames.com/offer/02c14a01b7044db98de3f3a10813a42e/HK_Landscape_2560x1440-0233eae757a0e921c879b7be3a697d97?resize=1&w=854&h=480&quality=medium")';
+    const endPromotionPtBt = "13 de fevereiro";
+    const endPromotionEnUS = "February 13";
 
     // Detect User Language
     const userLanguage = selectTranslation();
