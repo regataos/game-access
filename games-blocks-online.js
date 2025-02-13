@@ -12,20 +12,11 @@ function showFreeGameHome() {
     const gameBlockDesc1 = document.querySelector(".home-game1 .block-desc");
 
     if (userLanguage.includes("pt-br") || userLanguage.includes("pt-pt")) {
-        // Game Description 1
-        // gameBlockDesc1.innerHTML = `Disponível de graça na Epic Games Store até ${endPromotionPtBt}.`;
-        gameTile = "Jogo misterioso na Epic Games Store";
-        gameBlockDesc1.innerHTML = `Resgate um jogo misterioso gratuitamente na Epic Games Store.`;
+        gameBlockDesc1.innerHTML = `Disponível de graça na Epic Games Store até ${endPromotionPtBt}.`;
     } else if (userLanguage.includes("en-us")) {
-        // Game Description 1
-        // gameBlockDesc1.innerHTML = `Available for free at the Epic Games Store until ${endPromotionEnUS}.`;
-        gameTile = "Mysterious game on Epic Games Store";
-        gameBlockDesc1.innerHTML = `Claim a mystery game for free on the Epic Games Store.`;
+        gameBlockDesc1.innerHTML = `Available for free at the Epic Games Store until ${endPromotionEnUS}.`;
     } else {
-        // Game Description 1
-        // gameBlockDesc1.innerHTML = `Available for free at the Epic Games Store until ${endPromotionEnUS}.`;
-        gameTile = "Mysterious game on Epic Games Store";
-        gameBlockDesc1.innerHTML = `Claim a mystery game for free on the Epic Games Store.`;
+        gameBlockDesc1.innerHTML = `Available for free at the Epic Games Store until ${endPromotionEnUS}.`;
     }
 
     document.querySelector(".home-game1 .block-title").innerHTML = gameTile;
