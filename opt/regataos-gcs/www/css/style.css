@@ -251,6 +251,16 @@ ul#top-menu li a {
 	color: #fff;
 	letter-spacing: 0.05em;
 	cursor: pointer;
+	font-weight: 400;
+}
+
+ul#top-menu li a.current {
+	font-weight: 700;
+	border-bottom: solid 1px white;
+}
+
+.text-app {
+	font-weight: 400;
 }
 
 a.p-home {

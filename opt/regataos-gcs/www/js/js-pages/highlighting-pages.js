@@ -5,46 +5,40 @@ function back_button() {
 	if ((iframeurl.indexOf("home") > -1) == "1") {
 		$(".top-bar-arrow").css("display", "none")
 		$("ul#top-menu").css("margin-left", "50px")
-		$("a.p-home").css("font-weight", "700")
-		$(".text-app").css("font-weight", "400")
+		$("a.p-home").addClass('current');
 	} else {
 		$(".top-bar-arrow").css("display", "block")
 		$("ul#top-menu").css("margin-left", "80px")
-		$("a.p-home").css("font-weight", "400")
+		$("a.p-home").removeClass('current');
 	}
 
 	if ((iframeurl.indexOf("installed") > -1) == "1") {
-		$("a.p-installed").css("font-weight", "700")
-		$(".text-app").css("font-weight", "400")
+		$("a.p-installed").addClass('current');
 	} else {
-		$("a.p-installed").css("font-weight", "400")
+		$("a.p-installed").removeClass('current');
 	}
 
 	if ((iframeurl.indexOf("allgames") > -1) == "1") {
-		$("a.p-allgames").css("font-weight", "700")
-		$(".text-app").css("font-weight", "400")
+		$("a.p-allgames").addClass('current');
 	} else {
-		$("a.p-allgames").css("font-weight", "400")
+		$("a.p-allgames").removeClass('current');
 	}
 
 	if ((iframeurl.indexOf("steam-games") > -1) == "1") {
-		$("a.p-steam").css("font-weight", "700")
-		$(".text-app").css("font-weight", "400")
+		$("a.p-steam").addClass('current');
 	} else {
-		$("a.p-steam").css("font-weight", "400")
+		$("a.p-steam").removeClass('current');
 	}
 
 	if ((iframeurl.indexOf("settings") > -1) == "1") {
-		$("a.p-settings").css("font-weight", "700")
-		$(".text-app").css("font-weight", "400")
+		$("a.p-settings").addClass('current');
 	} else {
-		$("a.p-settings").css("font-weight", "400")
+		$("a.p-settings").removeClass('current');
 	}
 
 	if ((iframeurl.indexOf("search") > -1) == "1") {
 		$(".top-bar-arrow").css("display", "block")
 		$("ul#top-menu").css("margin-left", "80px")
-		$(".text-app").css("font-weight", "400")
 	}
 }
 
@@ -61,25 +55,22 @@ function back_button_pages() {
 			var url_split1 = page_url.split("pages/")[1];
 			var pagename = url_split1.replace('-games.html', '');
 
-			$(".text-app").css("font-weight", "400")
 
 			setTimeout(function () {
-				$("." + pagename + "-title").css("font-weight", "700")
+				$("." + pagename + "-title").addClass('current');
 			}, 100);
 
 		} else if ((page_url.indexOf("gcs") > -1) == "1") {
 			var url_split1 = page_url.split("pages/")[1];
 			var pagename = url_split1.replace('-gcs.html', '');
 
-			$(".text-app").css("font-weight", "400")
 
 			setTimeout(function () {
-				$("." + pagename + "-title").css("font-weight", "700")
+				$("." + pagename + "-title").addClass('current');
 			}, 100);
 
 		} else {
 			setTimeout(function () {
-				$(".text-app").css("font-weight", "400")
 			}, 100);
 		}
 	}, 200);
