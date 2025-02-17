@@ -161,14 +161,17 @@ div.universal-title {
 
 .blocks {
 	width: 100%;
-	min-width: 1015px;
 	float: left;
 	padding-bottom: 30px;
 	opacity: 1;
-  	-webkit-transition: all 0.3s ease;
-  	transition: all 0.3s ease;
-  	animation-name: opacityEfect;
-  	animation-duration: 1.5s;
+	-webkit-transition: all 0.3s ease;
+	transition: all 0.3s ease;
+	animation-name: opacityEfect;
+	animation-duration: 1.5s;
+}
+
+.blocks:not(.settings, .all-games) {
+	min-width: 1015px;
 }
 
 .blocks2 {
@@ -272,6 +275,7 @@ div.universal-title {
     margin-right: auto;
     -webkit-transition: all 0.3s ease-in-out;
     transition: all 0.3s ease-in-out;
+		gap: 20px 8px;
 }
 
 .list-account-games, .list-installed-games {
@@ -290,9 +294,6 @@ div.universal-title {
 	background-position: 50% 50%;
 	background-size: cover;
 	background-repeat: no-repeat;
-	margin-right: 8px;
-    margin-left: 8px;
-	margin-bottom: 20px;
 	padding: 0px;
     -webkit-transition: all 0.5s ease-in-out;
     transition: all 0.5s ease-in-out;
