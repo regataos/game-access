@@ -1,6 +1,7 @@
 // Global Variables
 let loopStarted = false;
 let buttonsState = [];
+let axesState = [false, false];
 
 // Starting listeners to get when gamepad is connected or disconnected
 window.addEventListener('gamepaddisconnected', () => {
@@ -15,6 +16,7 @@ window.addEventListener('gamepadconnected', () => {
     const gamepad = navigator.getGamepads()[0];
 
     if (buttonsState.length === 0) {
+      axesState = [false, false];
       buttonsState = new Array(gamepad.buttons.length).fill(false);
     }
 
@@ -39,6 +41,28 @@ function startGamepadSupport() {
     } else if (!button.pressed && buttonsState[i]) {
       buttonsState[i] = false;
     }
+  }
+
+  const xAxis = gamepad.axes[0];
+  const yAxis = gamepad.axes[1];
+
+  if (!axesState[0] && (xAxis > 0.5 || xAxis < -0.5)) {
+    // If the axis is being used, mimic a button press
+    const mimicButton = getPressedButton(xAxis > 0.5 ? 15 : 14); // 15 = D-Right, 14 = D-Left
+    handleButtonPress(mimicButton);
+    axesState[0] = true;
+  } else if (axesState[0] && (xAxis >= -0.5 && xAxis <= 0.5)) {
+    axesState[0] = false;
+  }
+
+  // Handle Y-axis (up/down)
+  if (!axesState[1] && (yAxis > 0.5 || yAxis < -0.5)) {
+    // If the axis is being used, mimic a button press
+    const mimicButton = getPressedButton(yAxis > 0.5 ? 13 : 12); // 13 = D-Down, 12 = D-Up
+    handleButtonPress(mimicButton);
+    axesState[1] = true;
+  } else if (axesState[1] && (yAxis >= -0.5 && yAxis <= 0.5)) {
+    axesState[1] = false;
   }
 
   if (loopStarted) {
@@ -84,6 +108,6 @@ function changeTab(pressedButton) {
   while (targetTab.style.display === 'none') {
     targetTab = pressedButton === 'LB' ? targetTab.previousElementSibling : targetTab.nextElementSibling;
   }
-  
+
   targetTab.querySelector('a').click();
 }
