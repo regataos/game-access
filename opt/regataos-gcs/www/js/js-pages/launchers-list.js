@@ -14,12 +14,12 @@ async function launchers_list() {
 		});
 	});
 
-	launcherList.forEach(async launcher => {
+	launcherList.forEach(async (launcher, index) => {
 		await fs.readFile(`${launcherJsonFilesDir}/${launcher.name}.json`, "utf8", function (err, data) {
 			if (!err) {
 				data = JSON.parse(data);
 				data = data[0];
-
+				
 				launcherList[index] = data;
 				// Request the dynamic creation of launcher blocks on the HTML page.
 				//Capture the main element where the game blocks will be created.
@@ -36,7 +36,7 @@ async function launchers_list() {
 				const launchernickname = '"' + data.launcher_nickname + '"'
 
 				new_game_blocks.setAttribute('onclick', `window.launchername=${launchernickname}; go_to_page(); back_button_pages();`)
-
+				
 				// Attribute making it able to focus
 				new_game_blocks.setAttribute('tabindex', '-1');
 
