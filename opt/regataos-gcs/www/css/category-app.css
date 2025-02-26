@@ -170,7 +170,7 @@ div.universal-title {
 	animation-duration: 1.5s;
 }
 
-.blocks:not(.settings, .all-games) {
+.blocks:not(.settings, .all-games, .launcher-games) {
 	min-width: 1015px;
 }
 

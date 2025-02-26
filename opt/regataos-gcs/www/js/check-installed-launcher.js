@@ -3,7 +3,7 @@ function checkInstalledLaunchers() {
 	const fs = require('fs');
 
 	const getInstalledLaunchers = fs.readFileSync("/tmp/regataos-gcs/config/installed-launchers.conf", "utf8");
-	let getPageUrl = document.getElementById("iframegcs").contentWindow.location.href;
+	var getPageUrl = document.getElementById("iframegcs").contentWindow.location.href;
 	getPageUrl = getPageUrl.split("pages/")[1];
 
 	const launcherSidebar = document.querySelector("#block-home");
