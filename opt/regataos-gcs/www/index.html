@@ -25,7 +25,6 @@
 	<script type="text/javascript" src="js/confirm-installation.js"></script>
 	<script type="text/javascript" src="js/confirm-uninstall.js"></script>
 	<script type="text/javascript" src="js/scripts.js"></script>
-	<script type="text/javascript" src="js/controller-support.js"></script>
 	<script type="text/javascript" src="js/js-pages/steam-games-list.js"></script>
 </head>
 <body>
@@ -196,15 +195,19 @@
 
 <ul id='top-menu'>
     <li class="p-home-li">
-    	<a class='p-home' onclick="go_home();">Game Access</a>
-    </li><li class="p-installed-li">
-    	<a class='p-installed' onclick="go_installed();">Instalados</a>
-    </li><li class="p-allgames-li">
-    	<a class='p-allgames' onclick="go_allgames();">Todos os jogos</a>
-    </li><li class="p-steam-li">
-		<a class='p-steam' onclick="go_steam();">Jogos do Steam</a>
-	</li><li class="p-settings-li">
-		<a class='p-settings' onclick="go_settings();">Configurações</a>
+    	<a id="home-page" class='p-home top-menu-item' onclick="go_home();">Game Access</a>
+    </li>
+	<li class="p-installed-li">
+    	<a class='p-installed top-menu-item' onclick="go_installed();">Instalados</a>
+    </li>
+	<li class="p-allgames-li">
+    	<a class='p-allgames top-menu-item' onclick="go_allgames();">Todos os jogos</a>
+    </li>
+	<li class="p-steam-li">
+		<a class='p-steam top-menu-item' onclick="go_steam();">Jogos do Steam</a>
+	</li>
+	<li class="p-settings-li">
+		<a class='p-settings top-menu-item' onclick="go_settings();">Configurações</a>
 	</li>
 </ul>
 
@@ -225,5 +228,6 @@
 			gui.Window.get().show();
 		}
 	</script>
+	<script type="text/javascript" src="js/controller-support.js"></script>
 </body>
 </html>
