@@ -8,7 +8,7 @@
   "enableNativeAPI": true,
   "nativeAllowList": [
     "app.*",
-    "filesystem.readDirectory"
+    "os.getEnv"
   ],
   "modes": {
     "window": {

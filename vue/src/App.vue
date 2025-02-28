@@ -20,11 +20,11 @@ import { RouterLink, RouterView } from 'vue-router'
 import HelloWorld from './components/HelloWorld.vue'
 import { onMounted } from 'vue';
 
-import { filesystem } from '@neutralinojs/lib';
+import { os } from '@neutralinojs/lib';
 
 onMounted(() => {
-  filesystem.readDirectory('./').then((data) => {
-    console.log(data)
+  os.getEnv('USER').then((data) => {
+    console.log(`USER = ${data}`);
   }).catch((err) => {
     console.log(err)
   })
