@@ -1,0 +1,29 @@
+{
+  "applicationId": "js.neutralino.zero",
+  "version": "1.0.0",
+  "defaultMode": "window",
+  "documentRoot": "/vue/dist",
+  "url": "/",
+  "enableServer": true,
+  "enableNativeAPI": true,
+  "nativeAllowList": [
+    "app.*"
+  ],
+  "modes": {
+    "window": {
+      "title": "game-access",
+      "width": 800,
+      "height": 500,
+      "minWidth": 400,
+      "minHeight": 200,
+      "icon": "/vue/public/favicon.ico"
+    }
+  },
+  "cli": {
+    "binaryName": "game-access",
+    "resourcesPath": "/vue/dist",
+    "extensionsPath": "/extensions/",
+    "binaryVersion": "5.6.0",
+    "clientVersion": "5.6.0"
+  }
+}

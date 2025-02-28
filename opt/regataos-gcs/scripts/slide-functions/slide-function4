@@ -1,6 +1,0 @@
-#!/bin/bash
-
-# Run installed game and display icon in system taskbar
-export GAMEID="Sugar";
-
-/opt/regataos-gcs/scripts/action-games/rungame-epicstore start

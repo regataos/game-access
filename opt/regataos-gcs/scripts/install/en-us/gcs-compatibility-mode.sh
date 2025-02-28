@@ -1,1 +1,0 @@
-/opt/regataos-gcs/scripts/install/en-us/install-game-gcs/install-gcs-game.sh

@@ -1,9 +1,0 @@
-[Unit]
-Description=All settings for Regata OS Game Access
-Before=display-manager.service
-
-[Service]
-ExecStart=/bin/sh /opt/regataos-gcs/scripts/all-settings
-
-[Install]
-WantedBy=graphical.target

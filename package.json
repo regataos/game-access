@@ -1,0 +1,16 @@
+{
+  "name": "game-access",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+		"dev": "neu run",
+    "build:vue": "cd vue && pnpm build"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@neutralinojs/neu": "^11.3.1"
+  }
+}
