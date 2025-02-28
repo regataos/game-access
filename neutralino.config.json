@@ -30,7 +30,9 @@
       "patchFile": "/vue/index.html",
       "devUrl": "http://localhost:5173/",
       "projectPath": "/vue/",
-      "devCommand": "BROWSER=none npm run dev"
+      "initCommand": "npm install",
+      "devCommand": "BROWSER=none npm run dev",
+      "buildComand": "npm run buld"
     }
   }
 }
