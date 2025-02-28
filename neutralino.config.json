@@ -25,6 +25,14 @@
     "resourcesPath": "/vue/dist",
     "extensionsPath": "/extensions/",
     "binaryVersion": "5.6.0",
-    "clientVersion": "5.6.0"
+    "clientVersion": "5.6.0",
+    "frontendLibrary": {
+      "patchFile": "/vue/index.html",
+      "devUrl": "http://localhost:5173/",
+      "projectPath": "/vue/",
+      "initCommand": "npm install",
+      "devCommand": "BROWSER=none npm run dev",
+      "buildComand": "npm run buld"
+    }
   }
 }
