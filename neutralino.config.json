@@ -32,7 +32,7 @@
       "projectPath": "/vue/",
       "initCommand": "npm install",
       "devCommand": "BROWSER=none npm run dev",
-      "buildComand": "npm run buld"
+      "buildComand": "npm run build"
     }
   }
 }

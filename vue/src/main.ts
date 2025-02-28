@@ -10,4 +10,8 @@ const app = createApp(App)
 app.use(router)
 app.mount('#app')
 
-init();
+try {
+  init();
+} catch(error) {
+  location.reload()
+}
