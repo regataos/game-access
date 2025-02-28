@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-		"dev": "neu run",
+		"dev": "neu run -- --window-enable-inspector",
     "build:vue": "cd vue && pnpm build"
   },
   "keywords": [],
