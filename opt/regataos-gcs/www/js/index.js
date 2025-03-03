@@ -70,9 +70,11 @@ setInterval(installed_page, 500);
 function installed_page() {
 	fs.access('/tmp/regataos-gcs/config/installed/show-installed-games.txt', (err) => {
 		if (!err) {
-			$(".p-installed-li").css("display", "block");
+			document.querySelector(".p-installed-li").style.display = "block";
+			document.querySelector(".p-installed-li a").style.display = "inline-block";
 		} else {
-			$(".p-installed-li").css("display", "none");
+			document.querySelector(".p-installed-li").style.display = "none";
+			document.querySelector(".p-installed-li a").style.display = "none";
 		}
 	});
 }
@@ -82,19 +84,25 @@ const checkSteamCache = setInterval(steam_games, 500);
 function steam_games() {
 	if (!fs.existsSync('/tmp/regataos-gcs/config/steam-games/no-steam-games.txt')) {
 		if (fs.existsSync('/tmp/regataos-gcs/config/steam-games/show-menu-steam.txt')) {
-			$(".p-steam-li").css("display", "block");
+			document.querySelector(".p-steam-li").style.display = "block";
+			document.querySelector(".p-steam-li a").style.display = "inline-block";
 			clearInterval(checkSteamCache);
 
 		} else {
 			if (fs.readdirSync("/tmp/regataos-gcs/config/steam-games/json/games").length) {
-				$(".p-steam-li").css("display", "block");
+				document.querySelector(".p-steam-li").style.display = "block";
+				document.querySelector(".p-steam-li a").style.display = "inline-block";
 				clearInterval(checkSteamCache);
 			} else {
 				$(".p-steam-li").css("display", "none");
+				document.querySelector(".p-steam-li").style.display = "none";
+				document.querySelector(".p-steam-li a").style.display = "none";
 			}
 		}
 
 	} else {
 		$(".p-steam-li").css("display", "none");
+		document.querySelector(".p-steam-li").style.display = "none";
+		document.querySelector(".p-steam-li a").style.display = "none";
 	}
 }
