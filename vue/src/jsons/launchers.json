@@ -1,0 +1,30 @@
+[
+  {
+    "name": "Amazon Games",
+    "iconName": "amazon"
+  },
+  {
+    "name": "Battle.net",
+    "iconName": "battlenet"
+  },
+  {
+    "name": "EA App",
+    "iconName": "eadesktop"
+  },
+  {
+    "name": "Epic Games Store",
+    "iconName": "epicstore"
+  },
+  {
+    "name": "GOG Galaxy",
+    "iconName": "gog"
+  },
+  {
+    "name": "Rockstar Launcher",
+    "iconName": "rockstar"
+  },
+  {
+    "name": "Ubisoft Connect",
+    "iconName": "ubisoft"
+  }
+]

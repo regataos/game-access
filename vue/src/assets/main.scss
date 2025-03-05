@@ -1,0 +1,31 @@
+@font-face {
+  font-family: "Oxygen";
+  src: url('./fonts/Oxygen.otf') format('truetype');
+}
+
+body,
+html {
+  margin: 0;
+  padding: 0;
+  background-color: #2a2e33;
+}
+
+* {
+  color: white;
+  letter-spacing: 0.05em;
+  font-family: Oxygen;
+  font-weight: 400;
+}
+
+a {
+  text-decoration-line: none;
+  
+  &:hover span {
+    text-decoration-line: underline;
+  }
+}
+
+ol {
+  list-style: none;
+  padding-left: 0;
+}
