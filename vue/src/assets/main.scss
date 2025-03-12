@@ -19,10 +19,16 @@ html {
 
 a {
   text-decoration-line: none;
+  font-family: 'Roboto', sans-serif;
   
   &.router-link-active span,
   &:hover span {
     text-decoration-line: underline;
+    text-underline-offset: 4px;
+  }
+
+  &.router-link-active span {
+    font-weight: 700;
   }
 }
 
