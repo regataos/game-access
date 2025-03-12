@@ -6,7 +6,7 @@
 
       <ol>
         <li v-for="launcher in launchers" class="launcher">
-          <RouterLink to="/">
+          <RouterLink :to="launcher.iconName">
             <img :src="getIconPath(launcher.iconName)" :alt="launcher.name">
             <span>{{ launcher.name }}</span>
           </RouterLink>
@@ -20,9 +20,9 @@
           <li>
             <RouterLink to="/"><span>Game Access</span></RouterLink>
           </li>
-          <li>
+          <!-- <li>
             <RouterLink to="/About"><span>Jogos Instalados</span></RouterLink>
-          </li>
+          </li> -->
           <li>
             <RouterLink to="/About"><span>Todos os Jogos</span></RouterLink>
           </li>
@@ -96,8 +96,10 @@ const getIconPath = (iconName: string) => {
       ol {
         margin: 0;
         display: flex;
-        gap: 12px;
+        gap: 32px;
         text-transform: uppercase;
+        font-family: 'Roboto', sans-serif;
+        font-size: 15px;
       }
     }
   }

@@ -20,6 +20,7 @@ html {
 a {
   text-decoration-line: none;
   
+  &.router-link-active span,
   &:hover span {
     text-decoration-line: underline;
   }
