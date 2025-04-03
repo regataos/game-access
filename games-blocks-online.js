@@ -1,9 +1,9 @@
 function showFreeGameHome() {
     // Content of block 1
-    let gameTile = "HUMANKIND";
-    const gameImg = 'url("https://cdn1.epicgames.com/offer/02c14a01b7044db98de3f3a10813a42e/HK_Landscape_2560x1440-0233eae757a0e921c879b7be3a697d97?resize=1&w=854&h=480&quality=medium")';
-    const endPromotionPtBt = "13 de fevereiro";
-    const endPromotionEnUS = "February 13";
+    let gameTile = "Neko Ghost, Jump!";
+    const gameImg = 'url("https://cdn1.epicgames.com/offer/d5241c76f178492ea1540fce45616757/Gift_1920x1080_wrap-b_1920x1080-d6e0c4f1fa0962bbb9b30317081c5b6d?resize=1&w=854&h=480&quality=medium")';
+    const endPromotionPtBt = "2 de Abril";
+    const endPromotionEnUS = "April 2";
 
     // Detect User Language
     const userLanguage = selectTranslation();
