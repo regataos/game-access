@@ -1,9 +1,9 @@
 function showFreeGameHome() {
     // Content of block 1
-    let gameTile = "Neko Ghost, Jump!";
-    const gameImg = 'url("https://cdn1.epicgames.com/offer/d5241c76f178492ea1540fce45616757/Gift_1920x1080_wrap-b_1920x1080-d6e0c4f1fa0962bbb9b30317081c5b6d?resize=1&w=854&h=480&quality=medium")';
-    const endPromotionPtBt = "2 de Abril";
-    const endPromotionEnUS = "April 2";
+    let gameTile = "Super Space Club";
+    const gameImg = 'url("https://cdn1.epicgames.com/spt-assets/d23691af8c7d42729f66d929c8609676/super-space-club-t55ij.png?resize=1&w=854&h=480&quality=medium")';
+    const endPromotionPtBt = "8 de maio";
+    const endPromotionEnUS = "May 08";
 
     // Detect User Language
     const userLanguage = selectTranslation();
