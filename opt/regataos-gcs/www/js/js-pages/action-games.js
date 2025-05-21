@@ -138,8 +138,8 @@ function run_steam_game(gamenickname, gameid) {
 }
 
 // Install Steam game
-function install_steam_game(gamenickname) {
-	const commandLine = `steam steam://rungameid/${gamenickname} & sleep 10; steam steam://open/downloads`;
+function install_steam_game(gamenickname, gameid) {
+	const commandLine = `steam steam://rungameid/${gameid} & sleep 10; steam steam://open/downloads`;
 	runShellProcess(commandLine);
 
 	setTimeout(function () {

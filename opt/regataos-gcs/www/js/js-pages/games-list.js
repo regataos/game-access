@@ -61,7 +61,7 @@ function listAllGames(specifyLauncher, contentBrake) {
 						specialButtonFunction = `goGamePageId('${gamenickname}')`;
 
 					} else if (launchernickname.includes("steam")) {
-						installGame = `install_${launchernickname}_game('${gamenickname}')`;
+						installGame = `install_${launchernickname}_game('${gamenickname}', '${gameid}')`;
 						runGame = `run_${launchernickname}_game('${gamenickname}', '${gameid}')`;
 						gamePlataform = gamenative.includes("true") ? "nativegame" : "steamplay";
 
