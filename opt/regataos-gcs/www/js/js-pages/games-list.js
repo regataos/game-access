@@ -62,13 +62,13 @@ function listAllGames(specifyLauncher, contentBrake) {
 
 					} else if (launchernickname.includes("steam")) {
 						installGame = `install_${launchernickname}_game('${gamenickname}')`;
-						runGame = `run_${launchernickname}_game('${gamenickname})', '${gameid}')`;
+						runGame = `run_${launchernickname}_game('${gamenickname}', '${gameid}')`;
 						gamePlataform = gamenative.includes("true") ? "nativegame" : "steamplay";
 
 					} else if ((launchernickname.includes("gog")) ||
 						(launchernickname.includes("epicstore")) || (launchernickname.includes("amazon"))) {
 						installGame = `install_${launchernickname}_game('${gamenickname}')`;
-						runGame = `run_${launchernickname}_game('${gamenickname})', '${gameid}')`;
+						runGame = `run_${launchernickname}_game('${gamenickname}', '${gameid}')`;
 						specialButtonFunction = `uninstall_${launchernickname}_game('${gamenickname}')`;
 
 					} else {
