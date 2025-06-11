@@ -1,9 +1,9 @@
 function showFreeGameHome() {
     // Content of block 1
-    let gameTile = "Super Space Club";
-    const gameImg = 'url("https://cdn1.epicgames.com/spt-assets/d23691af8c7d42729f66d929c8609676/super-space-club-t55ij.png?resize=1&w=854&h=480&quality=medium")';
-    const endPromotionPtBt = "8 de maio";
-    const endPromotionEnUS = "May 08";
+    let gameTile = "DEATHLOOP";
+    const gameImg = 'url("https://cdn1.epicgames.com/offer/d5241c76f178492ea1540fce45616757/Day8wide_2560x1440-bf6d342edbd2411ccf24e326852fca93?resize=1&w=854&h=480&quality=medium")';
+    const endPromotionPtBt = "12 de junho";
+    const endPromotionEnUS = "June 12";
 
     // Detect User Language
     const userLanguage = selectTranslation();
