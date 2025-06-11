@@ -1,6 +1,7 @@
 function homeSlideContent() {
     // Image of the 1st item on the slide.
     document.querySelector("#slide-img1").style.backgroundImage = 'url("./../images/games-slide/slide1-apex-legends.webp")';
+    document.querySelector("#slide-img1").style.backgroundPosition = "0% 100%";
     document.querySelector(".slide-content .slide-title1").innerHTML = "Apex Legends";
 
     // Image of the 2st item on the slide.
@@ -9,10 +10,12 @@ function homeSlideContent() {
 
     // Image of the 3st item on the slide.
     document.querySelector("#slide-img3").style.backgroundImage = 'url("./../images/games-slide/slide3-ow2.webp")';
+    document.querySelector("#slide-img3").style.backgroundPosition = "50% 100%";
     document.querySelector(".slide-content .slide-title3").innerHTML = "Overwatch 2";
 
     // Image of the 4st item on the slide.
     document.querySelector("#slide-img4").style.backgroundImage = 'url("./../images/games-slide/slide4-rl.webp")';
+    document.querySelector("#slide-img4").style.backgroundPosition = "50% 0%";
     document.querySelector(".slide-content .slide-title4").innerHTML = "Rocket League";
 
     // Detect User Language

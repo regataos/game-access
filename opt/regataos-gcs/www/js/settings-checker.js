@@ -38,8 +38,5 @@ function selectTranslation() {
         languageDetected = languageDetected.replace(/_/g, '-');
 
         return languageDetected;
-    } else {
-        // Default language
-        return 'pt-br'
     }
 }

@@ -50,6 +50,9 @@ function search_installed_games() {
 							if test -e "/tmp/regataos-gcs/config/steam-games/json/games/$game_name-steam.json"; then
 								cp -f "/tmp/regataos-gcs/config/steam-games/json/games/$game_name-steam.json" \
 								"/tmp/regataos-gcs/config/installed/$game_name-steam.json"
+
+								echo "show steam games" > "/tmp/regataos-gcs/config/steam-games/json/steam-id/show-steam-games.txt"
+								rm -f "/tmp/regataos-gcs/config/steam-games/no-steam-games.txt"
 							fi
 						fi
 					fi
@@ -76,15 +79,29 @@ if test -e "$config_file"; then
 		fi
 
 		if [[ $(grep -r "appid" "$user_id_dir/$check_steam_id.json") == *"appid"* ]]; then
-			echo "show steam games" > "/tmp/regataos-gcs/config/steam-games/json/steam-id/show-steam-games.txt"
-			rm -f "/tmp/regataos-gcs/config/steam-games/no-steam-games.txt"
-
 			if [[ $(ls "/tmp/regataos-gcs/config/steam-games/json/games/") == *"steam.json"* ]]; then
 				echo "show steam games" > "/tmp/regataos-gcs/config/steam-games/show-menu-steam.txt"
 			fi
 
 			# Check for installed or downloaded games.
 			search_installed_games
+
+			check_installed_game_name="$(ls /tmp/regataos-gcs/config/installed/)"
+			if [[ $check_installed_game_name == *"json"* ]]; then
+				for file in $check_installed_game_name; do
+					if [[ $(echo "/tmp/regataos-gcs/config/installed/$file") == *"steam.json"* ]]; then
+						get_game_id="$(cat /tmp/regataos-gcs/config/installed/$file | grep '"gameid"' | head -1 | tail -1 | awk '{print $2}' | cut -d'"' -f -2 | cut -d'"' -f 2-)"
+						check_game_id="$(grep -r "$get_game_id" $steam_library/*.acf)"
+						if [ -z "$check_game_id" ]; then
+							echo "Game with ID $get_game_id is not installed!"
+							rm -f "/tmp/regataos-gcs/config/installed/$file"
+						else
+							echo "$check_game_id"
+							echo "Game with ID $get_game_id is installed!"
+						fi
+					fi
+				done
+			fi
 
 			if [[ $(ls "/tmp/regataos-gcs/config/installed/") == *"steam.json"* ]]; then
 				echo "Show Steam installed!" > "/tmp/regataos-gcs/config/installed/show-installed-games-steam.txt"

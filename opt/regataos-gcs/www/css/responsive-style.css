@@ -117,14 +117,6 @@
 	}
 }
 
-@media screen and (max-width: 820px) {
-	#account-games,
-	#installed-games,
-	#universal-account {
-		grid-template-columns: auto;
-	}
-}
-
 @media screen and (max-width: 1175px) {
 	#search input#field {
 		width: 0px;
@@ -138,7 +130,6 @@
 @media screen and (max-width: 1080px) {
 	.home-blocks3 {
 		display: grid;
-		justify-content: normal;
 	}
 
 	.big-block-home {

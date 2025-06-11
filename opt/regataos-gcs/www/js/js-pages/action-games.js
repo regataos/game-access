@@ -208,7 +208,7 @@ function uninstall_epicstore_game(gamenickname) {
 	fs.watch(fileStatus, (eventType, filename) => {
 		interfaceStatus = fs.readFileSync(fileStatus, "utf8");
 		if (interfaceStatus.includes("rearrange game blocks")) {
-			var getPageUrl = window.location.href;
+			const getPageUrl = window.location.href;
 			if ((getPageUrl.includes("search.html")) ||
 				(getPageUrl.includes("allgames.html"))) {
 				reloadPage(1000);
@@ -346,7 +346,7 @@ function uninstall_amazon_game(gamenickname) {
 	fs.watch(fileStatus, (eventType, filename) => {
 		interfaceStatus = fs.readFileSync(fileStatus, "utf8");
 		if (interfaceStatus.includes("rearrange game blocks")) {
-			var getPageUrl = window.location.href;
+			const getPageUrl = window.location.href;
 			if ((getPageUrl.includes("search.html")) ||
 				(getPageUrl.includes("allgames.html"))) {
 				reloadPage(1000);

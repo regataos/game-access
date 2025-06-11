@@ -228,7 +228,7 @@ function listAllGames(specifyLauncher, contentBrake) {
 
 // Start the process of creating the list of games on the screen.
 function startListAllGames() {
-	var getPageUrl = window.location.href;
+	const getPageUrl = window.location.href;
 	listAllGames(getPageUrl);
 
 	// Load more games when the user scrolls to the end of the page.

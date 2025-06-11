@@ -60,13 +60,13 @@ if test -e "/usr/bin/nvidia-xconfig"; then
 	export __GL_SHADER_DISK_CACHE=1
 	export __GL_SHADER_DISK_CACHE_PATH="$PREFIX_LOCATION"
 	export __GL_SHADER_DISK_CACHE_SKIP_CLEANUP=1
-	export VK_LAYER_PATH="/etc/vulkan/icd.d"
-	export VK_ICD_FILENAMES="/etc/vulkan/icd.d/nvidia_icd.json"
+	export VK_LAYER_PATH="/usr/share/vulkan/icd.d"
+	export VK_ICD_FILENAMES="/usr/share/vulkan/icd.d/nvidia_icd.i686.json:/usr/share/vulkan/icd.d/nvidia_icd.x86_64.json"
 
 	# If necessary, run software with the NVIDIA dGPU
 	if test -e "/tmp/regataos-prime/use-hybrid-graphics.txt"; then
 		#export GAMEMODERUNEXEC="env __NV_PRIME_RENDER_OFFLOAD=1 __GLX_VENDOR_LIBRARY_NAME=nvidia __VK_LAYER_NV_optimus=NVIDIA_only $(echo $MANGOHUD_GL)"
-		export GAMEMODERUNEXEC="VK_ICD_FILENAMES=/etc/vulkan/icd.d/nvidia_icd.json VK_LAYER_PATH=/etc/vulkan/icd.d"
+		export GAMEMODERUNEXEC="VK_ICD_FILENAMES=/usr/share/vulkan/icd.d/nvidia_icd.i686.json:/usr/share/vulkan/icd.d/nvidia_icd.x86_64.json VK_LAYER_PATH=/usr/share/vulkan/icd.d"
 	else
 		export GAMEMODERUNEXEC="env $(echo $MANGOHUD_GL)"
 	fi

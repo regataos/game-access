@@ -41,7 +41,7 @@ function install_app() {
 	export WINEDLLOVERRIDES="winemenubuilder,winedbg="
 	export WINEPREFIX="$app_nickname_dir"
 
-	wine-gcs msiexec /i /tmp/regataos-gcs/$app_download_file_name /q
+	wine-gcs /tmp/regataos-gcs/$app_download_file_name /q
 	killall EpicGamesLauncher.exe
 	sleep 120
 }

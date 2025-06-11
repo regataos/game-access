@@ -1,5 +1,5 @@
 // Check the page url and check the user login.
-var getPageUrl = window.location.href;
+const getPageUrl = window.location.href;
 
 // For Epic Games Store
 if (getPageUrl.includes("https://www.epicgames.com/id/login?redirectUrl=https://www.epicgames.com/id/api/redirect")) {

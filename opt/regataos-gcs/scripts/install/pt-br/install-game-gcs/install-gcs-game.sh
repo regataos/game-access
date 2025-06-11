@@ -261,23 +261,15 @@ function install_app() {
 				$CUSTOM_WINE_DIR/bin/wine $downloadDir/$game_download_file_name $install_args
 
 			else
-				if [[ $(echo $game_download_file_name) == *".exe"* ]]; then
-					$CUSTOM_WINE_DIR/bin/wine $downloadDir/$game_download_file_name $install_args
-				else
-					$CUSTOM_WINE_DIR/bin/wine $CUSTOM_WINE_DIR/bin/msiexec /i $downloadDir/$game_download_file_name $install_args
-				fi
+				$CUSTOM_WINE_DIR/bin/wine $downloadDir/$game_download_file_name $install_args
 			fi
 
 		elif [[ $(echo $game_nickname) == *"warframe"* ]]; then
 			clearDesktopIcons &
-			wine-gcs msiexec /i $downloadDir/$game_download_file_name $install_args
+			wine-gcs $downloadDir/$game_download_file_name $install_args
 
 		else
-			if [[ $(echo $game_download_file_name) == *".exe"* ]]; then
-				wine-gcs $downloadDir/$game_download_file_name $install_args
-			else
-				wine-gcs msiexec /i $downloadDir/$game_download_file_name $install_args
-			fi
+			wine-gcs $downloadDir/$game_download_file_name $install_args
 		fi
 
 	else
