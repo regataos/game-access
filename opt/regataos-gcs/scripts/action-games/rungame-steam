@@ -13,6 +13,7 @@ fi
 
 export NVIDIA_GL_SHADER_DISK_CACHE_PATH="$HOME/.local/share/Steam/nvidia-gl-shader-disk-cache-patch"
 export RADV_PERFTEST=gpl
+export PROTON_USE_EAC_LINUX=1
 
 # Gamescope is problematic with these environment variables
 if [[ $(cat $LOCAL_CONFIG) != *"gamescope"* ]]; then

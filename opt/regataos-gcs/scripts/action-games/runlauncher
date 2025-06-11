@@ -17,6 +17,7 @@ export DXVK_STATE_CACHE_PATH="$PREFIX_LOCATION"
 export DXVK_LOG_PATH="$PREFIX_LOCATION"
 export PROTON_BATTLEYE_RUNTIME="/opt/regataos-wine/runtimes-anticheats/battleye_runtime"
 export PROTON_EAC_RUNTIME="/opt/regataos-wine/runtimes-anticheats/eac_runtime"
+export PROTON_USE_EAC_LINUX=1
 export RADV_PERFTEST=gpl
 
 # DXVK-NVAPI
