@@ -41,25 +41,20 @@ function install_app() {
 	export WINEDLLOVERRIDES="winemenubuilder,winedbg="
 	export WINEPREFIX="$app_nickname_dir"
 
-	check_wine_version=$(cat "/opt/wine-gcs/wine-gcs.txt")
-	if [[ $(echo "$check_wine_version") == *"9.13"* ]]; then
-		wine-gcs msiexec /i /tmp/regataos-gcs/$app_download_file_name /q
-	else
-		wine-gcs /tmp/regataos-gcs/$app_download_file_name /q
-	fi
-
-	#killall EpicGamesLauncher.exe
-	#sleep 120
+	wine-gcs /tmp/regataos-gcs/$app_download_file_name /quiet
 
 	# Install Uplay
 	wget --no-check-certificate -O /tmp/regataos-gcs/UbisoftConnectInstaller.exe https://ubistatic3-a.akamaihd.net/orbit/launcher_installer/UbisoftConnectInstaller.exe
 	wine-gcs /tmp/regataos-gcs/UbisoftConnectInstaller.exe /S
 
 	mkdir -p "$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode/drive_c/users/$user/Local Settings/Application Data/Ubisoft Game Launcher/"
-	cp -f /opt/regataos-wine/custom-configs/$app_nickname/settings.yml "$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode/drive_c/users/$user/Local Settings/Application Data/Ubisoft Game Launcher/settings.yml"
+	cp -f /opt/regataos-wine/custom-configs/ubisoftconnect/settings.yml "$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode/drive_c/users/$user/Local Settings/Application Data/Ubisoft Game Launcher/settings.yml"
 
 	mkdir -p "$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode/drive_c/users/$user/AppData/Local/Ubisoft Game Launcher/"
-	cp -f /opt/regataos-wine/custom-configs/$app_nickname/settings.yml "$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode/drive_c/users/$user/AppData/Local/Ubisoft Game Launcher/settings.yaml"
+	cp -f /opt/regataos-wine/custom-configs/ubisoftconnect/settings.yml "$HOME/.local/share/wineprefixes/$app_nickname-compatibility-mode/drive_c/users/$user/AppData/Local/Ubisoft Game Launcher/settings.yaml"
+
+	#killall EpicGamesLauncher.exe
+	#sleep 120
 }
 
 # Successful installation
