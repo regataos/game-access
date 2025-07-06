@@ -11,3 +11,10 @@ fi
 if test ! -e "/opt/regataos-wine/vkd3d-proton/setup_vkd3d-proton.sh"; then
 	cp -fv "/opt/regataos-wine/setup_vkd3d-proton.sh" "/opt/regataos-wine/vkd3d-proton/setup_vkd3d-proton.sh"
 fi
+
+# Fix wine
+if test -e "/opt/wine-gcs/wine-gcs.txt"; then
+  if test ! -e "/opt/wine-gcs/bin/wine64"; then
+    ln -s "/opt/wine-gcs/bin/wine" "/opt/wine-gcs/bin/wine64"
+  fi
+fi
