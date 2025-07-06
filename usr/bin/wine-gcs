@@ -27,4 +27,9 @@ if test -e "$WINEPREFIX/vulkan.txt"; then
     fi
 fi
 
-$CUSTOM_WINE_DIR/bin/wine "$@"
+to_execute=$(echo "$@")
+if [[ $(echo "$to_execute") == *"msiexec"* ]]; then
+    $CUSTOM_WINE_DIR/bin/wine $CUSTOM_WINE_DIR/bin/msiexec /i "$@"
+else
+    $CUSTOM_WINE_DIR/bin/wine "$@"
+fi

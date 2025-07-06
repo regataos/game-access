@@ -41,7 +41,13 @@ function install_app() {
 	export WINEDLLOVERRIDES="winemenubuilder,winedbg="
 	export WINEPREFIX="$app_nickname_dir"
 
-	wine-gcs /tmp/regataos-gcs/$app_download_file_name /q
+	check_wine_version=$(cat "/opt/wine-gcs/wine-gcs.txt")
+	if [[ $(echo "$check_wine_version") == *"9.13"* ]]; then
+		wine-gcs msiexec /i /tmp/regataos-gcs/$app_download_file_name /q
+	else
+		wine-gcs /tmp/regataos-gcs/$app_download_file_name /q
+	fi
+
 	#killall EpicGamesLauncher.exe
 	#sleep 120
 
