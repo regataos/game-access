@@ -1,9 +1,9 @@
 function showFreeGameHome() {
     // Content of block 1
-    let gameTile = "DEATHLOOP";
-    const gameImg = 'url("https://cdn1.epicgames.com/offer/d5241c76f178492ea1540fce45616757/Day8wide_2560x1440-bf6d342edbd2411ccf24e326852fca93?resize=1&w=854&h=480&quality=medium")';
-    const endPromotionPtBt = "12 de junho";
-    const endPromotionEnUS = "June 12";
+    let gameTile = "Backpack Hero";
+    const gameImg = 'url("https://i.ibb.co/YTt6VmP4/backpack-hero.webp")';
+    const endPromotionPtBt = "10 de julho";
+    const endPromotionEnUS = "July 10";
 
     // Detect User Language
     const userLanguage = selectTranslation();
