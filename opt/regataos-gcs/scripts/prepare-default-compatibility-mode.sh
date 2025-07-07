@@ -19,7 +19,7 @@ winetricks-gcs prefix=default-compatibility-mode -q -f d3dx9
 winetricks-gcs prefix=default-compatibility-mode -q -f xact
 winetricks-gcs prefix=default-compatibility-mode -q -f xact_x64
 winetricks-gcs prefix=default-compatibility-mode -q -f vcrun2013
-winetricks-gcs prefix=default-compatibility-mode -q -f vcrun2019
+winetricks-gcs prefix=default-compatibility-mode -q -f vcrun2022
 winetricks-gcs prefix=default-compatibility-mode -q -f msls31
 
 # Install d3dcompiler_47 dll
