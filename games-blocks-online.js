@@ -1,9 +1,9 @@
 function showFreeGameHome() {
     // Content of block 1
-    let gameTile = "Backpack Hero";
-    const gameImg = 'url("https://i.ibb.co/YTt6VmP4/backpack-hero.webp")';
-    const endPromotionPtBt = "10 de julho";
-    const endPromotionEnUS = "July 10";
+    let gameTile = "Keylocker | Turn Based Cyberpunk Action";
+    const gameImg = 'url("https://i.ibb.co/hbjKdF9/keylocker-cr3ty.webp")';
+    const endPromotionPtBt = "8 de agosto";
+    const endPromotionEnUS = "august 8";
 
     // Detect User Language
     const userLanguage = selectTranslation();
