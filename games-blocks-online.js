@@ -1,9 +1,9 @@
 function showFreeGameHome() {
     // Content of block 1
-    let gameTile = "Keylocker | Turn Based Cyberpunk Action";
-    const gameImg = 'url("https://i.ibb.co/hbjKdF9/keylocker-cr3ty.webp")';
-    const endPromotionPtBt = "8 de agosto";
-    const endPromotionEnUS = "august 8";
+    let gameTile = "Road Redemption";
+    const gameImg = 'url("https://i.ibb.co/7x2DwmJn/Road-Redemption.webp")';
+    const endPromotionPtBt = "14 de agosto";
+    const endPromotionEnUS = "august 14";
 
     // Detect User Language
     const userLanguage = selectTranslation();
