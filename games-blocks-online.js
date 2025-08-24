@@ -1,9 +1,9 @@
 function showFreeGameHome() {
     // Content of block 1
-    let gameTile = "Road Redemption";
-    const gameImg = 'url("https://i.ibb.co/7x2DwmJn/Road-Redemption.webp")';
-    const endPromotionPtBt = "14 de agosto";
-    const endPromotionEnUS = "august 14";
+    let gameTile = "Kamaeru: A Frog Refuge";
+    const gameImg = 'url("https://i.ibb.co/5d7d8rr/kamaeru.webp")';
+    const endPromotionPtBt = "28 de agosto";
+    const endPromotionEnUS = "august 28";
 
     // Detect User Language
     const userLanguage = selectTranslation();
