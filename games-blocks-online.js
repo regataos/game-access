@@ -1,9 +1,9 @@
 function showFreeGameHome() {
     // Content of block 1
-    let gameTile = "Kamaeru: A Frog Refuge";
-    const gameImg = 'url("https://i.ibb.co/5d7d8rr/kamaeru.webp")';
-    const endPromotionPtBt = "28 de agosto";
-    const endPromotionEnUS = "august 28";
+    let gameTile = "Machinarium";
+    const gameImg = 'url("https://i.ibb.co/tprQcGyW/machinarium.webp")';
+    const endPromotionPtBt = "04 de setembro";
+    const endPromotionEnUS = "september 28";
 
     // Detect User Language
     const userLanguage = selectTranslation();
