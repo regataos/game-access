@@ -1,9 +1,9 @@
 function showFreeGameHome() {
     // Content of block 1
-    let gameTile = "Machinarium";
-    const gameImg = 'url("https://i.ibb.co/tprQcGyW/machinarium.webp")';
-    const endPromotionPtBt = "04 de setembro";
-    const endPromotionEnUS = "september 28";
+    let gameTile = "Project Winter";
+    const gameImg = 'url("https://i.ibb.co/fVLhQtZC/project-winter.webp")';
+    const endPromotionPtBt = "25 de setembro";
+    const endPromotionEnUS = "september 25";
 
     // Detect User Language
     const userLanguage = selectTranslation();
