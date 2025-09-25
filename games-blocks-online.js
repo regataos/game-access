@@ -1,9 +1,9 @@
 function showFreeGameHome() {
     // Content of block 1
-    let gameTile = "Project Winter";
-    const gameImg = 'url("https://i.ibb.co/fVLhQtZC/project-winter.webp")';
-    const endPromotionPtBt = "25 de setembro";
-    const endPromotionEnUS = "september 25";
+    let gameTile = "Eastern Exorcist";
+    const gameImg = 'url("https://i.ibb.co/Cp1SVywT/eastern-exorcist.webp")';
+    const endPromotionPtBt = "1 de outubro";
+    const endPromotionEnUS = "october 1st";
 
     // Detect User Language
     const userLanguage = selectTranslation();
