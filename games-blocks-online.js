@@ -1,9 +1,9 @@
 function showFreeGameHome() {
     // Content of block 1
-    let gameTile = "Eastern Exorcist";
-    const gameImg = 'url("https://i.ibb.co/Cp1SVywT/eastern-exorcist.webp")';
-    const endPromotionPtBt = "1 de outubro";
-    const endPromotionEnUS = "october 1st";
+    let gameTile = "Gravity Circuit";
+    const gameImg = 'url("https://cdn1.epicgames.com/spt-assets/c259931bc98344a1a16427cb079f049f/gravity-circuit-offer-4kzn5.jpg?resize=1&w=854&h=480&quality=medium")';
+    const endPromotionPtBt = "16 de outubro";
+    const endPromotionEnUS = "october 16";
 
     // Detect User Language
     const userLanguage = selectTranslation();
