@@ -1,9 +1,9 @@
 function showFreeGameHome() {
     // Content of block 1
-    let gameTile = "Gravity Circuit";
-    const gameImg = 'url("https://cdn1.epicgames.com/spt-assets/c259931bc98344a1a16427cb079f049f/gravity-circuit-offer-4kzn5.jpg?resize=1&w=854&h=480&quality=medium")';
-    const endPromotionPtBt = "16 de outubro";
-    const endPromotionEnUS = "october 16";
+    let gameTile = "Amnesia: The Bunker";
+    const gameImg = 'url("https://cdn1.epicgames.com/spt-assets/671aee4c8fb64a1c967d97f31f093e7a/amnesia-the-bunker-1x2n7.png?resize=1&w=854&h=480&quality=medium")';
+    const endPromotionPtBt = "23 de outubro";
+    const endPromotionEnUS = "october 23";
 
     // Detect User Language
     const userLanguage = selectTranslation();
