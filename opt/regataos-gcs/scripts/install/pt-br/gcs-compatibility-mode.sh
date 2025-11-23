@@ -247,7 +247,7 @@ function install_app() {
 			export WINE="$CUSTOM_WINE_DIR/bin/wine"
 
 			alias wine="$CUSTOM_WINE_DIR/bin/wine"
-			alias wine64="$CUSTOM_WINE_DIR/bin/wine64"
+			alias wine64="$CUSTOM_WINE_DIR/bin/wine"
 			alias wineserver="$CUSTOM_WINE_DIR/bin/wineserver"
 			alias wineboot="$CUSTOM_WINE_DIR/bin/wineboot"
 			alias winecfg="$CUSTOM_WINE_DIR/bin/winecfg"
