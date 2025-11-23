@@ -1,9 +1,9 @@
 function showFreeGameHome() {
     // Content of block 1
-    let gameTile = "Bendy and the Ink Machine";
-    const gameImg = 'url("https://i.ibb.co/G4CB7P5Q/bendy-and-the-ink-machine.webp")';
-    const endPromotionPtBt = "06 de novembro";
-    const endPromotionEnUS = "november 06";
+    let gameTile = "Zoeti";
+    const gameImg = 'url("https://cdn1.epicgames.com/spt-assets/78af28ae56cb41e69cbca318bbc180e3/zoeti-1vjnz.jpg?resize=1&w=854&h=480&quality=medium")';
+    const endPromotionPtBt = "27 de novembro";
+    const endPromotionEnUS = "november 27";
 
     // Detect User Language
     const userLanguage = selectTranslation();
