@@ -3,7 +3,7 @@
 		"launcher_name": "Epic Games Store",
 		"launcher_nickname": "epicstore",
 		"executable_file": "EpicGamesLauncher.exe",
-		"launcher_executable": "dosdevices/c:/Program Files (x86)/Epic Games/Launcher/Portal/Binaries/Win32/EpicGamesLauncher.exe",
+		"launcher_executable": "dosdevices/c:/Program Files/Epic Games/Launcher/Portal/Binaries/Win64/EpicGamesLauncher.exe",
 		"desktop_file": "Epic Games Launcher.desktop",
 		"special_options": "-opengl -SkipBuildPatchPrereq",
 		"environment_variable": "WINEESYNC=1 WINEDLLOVERRIDES='winemenubuilder.exe,winedbg.exe=d' MESA_GL_VERSION_OVERRIDE=4.4COMPAT"

@@ -6,7 +6,7 @@ app_name="Epic Games Store"
 app_nickname="epicstore"
 app_name_process="Desinstalar a Epic Games Store"
 app_remove_status="Desinstalando a Epic Games Store..."
-app_executable="drive_c/Program Files (x86)/Epic Games/Launcher/Portal/Binaries/Win32/EpicGamesLauncher.exe"
+app_executable="drive_c/Program Files/Epic Games/Launcher/Portal/Binaries/Win64/EpicGamesLauncher.exe"
 
 #Default settings
 success_removal="Concluído"
