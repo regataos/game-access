@@ -1,9 +1,9 @@
 function showFreeGameHome() {
     // Content of block 1
-    let gameTile = "Zoeti";
-    const gameImg = 'url("https://cdn1.epicgames.com/spt-assets/78af28ae56cb41e69cbca318bbc180e3/zoeti-1vjnz.jpg?resize=1&w=854&h=480&quality=medium")';
-    const endPromotionPtBt = "27 de novembro";
-    const endPromotionEnUS = "november 27";
+    let gameTile = "Universe for Sale";
+    const gameImg = 'url("https://cdn1.epicgames.com/spt-assets/5159c30d2bba476484db4f9c97beb47e/universe-for-sale-xr25c.jpg?resize=1&w=854&h=480&quality=medium")';
+    const endPromotionPtBt = "04 de dezembro";
+    const endPromotionEnUS = "december 04";
 
     // Detect User Language
     const userLanguage = selectTranslation();
