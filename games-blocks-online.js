@@ -1,9 +1,9 @@
 function showFreeGameHome() {
     // Content of block 1
-    let gameTile = "Universe for Sale";
-    const gameImg = 'url("https://cdn1.epicgames.com/spt-assets/5159c30d2bba476484db4f9c97beb47e/universe-for-sale-xr25c.jpg?resize=1&w=854&h=480&quality=medium")';
-    const endPromotionPtBt = "04 de dezembro";
-    const endPromotionEnUS = "december 04";
+    let gameTile = "Hogwarts Legacy";
+    const gameImg = 'url("https://cdn1.epicgames.com/offer/d5241c76f178492ea1540fce45616757/Dec11_giveaway_2560x1440_2560x1440-ece5c5fb3e724cbdabf2d163ef4f34f9?resize=1&w=854&h=480&quality=medium")';
+    const endPromotionPtBt = "18 de dezembro";
+    const endPromotionEnUS = "december 18";
 
     // Detect User Language
     const userLanguage = selectTranslation();
