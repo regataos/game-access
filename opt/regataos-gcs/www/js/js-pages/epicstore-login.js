@@ -12,7 +12,11 @@ function openUrl() {
 // Save login id to a cache file
 function saveLoginId(loginId) {
 	const fs = require('fs');
-	fs.writeFileSync("/tmp/regataos-gcs/login-id.txt", loginId, "utf8");
+
+	const parsedLoginId = JSON.parse(loginId);
+	const authorizationCode = parsedLoginId.authorizationCode;
+
+	fs.writeFileSync("/tmp/regataos-gcs/login-id.txt", authorizationCode, "utf8");
 	fs.writeFileSync("/tmp/regataos-gcs/config/file-status.txt", "user account change", "utf8");
 	let commandLine = "";
 
