@@ -1,9 +1,9 @@
 function showFreeGameHome() {
     // Content of block 1
-    let gameTile = "Hogwarts Legacy";
-    const gameImg = 'url("https://cdn1.epicgames.com/offer/d5241c76f178492ea1540fce45616757/Dec11_giveaway_2560x1440_2560x1440-ece5c5fb3e724cbdabf2d163ef4f34f9?resize=1&w=854&h=480&quality=medium")';
-    const endPromotionPtBt = "18 de dezembro";
-    const endPromotionEnUS = "december 18";
+    let gameTile = "Eternights";
+    const gameImg = 'url("https://cdn1.epicgames.com/offer/d5241c76f178492ea1540fce45616757/Dec19_giveaway_2560x1440_2560x1440-35f0694dabc74e52b717607909332c27?resize=1&w=854&h=480&quality=medium")';
+    const endPromotionPtBt = "20 de dezembro";
+    const endPromotionEnUS = "december 20";
 
     // Detect User Language
     const userLanguage = selectTranslation();
