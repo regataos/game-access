@@ -1,9 +1,9 @@
 function showFreeGameHome() {
     // Content of block 1
-    let gameTile = "Eternights";
-    const gameImg = 'url("https://cdn1.epicgames.com/offer/d5241c76f178492ea1540fce45616757/Dec19_giveaway_2560x1440_2560x1440-35f0694dabc74e52b717607909332c27?resize=1&w=854&h=480&quality=medium")';
-    const endPromotionPtBt = "20 de dezembro";
-    const endPromotionEnUS = "december 20";
+    let gameTile = "Total War: THREE KINGDOMS";
+    const gameImg = 'url("https://cdn1.epicgames.com/offer/d5241c76f178492ea1540fce45616757/Jan1-7_Game17_giveaway_2560x14401_2560x1440-dba68e265f1045f883693b0348cf6ea2?resize=1&w=854&h=480&quality=medium")';
+    const endPromotionPtBt = "8 de janeiro";
+    const endPromotionEnUS = "january 8";
 
     // Detect User Language
     const userLanguage = selectTranslation();
