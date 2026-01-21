@@ -1,9 +1,9 @@
 function showFreeGameHome() {
     // Content of block 1
-    let gameTile = "Total War: THREE KINGDOMS";
-    const gameImg = 'url("https://cdn1.epicgames.com/offer/d5241c76f178492ea1540fce45616757/Jan1-7_Game17_giveaway_2560x14401_2560x1440-dba68e265f1045f883693b0348cf6ea2?resize=1&w=854&h=480&quality=medium")';
-    const endPromotionPtBt = "8 de janeiro";
-    const endPromotionEnUS = "january 8";
+    let gameTile = "Styx: Shards of Darkness";
+    const gameImg = 'url("https://cdn1.epicgames.com/spt-assets/6ccdf6a1518741f0842177137adc00b0/styx-shards-of-darkness-1bh52.jpg?resize=1&w=854&h=480&quality=medium")';
+    const endPromotionPtBt = "22 de janeiro";
+    const endPromotionEnUS = "january 22";
 
     // Detect User Language
     const userLanguage = selectTranslation();
