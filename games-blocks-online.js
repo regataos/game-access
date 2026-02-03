@@ -1,9 +1,9 @@
 function showFreeGameHome() {
     // Content of block 1
-    let gameTile = "Rustler (Grand Theft Horse)";
-    const gameImg = 'url("https://cdn1.epicgames.com/spt-assets/a1324ca83bc543ae8747f8d5a99d777a/rustler--grand-theft-horse-1ukey.jpg?resize=1&w=854&h=480&quality=medium")';
-    const endPromotionPtBt = "29 de janeiro";
-    const endPromotionEnUS = "january 29";
+    let gameTile = "Definitely Not Fried Chicken";
+    const gameImg = 'url("https://cdn1.epicgames.com/spt-assets/a90fa1ecc6fd41b2b98bc04b40b23c71/definitely-not-fried-chicken-thf6o.png?resize=1&w=854&h=480&quality=medium")';
+    const endPromotionPtBt = "05 de janeiro";
+    const endPromotionEnUS = "february 05";
 
     // Detect User Language
     const userLanguage = selectTranslation();
