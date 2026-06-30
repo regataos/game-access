@@ -13,7 +13,7 @@ function openUrl() {
 function saveLoginId(loginId) {
 	const fs = require('fs');
 
-	const gogLoginCode = JSON.parse(loginId);
+	const gogLoginCode = loginId;
 	fs.writeFileSync("/tmp/regataos-gcs/gog-login-code.txt", gogLoginCode, "utf8");
 	fs.writeFileSync("/tmp/regataos-gcs/config/file-status.txt", "user account change", "utf8");
 	let commandLine = "";
