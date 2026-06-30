@@ -43,3 +43,17 @@ if (getPageUrl.includes("https://www.amazon.com/ap/signin")) {
 		}
 	}, 100);
 }
+
+// For GOG Games
+if (getPageUrl.includes("https://auth.gog.com/auth")) {
+	console.log("GOG Games login screen");
+} else if (getPageUrl.includes("https://embed.gog.com/on_login_success")) {
+	console.log("Account logged into GOG Games. Saving authorization code for use with gogdl.");
+	const code = new URL(getPageUrl).searchParams.get("code");
+	window.opener.postMessage(code, "*");
+	setTimeout(function(){
+		if (code) {
+			window.close();
+		}
+	}, 100);
+}

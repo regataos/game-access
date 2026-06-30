@@ -1,74 +1,102 @@
 #!/bin/bash
 
-allSuggestedGames="/opt/regataos-gcs/games-list"
-gogGamesNoLongerSuggested="/tmp/regataos-gcs/config/gog-games/json-old"
-
-# Move suggested games JSON files to JSON files created from user library on GOG Galaxy
-function move_suggested_games() {
-	mkdir -p "$gogGamesNoLongerSuggested/"
-	mv -fv "$allSuggestedGames/awp.json" "$gogGamesNoLongerSuggested/awp.json"
-	mv -fv "$allSuggestedGames/fallout3.json" "$gogGamesNoLongerSuggested/fallout3.json"
-	mv -fv "$allSuggestedGames/lost-ember.json" "$gogGamesNoLongerSuggested/lost-ember.json"
-	mv -fv "$allSuggestedGames/mrr-edge.json" "$gogGamesNoLongerSuggested/mrr-edge.json"
-	mv -fv "$allSuggestedGames/ptnn.json" "$gogGamesNoLongerSuggested/ptnn.json"
-	mv -fv "$allSuggestedGames/sniper-contracts.json" "$gogGamesNoLongerSuggested/sniper-contracts.json"
-	mv -fv "$allSuggestedGames/sniper3.json" "$gogGamesNoLongerSuggested/sniper3.json"
-	mv -fv "$allSuggestedGames/tw2.json" "$gogGamesNoLongerSuggested/tw2.json"
-	mv -fv "$allSuggestedGames/tw3.json" "$gogGamesNoLongerSuggested/tw3.json"
-}
-
-# Restore suggested games JSON files for GOG Galaxy
-function restore_suggested_games() {
-	if test -e "$gogGamesNoLongerSuggested" && [[ $(ls "$gogGamesNoLongerSuggested/") == *".json"* ]]; then
-		mv -fv "$gogGamesNoLongerSuggested/awp.json" "$allSuggestedGames/awp.json"
-		mv -fv "$gogGamesNoLongerSuggested/fallout3.json" "$allSuggestedGames/fallout3.json"
-		mv -fv "$gogGamesNoLongerSuggested/lost-ember.json" "$allSuggestedGames/lost-ember.json"
-		mv -fv "$gogGamesNoLongerSuggested/mrr-edge.json" "$allSuggestedGames/mrr-edge.json"
-		mv -fv "$gogGamesNoLongerSuggested/ptnn.json" "$allSuggestedGames/ptnn.json"
-		mv -fv "$gogGamesNoLongerSuggested/sniper-contracts.json" "$allSuggestedGames/sniper-contracts.json"
-		mv -fv "$gogGamesNoLongerSuggested/sniper3.json" "$allSuggestedGames/sniper3.json"
-		mv -fv "$gogGamesNoLongerSuggested/tw2.json" "$allSuggestedGames/tw2.json"
-		mv -fv "$gogGamesNoLongerSuggested/tw3.json" "$allSuggestedGames/tw3.json"
-
-		# Clear cache
-		rm -fv $allSuggestedGames/*-gog.json
-		rm -fv /tmp/regataos-gcs/config/installed/*-gog.json
-		rm -fv /tmp/regataos-gcs/config/installed/show-installed-games-gog.txt
-
-		if test -e "$HOME/.config/regataos-gcs/gog-games/gamedb.json"; then
-			rm -fv "$HOME/.config/regataos-gcs/gog-games/gamedb.json"
-		fi
-	fi
-}
-
-# Make sure the GOG Galaxy client is installed to start collecting user game data
-if [[ $(cat "$HOME/.config/regataos-gcs/installed-launchers.conf") == *"gog"* ]]; then
-	user=$(users | awk '{print $1}')
-	if [[ $(grep -r userId "$HOME/.local/share/wineprefixes/gog-compatibility-mode/drive_c/users/$user/AppData/Local/GOG.com/Galaxy/Configuration/config.json") == *"userId"* ]]; then
-		# Use GOG-Galaxy-Export-Script to collect the data
-		if test -e "$HOME/.local/share/wineprefixes/gog-compatibility-mode/drive_c/ProgramData/GOG.com/Galaxy/storage/galaxy-2.0.db"; then
-			mkdir -p "$HOME/.config/regataos-gcs/gog-games/"
-			python3 /opt/regataos-gcs/tools/gog-galaxy-export-script/galaxy_library_export.py -i "$HOME/.local/share/wineprefixes/gog-compatibility-mode/drive_c/ProgramData/GOG.com/Galaxy/storage/galaxy-2.0.db" -o "$HOME/.config/regataos-gcs/gog-games/gamedb.csv" -d ,
-
-			cd "$HOME/.config/regataos-gcs/gog-games/"
-			python3 /opt/regataos-gcs/tools/csv-to-json-converter/csv-to-json-converter.py
-
-			# Rename suggested game json files
-			if test -e "$HOME/.config/regataos-gcs/gog-games/gamedb.json"; then
-				move_suggested_games
-			else
-				echo "gamedb.json: No such file or directory!"
-				restore_suggested_games
-			fi
-		else
-			echo "galaxy-2.0.db: No such file or directory!"
-			restore_suggested_games
-		fi
-	else
-		echo "The "userId" was not found!"
-		restore_suggested_games
-	fi
-else
-	echo "GOG Galaxy is not installed!"
-	restore_suggested_games
+# Create config directory
+if test ! -e /tmp/regataos-gcs; then
+	mkdir -p /tmp/regataos-gcs
+	chmod 777 /tmp/regataos-gcs
 fi
+
+if test ! -e "/tmp/regataos-gcs/config"; then
+	ln -sf "$HOME/.config/regataos-gcs" "/tmp/regataos-gcs/config"
+fi
+
+if test ! -e "/tmp/regataos-gcs/config/gog-games/img"; then
+	mkdir -p "/tmp/regataos-gcs/config/gog-games/img"
+fi
+
+if test ! -e "/tmp/regataos-gcs/config/gog-games/json"; then
+	mkdir -p "/tmp/regataos-gcs/config/gog-games/json"
+fi
+
+if test ! -e "/tmp/regataos-gcs/config/json/installed"; then
+	mkdir -p "/tmp/regataos-gcs/config/json/installed"
+fi
+
+# GOG metadata directory (individual JSONs from gogdl library --path)
+GOG_METADATA_DIR="/tmp/regataos-gcs/config/gog-games/metadata"
+
+# Create JSON file
+function create_json_file() {
+cat > "/tmp/regataos-gcs/config/gog-games/json/$gamename_lowercase-gog.json" << GOGGAMEJSON
+[
+	{
+		"gamename": "$game_title",
+		"gamenickname": "$gamename_lowercase",
+		"gameid": "$game_id",
+		"gametype": "game",
+		"game_folder": "$game_slug",
+		"game_img1": "$game_img1",
+		"game_img2": "$game_img2",
+		"gamekeywords": "$game_title, $(echo $gamename_lowercase | sed 's/-/ /g'), gog",
+		"launcher": "GOG Games",
+		"launchernickname": "gog",
+		"gamenative": "gcs"
+	}
+]
+GOGGAMEJSON
+
+cat > "/opt/regataos-gcs/games-list/$gamename_lowercase-gog.json" << GOGGAMEJSON
+[
+	{
+		"gamename": "$game_title",
+		"gamenickname": "$gamename_lowercase",
+		"gameid": "$game_id",
+		"gametype": "game",
+		"game_folder": "$game_slug",
+		"game_img1": "$game_img1",
+		"game_img2": "$game_img2",
+		"gamekeywords": "$game_title, $(echo $gamename_lowercase | sed 's/-/ /g'), gog",
+		"launcher": "GOG Games",
+		"launchernickname": "gog",
+		"gamenative": "gcs"
+	}
+]
+GOGGAMEJSON
+}
+
+# If necessary, create the cache with game files
+for i in "$GOG_METADATA_DIR"/*.json; do
+	# Skip if no json files found
+	test -e "$i" || continue
+
+	# Extract game data from gogdl JSON
+	game_title="$(grep -m1 '"title"' "$i" | cut -d'"' -f4)"
+	game_id="$(grep -m1 '"id"' "$i" | cut -d'"' -f4)"
+	game_slug="$(grep -m1 '"slug"' "$i" | cut -d'"' -f4)"
+	game_category="$(grep -m1 '"category"' "$i" | cut -d'"' -f4)"
+
+	# Skip non-game entries (DLCs, movies, etc.)
+	if [ -z "$game_title" ] || [ -z "$game_id" ]; then
+		continue
+	fi
+
+	# Capture image URLs
+	# game_img1: background or verticalCover (large image)
+	game_img1="$(grep -m1 '"background"' "$i" | cut -d'"' -f4)"
+	if [ -z "$game_img1" ]; then
+		game_img1="$(grep -m1 '"verticalCover"' "$i" | cut -d'"' -f4)"
+	fi
+
+	# game_img2: logo (smaller image)
+	game_img2="$(grep -m1 '"logo"' "$i" | cut -d'"' -f4)"
+
+	# Make the game name lowercase
+	gamename_lowercase=$(echo "$game_title" | tr 'A-Z' 'a-z' | sed 's/[[:punct:]]\|: \|- \|(\|)\|, \|™\|+\|\.//g')
+	gamename_lowercase=$(echo "$gamename_lowercase" | sed 's/[[:space:]]/-/g' | sed "s/'//g")
+
+	# Update cache only if game data does not exist
+	if test ! -e "/tmp/regataos-gcs/config/gog-games/json/$gamename_lowercase-gog.json" ||
+		test ! -e "/opt/regataos-gcs/games-list/$gamename_lowercase-gog.json"; then
+		create_json_file
+	fi
+done
