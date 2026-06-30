@@ -28,12 +28,7 @@ function listAllGames(specifyLauncher, contentBrake) {
 		allGamesJsonFiles = "/tmp/regataos-gcs/config/amazon-games/json";
 
 	} else if (specifyLauncher.includes("gog")) {
-		const getInstalledLaunchers = fs.readFileSync("/tmp/regataos-gcs/config/installed-launchers.conf", "utf8");
-		if (getInstalledLaunchers.includes("gog")) {
-			if (fs.existsSync("/tmp/regataos-gcs/config/gog-games/gamedb.json")) {
-				allGamesJsonFiles = "/tmp/regataos-gcs/config/gog-games/json";
-			}
-		}
+		allGamesJsonFiles = "/tmp/regataos-gcs/config/gog-games/json";
 
 	} else if (specifyLauncher.includes("steam")) {
 		allGamesJsonFiles = "/tmp/regataos-gcs/config/steam-games/json/games";

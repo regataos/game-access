@@ -245,52 +245,94 @@ function run_epicstore_game(gamenickname, gameid) {
 	}
 }
 
-// Start installing game from GOG Galaxy
+// Start installing game from GOG
 function install_gog_game(gamenickname) {
-	const commandLine = `export GAME_NIcKNAME="${gamenickname}";
-	/opt/regataos-gcs/scripts/action-games/install-game-gog`;
+	const fs = require("fs");
 
-	runShellProcess(commandLine);
+	function runInstallation() {
+		const commandLine = `echo "${gamenickname}" > "/tmp/regataos-gcs/start-installation-gog.txt"`;
+		runShellProcess(commandLine);
 
-	setTimeout(function () {
-		$(`.${gamenickname}-block .install-box-universal`).css("opacity", ".5")
-		$(`.${gamenickname}-block .install-box-universal`).css("cursor", "default")
-		$(`.${gamenickname}-block .install-box-universal`).css("pointer-events", "none");
-	}, 1000);
+		setTimeout(function () {
+			$(`.${gamenickname}-block .install-box-universal`).css("opacity", ".5")
+			$(`.${gamenickname}-block .install-box-universal`).css("cursor", "default")
+			$(`.${gamenickname}-block .install-box-universal`).css("pointer-events", "none");
+		}, 1000);
 
-	setTimeout(function () {
-		$(`.${gamenickname}-block .install-box-universal`).css("opacity", "1")
-		$(`.${gamenickname}-block .install-box-universal`).css("cursor", "pointer")
-		$(`.${gamenickname}-block .install-box-universal`).css("pointer-events", "auto");
-	}, 50000);
+		setTimeout(function () {
+			$(`.${gamenickname}-block .install-box-universal`).css("opacity", "1")
+			$(`.${gamenickname}-block .install-box-universal`).css("cursor", "pointer")
+			$(`.${gamenickname}-block .install-box-universal`).css("pointer-events", "auto");
+		}, 5000);
+	}
+
+	if (!fs.existsSync(`/tmp/regataos-gcs/installing-${gamenickname}`)) {
+		if (fs.existsSync(`/tmp/progressbar-gcs/queued-process`)) {
+			let checkInstallQueue = fs.readFileSync("/tmp/progressbar-gcs/queued-process", "utf8");
+
+			if ((checkInstallQueue.indexOf(gamenickname) > -1) == "0") {
+				runInstallation();
+			}
+		} else {
+			runInstallation();
+		}
+	}
 }
 
-// Uninstall game from GOG Galaxy
+// Uninstall game from GOG
 function uninstall_gog_game(gamenickname) {
-	const commandLine = `echo "${gamenickname}" > "/tmp/regataos-gcs/start-uninstallation-gog.txt"`;
-	runShellProcess(commandLine);
+	const fs = require("fs");
+
+	const gameToRemove = "/tmp/regataos-gcs/start-uninstallation-gog.txt"
+	fs.writeFileSync(gameToRemove, gamenickname);
+
+	// Refresh the page
+	const fileStatus = "/tmp/regataos-gcs/config/file-status.txt";
+
+	//Before checking UI status changes, clear the cache.
+	let interfaceStatus = fs.readFileSync(fileStatus, "utf8");
+	if (!interfaceStatus.includes("inactive")) {
+		fs.writeFileSync(fileStatus, "inactive", "utf8");
+	}
+
+	fs.watch(fileStatus, (eventType, filename) => {
+		interfaceStatus = fs.readFileSync(fileStatus, "utf8");
+		if (interfaceStatus.includes("rearrange game blocks")) {
+			const getPageUrl = window.location.href;
+			if ((getPageUrl.includes("search.html")) ||
+				(getPageUrl.includes("allgames.html"))) {
+				reloadPage(1000);
+			}
+		}
+	});
 }
 
-// Run game from GOG Galaxy
-function run_gog_game(gamenickname) {
-	const commandLine = `export GAME_NIcKNAME="${gamenickname}";
-	/opt/regataos-gcs/scripts/action-games/auto-close-game-access &
-	/opt/regataos-gcs/scripts/action-games/rungame-gog`;
+// Run game from GOG
+function run_gog_game(gamenickname, gameid) {
+	const fs = require("fs");
 
-	runShellProcess(commandLine);
-	autoCloseGameAccess();
+	if (!fs.existsSync(`/tmp/regataos-gcs/running-${gamenickname}`)) {
+		const commandLine = `echo "${gamenickname}" > "/tmp/regataos-gcs/running-${gamenickname}";
+		export GAMENICK="${gamenickname}";
+		export GAMEID="${gameid}";
+		/opt/regataos-gcs/scripts/action-games/auto-close-game-access &
+		/opt/regataos-gcs/scripts/action-games/rungame-gog`;
 
-	setTimeout(function () {
-		$(`.${gamenickname}-block .play-box-universal`).css("opacity", ".5")
-		$(`.${gamenickname}-block .play-box-universal`).css("cursor", "default")
-		$(`.${gamenickname}-block .play-box-universal`).css("pointer-events", "none");
-	}, 1000);
+		runShellProcess(commandLine);
+		autoCloseGameAccess();
 
-	setTimeout(function () {
-		$(`.${gamenickname}-block .play-box-universal`).css("opacity", "1")
-		$(`.${gamenickname}-block .play-box-universal`).css("cursor", "pointer")
-		$(`.${gamenickname}-block .play-box-universal`).css("pointer-events", "auto");
-	}, 50000);
+		setTimeout(function () {
+			$(`.${gamenickname}-block .play-box-universal`).css("opacity", ".5")
+			$(`.${gamenickname}-block .play-box-universal`).css("cursor", "default")
+			$(`.${gamenickname}-block .play-box-universal`).css("pointer-events", "none");
+		}, 1000);
+
+		setTimeout(function () {
+			$(`.${gamenickname}-block .play-box-universal`).css("opacity", "1")
+			$(`.${gamenickname}-block .play-box-universal`).css("cursor", "pointer")
+			$(`.${gamenickname}-block .play-box-universal`).css("pointer-events", "auto");
+		}, 10000);
+	}
 }
 
 // Start installing game from Amazon Games

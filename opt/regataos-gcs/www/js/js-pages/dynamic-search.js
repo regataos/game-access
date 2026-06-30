@@ -24,7 +24,7 @@ function listSearchedGames(gamename, gamenickname, gamenative, game_img1, gameru
 		gamePlataform = gamenative.includes("true") ? "nativegame" : "steamplay";
 
 	} else if ((launchernickname.includes("gog")) ||
-		(launchernickname.includes("epicstore"))) {
+						(launchernickname.includes("epicstore")) || (launchernickname.includes("amazon"))) {
 		installGame = `install_${launchernickname}_game('${gamenickname}')`;
 		runGame = `run_${launchernickname}_game('${gamenickname})', '${gameid}')`;
 		specialButtonFunction = `uninstall_${launchernickname}_game('${gamenickname}')`;
@@ -56,7 +56,7 @@ function listSearchedGames(gamename, gamenickname, gamenative, game_img1, gameru
 				<i class="fa fa-plus"></i>
 			</div>`;
 
-	} else if ((isInstalled) && launchernickname.includes("epicstore") || launchernickname.includes("gog")) {
+	} else if ((isInstalled) && launchernickname.includes("epicstore") || launchernickname.includes("gog") || (launchernickname.includes("amazon"))) {
 		specialButtonHtml = `
 			<div title="Desinstalar jogo" class="remove-game-button" onclick="${specialButtonFunction};">
 				<i class="fas fa-trash-alt"></i>
