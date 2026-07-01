@@ -71,6 +71,8 @@ function show_confirmbox_installing_game() {
 		document.querySelector(".confirm-start-game-installation").style.display = "block"
 	} else if (fs.existsSync("/tmp/regataos-gcs/start-installation-amazon.txt")) {
 		document.querySelector(".confirm-start-game-installation-amazon").style.display = "block"
+	} else if (fs.existsSync("/tmp/regataos-gcs/start-installation-gog.txt")) {
+		document.querySelector(".confirm-start-game-installation-gog").style.display = "block"
 	} else if (fs.existsSync("/tmp/regataos-gcs/start-installation-gcs.txt")) {
 		document.querySelector(".confirm-start-game-installation").style.display = "block"
 	}
@@ -196,6 +198,24 @@ function import_game_amazon() {
 	});
 }
 
+// Import game from GOG
+function import_game_gog() {
+	$('input[id="select-file"]').change(function (e) {
+		const fileinput = document.querySelector('input#select-file');
+		const path = fileinput.value;
+
+		if (path) {
+			const exec = require('child_process').exec;
+			const command_line = 'export GAME_PATH="' + path + '"; \
+			/opt/regataos-gcs/scripts/install/scripts-install/install-game-gog/import-gog-game.sh';
+			exec(command_line, function (error, call, errlog) { });
+		}
+
+		$('.confirm-start-game-installation-gog').css('display', 'none')
+		fileinput.value = '';
+	});
+}
+
 // Install game from Epic Games Store
 //Install game using default directory
 function install_game_epicstore_default_folder_enabled() {
@@ -246,6 +266,32 @@ function install_game_amazon_default_folder_disabled() {
 		exec(command_line, function (error, call, errlog) { });
 
 		$('.confirm-start-game-installation-amazon').css('display', 'none')
+		fileinput.value = '';
+	});
+}
+
+// Install game from GOG
+//Install game using default directory
+function install_game_gog_default_folder_enabled() {
+	const exec = require('child_process').exec;
+	const command_line = 'export GAME_PATH=""; \
+	/opt/regataos-gcs/scripts/install/scripts-install/install-game-gog/install-gog-game.sh';
+	exec(command_line, function (error, call, errlog) { });
+
+	$('.confirm-start-game-installation-gog').css('display', 'none')
+}
+
+//Install game by choosing a specific directory
+function install_game_gog_default_folder_disabled() {
+	$('input[id="select-installation-folder"]').change(function (e) {
+		const fileinput = document.querySelector('input#select-installation-folder');
+		const path = fileinput.value;
+		const exec = require('child_process').exec;
+		const command_line = 'export GAME_PATH="' + path + '"; \
+		/opt/regataos-gcs/scripts/install/scripts-install/install-game-gog/install-gog-game.sh';
+		exec(command_line, function (error, call, errlog) { });
+
+		$('.confirm-start-game-installation-gog').css('display', 'none')
 		fileinput.value = '';
 	});
 }
@@ -322,6 +368,20 @@ function default_folder() {
 			install_game_amazon_default_folder_disabled();
 		}
 
+	} else if (fs.existsSync("/tmp/regataos-gcs/start-installation-gog.txt")) {
+		if (checkBox1.checked == true) {
+			document.getElementById("select-installation-folder").disabled = true;
+			install_game_gog_default_folder_enabled();
+
+		} else if (checkBox2.checked == true) {
+			document.getElementById("select-installation-folder").disabled = true;
+			install_game_gog_default_folder_enabled();
+
+		} else {
+			document.getElementById("select-installation-folder").disabled = false;
+			install_game_gog_default_folder_disabled();
+		}
+
 	} else if (fs.existsSync("/tmp/regataos-gcs/start-installation-gcs.txt")) {
 		if (checkBox1.checked == true) {
 			document.getElementById("select-installation-folder").disabled = true;
@@ -379,14 +439,14 @@ function cancel_uninstall_amazon_game() {
 // Uninstall game from GOG Galaxy
 function start_uninstall_gog_game() {
 	const exec = require('child_process').exec;
-	const command_line = '/opt/regataos-gcs/scripts/action-games/remove-game';
+	const command_line = '/opt/regataos-gcs/scripts/remove/scripts-remove/uninstall-game-gog/uninstall-gog-game.sh';
 	exec(command_line, function (error, call, errlog) {
 	});
 
 	$('.confirm-start-game-uninstallation-gog').css('display', 'none')
 }
 
-function cancel_uninstall_gog_game() {
+function cancel_uninstall_amazon_game() {
 	const exec = require('child_process').exec;
 	const command_line = 'rm -f /tmp/regataos-gcs/start-uninstallation-gog.txt';
 	exec(command_line, function (error, call, errlog) {
