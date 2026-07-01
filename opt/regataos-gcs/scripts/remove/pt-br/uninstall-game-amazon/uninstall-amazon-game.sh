@@ -17,7 +17,7 @@ game_id="$(grep -r "gameid" $HOME/.config/regataos-gcs/amazon-games/json/$game_n
 	rm -f "$HOME/.config/regataos-gcs/installed/$game_nickname-amazon.json"
 
 	# Uninstall game from Amazon Games with nile
-	/opt/regataos-gcs/tools/nile/nile uninstall $game_id 2>&1 | (pv -n >/var/log/regataos-logs/uninstall-$game_nickname-amazon.log)
+	/opt/regataos-gcs/tools/nile/nile uninstall "$game_id" 2>&1 | (pv -n >/var/log/regataos-logs/uninstall-$game_nickname-amazon.log)
 
 	# Check for installed games from the Amazon Games
 	if test ! -e $HOME/.config/regataos-gcs/installed/*-amazon.json; then

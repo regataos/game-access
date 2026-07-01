@@ -42,6 +42,11 @@ then
 				sed -i 1d "$progressbar_dir/queued-process"
 				/opt/regataos-gcs/scripts/install/scripts-install/install-game-amazon/install-amazon-game.sh start
 
+			elif [[ $check_process == *"gog"* ]]; then
+				export game_nickname="$(cat $progressbar_dir/queued-process | awk '{print $1}' | head -1 | tail -1 | cut -d'=' -f -1)"
+				sed -i 1d "$progressbar_dir/queued-process"
+				/opt/regataos-gcs/scripts/install/scripts-install/install-game-gog/install-gog-game.sh start
+
 			elif [[ $check_process == *"gcs"* ]]; then
 				export game_nickname="$(cat $progressbar_dir/queued-process | awk '{print $1}' | head -1 | tail -1 | cut -d'=' -f -1)"
 				sed -i 1d "$progressbar_dir/queued-process"

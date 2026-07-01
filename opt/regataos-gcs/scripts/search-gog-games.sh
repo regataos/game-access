@@ -38,7 +38,7 @@ cat > "/tmp/regataos-gcs/config/gog-games/json/$gamename_lowercase-gog.json" << 
 		"game_img1": "$game_img1",
 		"game_img2": "$game_img2",
 		"gamekeywords": "$game_title, $(echo $gamename_lowercase | sed 's/-/ /g'), gog",
-		"launcher": "GOG Games",
+		"launcher": "GOG Galaxy",
 		"launchernickname": "gog",
 		"gamenative": "gcs"
 	}
@@ -56,7 +56,7 @@ cat > "/opt/regataos-gcs/games-list/$gamename_lowercase-gog.json" << GOGGAMEJSON
 		"game_img1": "$game_img1",
 		"game_img2": "$game_img2",
 		"gamekeywords": "$game_title, $(echo $gamename_lowercase | sed 's/-/ /g'), gog",
-		"launcher": "GOG Games",
+		"launcher": "GOG Galaxy",
 		"launchernickname": "gog",
 		"gamenative": "gcs"
 	}
@@ -80,15 +80,9 @@ for i in "$GOG_METADATA_DIR"/*.json; do
 		continue
 	fi
 
-	# Capture image URLs
-	# game_img1: background or verticalCover (large image)
-	game_img1="$(grep -m1 '"background"' "$i" | cut -d'"' -f4)"
-	if [ -z "$game_img1" ]; then
-		game_img1="$(grep -m1 '"verticalCover"' "$i" | cut -d'"' -f4)"
-	fi
-
-	# game_img2: logo (smaller image)
-	game_img2="$(grep -m1 '"logo"' "$i" | cut -d'"' -f4)"
+	# Capture image URLs directly from gogdl metadata
+	game_img1="$(grep -m1 '"game_img1"' "$i" | cut -d'"' -f4)"
+	game_img2="$(grep -m1 '"game_img2"' "$i" | cut -d'"' -f4)"
 
 	# Make the game name lowercase
 	gamename_lowercase=$(echo "$game_title" | tr 'A-Z' 'a-z' | sed 's/[[:punct:]]\|: \|- \|(\|)\|, \|™\|+\|\.//g')

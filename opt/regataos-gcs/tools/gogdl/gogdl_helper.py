@@ -1,21 +1,21 @@
 #!/usr/bin/env python3
 """
-gogdl-helper: Simplifica o uso do gogdl.
+gogdl-helper: Simplifies gogdl usage.
 
-Automatiza:
-  - Abrir o navegador para login na GOG
-  - Capturar o código de autorização
-  - Trocar o código por tokens (access_token + refresh_token)
-  - Renovar tokens automaticamente
-  - Listar a biblioteca com imagens
+Automates:
+  - Opening the browser for GOG login
+  - Capturing the authorization code
+  - Exchanging the code for tokens (access_token + refresh_token)
+  - Automatically refreshing tokens
+  - Listing the library with images
 
-Uso:
-  ./gogdl_helper.py login              Abre o navegador e faz login
-  ./gogdl_helper.py login --code XXXX  Usa um código já obtido
-  ./gogdl_helper.py refresh            Renova o token manualmente
-  ./gogdl_helper.py user               Mostra dados do usuário
-  ./gogdl_helper.py library            Lista jogos (JSON único no stdout)
-  ./gogdl_helper.py library --path DIR Salva um JSON por jogo no diretório
+Usage:
+  ./gogdl_helper.py login              Opens the browser and logs in
+  ./gogdl_helper.py login --code XXXX  Uses an already obtained code
+  ./gogdl_helper.py refresh            Manually refreshes the token
+  ./gogdl_helper.py user               Shows user data
+  ./gogdl_helper.py library            Lists games (single JSON to stdout)
+  ./gogdl_helper.py library --path DIR Saves one JSON per game to directory
 """
 
 import argparse
@@ -29,11 +29,11 @@ from urllib.parse import urlparse, parse_qs
 try:
     import requests
 except ImportError:
-    print("Erro: 'requests' não encontrado. Instale com: zypper install python313-requests", file=sys.stderr)
+    print("Error: 'requests' not found. Install with: zypper install python313-requests", file=sys.stderr)
     sys.exit(1)
 
 
-# --- Constantes da API GOG ---
+# --- GOG API Constants ---
 CLIENT_ID = "46899977096215655"
 CLIENT_SECRET = "9d85c43b1482497dbbce61f6e4aa173a433796eeae2ca8c5f6129f2dc4de46d9"
 REDIRECT_URI = "https://embed.gog.com/on_login_success?origin=client"
@@ -63,8 +63,8 @@ class GogAuth:
         if os.path.exists(self.config_path):
             with open(self.config_path, "r") as f:
                 data = json.load(f)
-                # Suporta formato do gogdl (tokens dentro de chave client_id)
-                # e formato simples (tokens na raiz)
+                # Supports gogdl format (tokens inside client_id key)
+                # and simple format (tokens at root)
                 if CLIENT_ID in data:
                     return data[CLIENT_ID]
                 return data
@@ -72,7 +72,7 @@ class GogAuth:
 
     def _save_config(self):
         os.makedirs(os.path.dirname(self.config_path), exist_ok=True)
-        # Salva no formato compatível com gogdl
+        # Save in gogdl-compatible format
         data = {CLIENT_ID: self.tokens}
         with open(self.config_path, "w") as f:
             json.dump(data, f, indent=2)
@@ -89,7 +89,7 @@ class GogAuth:
         return time.time() >= login_time + expires_in
 
     def login(self, code):
-        """Troca o código de autorização por tokens."""
+        """Exchange the authorization code for tokens."""
         response = self.session.get(TOKEN_URL, params={
             "client_id": CLIENT_ID,
             "client_secret": CLIENT_SECRET,
@@ -99,7 +99,7 @@ class GogAuth:
         }, timeout=15)
 
         if not response.ok:
-            print(f"Erro ao trocar código: {response.status_code}", file=sys.stderr)
+            print(f"Error exchanging code: {response.status_code}", file=sys.stderr)
             print(response.text, file=sys.stderr)
             return False
 
@@ -109,10 +109,10 @@ class GogAuth:
         return True
 
     def refresh(self):
-        """Renova o access_token usando o refresh_token."""
+        """Refresh the access_token using the refresh_token."""
         refresh_token = self.tokens.get("refresh_token")
         if not refresh_token:
-            print("Erro: sem refresh_token. Faça login primeiro.", file=sys.stderr)
+            print("Error: no refresh_token. Please login first.", file=sys.stderr)
             return False
 
         response = self.session.get(TOKEN_URL, params={
@@ -123,7 +123,7 @@ class GogAuth:
         }, timeout=15)
 
         if not response.ok:
-            print(f"Erro ao renovar token: {response.status_code}", file=sys.stderr)
+            print(f"Error refreshing token: {response.status_code}", file=sys.stderr)
             return False
 
         self.tokens = response.json()
@@ -132,12 +132,12 @@ class GogAuth:
         return True
 
     def ensure_valid_token(self):
-        """Garante que o token é válido, renovando se necessário."""
+        """Ensure the token is valid, refreshing if necessary."""
         if not self.is_logged_in():
-            print("Erro: não logado. Execute: gogdl_helper.py login", file=sys.stderr)
+            print("Error: not logged in. Run: gogdl_helper.py login", file=sys.stderr)
             return False
         if self.is_expired():
-            print("Token expirado, renovando...", file=sys.stderr)
+            print("Token expired, refreshing...", file=sys.stderr)
             return self.refresh()
         return True
 
@@ -147,22 +147,22 @@ class GogAuth:
 
 def extract_code(user_input):
     """
-    Extrai o código de autorização.
-    Aceita tanto o código puro quanto a URL completa de redirect.
+    Extract the authorization code.
+    Accepts both the raw code and the full redirect URL.
     """
     user_input = user_input.strip()
 
-    # Se parece uma URL, extrair o parâmetro "code"
+    # If it looks like a URL, extract the "code" parameter
     if user_input.startswith("http"):
         parsed = urlparse(user_input)
         params = parse_qs(parsed.query)
         codes = params.get("code", [])
         if codes:
             return codes[0]
-        print("Erro: URL não contém o parâmetro 'code'.", file=sys.stderr)
+        print("Error: URL does not contain the 'code' parameter.", file=sys.stderr)
         return None
 
-    # Caso contrário, é o código direto
+    # Otherwise, it is the code itself
     return user_input
 
 
@@ -170,15 +170,15 @@ def cmd_login(auth, args):
     if args.code:
         code = args.code
     else:
-        print("Abrindo o navegador para login na GOG...")
-        print(f"\nSe não abrir automaticamente, acesse:\n{AUTH_URL}\n")
+        print("Opening browser for GOG login...")
+        print(f"\nIf it does not open automatically, visit:\n{AUTH_URL}\n")
         webbrowser.open(AUTH_URL)
 
-        print("Após o login, cole aqui a URL de redirecionamento (ou apenas o código):")
+        print("After logging in, paste the redirect URL (or just the code) here:")
         user_input = input("> ").strip()
 
         if not user_input:
-            print("Nenhum código fornecido.", file=sys.stderr)
+            print("No code provided.", file=sys.stderr)
             return
 
         code = extract_code(user_input)
@@ -186,17 +186,17 @@ def cmd_login(auth, args):
             return
 
     if auth.login(code):
-        print(f"Login realizado com sucesso!")
-        print(f"Tokens salvos em: {auth.config_path}")
+        print("Login successful!")
+        print(f"Tokens saved to: {auth.config_path}")
     else:
-        print("Falha no login.", file=sys.stderr)
+        print("Login failed.", file=sys.stderr)
 
 
 def cmd_refresh(auth, args):
     if auth.refresh():
-        print("Token renovado com sucesso!")
+        print("Token refreshed successfully!")
     else:
-        print("Falha ao renovar token.", file=sys.stderr)
+        print("Failed to refresh token.", file=sys.stderr)
 
 
 def cmd_user(auth, args):
@@ -211,7 +211,7 @@ def cmd_user(auth, args):
         data = response.json()
         print(json.dumps(data, indent=2, ensure_ascii=False))
     else:
-        print(f"Erro: {response.status_code}", file=sys.stderr)
+        print(f"Error: {response.status_code}", file=sys.stderr)
 
 
 def cmd_library(auth, args):
@@ -234,14 +234,14 @@ def cmd_library(auth, args):
         }, timeout=15)
 
         if not response.ok:
-            print(f"Erro na página {page}: {response.status_code}", file=sys.stderr)
+            print(f"Error on page {page}: {response.status_code}", file=sys.stderr)
             break
 
         data = response.json()
         total_pages = data.get("totalPages", 1)
         products = data.get("products", [])
 
-        print(f"Página {page}/{total_pages} — {len(products)} jogo(s)", file=sys.stderr)
+        print(f"Page {page}/{total_pages} — {len(products)} game(s)", file=sys.stderr)
 
         for product in products:
             entry = build_game_entry(product, auth)
@@ -261,7 +261,7 @@ def cmd_library(auth, args):
         page += 1
 
     if output_dir:
-        print(f"\n{saved} arquivo(s) salvos em {output_dir}", file=sys.stderr)
+        print(f"\n{saved} file(s) saved to {output_dir}", file=sys.stderr)
     else:
         print(json.dumps({"games": all_games}, ensure_ascii=False, indent=2))
 
@@ -274,7 +274,7 @@ def build_game_entry(product, auth):
     rating = product.get("rating")
     works_on = product.get("worksOn", {})
 
-    # Imagens da listagem
+    # Images from the library listing
     image_hash = product.get("image", "")
     images = {}
     if image_hash:
@@ -287,15 +287,29 @@ def build_game_entry(product, auth):
             "icon": f"{base}_196.jpg",
         })
 
-    # Imagens do gamesdb (mais ricas)
+    # Richer images from gamesdb
     gamesdb_images = fetch_gamesdb_images(game_id, auth)
     if gamesdb_images:
         images.update(gamesdb_images)
     else:
-        # Fallback: API de produtos
+        # Fallback: products API
         product_images = fetch_product_images(game_id, auth)
         if product_images:
             images.update(product_images)
+
+    # game_img1: prefer _392.jpg from listing (medium tile)
+    # game_img2: prefer .jpg from listing (full size)
+    image_base = product.get("image", "")
+    if image_base:
+        base = image_base
+        if base.startswith("//"):
+            base = "https:" + base
+        game_img1 = f"{base}_392.jpg"
+        game_img2 = f"{base}.jpg"
+    else:
+        # Fallback to gamesdb or product API images
+        game_img1 = images.get("verticalCover", images.get("background", images.get("logo", "")))
+        game_img2 = images.get("background", images.get("logo", ""))
 
     return {
         "id": game_id,
@@ -304,6 +318,8 @@ def build_game_entry(product, auth):
         "category": category,
         "rating": rating,
         "worksOn": works_on,
+        "game_img1": game_img1,
+        "game_img2": game_img2,
         "images": images,
     }
 
@@ -329,7 +345,7 @@ def fetch_gamesdb_images(game_id, auth):
         ]:
             field = game_data.get(key, {})
             if field and field.get("url_format"):
-                fmt = field["url_format"]
+                fmt = field["url_format"].replace("{ext}", "jpg")
                 images[out_key] = fmt.replace("{formatter}", "")
                 images[f"{out_key}_2x"] = fmt.replace("{formatter}", "_2x")
 
@@ -361,29 +377,29 @@ def fetch_product_images(game_id, auth):
 def main():
     parser = argparse.ArgumentParser(
         prog="gogdl_helper",
-        description="Helper para simplificar o uso do gogdl"
+        description="Helper to simplify gogdl usage"
     )
     parser.add_argument(
         "--config", "-c",
         default=DEFAULT_CONFIG,
-        help=f"Caminho do arquivo de tokens (padrão: {DEFAULT_CONFIG})"
+        help=f"Path to tokens file (default: {DEFAULT_CONFIG})"
     )
 
     sub = parser.add_subparsers(dest="command")
 
     # login
-    login_p = sub.add_parser("login", help="Fazer login na GOG")
-    login_p.add_argument("--code", help="Código de autorização (pula o navegador)")
+    login_p = sub.add_parser("login", help="Log in to GOG")
+    login_p.add_argument("--code", help="Authorization code (skips the browser)")
 
     # refresh
-    sub.add_parser("refresh", help="Renovar o token de acesso")
+    sub.add_parser("refresh", help="Refresh the access token")
 
     # user
-    sub.add_parser("user", help="Mostrar dados do usuário logado")
+    sub.add_parser("user", help="Show logged-in user data")
 
     # library
-    lib_p = sub.add_parser("library", help="Listar jogos da biblioteca com imagens")
-    lib_p.add_argument("--path", help="Diretório para salvar JSONs individuais por jogo")
+    lib_p = sub.add_parser("library", help="List library games with images")
+    lib_p.add_argument("--path", help="Directory to save individual JSON files per game")
 
     args = parser.parse_args()
 

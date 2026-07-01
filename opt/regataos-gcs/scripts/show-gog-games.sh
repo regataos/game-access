@@ -31,10 +31,10 @@ fi
 # Check if the file with the login id exists
 if test -e "/tmp/regataos-gcs/gog-login-code.txt"; then
     # Separate and save only the login id
-    login_id=$(cat /tmp/regataos-gcs/gog-login-code.txt)
+    login_id="$(cat /tmp/regataos-gcs/gog-login-code.txt)"
 
     # Use the saved id to login with the GOG account with gogdl
-    /opt/regataos-gcs/tools/gogdl/gogdl_helper.py login --code "$login_id"
+    /opt/regataos-gcs/tools/gogdl/gogdl_helper.py login --code "$login_id" > ~/teste.txt
 
     # Update cache with game metadata (individual JSONs per game)
     /opt/regataos-gcs/tools/gogdl/gogdl --auth-config-path ~/.config/gogdl/auth.json \

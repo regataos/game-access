@@ -39,10 +39,20 @@ function removeAmazonAccount() {
     echo "reload page" > "/tmp/regataos-gcs/reload-page.txt"
 }
 
+function removeGogAccount() {
+    rm -f "$gcsTempDir/remove-user-account.txt"
+    rm -f "$gcsTempDir/config/gog-games/show-games.txt"
+    rm -f "$gcsTempDir/config/gog-games/metadata/"*
+    rm -f "$HOME/.config/gogdl/auth.json"
+    echo "reload page" > "/tmp/regataos-gcs/reload-page.txt"
+}
+
 case $1 in
    "-epicstore") removeEpicstoreAccount
          ;;
    "-amazon") removeAmazonAccount
+         ;;
+   "-gog") removeGogAccount
          ;;
    *) echo "Invalid option!"
       exit 1
