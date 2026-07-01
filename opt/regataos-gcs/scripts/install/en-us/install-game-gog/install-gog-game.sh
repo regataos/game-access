@@ -294,6 +294,7 @@ EOM
 
 	echo 100% >$progressbar_dir/progress
 	sleep 3
+	cp -f "$progressbar_dir/download-percentage-gogdl" "/var/log/regataos-logs/install-gog-game.log"
 	rm -f $progressbar_dir/download-percentage-gogdl
 	rm -f $progressbar_dir/speed
 	rm -f $progressbar_dir/download-download-size
@@ -383,7 +384,7 @@ EOM
 	install_app
 
 	# Confirm installation
-	if [[ $(cat /tmp/regataos-gcs/instalation-gogdl) == *"has been imported"* ]]; then
+	if [[ $(cat /var/log/regataos-logs/install-gog-game.log) == *"Download complete"* ]]; then
 		rm -f $progressbar_dir/progress-movement
 		echo "completed" >$progressbar_dir/progress-full
 		echo "" >$progressbar_dir/status
@@ -396,7 +397,7 @@ EOM
 		rm -f "/tmp/regataos-gcs/installing-$game_nickname"
 		rm -f "/tmp/regataos-gcs/$app_download_file_name"
 		rm -f "/tmp/regataos-gcs/instalation-gogdl"
-		#rm -f "/tmp/regataos-gcs/game-patch-$launcher.txt"
+		#rm -f "/tmp/regataos-gcs/game-patch-gog.txt"
 		rm -f "/tmp/regataos-gcs/$game_nickname-installdir.txt"
 		sed -i "/$game_nickname/d" "/tmp/regataos-gcs/gcs-for-install.txt"
 		sed -i '/^$/d' "/tmp/regataos-gcs/gcs-for-install.txt"

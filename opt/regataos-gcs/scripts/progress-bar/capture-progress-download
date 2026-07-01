@@ -114,8 +114,11 @@ do
 			if [ $lines -ge 12 ]; then
 				# Progress bar and percentage
 				progress=$(cat /tmp/progressbar-gcs/download-percentage-gogdl | grep "Progress" | awk '{print $5}' | tail -1 | head -1 | cut -d"." -f -1)
+				progress2=$(cat /tmp/progressbar-gcs/download-percentage-gogdl | tail -1 | head -1)
 
-				if [[ $progress == *"100"* ]]; then
+				if [[ $progress2 == *"Download complete"* ]]; then
+					echo "100%"
+				elif [[ $progress == *"100"* ]]; then
 					echo "100%"
 				else
 					echo "$progress%" > /tmp/progressbar-gcs/progress
@@ -135,7 +138,7 @@ do
 				fi
 
 				# Download Size
-				game_size=$(cat /tmp/progressbar-gcs/download-percentage-gogdl | grep "Download size" | awk '{print $6}' | tail -1 | head -1 | cut -d"." -f -1)
+				game_size=$(cat /tmp/progressbar-gcs/download-percentage-gogdl | grep "Download size" | awk '{print $5}' | tail -1 | head -1 | cut -d"." -f -1)
 
 				if [[ $game_size =~ $(echo "^[0-9]+$") ]]; then
 					download_size_bytes=$(( $game_size * 1024*1024 ))
