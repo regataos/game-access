@@ -1,10 +1,14 @@
 #!/usr/bin/env python3
 """
-Atualiza o arquivo games-blocks-online.js com o jogo grátis da semana na Epic Games Store.
-Compatível com a interface do Regata OS Game Access.
+Atualiza o arquivo games-blocks-online.js com os jogos grátis da semana na Epic Games Store.
+Suporta 1 ou 2 jogos simultâneos:
+- Jogo 1: Substitui o Bloco 1 (.home-game1).
+- Jogo 2 (se houver): Substitui o Bloco 2 (.home-game2), redirecionando para a Epic Games Store.
+- Se houver apenas 1 jogo gratuito: O Bloco 2 restaura automaticamente o Xonotic e seu comportamento original.
 """
 
 import json
+import re
 import sys
 import urllib.request
 from datetime import datetime, timezone
@@ -23,34 +27,17 @@ MONTHS_EN = {
     9: "september", 10: "october", 11: "november", 12: "december"
 }
 
-TEMPLATE = """function showFreeGameHome() {{
-    // Content of block 1
-    let gameTile = "{game_title}";
-    const gameImg = 'url("{game_img}")';
-    const endPromotionPtBt = "{end_pt}";
-    const endPromotionEnUS = "{end_en}";
+def clean_summary(text):
+    if not text:
+        return ""
+    # Pega apenas a primeira frase/linha relevante
+    first_part = text.strip().split("\n")[0].strip()
+    # Limita tamanho para não quebrar o layout
+    if len(first_part) > 130:
+        first_part = first_part[:127] + "..."
+    return first_part
 
-    // Detect User Language
-    const userLanguage = selectTranslation();
-
-    // Game block description 1
-    const gameBlockDesc1 = document.querySelector(".home-game1 .block-desc");
-
-    if (userLanguage.includes("pt-br") || userLanguage.includes("pt-pt")) {{
-        gameBlockDesc1.innerHTML = `Disponível de graça na Epic Games Store até ${{endPromotionPtBt}}.`;
-    }} else if (userLanguage.includes("en-us")) {{
-        gameBlockDesc1.innerHTML = `Available for free at the Epic Games Store until ${{endPromotionEnUS}}.`;
-    }} else {{
-        gameBlockDesc1.innerHTML = `Available for free at the Epic Games Store until ${{endPromotionEnUS}}.`;
-    }}
-
-    document.querySelector(".home-game1 .block-title").innerHTML = gameTile;
-    document.querySelector(".home-game1 .home-game-img").style.backgroundImage = gameImg;
-}}
-showFreeGameHome();
-"""
-
-def fetch_active_free_game():
+def fetch_active_free_games():
     req = urllib.request.Request(
         EPIC_API_URL,
         headers={"User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36"}
@@ -61,10 +48,11 @@ def fetch_active_free_game():
     now = datetime.now(timezone.utc)
     elements = payload.get("data", {}).get("Catalog", {}).get("searchStore", {}).get("elements", [])
 
-    candidates = []
+    active_games = []
 
     for el in elements:
         title = el.get("title", "").strip()
+        description = clean_summary(el.get("description", ""))
         promotions = el.get("promotions") or {}
         promo_offers = promotions.get("promotionalOffers") or []
 
@@ -74,7 +62,7 @@ def fetch_active_free_game():
                 start = datetime.fromisoformat(offer["startDate"].replace("Z", "+00:00"))
                 end = datetime.fromisoformat(offer["endDate"].replace("Z", "+00:00"))
 
-                # Verifica se é gratuidade 100% e está no período vigente
+                # Verifica se o jogo é 100% gratuito e está ativo no momento
                 if discount == 0 and start <= now <= end:
                     images = el.get("keyImages", [])
                     img_url = ""
@@ -90,43 +78,138 @@ def fetch_active_free_game():
                     end_pt = f"{end_day} de {MONTHS_PT.get(end.month, '')}"
                     end_en = f"{MONTHS_EN.get(end.month, '')} {end_day}"
 
-                    candidates.append({
+                    active_games.append({
                         "title": title,
+                        "description": description,
                         "img": img_url,
                         "end_pt": end_pt,
-                        "end_en": end_en,
-                        "end_datetime": end
+                        "end_en": end_en
                     })
 
-    if not candidates:
-        return None
+    # Remove possíveis duplicatas mantendo a ordem
+    unique_games = []
+    seen = set()
+    for g in active_games:
+        if g["title"] not in seen:
+            seen.add(g["title"])
+            unique_games.append(g)
 
-    return candidates[0]
+    return unique_games
+
+def generate_js(games):
+    if not games:
+        return ""
+
+    g1 = games[0]
+    g1_title = json.dumps(g1["title"])
+    g1_img = json.dumps(g1["img"])
+    g1_end_pt = json.dumps(g1["end_pt"])
+    g1_end_en = json.dumps(g1["end_en"])
+    g1_desc = json.dumps(g1["description"])
+
+    has_g2 = len(games) > 1
+    if has_g2:
+        g2 = games[1]
+        g2_title = json.dumps(g2["title"])
+        g2_img = json.dumps(g2["img"])
+        g2_end_pt = json.dumps(g2["end_pt"])
+        g2_end_en = json.dumps(g2["end_en"])
+        g2_desc = json.dumps(g2["description"])
+    else:
+        g2_title = g2_img = g2_end_pt = g2_end_en = g2_desc = "null"
+
+    js_code = f"""function showFreeGameHome() {{
+    const userLanguage = typeof selectTranslation === "function" ? selectTranslation() : "pt-br";
+    const isPt = userLanguage.includes("pt-br") || userLanguage.includes("pt-pt");
+
+    // Jogo 1 (Bloco 1)
+    const game1 = {{
+        title: {g1_title},
+        img: {g1_img},
+        end: isPt ? {g1_end_pt} : {g1_end_en},
+        desc: {g1_desc}
+    }};
+
+    const blockTitle1 = document.querySelector(".home-game1 .block-title");
+    const blockImg1 = document.querySelector(".home-game1 .home-game-img");
+    const blockDesc1 = document.querySelector(".home-game1 .block-desc");
+
+    if (blockTitle1) blockTitle1.innerHTML = game1.title;
+    if (blockImg1) blockImg1.style.backgroundImage = 'url("' + game1.img + '")';
+    if (blockDesc1) {{
+        let promoText = isPt
+            ? `Disponível de graça na Epic Games Store até ${{game1.end}}.<br/><span style="opacity: 0.8; font-size: 15px; margin-top: 6px; display: inline-block;">${{game1.desc}}</span>`
+            : `Available for free at the Epic Games Store until ${{game1.end}}.<br/><span style="opacity: 0.8; font-size: 15px; margin-top: 6px; display: inline-block;">${{game1.desc}}</span>`;
+        blockDesc1.innerHTML = promoText;
+    }}
+
+    // Jogo 2 (Bloco 2) - Se houver 2 jogos grátis na Epic
+    const hasGame2 = {str(has_g2).lower()};
+    const block2 = document.querySelector(".home-game2");
+    const blockTitle2 = document.querySelector(".home-game2 .block-title");
+    const blockImg2 = document.querySelector(".home-game2 .home-game-img");
+    const blockDesc2 = document.querySelector(".home-game2 .block-desc");
+
+    if (hasGame2) {{
+        const game2 = {{
+            title: {g2_title},
+            img: {g2_img},
+            end: isPt ? {g2_end_pt} : {g2_end_en},
+            desc: {g2_desc}
+        }};
+
+        if (blockTitle2) blockTitle2.innerHTML = game2.title;
+        if (blockImg2) blockImg2.style.backgroundImage = 'url("' + game2.img + '")';
+        if (blockDesc2) {{
+            let promoText2 = isPt
+                ? `Disponível de graça na Epic Games Store até ${{game2.end}}.<br/><span style="opacity: 0.8; font-size: 15px; margin-top: 6px; display: inline-block;">${{game2.desc}}</span>`
+                : `Available for free at the Epic Games Store until ${{game2.end}}.<br/><span style="opacity: 0.8; font-size: 15px; margin-top: 6px; display: inline-block;">${{game2.desc}}</span>`;
+            blockDesc2.innerHTML = promoText2;
+        }}
+        if (block2) {{
+            block2.onclick = function() {{
+                block_function1();
+            }};
+        }}
+    }} else {{
+        // Caso haja apenas 1 jogo gratuito na Epic, garante a restauração do Xonotic padrão
+        if (blockTitle2) blockTitle2.innerHTML = "Xonotic";
+        if (blockImg2) blockImg2.style.backgroundImage = 'url("./../images/games-blocks/block2-xonotic.jpg")';
+        if (blockDesc2) {{
+            blockDesc2.innerHTML = isPt
+                ? "Divertido jogo de tiro em primeira pessoa estilo arena."
+                : "Fun and addictive arena-style first person shooter.";
+        }}
+        if (block2) {{
+            block2.onclick = function() {{
+                if (typeof block_function2 === "function") {{
+                    block_function2();
+                }}
+            }};
+        }}
+    }}
+}}
+showFreeGameHome();
+"""
+    return js_code
 
 def main():
     output_path = sys.argv[1] if len(sys.argv) > 1 else "games-blocks-online.js"
-    print(f"Buscando jogos gratuitos da Epic Games Store...")
-    
-    game = fetch_active_free_game()
-    if not game:
+    print("Buscando jogos gratuitos da Epic Games Store...")
+
+    games = fetch_active_free_games()
+    if not games:
         print("Erro: Nenhum jogo grátis ativo encontrado no momento.", file=sys.stderr)
         sys.exit(1)
 
-    print(f"Jogo selecionado: {game['title']}")
-    print(f"Imagem: {game['img']}")
-    print(f"Término: {game['end_pt']} / {game['end_en']}")
+    print(f"Total de jogos grátis ativos: {len(games)}")
+    for i, g in enumerate(games, 1):
+        print(f"Jogo {i}: {g['title']} (término: {g['end_pt']})")
+        print(f"Resumo: {g['description']}")
 
-    safe_title = game["title"].replace('"', '\\"')
-
-    content = TEMPLATE.format(
-        game_title=safe_title,
-        game_img=game["img"],
-        end_pt=game["end_pt"],
-        end_en=game["end_en"]
-    )
-
+    js_content = generate_js(games)
     with open(output_path, "w", encoding="utf-8") as f:
-        f.write(content)
+        f.write(js_content)
 
     print(f"Arquivo gerado com sucesso em: {output_path}")
 
