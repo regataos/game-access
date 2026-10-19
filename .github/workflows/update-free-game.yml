@@ -1,0 +1,54 @@
+name: Update Epic Games Weekly Free Game
+
+on:
+  schedule:
+    # Executa toda quinta-feira às 15:30 UTC (12:30 BRT, meia hora após a rotação semanal da Epic)
+    - cron: '30 15 * * 4'
+    # Executa também na sexta-feira às 00:00 UTC como garantia/resiliência
+    - cron: '0 0 * * 5'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update-free-game:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout gh-pages
+        uses: actions/checkout@v4
+        with:
+          ref: gh-pages
+          path: gh-pages
+
+      - name: Checkout repository scripts
+        uses: actions/checkout@v4
+        with:
+          ref: develop
+          path: main-repo
+          sparse-checkout: |
+            .github/scripts
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Fetch and generate free game script
+        run: |
+          python3 main-repo/.github/scripts/update_free_game.py gh-pages/games-blocks-online.js
+
+      - name: Commit and Push changes
+        working-directory: gh-pages
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          
+          if git diff --quiet games-blocks-online.js; then
+            echo "Nenhuma alteração no jogo gratuito semanal."
+          else
+            git add games-blocks-online.js
+            git commit -m "Automated update of Epic Games weekly free game"
+            git push origin gh-pages
+          fi
