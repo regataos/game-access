@@ -4,19 +4,19 @@ function showFreeGameHome() {
 
     // Jogo 1 (Bloco 1)
     const game1 = {
-        title: "Sker Ritual",
-        img: "https://cdn1.epicgames.com/spt-assets/43d96f4437e34c87b7eff08831d1b1de/sker-ritual-1tuka.png",
-        end: isPt ? "29 de outubro" : "october 29",
-        desc: "The round-based co-op survival FPS and spin-off to the award-winning British horror, Maid of Sker. Play solo or up to 4 players..."
+        title: "Sorry We're Closed",
+        img: "https://cdn1.epicgames.com/spt-assets/9ab7eaaeb2f041969b350955b789f0f7/sorry-were-closed-1orqh.png",
+        end: isPt ? "05 de novembro" : "november 05",
+        desc: "Sorry We're Closed \u00e9 um nost\u00e1lgico jogo de terror de sobreviv\u00eancia com uma hist\u00f3ria rica, personagens profundos e v\u00e1rios finais..."
     };
 
     // Jogo 2 (Bloco 2) - Se houver 2 jogos grátis na Epic
-    const hasGame2 = true;
+    const hasGame2 = false;
     const game2 = hasGame2 ? {
-        title: "Home - A Unique Horror Adventure",
-        img: "https://cdn1.epicgames.com/spt-assets/46fc0cdb9f164a848e916249a8f68fc7/home-1f6qi.png",
-        end: isPt ? "29 de outubro" : "october 29",
-        desc: "Home is a unique horror adventure set in a beautifully-realized pixel world. It\u2019s a murder mystery with a twist \u2013 because you d..."
+        title: null,
+        img: null,
+        end: isPt ? null : null,
+        desc: null
     } : null;
 
     function applyBlocks() {
