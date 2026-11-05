@@ -4,19 +4,19 @@ function showFreeGameHome() {
 
     // Jogo 1 (Bloco 1)
     const game1 = {
-        title: "Sorry We're Closed",
-        img: "https://cdn1.epicgames.com/spt-assets/9ab7eaaeb2f041969b350955b789f0f7/sorry-were-closed-1orqh.png",
-        end: isPt ? "05 de novembro" : "november 05",
-        desc: "Sorry We're Closed \u00e9 um nost\u00e1lgico jogo de terror de sobreviv\u00eancia com uma hist\u00f3ria rica, personagens profundos e v\u00e1rios finais..."
+        title: "Idle Champions of the Forgotten Realms",
+        img: "https://cdn1.epicgames.com/spt-assets/a53f91e55c6840018cb5de0b204f1ad9/idle-champions-of-the-forgotten-realms-1gbsg.jpg",
+        end: isPt ? "12 de novembro" : "november 12",
+        desc: "Idle Champions \u00e9 um videogame de gest\u00e3o estrat\u00e9gica com licen\u00e7a de Dungeons & Dragons que une personagens ic\u00f4nicos de livros, c..."
     };
 
     // Jogo 2 (Bloco 2) - Se houver 2 jogos grátis na Epic
-    const hasGame2 = false;
+    const hasGame2 = true;
     const game2 = hasGame2 ? {
-        title: null,
-        img: null,
-        end: isPt ? null : null,
-        desc: null
+        title: "Flotsam",
+        img: "https://cdn1.epicgames.com/spt-assets/5c36b876e80d4285b9993947efeeaf2b/flotsam-1yczl.jpg",
+        end: isPt ? "12 de novembro" : "november 12",
+        desc: "O jogo de sobreviv\u00eancia da cidade flutuante de lixo! Colete lixo precioso da superf\u00edcie do oceano e fa\u00e7a sua cidade crescer enq..."
     } : null;
 
     function applyBlocks() {
