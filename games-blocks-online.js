@@ -4,19 +4,19 @@ function showFreeGameHome() {
 
     // Jogo 1 (Bloco 1)
     const game1 = {
-        title: "Idle Champions of the Forgotten Realms",
-        img: "https://cdn1.epicgames.com/spt-assets/a53f91e55c6840018cb5de0b204f1ad9/idle-champions-of-the-forgotten-realms-1gbsg.jpg",
-        end: isPt ? "12 de novembro" : "november 12",
-        desc: "Idle Champions \u00e9 um videogame de gest\u00e3o estrat\u00e9gica com licen\u00e7a de Dungeons & Dragons que une personagens ic\u00f4nicos de livros, c..."
+        title: "Knightica",
+        img: "https://cdn1.epicgames.com/spt-assets/357100ca5613420e98208c5f14585e9d/knightica-1nuxm.png",
+        end: isPt ? "19 de novembro" : "november 19",
+        desc: "Recrute unidades poderosas, posicione-as e encontre as melhores sinergias neste jogo de batalha autom\u00e1tica roguelike!"
     };
 
     // Jogo 2 (Bloco 2) - Se houver 2 jogos grátis na Epic
-    const hasGame2 = true;
+    const hasGame2 = false;
     const game2 = hasGame2 ? {
-        title: "Flotsam",
-        img: "https://cdn1.epicgames.com/spt-assets/5c36b876e80d4285b9993947efeeaf2b/flotsam-1yczl.jpg",
-        end: isPt ? "12 de novembro" : "november 12",
-        desc: "O jogo de sobreviv\u00eancia da cidade flutuante de lixo! Colete lixo precioso da superf\u00edcie do oceano e fa\u00e7a sua cidade crescer enq..."
+        title: null,
+        img: null,
+        end: isPt ? null : null,
+        desc: null
     } : null;
 
     function applyBlocks() {
