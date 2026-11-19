@@ -4,10 +4,10 @@ function showFreeGameHome() {
 
     // Jogo 1 (Bloco 1)
     const game1 = {
-        title: "Knightica",
-        img: "https://cdn1.epicgames.com/spt-assets/357100ca5613420e98208c5f14585e9d/knightica-1nuxm.png",
-        end: isPt ? "19 de novembro" : "november 19",
-        desc: "Recrute unidades poderosas, posicione-as e encontre as melhores sinergias neste jogo de batalha autom\u00e1tica roguelike!"
+        title: "Mark of the Deep",
+        img: "https://cdn1.epicgames.com/spt-assets/83a240506a884c10ad8fb99694e57a0d/mark-of-the-deep-w1ygr.png",
+        end: isPt ? "26 de novembro" : "november 26",
+        desc: "Mark of the Deep \u00e9 uma \u00e9pica aventura pirata com uma narrativa forte e uma empolgante mistura de elementos de jogos Metroidvani..."
     };
 
     // Jogo 2 (Bloco 2) - Se houver 2 jogos grátis na Epic
