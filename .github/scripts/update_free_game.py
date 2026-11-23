@@ -2,6 +2,7 @@
 """
 Atualiza o arquivo games-blocks-online.js com os jogos grátis da semana na Epic Games Store.
 Suporta 1 ou 2 jogos simultâneos:
+- Baixa as imagens dos jogos e hospeda na branch gh-pages para evitar falhas de CDN externa (IPv4-only / timeouts).
 - Resumo do jogo vem em primeiro lugar.
 - Frase de gratuidade com prazo ("Disponível de graça na Epic Games Store até...") logo abaixo.
 - Aplicado para AMBOS os jogos quando houver dois jogos gratuitos.
@@ -9,12 +10,14 @@ Suporta 1 ou 2 jogos simultâneos:
 """
 
 import json
+import os
 import re
 import sys
 import urllib.request
 from datetime import datetime, timezone
 
 EPIC_API_URL = "https://store-site-backend-static.ak.epicgames.com/freeGamesPromotions?locale=pt-BR&country=BR&allowCountries=BR"
+RAW_GITHUB_BASE = "https://raw.githubusercontent.com/regataos/game-access/refs/heads/gh-pages/images"
 
 MONTHS_PT = {
     1: "janeiro", 2: "fevereiro", 3: "março", 4: "abril",
@@ -37,6 +40,23 @@ def clean_summary(text):
     if len(first_part) > 130:
         first_part = first_part[:127] + "..."
     return first_part
+
+def download_game_image(url, output_path):
+    if not url:
+        return False
+    try:
+        req = urllib.request.Request(
+            url,
+            headers={"User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36"}
+        )
+        with urllib.request.urlopen(req, timeout=30) as resp:
+            with open(output_path, "wb") as f:
+                f.write(resp.read())
+        print(f"Imagem baixada com sucesso: {output_path} ({os.path.getsize(output_path)} bytes)")
+        return True
+    except Exception as e:
+        print(f"Aviso: Não foi possível baixar imagem de {url}: {e}", file=sys.stderr)
+        return False
 
 def fetch_active_free_games():
     req = urllib.request.Request(
@@ -216,6 +236,29 @@ def main():
     for i, g in enumerate(games, 1):
         print(f"Jogo {i}: {g['title']} (término: {g['end_pt']})")
         print(f"Resumo: {g['description']}")
+
+    # Gerenciamento de cache de imagens na branch gh-pages
+    base_dir = os.path.dirname(os.path.abspath(output_path))
+    images_dir = os.path.join(base_dir, "images")
+    os.makedirs(images_dir, exist_ok=True)
+
+    # Processar imagem do jogo 1
+    g1 = games[0]
+    img1_local = os.path.join(images_dir, "free-game-1.png")
+    if download_game_image(g1.get("img"), img1_local):
+        g1["img"] = f"{RAW_GITHUB_BASE}/free-game-1.png"
+
+    # Processar imagem do jogo 2 (se houver)
+    img2_local = os.path.join(images_dir, "free-game-2.png")
+    if len(games) > 1:
+        g2 = games[1]
+        if download_game_image(g2.get("img"), img2_local):
+            g2["img"] = f"{RAW_GITHUB_BASE}/free-game-2.png"
+    elif os.path.exists(img2_local):
+        try:
+            os.remove(img2_local)
+        except OSError:
+            pass
 
     js_content = generate_js(games)
     with open(output_path, "w", encoding="utf-8") as f:

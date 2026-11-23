@@ -25,7 +25,6 @@ jobs:
       - name: Checkout repository scripts
         uses: actions/checkout@v4
         with:
-          ref: develop
           path: main-repo
           sparse-checkout: |
             .github/scripts
@@ -45,10 +44,11 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           
-          if git diff --quiet games-blocks-online.js; then
+          mkdir -p images
+          git add games-blocks-online.js images/
+          if git diff --staged --quiet; then
             echo "Nenhuma alteração no jogo gratuito semanal."
           else
-            git add games-blocks-online.js
-            git commit -m "Automated update of Epic Games weekly free game"
+            git commit -m "Automated update of Epic Games weekly free game and cached images"
             git push origin gh-pages
           fi
