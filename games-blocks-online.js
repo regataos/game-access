@@ -5,7 +5,7 @@ function showFreeGameHome() {
     // Jogo 1 (Bloco 1)
     const game1 = {
         title: "Mark of the Deep",
-        img: "https://cdn1.epicgames.com/spt-assets/83a240506a884c10ad8fb99694e57a0d/mark-of-the-deep-w1ygr.png",
+        img: "https://raw.githubusercontent.com/regataos/game-access/refs/heads/gh-pages/images/free-game-1.png",
         end: isPt ? "26 de novembro" : "november 26",
         desc: "Mark of the Deep \u00e9 uma \u00e9pica aventura pirata com uma narrativa forte e uma empolgante mistura de elementos de jogos Metroidvani..."
     };
