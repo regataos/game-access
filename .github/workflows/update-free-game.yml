@@ -2,10 +2,14 @@ name: Update Epic Games Weekly Free Game
 
 on:
   schedule:
-    # Executa toda quinta-feira às 15:30 UTC (12:30 BRT, meia hora após a rotação semanal da Epic)
-    - cron: '30 15 * * 4'
-    # Executa também na sexta-feira às 00:00 UTC como garantia/resiliência
-    - cron: '0 0 * * 5'
+    # A Epic vira os jogos às 11:00 EST/EDT: 15:00 UTC (verão EUA) ou 16:00 UTC (inverno EUA).
+    # Minutos quebrados reduzem a fila de jobs agendados no GitHub Actions.
+    # Quinta-feira às 16:17 UTC (13:17 BRT) — logo após a rotação mesmo no inverno dos EUA
+    - cron: '17 16 * * 4'
+    # Reforço na quinta-feira às 18:42 UTC (15:42 BRT)
+    - cron: '42 18 * * 4'
+    # Contingência na sexta-feira às 00:19 UTC (21:19 BRT de quinta)
+    - cron: '19 0 * * 5'
   workflow_dispatch:
 
 permissions:
