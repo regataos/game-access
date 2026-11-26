@@ -4,19 +4,19 @@ function showFreeGameHome() {
 
     // Jogo 1 (Bloco 1)
     const game1 = {
-        title: "Mark of the Deep",
+        title: "Firestone \u2013 Idle Clicker Online RPG",
         img: "https://raw.githubusercontent.com/regataos/game-access/refs/heads/gh-pages/images/free-game-1.png",
-        end: isPt ? "26 de novembro" : "november 26",
-        desc: "Mark of the Deep \u00e9 uma \u00e9pica aventura pirata com uma narrativa forte e uma empolgante mistura de elementos de jogos Metroidvani..."
+        end: isPt ? "03 de dezembro" : "december 03",
+        desc: "*Firestone: Online Idle RPG* \u00e9 um jogo de fantasia multiplayer. Colete her\u00f3is, atualize seus equipamentos e habilidades e envie..."
     };
 
     // Jogo 2 (Bloco 2) - Se houver 2 jogos grátis na Epic
-    const hasGame2 = false;
+    const hasGame2 = true;
     const game2 = hasGame2 ? {
-        title: null,
-        img: null,
-        end: isPt ? null : null,
-        desc: null
+        title: "Bread and Fred",
+        img: "https://raw.githubusercontent.com/regataos/game-access/refs/heads/gh-pages/images/free-game-2.png",
+        end: isPt ? "03 de dezembro" : "december 03",
+        desc: "Grab your best bud for help in this new co-op challenge to help two adorable penguins, Bread and Fred, reach the top of the sno..."
     } : null;
 
     function applyBlocks() {
